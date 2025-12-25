@@ -40,12 +40,12 @@ export default function Index() {
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">
-                تولید تصاویر با هوش مصنوعی
+                تولید تصاویر و ویدیوهای هوش مصنوعی
               </span>
             </h1>
 
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              تصویری انتخاب کنید، پرامپت بنویسید، و تصویر جدید خود را ایجاد کنید. فناوری پیشرفته
+              تصویری انتخاب کنید، پرامپت بنویسید، و تصویر یا ویدیوی جدید خود را ایجاد کنید. فناوری پیشرفته
               هوش مصنوعی ما کار را برای شما انجام می‌دهد.
             </p>
 
