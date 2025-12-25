@@ -506,12 +506,14 @@ export async function handleCallback(
       }
     }
 
-    // Store the result
+    // Store the result, preserving any existing request details
+    const existingResult = taskResults.get(taskId);
     taskResults.set(taskId, {
+      ...existingResult,
       status: state || "unknown",
       imageUrl: imageUrl,
       error: state === "fail" ? data?.data?.failMsg : undefined,
-      timestamp: Date.now(),
+      timestamp: existingResult?.timestamp || Date.now(),
     });
 
     console.log("[Callback] Task result stored:", {
