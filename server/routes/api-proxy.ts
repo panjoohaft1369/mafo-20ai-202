@@ -239,7 +239,8 @@ export async function handleGenerateImage(
 }
 
 /**
- * دریافت گزارشات (Logs) از kie.ai
+ * دریافت گزارشات (Logs) از kie.ai v1
+ * Fetch user's task history
  */
 export async function handleFetchLogs(
   req: Request,
@@ -256,7 +257,9 @@ export async function handleFetchLogs(
       return;
     }
 
-    const response = await fetch(`${KIE_AI_API_BASE}/logs`, {
+    console.log("[Logs] دریافت تاریخ تصاویر");
+
+    const response = await fetch(`${KIE_AI_API_BASE}/jobs/listTasks`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -265,6 +268,7 @@ export async function handleFetchLogs(
     });
 
     if (!response.ok) {
+      console.error("[Logs] خطا - HTTP Status:", response.status);
       res.status(response.status).json({
         success: false,
         error: "خطا در دریافت گزارشات",
@@ -273,11 +277,18 @@ export async function handleFetchLogs(
     }
 
     const data = await response.json();
+    console.log("[Logs] Response:", data);
+
     const twoMonthsAgo = new Date();
     twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
-    const filteredLogs = (data.logs || []).filter(
-      (log: any) => log.timestamp > twoMonthsAgo.getTime()
+    // Filter logs to last 2 months
+    const allLogs = data?.data?.tasks || data?.tasks || [];
+    const filteredLogs = allLogs.filter(
+      (log: any) => {
+        const logTime = log.createTime || log.timestamp;
+        return logTime > twoMonthsAgo.getTime();
+      }
     );
 
     res.json({
@@ -285,7 +296,7 @@ export async function handleFetchLogs(
       logs: filteredLogs,
     });
   } catch (error) {
-    console.error("Logs fetch error:", error);
+    console.error("[Logs] خطا:", error);
     res.status(500).json({
       success: false,
       error: "خطا در دریافت گزارشات",
