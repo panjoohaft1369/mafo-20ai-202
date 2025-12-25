@@ -112,9 +112,7 @@ export default function GenerateVideo() {
 
       setTaskId(result.taskId);
       toast.dismiss();
-      toast.loading(
-        "درحال پردازش ویدیو... (این ممکن است چند دقیقه طول بکشد)"
-      );
+      toast.loading("درحال پردازش ویدیو... (این ممکن است چند دقیقه طول بکشد)");
 
       // Step 3: Poll for completion
       const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
@@ -210,7 +208,9 @@ export default function GenerateVideo() {
                   ) : (
                     <div className="space-y-2">
                       <Upload className="h-8 w-8 mx-auto text-muted-foreground" />
-                      <p className="text-sm font-medium">تصویر را اینجا بگذارید</p>
+                      <p className="text-sm font-medium">
+                        تصویر را اینجا بگذارید
+                      </p>
                       <p className="text-xs text-muted-foreground">
                         PNG, JPG یا WebP
                       </p>
@@ -321,11 +321,7 @@ export default function GenerateVideo() {
                 {generatedVideo ? (
                   <div className="space-y-4">
                     <div className="rounded-lg overflow-hidden border border-border bg-muted">
-                      <video
-                        src={generatedVideo}
-                        controls
-                        className="w-full"
-                      />
+                      <video src={generatedVideo} controls className="w-full" />
                     </div>
                     <div className="flex flex-col gap-2">
                       <Button

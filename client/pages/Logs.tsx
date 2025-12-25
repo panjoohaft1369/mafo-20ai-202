@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { fetchLogs } from "@/lib/api";
 import { getAuthState, clearAuth } from "@/lib/auth";
@@ -88,9 +94,7 @@ export default function Logs() {
       <main className="container mx-auto px-4 py-8 sm:py-12">
         {/* Title Section */}
         <div className="max-w-6xl mx-auto mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-            گزارش تصاویر
-          </h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2">گزارش تصاویر</h1>
           <p className="text-muted-foreground">
             تصاویری که در 2 ماه اخیر ایجاد کرده‌اید
           </p>
@@ -113,12 +117,18 @@ export default function Logs() {
                 <p className="text-red-800">{error}</p>
               </CardContent>
             </Card>
-          ) : logs.filter((log) => log.imageUrl && log.status === "success").length === 0 ? (
+          ) : logs.filter((log) => log.imageUrl && log.status === "success")
+              .length === 0 ? (
             <Card>
               <CardContent className="flex items-center justify-center py-12">
                 <div className="text-center space-y-2">
-                  <p className="text-muted-foreground">هنوز تصویری ایجاد نشده است</p>
-                  <Button onClick={() => navigate("/generate")} variant="default">
+                  <p className="text-muted-foreground">
+                    هنوز تصویری ایجاد نشده است
+                  </p>
+                  <Button
+                    onClick={() => navigate("/generate")}
+                    variant="default"
+                  >
                     شروع کنید
                   </Button>
                 </div>
@@ -160,7 +170,9 @@ export default function Logs() {
                       {/* Settings */}
                       {(log.aspectRatio || log.resolution) && (
                         <div className="text-xs text-muted-foreground space-y-0.5">
-                          {log.aspectRatio && <p>نسبت ابعاد: {log.aspectRatio}</p>}
+                          {log.aspectRatio && (
+                            <p>نسبت ابعاد: {log.aspectRatio}</p>
+                          )}
                           {log.resolution && <p>کیفیت: {log.resolution}</p>}
                         </div>
                       )}
@@ -172,7 +184,9 @@ export default function Logs() {
                             size="sm"
                             variant="outline"
                             className="flex-1"
-                            onClick={() => handleDownloadImage(log.imageUrl!, log.id)}
+                            onClick={() =>
+                              handleDownloadImage(log.imageUrl!, log.id)
+                            }
                           >
                             <Download className="h-4 w-4" />
                           </Button>

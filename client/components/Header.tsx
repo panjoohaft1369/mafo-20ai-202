@@ -74,13 +74,8 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-xs"
-                  >
-                    ☎ {" "}
-                    <span className="hidden sm:inline">تماس</span>
+                  <Button variant="outline" size="sm" className="text-xs">
+                    ☎ <span className="hidden sm:inline">تماس</span>
                   </Button>
                 </a>
                 <a
@@ -88,11 +83,7 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-xs"
-                  >
+                  <Button variant="outline" size="sm" className="text-xs">
                     💬 واتساپ
                   </Button>
                 </a>
@@ -123,7 +114,11 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
         </div>
       </header>
 
-      <Sidebar open={sidebarOpen} onOpenChange={setSidebarOpen} onLogout={onLogout} />
+      <Sidebar
+        open={sidebarOpen}
+        onOpenChange={setSidebarOpen}
+        onLogout={onLogout}
+      />
     </>
   );
 }

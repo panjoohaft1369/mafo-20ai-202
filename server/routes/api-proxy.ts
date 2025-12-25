@@ -327,7 +327,7 @@ export async function handleGenerateVideo(
     }
 
     console.log(
-      "[Video Gen] Creating task with model: grok-imagine/image-to-video"
+      "[Video Gen] Creating task with model: grok-imagine/image-to-video",
     );
     console.log("[Video Gen] Prompt:", prompt.substring(0, 50) + "...");
     console.log("[Video Gen] Mode:", mode);
@@ -469,11 +469,13 @@ export async function handleFetchLogs(
     twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
     // Get all stored task results
-    const allLogs = Array.from(taskResults.entries()).map(([taskId, result]) => ({
-      id: taskId,
-      taskId,
-      ...result,
-    }));
+    const allLogs = Array.from(taskResults.entries()).map(
+      ([taskId, result]) => ({
+        id: taskId,
+        taskId,
+        ...result,
+      }),
+    );
 
     // Filter logs to last 2 months
     const filteredLogs = allLogs.filter((log: any) => {
@@ -542,7 +544,9 @@ export async function handleFetchBilling(
       });
     } else {
       // Endpoint doesn't exist - return a message to check kie.ai dashboard
-      console.log("[Billing] Profile endpoint not available, returning fallback");
+      console.log(
+        "[Billing] Profile endpoint not available, returning fallback",
+      );
       res.json({
         success: true,
         creditsRemaining: 0,

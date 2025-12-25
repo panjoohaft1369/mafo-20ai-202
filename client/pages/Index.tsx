@@ -4,7 +4,13 @@ import { getAuthState } from "@/lib/auth";
 import { Header } from "@/components/Header";
 import { Tutorial } from "@/components/Tutorial";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Sparkles, Image, TrendingUp, Zap, Film } from "lucide-react";
 
 export default function Index() {
@@ -45,8 +51,9 @@ export default function Index() {
             </h1>
 
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              تصویری انتخاب کنید، پرامپت بنویسید، و تصویر یا ویدیوی جدید خود را ایجاد کنید. فناوری پیشرفته
-              هوش مصنوعی ما کار را برای شما انجام می‌دهد.
+              تصویری انتخاب کنید، پرامپت بنویسید، و تصویر یا ویدیوی جدید خود را
+              ایجاد کنید. فناوری پیشرفته هوش مصنوعی ما کار را برای شما انجام
+              می‌دهد.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -91,7 +98,8 @@ export default function Index() {
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      تصویری انتخاب کنید و با ابعاد و کیفیت دلخواه تصاویر جدید ایجاد کنید
+                      تصویری انتخاب کنید و با ابعاد و کیفیت دلخواه تصاویر جدید
+                      ایجاد کنید
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -106,7 +114,8 @@ export default function Index() {
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      تصویری را به ویدیوی متحرک تبدیل کنید و حرکات خود را کنترل کنید
+                      تصویری را به ویدیوی متحرک تبدیل کنید و حرکات خود را کنترل
+                      کنید
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -121,7 +130,8 @@ export default function Index() {
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      نتایج فوری و کیفیت بالا. تصاویر و ویدیوهای خود را فوراً دریافت کنید
+                      نتایج فوری و کیفیت بالا. تصاویر و ویدیوهای خود را فوراً
+                      دریافت کنید
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -156,7 +166,8 @@ export default function Index() {
                 آماده‌اید شروع کنید؟
               </h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                با وارد کردن کلید API خود، به تمام قابلیت‌های ما دسترسی داشته باشید
+                با وارد کردن کلید API خود، به تمام قابلیت‌های ما دسترسی داشته
+                باشید
               </p>
               <Button
                 onClick={() => navigate("/login")}
