@@ -5,7 +5,7 @@ import { Header } from "@/components/Header";
 import { Tutorial } from "@/components/Tutorial";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles, Image, TrendingUp, Zap } from "lucide-react";
+import { Sparkles, Image, TrendingUp, Zap, Film } from "lucide-react";
 
 export default function Index() {
   const navigate = useNavigate();
