@@ -1,0 +1,55 @@
+const API_KEY_STORAGE_KEY = "mafo_api_key";
+const USER_EMAIL_STORAGE_KEY = "mafo_user_email";
+const USER_CREDITS_STORAGE_KEY = "mafo_user_credits";
+
+export interface AuthState {
+  isLoggedIn: boolean;
+  apiKey: string | null;
+  email: string | null;
+  credits: number | null;
+}
+
+/**
+ * Get current auth state from localStorage
+ */
+export function getAuthState(): AuthState {
+  const apiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
+  const email = localStorage.getItem(USER_EMAIL_STORAGE_KEY);
+  const creditsStr = localStorage.getItem(USER_CREDITS_STORAGE_KEY);
+
+  return {
+    isLoggedIn: !!apiKey,
+    apiKey,
+    email,
+    credits: creditsStr ? parseInt(creditsStr, 10) : null,
+  };
+}
+
+/**
+ * Save auth credentials to localStorage
+ */
+export function saveAuthCredentials(
+  apiKey: string,
+  email: string,
+  credits: number
+): void {
+  localStorage.setItem(API_KEY_STORAGE_KEY, apiKey);
+  localStorage.setItem(USER_EMAIL_STORAGE_KEY, email);
+  localStorage.setItem(USER_CREDITS_STORAGE_KEY, credits.toString());
+}
+
+/**
+ * Clear auth data (logout)
+ */
+export function clearAuth(): void {
+  localStorage.removeItem(API_KEY_STORAGE_KEY);
+  localStorage.removeItem(USER_EMAIL_STORAGE_KEY);
+  localStorage.removeItem(USER_CREDITS_STORAGE_KEY);
+}
+
+/**
+ * Update credits in storage
+ */
+export function updateStoredCredits(credits: number): void {
+  localStorage.setItem(USER_CREDITS_STORAGE_KEY, credits.toString());
+}
