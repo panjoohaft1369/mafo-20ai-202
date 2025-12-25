@@ -299,6 +299,152 @@ export async function handleGenerateImage(
 }
 
 /**
+ * تولید ویدیو از طریق Backend
+ * kie.ai v1 API - استفاده از /api/v1/jobs/createTask با مدل grok-imagine/image-to-video
+ */
+export async function handleGenerateVideo(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const { imageUrl, prompt, mode } = req.body;
+    const apiKey = req.headers.authorization?.replace("Bearer ", "");
+
+    if (!apiKey) {
+      res.status(400).json({
+        success: false,
+        error: "کلید API یافت نشد",
+      });
+      return;
+    }
+
+    if (!imageUrl || !prompt || !mode) {
+      res.status(400).json({
+        success: false,
+        error: "تمام فیلدها الزامی هستند: imageUrl, prompt, mode",
+      });
+      return;
+    }
+
+    console.log(
+      "[Video Gen] Creating task with model: grok-imagine/image-to-video"
+    );
+    console.log("[Video Gen] Prompt:", prompt.substring(0, 50) + "...");
+    console.log("[Video Gen] Mode:", mode);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 ثانیه برای generate
+
+    // Get the public URL for callback
+    let callbackUrl: string;
+
+    if (process.env.PUBLIC_URL) {
+      callbackUrl = `${process.env.PUBLIC_URL}/api/callback`;
+    } else {
+      const protocol = req.headers["x-forwarded-proto"] || "https";
+      const host = req.headers["x-forwarded-host"] || req.headers.host;
+
+      if (host && !host.includes("localhost")) {
+        callbackUrl = `${protocol}://${host}/api/callback`;
+      } else {
+        // Fallback - won't work for external APIs from localhost
+        callbackUrl = `http://localhost:8080/api/callback`;
+      }
+    }
+
+    console.log("[Video Gen] Callback URL:", callbackUrl);
+
+    const response = await fetch(`${KIE_AI_API_BASE}/jobs/createTask`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: "grok-imagine/image-to-video",
+        callBackUrl: callbackUrl,
+        input: {
+          image_urls: [imageUrl],
+          prompt,
+          mode,
+        },
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    console.log("[Video Gen] HTTP Status:", response.status);
+
+    const contentType = response.headers.get("content-type");
+    let data: any;
+
+    try {
+      if (contentType?.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error("[Video Gen] غیر-JSON Response:", text.substring(0, 200));
+        res.status(400).json({
+          success: false,
+          error: "پاسخ API نامعتبر است.",
+        });
+        return;
+      }
+    } catch (parseError) {
+      console.error("[Video Gen] خطا در پارس JSON:", parseError);
+      res.status(400).json({
+        success: false,
+        error: "خطا در پاسخ API",
+      });
+      return;
+    }
+
+    console.log("[Video Gen] Response:", data);
+
+    if (!response.ok || data?.code !== 200) {
+      res.status(response.status).json({
+        success: false,
+        error: data?.message || "خطا در ایجاد ویدیو",
+      });
+      return;
+    }
+
+    // Initialize task status as processing with request details
+    const taskId = data?.data?.taskId;
+    if (taskId) {
+      taskResults.set(taskId, {
+        status: "processing",
+        timestamp: Date.now(),
+        prompt,
+        resolution: mode, // Store mode as resolution for consistency
+      });
+    }
+
+    // Return the task ID for polling
+    res.json({
+      success: true,
+      taskId: taskId,
+      message: data?.message || "ویدیو در حال پردازش است...",
+    });
+  } catch (error: any) {
+    console.error("[Video Gen] خطا:", error.message);
+
+    if (error.name === "AbortError") {
+      return res.status(504).json({
+        success: false,
+        error: "خطا: درخواست منقضی شد",
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      error: "خطا در اتصال به سرویس",
+    });
+  }
+}
+
+/**
  * دریافت گزارشات (Logs)
  * Note: kie.ai doesn't provide a logs API, so we return locally stored task results
  */
