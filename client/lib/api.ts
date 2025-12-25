@@ -1,4 +1,5 @@
-const KIE_AI_API_BASE = "https://kie.ai/api";
+// استفاده از Backend برای تمام درخواست‌های API
+const BACKEND_API_BASE = "/api";
 
 export interface ApiKeyValidationResponse {
   valid: boolean;
@@ -40,13 +41,13 @@ export interface BillingInfo {
 }
 
 /**
- * Validate API key against kie.ai
+ * تایید API Key از طریق Backend
  */
 export async function validateApiKey(
   apiKey: string
 ): Promise<ApiKeyValidationResponse> {
   try {
-    const response = await fetch(`${KIE_AI_API_BASE}/validate-key`, {
+    const response = await fetch(`${BACKEND_API_BASE}/validate-key`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,14 +55,15 @@ export async function validateApiKey(
       },
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
       return {
         valid: false,
-        message: "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
+        message: data.message || "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
       };
     }
 
-    const data = await response.json();
     return {
       valid: true,
       credit: data.credit,
