@@ -128,14 +128,11 @@ export async function generateImage(
 }
 
 /**
- * Fetch logs from kie.ai (last 2 months)
+ * دریافت گزارشات از طریق Backend (2 ماه اخیر)
  */
 export async function fetchLogs(apiKey: string): Promise<LogEntry[]> {
   try {
-    const twoMonthsAgo = new Date();
-    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
-
-    const response = await fetch(`${KIE_AI_API_BASE}/logs`, {
+    const response = await fetch(`${BACKEND_API_BASE}/logs`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -151,8 +148,7 @@ export async function fetchLogs(apiKey: string): Promise<LogEntry[]> {
     const data = await response.json();
     const logs: LogEntry[] = data.logs || [];
 
-    // Filter logs from last 2 months
-    return logs.filter((log) => log.timestamp > twoMonthsAgo.getTime());
+    return logs;
   } catch (error) {
     console.error("Error fetching logs:", error);
     return [];
@@ -160,13 +156,13 @@ export async function fetchLogs(apiKey: string): Promise<LogEntry[]> {
 }
 
 /**
- * Fetch billing information
+ * دریافت اطلاعات اعتبار از طریق Backend
  */
 export async function fetchBillingInfo(
   apiKey: string
 ): Promise<BillingInfo | null> {
   try {
-    const response = await fetch(`${KIE_AI_API_BASE}/billing`, {
+    const response = await fetch(`${BACKEND_API_BASE}/billing`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
