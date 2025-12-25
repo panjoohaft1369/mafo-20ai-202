@@ -80,14 +80,14 @@ export async function validateApiKey(
 }
 
 /**
- * Generate image using kie.ai API
+ * تولید تصویر از طریق Backend
  */
 export async function generateImage(
   request: ImageGenerationRequest
 ): Promise<ImageGenerationResponse> {
   try {
     const response = await fetch(
-      `${KIE_AI_API_BASE}/flux-2/pro-image-to-image`,
+      `${BACKEND_API_BASE}/generate-image`,
       {
         method: "POST",
         headers: {
@@ -95,7 +95,7 @@ export async function generateImage(
           Authorization: `Bearer ${request.apiKey}`,
         },
         body: JSON.stringify({
-          image: request.imageUrl,
+          imageUrl: request.imageUrl,
           prompt: request.prompt,
           width: request.width,
           height: request.height,
@@ -104,15 +104,15 @@ export async function generateImage(
       }
     );
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
       return {
         success: false,
-        error: errorData.message || "خطا در ایجاد تصویر",
+        error: data.error || "خطا در ایجاد تصویر",
       };
     }
 
-    const data = await response.json();
     return {
       success: true,
       imageUrl: data.imageUrl,
