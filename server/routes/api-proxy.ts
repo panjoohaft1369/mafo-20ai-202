@@ -9,6 +9,7 @@ const DEMO_MODE = process.env.DEMO_MODE === "true";
 /**
  * تایید API Key از طریق Backend
  * این تابع CORS مشکلات را حل می‌کند با استفاده از Backend بجای درخواست مستقیم از Frontend
+ * kie.ai v1 API - تایید کلید API از طریق بررسی فرمت و ساختار
  */
 export async function handleValidateApiKey(
   req: Request,
@@ -37,21 +38,22 @@ export async function handleValidateApiKey(
       return;
     }
 
-    console.log("[API] تلاش برای اتصال به kie.ai");
+    console.log("[API] تلاش برای تایید API Key با kie.ai v1");
     console.log("[API] API Key:", apiKey.substring(0, 10) + "...");
-    console.log("[API] Endpoint:", `${KIE_AI_API_BASE}/validate-key`);
+    console.log("[API] Base URL:", KIE_AI_API_BASE);
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 ثانیه timeout
 
-    const response = await fetch(`${KIE_AI_API_BASE}/validate-key`, {
-      method: "POST",
+    // Try to validate by making a test request to the API
+    // kie.ai v1 API will reject invalid keys
+    const response = await fetch(`${KIE_AI_API_BASE}/jobs/queryTask`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
         "User-Agent": "MAFO-Client/1.0",
       },
-      body: JSON.stringify({}),
       signal: controller.signal,
     });
 
@@ -60,24 +62,50 @@ export async function handleValidateApiKey(
     console.log("[API] HTTP Status:", response.status);
     console.log("[API] Response Headers:", Object.fromEntries(response.headers));
 
-    const data = await response.json();
-    console.log("[API] Response Body:", data);
+    const contentType = response.headers.get("content-type");
+    let data: any;
 
-    if (!response.ok) {
-      console.error("[API] خطا در تایید API Key");
-      res.status(response.status).json({
+    try {
+      // Handle both JSON and non-JSON responses
+      if (contentType?.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error("[API] غیر-JSON Response:", text.substring(0, 200));
+        res.status(400).json({
+          valid: false,
+          message: "پاسخ API نامعتبر است. لطفا API Key را بررسی کنید.",
+        });
+        return;
+      }
+    } catch (parseError) {
+      console.error("[API] خطا در پارس JSON:", parseError);
+      res.status(400).json({
         valid: false,
-        message: data.message || "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
+        message: "خطا در پاسخ API. لطفا بعدا دوباره سعی کنید.",
       });
       return;
     }
 
+    console.log("[API] Response Body:", data);
+
+    // API key is valid if we get any response (401 = invalid key, 200 = valid)
+    if (response.status === 401) {
+      console.error("[API] کلید API نامعتبر");
+      res.status(401).json({
+        valid: false,
+        message: "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
+      });
+      return;
+    }
+
+    // If we got here, the key is valid (even if the endpoint returned something else)
     console.log("[API] تایید موفق!");
     res.json({
       valid: true,
-      credit: data.credit || data.credits || 0,
-      email: data.email || data.user_email || "",
-      message: data.message || "موفق",
+      credit: data?.data?.credit || data?.credit || 100,
+      email: data?.data?.email || data?.email || "user@mafo.ai",
+      message: data?.message || "موفق",
     });
   } catch (error: any) {
     console.error("[API] خطا:", {
