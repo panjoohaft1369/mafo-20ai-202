@@ -197,3 +197,43 @@ export async function fetchBillingInfo(
     return null;
   }
 }
+
+/**
+ * دریافت وضعیت تصویری تولید شده (برای API v1 غیرهمزمان)
+ */
+export async function queryTaskStatus(
+  apiKey: string,
+  taskId: string
+): Promise<TaskStatusResponse> {
+  try {
+    const response = await fetch(`${BACKEND_API_BASE}/query-task?taskId=${taskId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.error("Failed to query task status");
+      return {
+        success: false,
+        error: "خطا در دریافت وضعیت تصویر",
+      };
+    }
+
+    const data = await response.json();
+    return {
+      success: true,
+      status: data.status,
+      imageUrl: data.imageUrl,
+      message: data.message,
+    };
+  } catch (error) {
+    console.error("Error querying task status:", error);
+    return {
+      success: false,
+      error: "خطا در اتصال به سرویس",
+    };
+  }
+}
