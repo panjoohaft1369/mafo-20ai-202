@@ -113,7 +113,7 @@ export default function Logs() {
                 <p className="text-red-800">{error}</p>
               </CardContent>
             </Card>
-          ) : logs.length === 0 ? (
+          ) : logs.filter((log) => log.imageUrl && log.status === "success").length === 0 ? (
             <Card>
               <CardContent className="flex items-center justify-center py-12">
                 <div className="text-center space-y-2">
@@ -126,62 +126,71 @@ export default function Logs() {
             </Card>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {logs.map((log) => (
-                <Card key={log.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="aspect-square overflow-hidden bg-muted">
-                    <img
-                      src={log.imageUrl}
-                      alt={log.prompt}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform"
-                    />
-                  </div>
+              {logs
+                .filter((log) => log.imageUrl && log.status === "success")
+                .map((log) => (
+                  <Card
+                    key={log.id}
+                    className="overflow-hidden hover:shadow-lg transition-shadow"
+                  >
+                    <div className="aspect-square overflow-hidden bg-muted">
+                      <img
+                        src={log.imageUrl}
+                        alt={log.prompt || "Generated image"}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform"
+                      />
+                    </div>
 
-                  <CardContent className="p-4 space-y-3">
-                    {/* Date */}
-                    <p className="text-xs text-muted-foreground">
-                      {formatDate(log.timestamp)}
-                    </p>
-
-                    {/* Prompt */}
-                    <div>
-                      <p className="text-sm font-medium mb-1">پرامپت:</p>
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {log.prompt}
+                    <CardContent className="p-4 space-y-3">
+                      {/* Date */}
+                      <p className="text-xs text-muted-foreground">
+                        {formatDate(log.timestamp)}
                       </p>
-                    </div>
 
-                    {/* Settings */}
-                    <div className="text-xs text-muted-foreground space-y-0.5">
-                      <p>ابعاد: {log.width}×{log.height}</p>
-                      <p>کیفیت: {log.quality}</p>
-                    </div>
+                      {/* Prompt */}
+                      {log.prompt && (
+                        <div>
+                          <p className="text-sm font-medium mb-1">پرامپت:</p>
+                          <p className="text-sm text-muted-foreground line-clamp-2">
+                            {log.prompt}
+                          </p>
+                        </div>
+                      )}
 
-                    {/* Actions */}
-                    <div className="flex gap-2 pt-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="flex-1"
-                        onClick={() =>
-                          handleDownloadImage(log.imageUrl, log.id)
-                        }
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="flex-1"
-                        onClick={() => {
-                          setLogs(logs.filter((l) => l.id !== log.id));
-                        }}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      {/* Settings */}
+                      {(log.aspectRatio || log.resolution) && (
+                        <div className="text-xs text-muted-foreground space-y-0.5">
+                          {log.aspectRatio && <p>نسبت ابعاد: {log.aspectRatio}</p>}
+                          {log.resolution && <p>کیفیت: {log.resolution}</p>}
+                        </div>
+                      )}
+
+                      {/* Actions */}
+                      {log.imageUrl && (
+                        <div className="flex gap-2 pt-2">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1"
+                            onClick={() => handleDownloadImage(log.imageUrl!, log.id)}
+                          >
+                            <Download className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1"
+                            onClick={() => {
+                              setLogs(logs.filter((l) => l.id !== log.id));
+                            }}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
             </div>
           )}
         </div>
