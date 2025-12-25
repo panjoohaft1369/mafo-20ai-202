@@ -12,9 +12,8 @@ export interface ImageGenerationRequest {
   apiKey: string;
   imageUrl: string;
   prompt: string;
-  width: string;
-  height: string;
-  quality: string;
+  aspectRatio: string;
+  resolution: string;
 }
 
 export interface ImageGenerationResponse {
