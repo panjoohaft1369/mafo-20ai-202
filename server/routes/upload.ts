@@ -29,4 +29,62 @@ export async function handleImageUpload(
     }
 
     // Parse base64 data URL
-    const matches = imageData.match(/^data:image\/(\w+);base64,(.+)$/);
+    const dataUrlPattern = /^data:image\/([a-zA-Z]+);base64,(.+)$/;
+    const matches = imageData.match(dataUrlPattern);
+
+    if (!matches) {
+      res.status(400).json({
+        success: false,
+        error: "Invalid image format. Expected base64 data URL.",
+      });
+      return;
+    }
+
+    const [, imageType, base64Data] = matches;
+
+    // Validate image type
+    const allowedTypes = ["jpeg", "jpg", "png", "webp"];
+    const normalizedType = imageType.toLowerCase();
+    
+    if (!allowedTypes.includes(normalizedType)) {
+      res.status(400).json({
+        success: false,
+        error: `Unsupported image type: ${imageType}. Allowed: jpeg, png, webp`,
+      });
+      return;
+    }
+
+    // Convert base64 to buffer
+    const buffer = Buffer.from(base64Data, "base64");
+
+    // Generate unique filename
+    const timestamp = Date.now();
+    const randomStr = crypto.randomBytes(4).toString("hex");
+    const ext = normalizedType === "jpg" ? "jpeg" : normalizedType;
+    const filename = `${timestamp}-${randomStr}.${ext}`;
+    const filepath = path.join(uploadsDir, filename);
+
+    // Save file to disk
+    fs.writeFileSync(filepath, buffer);
+    console.log(`[Upload] Image saved: ${filename}`);
+
+    // Get protocol and host from request
+    const protocol = req.headers["x-forwarded-proto"] || "http";
+    const host = req.headers["x-forwarded-host"] || req.headers.host || "localhost:8080";
+    
+    // Generate public URL
+    const publicUrl = `${protocol}://${host}/uploads/${filename}`;
+
+    res.json({
+      success: true,
+      imageUrl: publicUrl,
+      message: "Image uploaded successfully",
+    });
+  } catch (error: any) {
+    console.error("[Upload] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to upload image",
+    });
+  }
+}
