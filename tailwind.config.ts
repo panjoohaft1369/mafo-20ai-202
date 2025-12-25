@@ -63,7 +63,7 @@ export default {
         brand: {
           primary: "#22c55e",
           secondary: "#a855f7",
-          accent: "#10b981",
+          accent: "#22c55e",
         },
       },
       borderRadius: {
