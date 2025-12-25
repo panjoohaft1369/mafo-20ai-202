@@ -305,7 +305,7 @@ export async function handleFetchLogs(
 }
 
 /**
- * دریافت اطلاعات بیل (Billing) از kie.ai
+ * دریافت اطلاعات بیل (Billing) از kie.ai v1
  */
 export async function handleFetchBilling(
   req: Request,
@@ -322,7 +322,9 @@ export async function handleFetchBilling(
       return;
     }
 
-    const response = await fetch(`${KIE_AI_API_BASE}/billing`, {
+    console.log("[Billing] دریافت اطلاعات اعتبار");
+
+    const response = await fetch(`${KIE_AI_API_BASE}/users/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -331,6 +333,7 @@ export async function handleFetchBilling(
     });
 
     if (!response.ok) {
+      console.error("[Billing] خطا - HTTP Status:", response.status);
       res.status(response.status).json({
         success: false,
         error: "خطا در دریافت اطلاعات اعتبار",
@@ -339,14 +342,20 @@ export async function handleFetchBilling(
     }
 
     const data = await response.json();
+    console.log("[Billing] Response:", data);
+
+    // Extract credit info from user profile
+    const credits = data?.data?.credits || data?.credits || 0;
+    const totalCredits = data?.data?.totalCredits || data?.totalCredits || 0;
+
     res.json({
       success: true,
-      creditsRemaining: data.creditsRemaining || 0,
-      totalCredits: data.totalCredits || 0,
-      usedCredits: data.usedCredits || 0,
+      creditsRemaining: credits,
+      totalCredits: totalCredits,
+      usedCredits: (totalCredits - credits) || 0,
     });
   } catch (error) {
-    console.error("Billing fetch error:", error);
+    console.error("[Billing] خطا:", error);
     res.status(500).json({
       success: false,
       error: "خطا در دریافت اطلاعات اعتبار",
