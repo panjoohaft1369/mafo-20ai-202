@@ -14,50 +14,50 @@
   */
   :root {
     --background: 0 0% 99%;
-    --foreground: 220 13% 13%;
+    --foreground: 140 20% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 13% 13%;
+    --card-foreground: 140 20% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 13%;
+    --popover-foreground: 140 20% 15%;
 
-    --primary: 267 91% 64%;
+    --primary: 140 70% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 280 85% 67%;
+    --secondary: 260 65% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 14% 90%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 140 20% 90%;
+    --muted-foreground: 140 15% 50%;
 
-    --accent: 260 95% 60%;
+    --accent: 160 75% 45%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 267 91% 64%;
+    --border: 140 15% 88%;
+    --input: 140 15% 88%;
+    --ring: 140 70% 50%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 250 25% 10%;
+    --sidebar-background: 140 40% 20%;
 
     --sidebar-foreground: 0 0% 98%;
 
-    --sidebar-primary: 267 91% 64%;
+    --sidebar-primary: 160 75% 50%;
 
     --sidebar-primary-foreground: 0 0% 100%;
 
-    --sidebar-accent: 280 85% 67%;
+    --sidebar-accent: 260 65% 60%;
 
     --sidebar-accent-foreground: 0 0% 100%;
 
-    --sidebar-border: 250 20% 20%;
+    --sidebar-border: 140 30% 30%;
 
-    --sidebar-ring: 267 91% 64%;
+    --sidebar-ring: 160 75% 50%;
   }
 
   .dark {
