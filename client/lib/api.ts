@@ -212,15 +212,16 @@ export async function queryTaskStatus(
       },
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      console.error("Failed to query task status");
+      console.error("Failed to query task status:", data);
       return {
         success: false,
-        error: "خطا در دریافت وضعیت تصویر",
+        error: data.error || "خطا در دریافت وضعیت تصویر",
       };
     }
 
-    const data = await response.json();
     return {
       success: true,
       status: data.status,
@@ -234,4 +235,38 @@ export async function queryTaskStatus(
       error: "خطا در اتصال به سرویس",
     };
   }
+}
+
+/**
+ * Poll for task completion (helper function)
+ */
+export async function pollTaskCompletion(
+  apiKey: string,
+  taskId: string,
+  maxAttempts: number = 120, // 2 minutes with 1 second intervals
+  interval: number = 1000 // 1 second
+): Promise<TaskStatusResponse> {
+  for (let i = 0; i < maxAttempts; i++) {
+    const result = await queryTaskStatus(apiKey, taskId);
+
+    if (result.success && result.status === "success") {
+      return result;
+    }
+
+    if (result.success && result.status === "fail") {
+      return {
+        success: false,
+        error: result.error || "خطا در ایجاد تصویر",
+      };
+    }
+
+    // Wait before next attempt
+    await new Promise(resolve => setTimeout(resolve, interval));
+  }
+
+  // Timeout
+  return {
+    success: false,
+    error: "خطا: درخواست منقضی شد",
+  };
 }
