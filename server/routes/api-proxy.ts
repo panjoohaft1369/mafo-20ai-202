@@ -263,12 +263,15 @@ export async function handleGenerateImage(
       return;
     }
 
-    // Initialize task status as processing
+    // Initialize task status as processing with request details
     const taskId = data?.data?.taskId;
     if (taskId) {
       taskResults.set(taskId, {
         status: "processing",
         timestamp: Date.now(),
+        prompt,
+        aspectRatio,
+        resolution,
       });
     }
 
