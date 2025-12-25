@@ -7,6 +7,7 @@ import {
   handleGenerateImage,
   handleFetchLogs,
   handleFetchBilling,
+  handleQueryTask,
 } from "./routes/api-proxy";
 
 export function createServer() {
