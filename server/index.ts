@@ -32,6 +32,7 @@ export function createServer() {
   app.post("/api/validate-key", handleValidateApiKey);
   app.post("/api/generate-image", handleGenerateImage);
   app.get("/api/query-task", handleQueryTask);
+  app.post("/api/callback", handleCallback); // Callback endpoint for kie.ai
   app.get("/api/logs", handleFetchLogs);
   app.get("/api/billing", handleFetchBilling);
 
