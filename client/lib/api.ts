@@ -150,6 +150,51 @@ export async function generateImage(
 }
 
 /**
+ * تولید ویدیو از طریق Backend
+ * Note: kie.ai v1 API returns taskId, results delivered via callback
+ */
+export async function generateVideo(
+  request: VideoGenerationRequest,
+): Promise<ImageGenerationResponse> {
+  try {
+    const response = await fetch(`${BACKEND_API_BASE}/generate-video`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${request.apiKey}`,
+      },
+      body: JSON.stringify({
+        imageUrl: request.imageUrl,
+        prompt: request.prompt,
+        mode: request.mode,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: data.error || "خطا در ایجاد ویدیو",
+      };
+    }
+
+    return {
+      success: true,
+      taskId: data.taskId,
+      imageUrl: data.imageUrl,
+      message: data.message,
+    };
+  } catch (error) {
+    console.error("Video generation error:", error);
+    return {
+      success: false,
+      error: "خطا در اتصال به سرویس. لطفا بعدا دوباره سعی کنید.",
+    };
+  }
+}
+
+/**
  * دریافت گزارشات از طریق Backend (2 ماه اخیر)
  */
 export async function fetchLogs(apiKey: string): Promise<LogEntry[]> {
