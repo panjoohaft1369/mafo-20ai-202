@@ -82,6 +82,7 @@ export async function validateApiKey(
 
 /**
  * تولید تصویر از طریق Backend
+ * Note: kie.ai v1 API returns taskId, not imageUrl
  */
 export async function generateImage(
   request: ImageGenerationRequest
@@ -116,6 +117,7 @@ export async function generateImage(
 
     return {
       success: true,
+      taskId: data.taskId,
       imageUrl: data.imageUrl,
       message: data.message,
     };
