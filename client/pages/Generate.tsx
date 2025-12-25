@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { generateImage } from "@/lib/api";
+import { generateImage, pollTaskCompletion } from "@/lib/api";
 import { getAuthState, clearAuth } from "@/lib/auth";
 import { Upload, Loader2, AlertCircle, CheckCircle, Download, Trash2 } from "lucide-react";
 import { toast } from "sonner";
