@@ -219,53 +219,38 @@ export default function Generate() {
               <CardHeader>
                 <CardTitle className="text-lg">۳. تنظیمات</CardTitle>
                 <CardDescription>
-                  ابعاد و کیفیت تصویر را انتخاب کنید
+                  نسبت ابعاد و کیفیت تصویر را انتخاب کنید
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">عرض</label>
-                    <Select value={width} onValueChange={setWidth}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="512">512px</SelectItem>
-                        <SelectItem value="768">768px</SelectItem>
-                        <SelectItem value="1024">1024px</SelectItem>
-                        <SelectItem value="1536">1536px</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">ارتفاع</label>
-                    <Select value={height} onValueChange={setHeight}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="512">512px</SelectItem>
-                        <SelectItem value="768">768px</SelectItem>
-                        <SelectItem value="1024">1024px</SelectItem>
-                        <SelectItem value="1536">1536px</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">کیفیت</label>
-                  <Select value={quality} onValueChange={setQuality}>
+                  <label className="text-sm font-medium">نسبت ابعاد</label>
+                  <Select value={aspectRatio} onValueChange={setAspectRatio}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="low">پایین</SelectItem>
-                      <SelectItem value="medium">متوسط</SelectItem>
-                      <SelectItem value="high">بالا</SelectItem>
-                      <SelectItem value="ultra">بسیار بالا</SelectItem>
+                      <SelectItem value="auto">خودکار (بر اساس عکس)</SelectItem>
+                      <SelectItem value="1:1">۱:۱ (مربع)</SelectItem>
+                      <SelectItem value="4:3">۴:۳ (افقی)</SelectItem>
+                      <SelectItem value="3:4">۳:۴ (عمودی)</SelectItem>
+                      <SelectItem value="16:9">۱۶:۹ (سینمایی)</SelectItem>
+                      <SelectItem value="9:16">۹:۱۶ (موبایل)</SelectItem>
+                      <SelectItem value="3:2">۳:۲ (کلاسیک)</SelectItem>
+                      <SelectItem value="2:3">۲:۳ (کلاسیک عمودی)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">کیفیت</label>
+                  <Select value={resolution} onValueChange={setResolution}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1K">۱K - بالای ۱۰۲۴px</SelectItem>
+                      <SelectItem value="2K">۲K - بالای ۲۰۴۸px</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
