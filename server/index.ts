@@ -21,6 +21,9 @@ export function createServer() {
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
+  // Serve static files from public directory
+  app.use(express.static("public"));
+
   // Example API routes
   app.get("/api/ping", (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
@@ -28,6 +31,9 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // Image upload route
+  app.post("/api/upload-image", handleImageUpload);
 
   // KIE.AI API Proxy Routes
   app.post("/api/validate-key", handleValidateApiKey);
