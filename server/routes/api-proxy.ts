@@ -362,3 +362,97 @@ export async function handleFetchBilling(
     });
   }
 }
+
+/**
+ * دریافت وضعیت یک تصویر تولید شده (Task Status)
+ * kie.ai v1 API - query task result
+ */
+export async function handleQueryTask(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    const taskId = req.query.taskId as string;
+    const apiKey = req.headers.authorization?.replace("Bearer ", "");
+
+    if (!apiKey) {
+      res.status(400).json({
+        success: false,
+        error: "کلید API یافت نشد",
+      });
+      return;
+    }
+
+    if (!taskId) {
+      res.status(400).json({
+        success: false,
+        error: "Task ID یافت نشد",
+      });
+      return;
+    }
+
+    console.log("[Query Task] TaskID:", taskId);
+
+    const response = await fetch(`${KIE_AI_API_BASE}/jobs/queryTask?taskId=${taskId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+
+    console.log("[Query Task] HTTP Status:", response.status);
+
+    const contentType = response.headers.get("content-type");
+    let data: any;
+
+    try {
+      if (contentType?.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error("[Query Task] غیر-JSON Response:", text.substring(0, 200));
+        res.status(400).json({
+          success: false,
+          error: "پاسخ API نامعتبر است.",
+        });
+        return;
+      }
+    } catch (parseError) {
+      console.error("[Query Task] خطا در پارس JSON:", parseError);
+      res.status(400).json({
+        success: false,
+        error: "خطا در پاسخ API",
+      });
+      return;
+    }
+
+    console.log("[Query Task] Response:", data);
+
+    if (!response.ok) {
+      res.status(response.status).json({
+        success: false,
+        error: data?.message || "خطا در دریافت وضعیت تصویر",
+      });
+      return;
+    }
+
+    // Parse task result
+    const taskData = data?.data || data;
+    const resultJson = taskData?.resultJson ? JSON.parse(taskData.resultJson) : null;
+    const imageUrl = resultJson?.resultUrls?.[0] || null;
+
+    res.json({
+      success: true,
+      status: taskData?.state || "processing",
+      imageUrl: imageUrl,
+      message: data?.message || "موفق",
+    });
+  } catch (error: any) {
+    console.error("[Query Task] خطا:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در دریافت وضعیت تصویر",
+    });
+  }
+}
