@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Generate from "./pages/Generate";
+import GenerateVideo from "./pages/GenerateVideo";
 import Logs from "./pages/Logs";
 import Billing from "./pages/Billing";
 import NotFound from "./pages/NotFound";
