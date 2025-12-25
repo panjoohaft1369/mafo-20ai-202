@@ -6,6 +6,15 @@ const KIE_AI_API_BASE = "https://api.kie.ai/api/v1";
 // Demo mode برای تست بدون API Key واقعی
 const DEMO_MODE = process.env.DEMO_MODE === "true";
 
+// In-memory task storage (results received via callbacks)
+// In production, this should be a database
+const taskResults: Map<string, {
+  status: string;
+  imageUrl?: string;
+  error?: string;
+  timestamp: number;
+}> = new Map();
+
 /**
  * تایید API Key از طریق Backend
  * این تابع CORS مشکلات را حل می‌کند با استفاده از Backend بجای درخواست مستقیم از Frontend
