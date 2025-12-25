@@ -80,18 +80,18 @@ export default function Index() {
                 ویژگی‌های منحصربه‌فرد
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Feature 1 */}
                 <Card>
                   <CardHeader>
                     <div className="h-10 w-10 rounded-lg bg-brand-primary/10 flex items-center justify-center mb-3">
                       <Image className="h-5 w-5 text-brand-primary" />
                     </div>
-                    <CardTitle>بارگذاری تصویر آسان</CardTitle>
+                    <CardTitle>تولید تصویر</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      تصویری از گوشی یا کامپیوتر خود انتخاب کنید و فوراً شروع به تغییر کنید
+                      تصویری انتخاب کنید و با ابعاد و کیفیت دلخواه تصاویر جدید ایجاد کنید
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -100,13 +100,13 @@ export default function Index() {
                 <Card>
                   <CardHeader>
                     <div className="h-10 w-10 rounded-lg bg-brand-secondary/10 flex items-center justify-center mb-3">
-                      <Zap className="h-5 w-5 text-brand-secondary" />
+                      <Film className="h-5 w-5 text-brand-secondary" />
                     </div>
-                    <CardTitle>نتایج سریع</CardTitle>
+                    <CardTitle>تولید ویدیو</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      تصاویر خود را در چند ثانیه دریافت کنید. نتایج فوری و کیفیت بالا
+                      تصویری را به ویدیوی متحرک تبدیل کنید و حرکات خود را کنترل کنید
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -115,13 +115,28 @@ export default function Index() {
                 <Card>
                   <CardHeader>
                     <div className="h-10 w-10 rounded-lg bg-brand-accent/10 flex items-center justify-center mb-3">
-                      <TrendingUp className="h-5 w-5 text-brand-accent" />
+                      <Zap className="h-5 w-5 text-brand-accent" />
+                    </div>
+                    <CardTitle>نتایج سریع</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription>
+                      نتایج فوری و کیفیت بالا. تصاویر و ویدیوهای خود را فوراً دریافت کنید
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+
+                {/* Feature 4 */}
+                <Card>
+                  <CardHeader>
+                    <div className="h-10 w-10 rounded-lg bg-brand-primary/10 flex items-center justify-center mb-3">
+                      <TrendingUp className="h-5 w-5 text-brand-primary" />
                     </div>
                     <CardTitle>کنترل کامل</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      ابعاد، کیفیت و جزئیات دقیق تصویر را کاملاً کنترل کنید
+                      تمام پارامترها را کنترل کنید و نتایج دقیق دریافت کنید
                     </CardDescription>
                   </CardContent>
                 </Card>
