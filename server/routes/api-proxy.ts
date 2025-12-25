@@ -399,7 +399,7 @@ export async function handleFetchBilling(
 
 /**
  * دریافت وضعیت یک تصویر تولید شده (Task Status)
- * kie.ai v1 API - query task result
+ * Checks local task results (received via callback from kie.ai)
  */
 export async function handleQueryTask(
   req: Request,
@@ -407,15 +407,6 @@ export async function handleQueryTask(
 ): Promise<void> {
   try {
     const taskId = req.query.taskId as string;
-    const apiKey = req.headers.authorization?.replace("Bearer ", "");
-
-    if (!apiKey) {
-      res.status(400).json({
-        success: false,
-        error: "کلید API یافت نشد",
-      });
-      return;
-    }
 
     if (!taskId) {
       res.status(400).json({
@@ -425,68 +416,93 @@ export async function handleQueryTask(
       return;
     }
 
-    console.log("[Query Task] TaskID:", taskId);
+    console.log("[Query Task] Checking TaskID:", taskId);
 
-    const response = await fetch(`${KIE_AI_API_BASE}/jobs/queryTask?taskId=${taskId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
+    // Check if task result is available
+    const result = taskResults.get(taskId);
 
-    console.log("[Query Task] HTTP Status:", response.status);
-
-    const contentType = response.headers.get("content-type");
-    let data: any;
-
-    try {
-      if (contentType?.includes("application/json")) {
-        data = await response.json();
-      } else {
-        const text = await response.text();
-        console.error("[Query Task] غیر-JSON Response:", text.substring(0, 200));
-        res.status(400).json({
-          success: false,
-          error: "پاسخ API نامعتبر است.",
-        });
-        return;
-      }
-    } catch (parseError) {
-      console.error("[Query Task] خطا در پارس JSON:", parseError);
-      res.status(400).json({
+    if (!result) {
+      // Task not found
+      console.log("[Query Task] Task not found or not yet created");
+      res.status(404).json({
         success: false,
-        error: "خطا در پاسخ API",
+        error: "تصویر یافت نشد",
       });
       return;
     }
 
-    console.log("[Query Task] Response:", data);
-
-    if (!response.ok) {
-      res.status(response.status).json({
-        success: false,
-        error: data?.message || "خطا در دریافت وضعیت تصویر",
-      });
-      return;
-    }
-
-    // Parse task result
-    const taskData = data?.data || data;
-    const resultJson = taskData?.resultJson ? JSON.parse(taskData.resultJson) : null;
-    const imageUrl = resultJson?.resultUrls?.[0] || null;
+    console.log("[Query Task] Result:", result);
 
     res.json({
       success: true,
-      status: taskData?.state || "processing",
-      imageUrl: imageUrl,
-      message: data?.message || "موفق",
+      status: result.status,
+      imageUrl: result.imageUrl,
+      error: result.error,
+      message: result.status === "success" ? "تصویر آماده است" : "تصویر در حال پردازش است...",
     });
   } catch (error: any) {
     console.error("[Query Task] خطا:", error.message);
     res.status(500).json({
       success: false,
       error: "خطا در دریافت وضعیت تصویر",
+    });
+  }
+}
+
+/**
+ * Callback handler - receives task completion notifications from kie.ai
+ */
+export async function handleCallback(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    const data = req.body;
+
+    console.log("[Callback] Received callback from kie.ai");
+    console.log("[Callback] Task ID:", data?.data?.taskId);
+    console.log("[Callback] State:", data?.data?.state);
+
+    const taskId = data?.data?.taskId;
+    const state = data?.data?.state;
+
+    if (!taskId) {
+      console.error("[Callback] No taskId in callback");
+      res.status(400).json({ error: "No taskId provided" });
+      return;
+    }
+
+    // Parse the result
+    let imageUrl: string | undefined;
+    if (state === "success" && data?.data?.resultJson) {
+      try {
+        const resultJson = JSON.parse(data.data.resultJson);
+        imageUrl = resultJson?.resultUrls?.[0];
+      } catch (e) {
+        console.error("[Callback] Failed to parse resultJson:", e);
+      }
+    }
+
+    // Store the result
+    taskResults.set(taskId, {
+      status: state || "unknown",
+      imageUrl: imageUrl,
+      error: state === "fail" ? data?.data?.failMsg : undefined,
+      timestamp: Date.now(),
+    });
+
+    console.log("[Callback] Task result stored:", {
+      taskId,
+      status: state,
+      hasImage: !!imageUrl,
+    });
+
+    // Respond to kie.ai
+    res.json({ success: true, message: "Callback received" });
+  } catch (error: any) {
+    console.error("[Callback] خطا:", error.message);
+    res.status(500).json({
+      error: "خطا در پردازش callback",
     });
   }
 }
