@@ -5,6 +5,7 @@ import { handleDemo } from "./routes/demo";
 import {
   handleValidateApiKey,
   handleGenerateImage,
+  handleGenerateVideo,
   handleFetchLogs,
   handleFetchBilling,
   handleQueryTask,
