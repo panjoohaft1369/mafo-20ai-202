@@ -102,6 +102,7 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: "Shabnami", sans-serif !important;
   }
 
   html, body, button, input, textarea, select {
@@ -111,6 +112,26 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: "Shabnami", sans-serif;
     font-weight: 700;
+    color: hsl(var(--foreground));
+    text-shadow:
+      -1px -1px 0 white,
+      1px -1px 0 white,
+      -1px 1px 0 white,
+      1px 1px 0 white,
+      -2px 0 0 white,
+      2px 0 0 white,
+      0 -2px 0 white,
+      0 2px 0 white;
+  }
+
+  p, span, li, a, label, td, th {
+    font-family: "Shabnami", sans-serif;
+    color: hsl(var(--foreground));
+    text-shadow:
+      -0.5px -0.5px 0 white,
+      0.5px -0.5px 0 white,
+      -0.5px 0.5px 0 white,
+      0.5px 0.5px 0 white;
   }
 
   body {
@@ -128,5 +149,6 @@
     overflow-x: auto;
     white-space: pre;
     direction: ltr;
+    font-family: "Courier New", monospace;
   }
 }
