@@ -5,6 +5,9 @@ export default {
   content: ["./client/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
+    fontFamily: {
+      sans: ["Shabnami", "sans-serif"],
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -56,6 +59,11 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        brand: {
+          primary: "#6366f1",
+          secondary: "#a855f7",
+          accent: "#ec4899",
         },
       },
       borderRadius: {
