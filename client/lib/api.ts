@@ -23,6 +23,13 @@ export interface ImageGenerationRequest {
   resolution: string;
 }
 
+export interface VideoGenerationRequest {
+  apiKey: string;
+  imageUrl: string;
+  prompt: string;
+  mode: string;
+}
+
 export interface ImageGenerationResponse {
   success: boolean;
   taskId?: string;
