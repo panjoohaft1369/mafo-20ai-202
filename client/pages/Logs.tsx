@@ -10,12 +10,14 @@ import { toast } from "sonner";
 
 export interface LogEntry {
   id: string;
+  taskId?: string;
   timestamp: number;
-  prompt: string;
-  imageUrl: string;
-  width: string;
-  height: string;
-  quality: string;
+  prompt?: string;
+  imageUrl?: string;
+  aspectRatio?: string;
+  resolution?: string;
+  status?: string;
+  error?: string;
 }
 
 export default function Logs() {
