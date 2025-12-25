@@ -62,24 +62,38 @@ export default function Generate() {
     }
 
     setLoading(true);
+    setTaskId(null);
 
     try {
+      // Step 1: Send generation request
       const result = await generateImage({
         apiKey: auth.apiKey!,
         imageUrl: selectedImage,
         prompt,
-        width,
-        height,
-        quality,
+        aspectRatio,
+        resolution,
       });
 
-      if (result.success && result.imageUrl) {
-        setGeneratedImage(result.imageUrl);
+      if (!result.success || !result.taskId) {
+        setError(result.error || "خطا در ایجاد تصویر");
+        setLoading(false);
+        return;
+      }
+
+      setTaskId(result.taskId);
+      toast.success("درخواست ایجاد تصویر ثبت شد. لطفا صبر کنید...");
+
+      // Step 2: Poll for completion
+      const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
+
+      if (pollResult.success && pollResult.imageUrl) {
+        setGeneratedImage(pollResult.imageUrl);
         toast.success("تصویر با موفقیت ایجاد شد!");
       } else {
-        setError(result.error || "خطا در ایجاد تصویر");
+        setError(pollResult.error || "خطا در ایجاد تصویر");
       }
     } catch (err) {
+      console.error("Generate error:", err);
       setError("خطا در اتصال. لطفا بعدا دوباره سعی کنید.");
     } finally {
       setLoading(false);
