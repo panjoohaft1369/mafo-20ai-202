@@ -1,5 +1,5 @@
 /** @import must precede all other statements */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Shabnami:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -103,8 +103,13 @@
     @apply border-border;
   }
 
+  html, body, button, input, textarea, select {
+    font-family: "Shabnami", sans-serif;
+  }
+
   body {
     @apply bg-background text-foreground;
+    direction: rtl;
   }
 
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
@@ -116,5 +121,6 @@
   code {
     overflow-x: auto;
     white-space: pre;
+    direction: ltr;
   }
 }
