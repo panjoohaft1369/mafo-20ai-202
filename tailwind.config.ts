@@ -61,9 +61,9 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         brand: {
-          primary: "#6366f1",
+          primary: "#22c55e",
           secondary: "#a855f7",
-          accent: "#ec4899",
+          accent: "#10b981",
         },
       },
       borderRadius: {
