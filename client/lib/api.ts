@@ -89,7 +89,7 @@ export async function validateApiKey(
 
 /**
  * تولید تصویر از طریق Backend
- * Note: kie.ai v1 API returns taskId, not imageUrl
+ * Note: kie.ai v1 API returns taskId, results delivered via callback
  */
 export async function generateImage(
   request: ImageGenerationRequest
@@ -106,9 +106,8 @@ export async function generateImage(
         body: JSON.stringify({
           imageUrl: request.imageUrl,
           prompt: request.prompt,
-          width: request.width,
-          height: request.height,
-          quality: request.quality,
+          aspectRatio: request.aspectRatio,
+          resolution: request.resolution,
         }),
       }
     );
