@@ -141,13 +141,14 @@ export async function handleValidateApiKey(
 /**
  * تولید تصویر از طریق Backend
  * kie.ai v1 API - استفاده از /api/v1/jobs/createTask
+ * Note: API uses callback notifications for results
  */
 export async function handleGenerateImage(
   req: Request,
   res: Response
 ): Promise<void> {
   try {
-    const { imageUrl, prompt, width, height, quality } = req.body;
+    const { imageUrl, prompt, aspectRatio, resolution } = req.body;
     const apiKey = req.headers.authorization?.replace("Bearer ", "");
 
     if (!apiKey) {
@@ -158,11 +159,26 @@ export async function handleGenerateImage(
       return;
     }
 
+    if (!imageUrl || !prompt || !aspectRatio || !resolution) {
+      res.status(400).json({
+        success: false,
+        error: "تمام فیلدها الزامی هستند: imageUrl, prompt, aspectRatio, resolution",
+      });
+      return;
+    }
+
     console.log("[Image Gen] Creating task with model: flux-2/pro-image-to-image");
     console.log("[Image Gen] Prompt:", prompt.substring(0, 50) + "...");
+    console.log("[Image Gen] Aspect Ratio:", aspectRatio);
+    console.log("[Image Gen] Resolution:", resolution);
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 ثانیه برای generate
+
+    // Get the host from request headers for callback URL
+    const protocol = req.headers["x-forwarded-proto"] || "http";
+    const host = req.headers["x-forwarded-host"] || req.headers.host || "localhost:8080";
+    const callbackUrl = `${protocol}://${host}/api/callback`;
 
     const response = await fetch(
       `${KIE_AI_API_BASE}/jobs/createTask`,
@@ -174,12 +190,12 @@ export async function handleGenerateImage(
         },
         body: JSON.stringify({
           model: "flux-2/pro-image-to-image",
+          callBackUrl: callbackUrl,
           input: {
-            image_urls: [imageUrl],
+            input_urls: [imageUrl],
             prompt,
-            width: parseInt(width),
-            height: parseInt(height),
-            quality: quality || "standard",
+            aspect_ratio: aspectRatio,
+            resolution: resolution,
           },
         }),
         signal: controller.signal,
@@ -224,11 +240,20 @@ export async function handleGenerateImage(
       return;
     }
 
+    // Initialize task status as processing
+    const taskId = data?.data?.taskId;
+    if (taskId) {
+      taskResults.set(taskId, {
+        status: "processing",
+        timestamp: Date.now(),
+      });
+    }
+
     // Return the task ID for polling
     res.json({
       success: true,
-      taskId: data?.data?.taskId,
-      message: data?.message || "موفق",
+      taskId: taskId,
+      message: data?.message || "تصویر در حال پردازش است...",
     });
   } catch (error: any) {
     console.error("[Image Gen] خطا:", error.message);
