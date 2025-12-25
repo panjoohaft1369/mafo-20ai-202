@@ -2,6 +2,12 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import {
+  handleValidateApiKey,
+  handleGenerateImage,
+  handleFetchLogs,
+  handleFetchBilling,
+} from "./routes/api-proxy";
 
 export function createServer() {
   const app = express();
@@ -18,6 +24,12 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // KIE.AI API Proxy Routes
+  app.post("/api/validate-key", handleValidateApiKey);
+  app.post("/api/generate-image", handleGenerateImage);
+  app.get("/api/logs", handleFetchLogs);
+  app.get("/api/billing", handleFetchBilling);
 
   return app;
 }
