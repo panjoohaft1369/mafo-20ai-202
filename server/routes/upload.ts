@@ -68,12 +68,27 @@ export async function handleImageUpload(
     fs.writeFileSync(filepath, buffer);
     console.log(`[Upload] Image saved: ${filename}`);
 
-    // Get protocol and host from request
-    const protocol = req.headers["x-forwarded-proto"] || "http";
-    const host = req.headers["x-forwarded-host"] || req.headers.host || "localhost:8080";
-    
-    // Generate public URL
-    const publicUrl = `${protocol}://${host}/uploads/${filename}`;
+    // Get public URL - prefer environment variable, then x-forwarded headers, then request host
+    let publicUrl: string;
+
+    if (process.env.PUBLIC_URL) {
+      // Use PUBLIC_URL if explicitly set
+      publicUrl = `${process.env.PUBLIC_URL}/uploads/${filename}`;
+    } else {
+      // Try to detect from request headers (for deployed apps with reverse proxy)
+      const protocol = req.headers["x-forwarded-proto"] || "https";
+      const host = req.headers["x-forwarded-host"] || req.headers.host;
+
+      if (host && !host.includes("localhost")) {
+        // Use detected host for deployed environments
+        publicUrl = `${protocol}://${host}/uploads/${filename}`;
+      } else {
+        // Fallback - this might not work for external APIs
+        publicUrl = `http://localhost:8080/uploads/${filename}`;
+      }
+    }
+
+    console.log(`[Upload] Public URL generated: ${publicUrl}`);
 
     res.json({
       success: true,
