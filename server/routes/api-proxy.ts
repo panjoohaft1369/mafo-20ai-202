@@ -131,6 +131,7 @@ export async function handleValidateApiKey(
 
 /**
  * تولید تصویر از طریق Backend
+ * kie.ai v1 API - استفاده از /api/v1/jobs/createTask
  */
 export async function handleGenerateImage(
   req: Request,
@@ -148,8 +149,14 @@ export async function handleGenerateImage(
       return;
     }
 
+    console.log("[Image Gen] Creating task with model: flux-2/pro-image-to-image");
+    console.log("[Image Gen] Prompt:", prompt.substring(0, 50) + "...");
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 ثانیه برای generate
+
     const response = await fetch(
-      `${KIE_AI_API_BASE}/flux-2/pro-image-to-image`,
+      `${KIE_AI_API_BASE}/jobs/createTask`,
       {
         method: "POST",
         headers: {
@@ -157,32 +164,73 @@ export async function handleGenerateImage(
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          image: imageUrl,
-          prompt,
-          width,
-          height,
-          quality,
+          model: "flux-2/pro-image-to-image",
+          input: {
+            image_urls: [imageUrl],
+            prompt,
+            width: parseInt(width),
+            height: parseInt(height),
+            quality: quality || "standard",
+          },
         }),
+        signal: controller.signal,
       }
     );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      res.status(response.status).json({
+    clearTimeout(timeoutId);
+
+    console.log("[Image Gen] HTTP Status:", response.status);
+
+    const contentType = response.headers.get("content-type");
+    let data: any;
+
+    try {
+      if (contentType?.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error("[Image Gen] غیر-JSON Response:", text.substring(0, 200));
+        res.status(400).json({
+          success: false,
+          error: "پاسخ API نامعتبر است.",
+        });
+        return;
+      }
+    } catch (parseError) {
+      console.error("[Image Gen] خطا در پارس JSON:", parseError);
+      res.status(400).json({
         success: false,
-        error: errorData.message || "خطا در ایجاد تصویر",
+        error: "خطا در پاسخ API",
       });
       return;
     }
 
-    const data = await response.json();
+    console.log("[Image Gen] Response:", data);
+
+    if (!response.ok || data?.code !== 200) {
+      res.status(response.status).json({
+        success: false,
+        error: data?.message || "خطا در ایجاد تصویر",
+      });
+      return;
+    }
+
+    // Return the task ID for polling
     res.json({
       success: true,
-      imageUrl: data.imageUrl,
-      message: data.message || "موفق",
+      taskId: data?.data?.taskId,
+      message: data?.message || "موفق",
     });
-  } catch (error) {
-    console.error("Image generation error:", error);
+  } catch (error: any) {
+    console.error("[Image Gen] خطا:", error.message);
+
+    if (error.name === "AbortError") {
+      return res.status(504).json({
+        success: false,
+        error: "خطا: درخواست منقضی شد",
+      });
+    }
+
     res.status(500).json({
       success: false,
       error: "خطا در اتصال به سرویس",
