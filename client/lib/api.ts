@@ -1,6 +1,13 @@
 // استفاده از Backend برای تمام درخواست‌های API
 const BACKEND_API_BASE = "/api";
 
+export interface UploadImageResponse {
+  success: boolean;
+  imageUrl?: string;
+  error?: string;
+  message?: string;
+}
+
 export interface ApiKeyValidationResponse {
   valid: boolean;
   message?: string;
