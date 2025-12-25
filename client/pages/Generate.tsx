@@ -65,10 +65,23 @@ export default function Generate() {
     setTaskId(null);
 
     try {
-      // Step 1: Send generation request
+      // Step 1: Upload image to get a public URL
+      toast.loading("آپلود تصویر...");
+      const uploadResult = await uploadImage(selectedImage);
+
+      if (!uploadResult.success || !uploadResult.imageUrl) {
+        setError(uploadResult.error || "خطا در آپلود تصویر");
+        setLoading(false);
+        return;
+      }
+
+      toast.dismiss();
+      toast.loading("درخواست ایجاد تصویر...");
+
+      // Step 2: Send generation request with uploaded image URL
       const result = await generateImage({
         apiKey: auth.apiKey!,
-        imageUrl: selectedImage,
+        imageUrl: uploadResult.imageUrl,
         prompt,
         aspectRatio,
         resolution,
@@ -81,20 +94,24 @@ export default function Generate() {
       }
 
       setTaskId(result.taskId);
-      toast.success("درخواست ایجاد تصویر ثبت شد. لطفا صبر کنید...");
+      toast.dismiss();
+      toast.loading("درحال پردازش تصویر... (این ممکن است یند چند دقیقه طول بکشد)");
 
-      // Step 2: Poll for completion
+      // Step 3: Poll for completion
       const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
 
       if (pollResult.success && pollResult.imageUrl) {
         setGeneratedImage(pollResult.imageUrl);
+        toast.dismiss();
         toast.success("تصویر با موفقیت ایجاد شد!");
       } else {
         setError(pollResult.error || "خطا در ایجاد تصویر");
+        toast.dismiss();
       }
     } catch (err) {
       console.error("Generate error:", err);
       setError("خطا در اتصال. لطفا بعدا دوباره سعی کنید.");
+      toast.dismiss();
     } finally {
       setLoading(false);
     }
