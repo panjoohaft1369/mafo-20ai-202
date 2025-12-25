@@ -18,8 +18,8 @@ export function createServer() {
   // Middleware
   app.use(cors());
   // Increase body size limit to handle base64-encoded images (up to 50MB)
-  app.use(express.json({ limit: '50mb' }));
-  app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+  app.use(express.json({ limit: "50mb" }));
+  app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
   // Serve static files from public directory
   app.use(express.static("public"));

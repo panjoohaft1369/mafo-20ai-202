@@ -15,7 +15,7 @@ if (!fs.existsSync(uploadsDir)) {
  */
 export async function handleImageUpload(
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const { imageData } = req.body;
@@ -45,7 +45,7 @@ export async function handleImageUpload(
     // Validate image type
     const allowedTypes = ["jpeg", "jpg", "png", "webp"];
     const normalizedType = imageType.toLowerCase();
-    
+
     if (!allowedTypes.includes(normalizedType)) {
       res.status(400).json({
         success: false,

@@ -59,7 +59,7 @@ export interface TaskStatusResponse {
  * تایید API Key از طریق Backend
  */
 export async function validateApiKey(
-  apiKey: string
+  apiKey: string,
 ): Promise<ApiKeyValidationResponse> {
   try {
     const response = await fetch(`${BACKEND_API_BASE}/validate-key`, {
@@ -75,7 +75,9 @@ export async function validateApiKey(
     if (!response.ok) {
       return {
         valid: false,
-        message: data.message || "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
+        message:
+          data.message ||
+          "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
       };
     }
 
@@ -99,25 +101,22 @@ export async function validateApiKey(
  * Note: kie.ai v1 API returns taskId, results delivered via callback
  */
 export async function generateImage(
-  request: ImageGenerationRequest
+  request: ImageGenerationRequest,
 ): Promise<ImageGenerationResponse> {
   try {
-    const response = await fetch(
-      `${BACKEND_API_BASE}/generate-image`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${request.apiKey}`,
-        },
-        body: JSON.stringify({
-          imageUrl: request.imageUrl,
-          prompt: request.prompt,
-          aspectRatio: request.aspectRatio,
-          resolution: request.resolution,
-        }),
-      }
-    );
+    const response = await fetch(`${BACKEND_API_BASE}/generate-image`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${request.apiKey}`,
+      },
+      body: JSON.stringify({
+        imageUrl: request.imageUrl,
+        prompt: request.prompt,
+        aspectRatio: request.aspectRatio,
+        resolution: request.resolution,
+      }),
+    });
 
     const data = await response.json();
 
@@ -175,7 +174,7 @@ export async function fetchLogs(apiKey: string): Promise<LogEntry[]> {
  * دریافت اطلاعات اعتبار از طریق Backend
  */
 export async function fetchBillingInfo(
-  apiKey: string
+  apiKey: string,
 ): Promise<BillingInfo | null> {
   try {
     const response = await fetch(`${BACKEND_API_BASE}/billing`, {
@@ -208,16 +207,19 @@ export async function fetchBillingInfo(
  */
 export async function queryTaskStatus(
   apiKey: string,
-  taskId: string
+  taskId: string,
 ): Promise<TaskStatusResponse> {
   try {
-    const response = await fetch(`${BACKEND_API_BASE}/query-task?taskId=${taskId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+    const response = await fetch(
+      `${BACKEND_API_BASE}/query-task?taskId=${taskId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
       },
-    });
+    );
 
     const data = await response.json();
 
@@ -251,7 +253,7 @@ export async function pollTaskCompletion(
   apiKey: string,
   taskId: string,
   maxAttempts: number = 120, // 2 minutes with 1 second intervals
-  interval: number = 1000 // 1 second
+  interval: number = 1000, // 1 second
 ): Promise<TaskStatusResponse> {
   for (let i = 0; i < maxAttempts; i++) {
     const result = await queryTaskStatus(apiKey, taskId);
@@ -268,7 +270,7 @@ export async function pollTaskCompletion(
     }
 
     // Wait before next attempt
-    await new Promise(resolve => setTimeout(resolve, interval));
+    await new Promise((resolve) => setTimeout(resolve, interval));
   }
 
   // Timeout
@@ -282,7 +284,7 @@ export async function pollTaskCompletion(
  * Upload image to server (converts base64 to public URL)
  */
 export async function uploadImage(
-  imageData: string
+  imageData: string,
 ): Promise<UploadImageResponse> {
   try {
     const response = await fetch(`${BACKEND_API_BASE}/upload-image`, {

@@ -8,12 +8,15 @@ const DEMO_MODE = process.env.DEMO_MODE === "true";
 
 // In-memory task storage (results received via callbacks)
 // In production, this should be a database
-const taskResults: Map<string, {
-  status: string;
-  imageUrl?: string;
-  error?: string;
-  timestamp: number;
-}> = new Map();
+const taskResults: Map<
+  string,
+  {
+    status: string;
+    imageUrl?: string;
+    error?: string;
+    timestamp: number;
+  }
+> = new Map();
 
 /**
  * تایید API Key از طریق Backend
@@ -22,7 +25,7 @@ const taskResults: Map<string, {
  */
 export async function handleValidateApiKey(
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const apiKey = req.headers.authorization?.replace("Bearer ", "");
@@ -69,7 +72,10 @@ export async function handleValidateApiKey(
     clearTimeout(timeoutId);
 
     console.log("[API] HTTP Status:", response.status);
-    console.log("[API] Response Headers:", Object.fromEntries(response.headers));
+    console.log(
+      "[API] Response Headers:",
+      Object.fromEntries(response.headers),
+    );
 
     const contentType = response.headers.get("content-type");
     let data: any;
@@ -145,7 +151,7 @@ export async function handleValidateApiKey(
  */
 export async function handleGenerateImage(
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const { imageUrl, prompt, aspectRatio, resolution } = req.body;
@@ -162,12 +168,15 @@ export async function handleGenerateImage(
     if (!imageUrl || !prompt || !aspectRatio || !resolution) {
       res.status(400).json({
         success: false,
-        error: "تمام فیلدها الزامی هستند: imageUrl, prompt, aspectRatio, resolution",
+        error:
+          "تمام فیلدها الزامی هستند: imageUrl, prompt, aspectRatio, resolution",
       });
       return;
     }
 
-    console.log("[Image Gen] Creating task with model: flux-2/pro-image-to-image");
+    console.log(
+      "[Image Gen] Creating task with model: flux-2/pro-image-to-image",
+    );
     console.log("[Image Gen] Prompt:", prompt.substring(0, 50) + "...");
     console.log("[Image Gen] Aspect Ratio:", aspectRatio);
     console.log("[Image Gen] Resolution:", resolution);
@@ -194,27 +203,24 @@ export async function handleGenerateImage(
 
     console.log("[Image Gen] Callback URL:", callbackUrl);
 
-    const response = await fetch(
-      `${KIE_AI_API_BASE}/jobs/createTask`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+    const response = await fetch(`${KIE_AI_API_BASE}/jobs/createTask`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: "flux-2/pro-image-to-image",
+        callBackUrl: callbackUrl,
+        input: {
+          input_urls: [imageUrl],
+          prompt,
+          aspect_ratio: aspectRatio,
+          resolution: resolution,
         },
-        body: JSON.stringify({
-          model: "flux-2/pro-image-to-image",
-          callBackUrl: callbackUrl,
-          input: {
-            input_urls: [imageUrl],
-            prompt,
-            aspect_ratio: aspectRatio,
-            resolution: resolution,
-          },
-        }),
-        signal: controller.signal,
-      }
-    );
+      }),
+      signal: controller.signal,
+    });
 
     clearTimeout(timeoutId);
 
@@ -292,7 +298,7 @@ export async function handleGenerateImage(
  */
 export async function handleFetchLogs(
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const apiKey = req.headers.authorization?.replace("Bearer ", "");
@@ -332,12 +338,10 @@ export async function handleFetchLogs(
 
     // Filter logs to last 2 months
     const allLogs = data?.data?.tasks || data?.tasks || [];
-    const filteredLogs = allLogs.filter(
-      (log: any) => {
-        const logTime = log.createTime || log.timestamp;
-        return logTime > twoMonthsAgo.getTime();
-      }
-    );
+    const filteredLogs = allLogs.filter((log: any) => {
+      const logTime = log.createTime || log.timestamp;
+      return logTime > twoMonthsAgo.getTime();
+    });
 
     res.json({
       success: true,
@@ -357,7 +361,7 @@ export async function handleFetchLogs(
  */
 export async function handleFetchBilling(
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const apiKey = req.headers.authorization?.replace("Bearer ", "");
@@ -400,7 +404,7 @@ export async function handleFetchBilling(
       success: true,
       creditsRemaining: credits,
       totalCredits: totalCredits,
-      usedCredits: (totalCredits - credits) || 0,
+      usedCredits: totalCredits - credits || 0,
     });
   } catch (error) {
     console.error("[Billing] خطا:", error);
@@ -417,7 +421,7 @@ export async function handleFetchBilling(
  */
 export async function handleQueryTask(
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const taskId = req.query.taskId as string;
@@ -452,7 +456,10 @@ export async function handleQueryTask(
       status: result.status,
       imageUrl: result.imageUrl,
       error: result.error,
-      message: result.status === "success" ? "تصویر آماده است" : "تصویر در حال پردازش است...",
+      message:
+        result.status === "success"
+          ? "تصویر آماده است"
+          : "تصویر در حال پردازش است...",
     });
   } catch (error: any) {
     console.error("[Query Task] خطا:", error.message);
@@ -468,7 +475,7 @@ export async function handleQueryTask(
  */
 export async function handleCallback(
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> {
   try {
     const data = req.body;

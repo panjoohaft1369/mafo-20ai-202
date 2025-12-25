@@ -4,12 +4,31 @@ import { Header } from "@/components/Header";
 import { Tutorial } from "@/components/Tutorial";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { generateImage, pollTaskCompletion, uploadImage } from "@/lib/api";
 import { getAuthState, clearAuth } from "@/lib/auth";
-import { Upload, Loader2, AlertCircle, CheckCircle, Download, Trash2 } from "lucide-react";
+import {
+  Upload,
+  Loader2,
+  AlertCircle,
+  CheckCircle,
+  Download,
+  Trash2,
+} from "lucide-react";
 import { toast } from "sonner";
 
 export default function Generate() {
@@ -95,7 +114,9 @@ export default function Generate() {
 
       setTaskId(result.taskId);
       toast.dismiss();
-      toast.loading("درحال پردازش تصویر... (این ممکن است یند چند دقیقه طول بکشد)");
+      toast.loading(
+        "درحال پردازش تصویر... (این ممکن است یند چند دقیقه طول بکشد)",
+      );
 
       // Step 3: Poll for completion
       const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
@@ -157,7 +178,9 @@ export default function Generate() {
             {/* Image Upload */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">۱. تصویر را بارگذاری کنید</CardTitle>
+                <CardTitle className="text-lg">
+                  ۱. تصویر را بارگذاری کنید
+                </CardTitle>
                 <CardDescription>
                   تصویری از گوشی یا کامپیوتر انتخاب کنید
                 </CardDescription>
@@ -188,7 +211,9 @@ export default function Generate() {
                   ) : (
                     <div className="space-y-2">
                       <Upload className="h-8 w-8 mx-auto text-muted-foreground" />
-                      <p className="text-sm font-medium">تصویر را اینجا بگذارید</p>
+                      <p className="text-sm font-medium">
+                        تصویر را اینجا بگذارید
+                      </p>
                       <p className="text-xs text-muted-foreground">
                         PNG, JPG یا WebP
                       </p>
@@ -216,7 +241,9 @@ export default function Generate() {
             {/* Prompt Input */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">۲. پرامپت خود را بنویسید</CardTitle>
+                <CardTitle className="text-lg">
+                  ۲. پرامپت خود را بنویسید
+                </CardTitle>
                 <CardDescription>
                   تغییراتی که می‌خواهید را توصیف کنید
                 </CardDescription>
@@ -305,9 +332,7 @@ export default function Generate() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">۴. تصویر تولید شده</CardTitle>
-                <CardDescription>
-                  نتیجه نهایی تصویر شما
-                </CardDescription>
+                <CardDescription>نتیجه نهایی تصویر شما</CardDescription>
               </CardHeader>
               <CardContent>
                 {generatedImage ? (
@@ -359,10 +384,15 @@ export default function Generate() {
               <CardContent>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">اعتبار باقی‌مانده:</span>
+                    <span className="text-muted-foreground">
+                      اعتبار باقی‌مانده:
+                    </span>
                     <span className="font-semibold">{auth.credits || 0}</span>
                   </div>
-                  <a href="/billing" className="text-xs text-brand-primary hover:underline block">
+                  <a
+                    href="/billing"
+                    className="text-xs text-brand-primary hover:underline block"
+                  >
                     مشاهده جزئیات اعتبار →
                   </a>
                 </div>
