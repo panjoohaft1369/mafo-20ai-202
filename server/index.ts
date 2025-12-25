@@ -39,6 +39,7 @@ export function createServer() {
   // KIE.AI API Proxy Routes
   app.post("/api/validate-key", handleValidateApiKey);
   app.post("/api/generate-image", handleGenerateImage);
+  app.post("/api/generate-video", handleGenerateVideo);
   app.get("/api/query-task", handleQueryTask);
   app.post("/api/callback", handleCallback); // Callback endpoint for kie.ai
   app.get("/api/logs", handleFetchLogs);
