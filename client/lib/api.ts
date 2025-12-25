@@ -277,3 +277,43 @@ export async function pollTaskCompletion(
     error: "خطا: درخواست منقضی شد",
   };
 }
+
+/**
+ * Upload image to server (converts base64 to public URL)
+ */
+export async function uploadImage(
+  imageData: string
+): Promise<UploadImageResponse> {
+  try {
+    const response = await fetch(`${BACKEND_API_BASE}/upload-image`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        imageData,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: data.error || "خطا در آپلود تصویر",
+      };
+    }
+
+    return {
+      success: true,
+      imageUrl: data.imageUrl,
+      message: data.message,
+    };
+  } catch (error) {
+    console.error("Image upload error:", error);
+    return {
+      success: false,
+      error: "خطا در آپلود تصویر",
+    };
+  }
+}
