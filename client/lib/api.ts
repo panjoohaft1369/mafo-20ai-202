@@ -19,6 +19,7 @@ export interface ImageGenerationRequest {
 
 export interface ImageGenerationResponse {
   success: boolean;
+  taskId?: string;
   imageUrl?: string;
   error?: string;
   message?: string;
