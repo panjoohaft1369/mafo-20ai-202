@@ -173,30 +173,76 @@ export default function Index() {
         {/* If logged in, show generator quick access */}
         {auth.isLoggedIn && (
           <section className="px-4 py-20">
-            <div className="container mx-auto max-w-4xl">
-              <Card className="border-2 border-brand-primary/50">
+            <div className="container mx-auto max-w-6xl">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                {/* Image Generator Card */}
+                <Card className="border-2 border-brand-primary/50">
+                  <CardHeader>
+                    <div className="h-10 w-10 rounded-lg bg-brand-primary/10 flex items-center justify-center mb-3">
+                      <Image className="h-5 w-5 text-brand-primary" />
+                    </div>
+                    <CardTitle className="text-xl">تولید تصویر</CardTitle>
+                    <CardDescription>
+                      تصویری را انتخاب کنید و تصویر جدید ایجاد کنید
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button
+                      onClick={() => navigate("/generate")}
+                      className="w-full bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base"
+                      size="lg"
+                    >
+                      <Sparkles className="h-5 w-5 mr-2" />
+                      شروع تولید تصویر
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Video Generator Card */}
+                <Card className="border-2 border-brand-secondary/50">
+                  <CardHeader>
+                    <div className="h-10 w-10 rounded-lg bg-brand-secondary/10 flex items-center justify-center mb-3">
+                      <Film className="h-5 w-5 text-brand-secondary" />
+                    </div>
+                    <CardTitle className="text-xl">تولید ویدیو</CardTitle>
+                    <CardDescription>
+                      تصویری را به ویدیو متحرک تبدیل کنید
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button
+                      onClick={() => navigate("/generate-video")}
+                      className="w-full bg-gradient-to-r from-brand-secondary to-brand-accent hover:opacity-90 py-6 text-base"
+                      size="lg"
+                    >
+                      <Film className="h-5 w-5 mr-2" />
+                      شروع تولید ویدیو
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Quick Links */}
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-2xl">آماده شروع هستید؟</CardTitle>
-                  <CardDescription>
-                    به صفحه تولید تصویر بروید و شروع کنید
-                  </CardDescription>
+                  <CardTitle>میانبرهای سریع</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col sm:flex-row gap-4">
-                  <Button
-                    onClick={() => navigate("/generate")}
-                    className="flex-1 bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base"
-                    size="lg"
-                  >
-                    <Sparkles className="h-5 w-5 mr-2" />
-                    رفتن به تولیدکننده
-                  </Button>
                   <Button
                     onClick={() => navigate("/logs")}
                     variant="outline"
                     className="flex-1 py-6 text-base"
                     size="lg"
                   >
-                    مشاهده گزارشات
+                    📊 مشاهده گزارشات
+                  </Button>
+                  <Button
+                    onClick={() => navigate("/billing")}
+                    variant="outline"
+                    className="flex-1 py-6 text-base"
+                    size="lg"
+                  >
+                    💳 مشاهده اعتبار
                   </Button>
                 </CardContent>
               </Card>
