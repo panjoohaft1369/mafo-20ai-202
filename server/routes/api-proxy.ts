@@ -15,6 +15,9 @@ const taskResults: Map<
     imageUrl?: string;
     error?: string;
     timestamp: number;
+    prompt?: string;
+    aspectRatio?: string;
+    resolution?: string;
   }
 > = new Map();
 
