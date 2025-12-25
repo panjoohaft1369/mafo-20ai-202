@@ -41,6 +41,14 @@ export interface BillingInfo {
   usedCredits: number;
 }
 
+export interface TaskStatusResponse {
+  success: boolean;
+  status?: string;
+  imageUrl?: string;
+  error?: string;
+  message?: string;
+}
+
 /**
  * تایید API Key از طریق Backend
  */
