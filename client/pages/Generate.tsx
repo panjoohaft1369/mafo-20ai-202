@@ -25,12 +25,12 @@ export default function Generate() {
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [prompt, setPrompt] = useState("");
-  const [width, setWidth] = useState("1024");
-  const [height, setHeight] = useState("768");
-  const [quality, setQuality] = useState("high");
+  const [aspectRatio, setAspectRatio] = useState("1:1");
+  const [resolution, setResolution] = useState("1K");
   const [loading, setLoading] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [taskId, setTaskId] = useState<string | null>(null);
 
   const handleLogout = () => {
     clearAuth();
