@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
-const KIE_AI_API_BASE = "https://kie.ai/api";
+// Updated to kie.ai v1 API
+const KIE_AI_API_BASE = "https://api.kie.ai/api/v1";
 
 // Demo mode برای تست بدون API Key واقعی
 const DEMO_MODE = process.env.DEMO_MODE === "true";
