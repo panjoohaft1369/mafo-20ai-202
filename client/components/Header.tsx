@@ -17,7 +17,13 @@ interface HeaderProps {
 }
 
 export function Header({ isLoggedIn, onLogout }: HeaderProps) {
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showOrderModal, setShowOrderModal] = useState(false);
+
+  // WhatsApp contact information
+  const whatsappNumber = "+989123456789"; // Replace with actual WhatsApp number
+  const whatsappMessage = "سلام، من برای ثبت سفارش جدید اکانت در MAFO تماس می‌گیرم";
 
   return (
     <>
