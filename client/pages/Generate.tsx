@@ -373,6 +373,13 @@ export default function Generate() {
                 "ایجاد تصویر"
               )}
             </Button>
+
+            {/* Credit Cost Info */}
+            <div className="p-3 bg-orange-50 rounded-md border border-orange-200">
+              <p className="text-xs text-orange-800 font-medium">
+                <strong>یادآوری:</strong> هر تصویر ساخته شده با کیفیت 1K میزان 5 اعتبار و با کیفیت 2K میزان 7 اعتبار از شما کسر خواهد کرد
+              </p>
+            </div>
           </div>
 
           {/* Right Column - Output */}
