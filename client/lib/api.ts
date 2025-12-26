@@ -197,7 +197,7 @@ export async function generateVideo(
 /**
  * دریافت گزارشات از طریق Backend (2 ماه اخیر)
  */
-export async function fetchLogs(apiKey: string): Promise<LogEntry[]> {
+export async function fetchLogs(apiKey: string): Promise<any[]> {
   try {
     const response = await fetch(`${BACKEND_API_BASE}/logs`, {
       method: "GET",
@@ -213,7 +213,7 @@ export async function fetchLogs(apiKey: string): Promise<LogEntry[]> {
     }
 
     const data = await response.json();
-    const logs: LogEntry[] = data.logs || [];
+    const logs: any[] = data.logs || [];
 
     return logs;
   } catch (error) {
