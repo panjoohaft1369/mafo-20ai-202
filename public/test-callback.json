@@ -1,0 +1,9 @@
+{
+  "code": 200,
+  "data": {
+    "taskId": "test-task-123",
+    "state": "success",
+    "resultJson": "{\"resultUrls\":[\"https://example.com/generated-image.png\"],\"status\":\"success\"}"
+  },
+  "msg": "Task completed successfully"
+}
