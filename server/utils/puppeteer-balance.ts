@@ -35,131 +35,149 @@ async function getBrowser(): Promise<Browser> {
  * Renders the page so JavaScript executes and balance appears
  */
 export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
-  const page = await getBrowser().then((browser) => browser.newPage()).catch(null);
-
-  if (!page) {
-    console.error("[Balance] Failed to create page");
-    return 0;
-  }
+  const browser = await getBrowser();
+  const page = await browser.newPage();
 
   try {
     console.log("[Balance] Fetching balance for API Key:", apiKey.substring(0, 10) + "...");
 
+    // Set viewport
+    await page.setViewport({ width: 1920, height: 1080 });
+
     // Set authentication headers
     await page.setExtraHTTPHeaders({
       "Authorization": `Bearer ${apiKey}`,
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+      "Accept-Language": "en-US,en;q=0.9",
+      "Accept-Encoding": "gzip, deflate, br",
     });
 
     console.log("[Balance] Navigating to https://kie.ai/billing...");
 
-    // Navigate to billing page with proper waiting
-    await page.goto("https://kie.ai/billing", {
-      waitUntil: "networkidle0",
-      timeout: 45000,
+    // Navigate to billing page
+    const response = await page.goto("https://kie.ai/billing", {
+      waitUntil: "networkidle2",
+      timeout: 60000,
     });
 
-    console.log("[Balance] Page loaded, waiting for balance to render...");
+    console.log("[Balance] Response status:", response?.status());
+    console.log("[Balance] Page loaded, waiting for JavaScript to render...");
 
-    // Wait a bit for JavaScript to render content
-    await page.waitForTimeout(3000);
+    // Wait for the page to fully render
+    await page.waitForTimeout(5000);
 
-    // Take a screenshot for debugging
-    const screenshotPath = "/tmp/kie-billing-" + Date.now() + ".png";
-    await page.screenshot({ path: screenshotPath });
-    console.log("[Balance] Screenshot saved to:", screenshotPath);
+    // Try waiting for specific text to appear
+    try {
+      await page.waitForFunction(
+        () => document.body.innerText.includes("Balance Information"),
+        { timeout: 10000 }
+      );
+      console.log("[Balance] Found 'Balance Information' text");
+    } catch (e) {
+      console.log("[Balance] Timeout waiting for Balance Information text");
+    }
 
-    // Get page HTML for debugging
+    // Get page HTML
     const pageHtml = await page.content();
-    const htmlLength = pageHtml.length;
-    console.log("[Balance] Page HTML length:", htmlLength);
+    console.log("[Balance] Page HTML length:", pageHtml.length);
+    console.log("[Balance] Has 'Balance Information':", pageHtml.includes("Balance Information"));
 
-    // Check if we're authenticated (look for Balance Information text)
-    const hasBalanceSection = pageHtml.includes("Balance Information");
-    console.log("[Balance] Has Balance Information section:", hasBalanceSection);
+    // Extract the balance using JavaScript
+    // Look specifically in the Balance Information section
+    let balance = await page.evaluate(() => {
+      // Method 1: Find span with just the number
+      const allSpans = document.querySelectorAll("span");
+      const candidates: number[] = [];
 
-    // Try to find the balance using multiple strategies
-    let balance = 0;
+      for (const span of allSpans) {
+        const text = span.textContent?.trim();
 
-    // Strategy 1: Look for text pattern in page content
-    const textContent = await page.evaluate(() => document.body.innerText);
-    console.log("[Balance] Page text content (first 1000 chars):", textContent.substring(0, 1000));
+        // Only consider pure numbers
+        if (text && /^\d+$/.test(text)) {
+          const num = parseInt(text, 10);
 
-    // Strategy 2: Look in the HTML directly for the balance number
-    const numberMatch = pageHtml.match(/>(\d{1,4})<\/span><\/span>\s*<[^>]*>credits/i);
-    if (numberMatch && numberMatch[1]) {
-      balance = parseInt(numberMatch[1], 10);
-      console.log("[Balance] Found balance from HTML regex:", balance);
-    }
-
-    // Strategy 3: Use page.evaluate to find balance more intelligently
-    if (balance === 0) {
-      console.log("[Balance] Trying JavaScript extraction...");
-      balance = await page.evaluate(() => {
-        // Log all text nodes to see what's on the page
-        const walker = document.createTreeWalker(
-          document.body,
-          NodeFilter.SHOW_TEXT,
-          null,
-          false
-        );
-
-        const numbers: number[] = [];
-        let node;
-        while ((node = walker.nextNode())) {
-          const text = node.textContent?.trim();
-          if (text && /^\d+$/.test(text)) {
-            const num = parseInt(text, 10);
-            if (num > 0 && num < 10000) {
-              numbers.push(num);
-            }
+          // Filter: reasonable balance numbers
+          if (num > 0 && num < 10000) {
+            candidates.push(num);
+            console.log("[JS] Found number candidate:", num);
           }
         }
+      }
 
-        console.log("[JS] Found numbers:", numbers);
+      // Return first candidate (should be the balance)
+      if (candidates.length > 0) {
+        console.log("[JS] All candidates:", candidates);
+        return candidates[0];
+      }
 
-        // Return the first reasonable number (usually the balance)
-        return numbers.length > 0 ? numbers[0] : 0;
-      });
+      return 0;
+    });
 
-      console.log("[Balance] JavaScript found balance:", balance);
-    }
+    console.log("[Balance] JavaScript extracted balance:", balance);
 
-    // Strategy 4: Wait for a specific selector and extract
+    // If JavaScript didn't work, try regex on HTML
     if (balance === 0) {
-      try {
-        const spanText = await page.evaluate(() => {
-          const spans = Array.from(document.querySelectorAll("span"));
-          const results: string[] = [];
-          for (const span of spans) {
-            const text = span.textContent?.trim();
-            if (text && /^\d+$/.test(text)) {
-              const num = parseInt(text, 10);
-              if (num > 0 && num < 10000) {
-                results.push(text);
-              }
-            }
-          }
-          return results;
-        });
+      console.log("[Balance] JavaScript returned 0, trying HTML regex...");
 
-        console.log("[Balance] Found span numbers:", spanText);
-        if (spanText.length > 0) {
-          balance = parseInt(spanText[0], 10);
-          console.log("[Balance] Using first span number:", balance);
+      // Look for the exact pattern from the screenshot
+      // <span>65</span>credits or <span class="..."><span>65</span></span>credits
+      const patterns = [
+        />(\d+)<\/span><\/span>\s*<[^>]*>credits/i,
+        />(\d+)<\/span>\s*credits/i,
+        /Balance Information[\s\S]{0,500}>(\d+)</i,
+        /<span[^>]*>(\d+)<\/span>/,
+      ];
+
+      for (const pattern of patterns) {
+        const match = pageHtml.match(pattern);
+        if (match && match[1]) {
+          const num = parseInt(match[1], 10);
+          if (num > 0 && num < 10000) {
+            balance = num;
+            console.log("[Balance] HTML regex found balance:", balance, "using pattern:", pattern);
+            break;
+          }
         }
-      } catch (e) {
-        console.error("[Balance] Error evaluating spans:", e);
       }
     }
 
-    console.log("[Balance] Final extracted balance:", balance);
-    await page.close();
+    // Last resort: find the number in the entire page text
+    if (balance === 0) {
+      console.log("[Balance] Trying text content extraction...");
+      const textContent = await page.evaluate(() => document.body.innerText);
 
+      // Find all numbers
+      const numbers = textContent.match(/\d+/g) || [];
+      console.log("[Balance] All numbers in page:", numbers);
+
+      // Find first reasonable balance number
+      for (const numStr of numbers) {
+        const num = parseInt(numStr, 10);
+        if (num > 0 && num < 10000) {
+          balance = num;
+          console.log("[Balance] Using text content number:", balance);
+          break;
+        }
+      }
+    }
+
+    console.log("[Balance] FINAL BALANCE:", balance);
+
+    // Take screenshot for debugging
+    try {
+      const screenshotPath = "/tmp/kie-billing-" + Date.now() + ".png";
+      await page.screenshot({ path: screenshotPath });
+      console.log("[Balance] Screenshot saved to:", screenshotPath);
+    } catch (screenshotError) {
+      console.log("[Balance] Could not save screenshot:", screenshotError);
+    }
+
+    await page.close();
     return balance;
   } catch (error: any) {
-    console.error("[Balance] Error fetching balance:", error.message);
-    console.error("[Balance] Error stack:", error.stack);
+    console.error("[Balance] ERROR:", error.message);
+    console.error("[Balance] Stack:", error.stack);
 
     try {
       await page.close();
