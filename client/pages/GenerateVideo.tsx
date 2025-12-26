@@ -399,31 +399,6 @@ export default function GenerateVideo() {
               </CardContent>
             </Card>
 
-            {/* Credits Info */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">اعتبار شما</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      اعتبار باقی‌مانده:
-                    </span>
-                    <span className="font-semibold">
-                      {loadingCredits ? (
-                        <Loader2 className="h-4 w-4 animate-spin inline" />
-                      ) : (
-                        credits ?? 0
-                      )}
-                    </span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    اعتبار به صورت خودکار بروزرسانی می‌شود
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
 
