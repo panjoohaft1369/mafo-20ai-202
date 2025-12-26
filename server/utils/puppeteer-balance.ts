@@ -41,32 +41,6 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
     console.log("[Balance] HTML length:", html.length);
     console.log("[Balance] Has 'Balance Information':", html.includes("Balance Information"));
 
-    // Look for where the balance might be - search for all occurrences of "balance"
-    const balanceLowerIndex = html.toLowerCase().indexOf("balance information");
-    if (balanceLowerIndex !== -1) {
-      const balanceContext = html.substring(balanceLowerIndex, Math.min(balanceLowerIndex + 3000, html.length));
-      console.log("[Balance] Balance Information Context (3000 chars):");
-      console.log(balanceContext);
-    }
-
-    // Look for all numeric values in the HTML and their context
-    console.log("[Balance] Searching for all 2-digit numbers near 'balance'...");
-    const balanceWordIndex = html.toLowerCase().indexOf("balance");
-    if (balanceWordIndex !== -1) {
-      const contextStart = Math.max(0, balanceWordIndex - 500);
-      const contextEnd = Math.min(html.length, balanceWordIndex + 2000);
-      const contextStr = html.substring(contextStart, contextEnd);
-
-      // Find all numbers in this context
-      const numberMatches = contextStr.match(/(\d+)/g);
-      if (numberMatches) {
-        console.log("[Balance] Numbers found near 'balance':", numberMatches.slice(0, 20));
-      }
-    }
-
-    // Log a large section of HTML to analyze
-    console.log("[Balance] Logging first 10000 chars of HTML for analysis...");
-    console.log(html.substring(0, 10000));
 
     let balance = 0;
 
