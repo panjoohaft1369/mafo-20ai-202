@@ -817,61 +817,17 @@ export async function handleFetchBilling(
       console.log("[Billing] Found credits in JSON data:", jsonDataMatches[1]);
     }
 
-    // Extract credit balance from HTML
-    // HTML structure from kie.ai/billing:
-    // <span class="mr-2 text-xl text-foreground"><span>65</span></span>credits
+    // Extract credit balance using Puppeteer
+    // The balance loads via JavaScript, so we use headless browser to render it
+    console.log("[Billing] Fetching balance using Puppeteer...");
+
     let creditsRemaining = 0;
-
-    console.log("[Billing] Searching for credit balance in HTML...");
-
-    // Strategy 1: Try specific patterns for the balance value
-    const patterns = [
-      // Pattern 1: <span>65</span></span>credits (exact kie.ai structure)
-      /<span[^>]*>(\d+)<\/span><\/span>[^<]*credits/i,
-      // Pattern 2: More flexible - any span with number before credits
-      /<span[^>]*>(\d+)<\/span>[^<]{0,50}credits/i,
-      // Pattern 3: Number directly before "credits" text
-      />(\d+)\s*<[^>]*>credits/i,
-      // Pattern 4: Just number before credits (most flexible)
-      /(\d+)[^a-z]*credits/i,
-    ];
-
-    for (const pattern of patterns) {
-      const match = html.match(pattern);
-      if (match && match[1]) {
-        const num = parseInt(match[1], 10);
-        // Accept any reasonable balance (0-999999)
-        if (!isNaN(num) && num >= 0 && num <= 999999) {
-          creditsRemaining = num;
-          console.log("[Billing] Found balance:", creditsRemaining);
-          break;
-        }
-      }
-    }
-
-    // Fallback: Extract all numbers and use heuristics to find balance
-    if (creditsRemaining === 0) {
-      console.log("[Billing] Direct patterns failed, trying comprehensive search...");
-
-      // Extract all 1-4 digit numbers
-      const allNumbers = [...html.matchAll(/\b(\d{1,4})\b/g)]
-        .map((m) => parseInt(m[1], 10))
-        .filter((n) => n > 0);
-
-      // Find all unique numbers
-      const unique = [...new Set(allNumbers)];
-      console.log("[Billing] Found unique numbers (first 20):", unique.slice(0, 20));
-
-      // Heuristic: Pick smallest non-trivial number (1-999)
-      // Balance is usually displayed early and is not a UI size number
-      const candidates = unique.filter((n) => n >= 1 && n <= 999);
-      if (candidates.length > 0) {
-        creditsRemaining = candidates[0];
-        console.log("[Billing] Using heuristic candidate:", creditsRemaining);
-      } else if (unique.length > 0) {
-        creditsRemaining = unique[0];
-        console.log("[Billing] Using first unique number:", creditsRemaining);
-      }
+    try {
+      creditsRemaining = await fetchBalanceFromBilling(apiKey);
+      console.log("[Billing] Puppeteer extracted balance:", creditsRemaining);
+    } catch (puppeteerError) {
+      console.error("[Billing] Error with Puppeteer:", puppeteerError);
+      creditsRemaining = 0;
     }
 
     console.log("[Billing] Final balance:", creditsRemaining);
