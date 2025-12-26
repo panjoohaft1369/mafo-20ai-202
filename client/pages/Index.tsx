@@ -38,7 +38,6 @@ export default function Index() {
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
       <main className="pt-20 md:pt-28">
-
         {/* Image Carousel - Top */}
         <section className="px-4 py-12 sm:py-16">
           <div className="container mx-auto max-w-6xl">
@@ -101,7 +100,8 @@ export default function Index() {
                   ویژگی‌های منحصربه‌فرد
                 </h2>
                 <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-                  ما به عنوان اولین پلتفرم هوش مصنوعی ایرانی، خدمات جهان‌سطح و قابل‌اعتماد ارائه می‌دهیم
+                  ما به عنوان اولین پلتفرم هوش مصنوعی ایرانی، خدمات جهان‌سطح و
+                  قابل‌اعتماد ارائه می‌دهیم
                 </p>
               </div>
 
@@ -185,8 +185,8 @@ export default function Index() {
                 حمایت از فناوری ایرانی
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
-                با استفاده از MAFO، شما از تیمی ایرانی را حمایت می‌کنید که
-                خدمات جهان‌سطح ارائه می‌دهند.
+                با استفاده از MAFO، شما از تیمی ایرانی را حمایت می‌کنید که خدمات
+                جهان‌سطح ارائه می‌دهند.
                 <br />
                 <br />
                 <strong>
