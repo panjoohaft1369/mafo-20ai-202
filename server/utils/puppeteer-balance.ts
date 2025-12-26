@@ -1,34 +1,7 @@
 /**
- * Puppeteer utility to fetch actual balance from kie.ai/billing
- * This renders the JavaScript and extracts the balance number
+ * Balance fetcher utility for kie.ai/billing
+ * Uses HTTP requests with regex parsing to extract balance
  */
-
-import puppeteer, { Browser } from "puppeteer";
-
-let browserInstance: Browser | null = null;
-
-/**
- * Get or create a Puppeteer browser instance
- */
-async function getBrowser(): Promise<Browser> {
-  if (browserInstance && browserInstance.isConnected()) {
-    return browserInstance;
-  }
-
-  console.log("[Puppeteer] Launching browser...");
-  browserInstance = await puppeteer.launch({
-    headless: true,
-    executablePath: process.env.CHROME_PATH || "/root/.cache/puppeteer/chrome/linux-127.0.6533.88/chrome-linux64/chrome",
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-    ],
-  });
-
-  console.log("[Puppeteer] Browser launched successfully");
-  return browserInstance;
-}
 
 /**
  * Fetch balance from kie.ai/billing using Puppeteer
