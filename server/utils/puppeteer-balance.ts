@@ -41,11 +41,19 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
     console.log("[Balance] HTML length:", html.length);
     console.log("[Balance] Has 'Balance Information':", html.includes("Balance Information"));
 
-    // Log some of the Balance Information section
+    // Look for where the balance might be - search for it after Balance Information
     const balanceIndex = html.toLowerCase().indexOf("balance information");
     if (balanceIndex !== -1) {
-      const snippet = html.substring(balanceIndex, Math.min(balanceIndex + 400, html.length));
-      console.log("[Balance] Balance Information snippet:", snippet.substring(0, 300));
+      const balanceContext = html.substring(balanceIndex, Math.min(balanceIndex + 2000, html.length));
+      console.log("[Balance] FULL Balance Information Context (2000 chars):");
+      console.log(balanceContext);
+
+      // Also look for the exact number 65
+      const num65Index = html.indexOf("65");
+      if (num65Index !== -1) {
+        console.log("[Balance] Found '65' at index:", num65Index);
+        console.log("[Balance] Context around 65:", html.substring(num65Index - 100, num65Index + 100));
+      }
     }
 
     let balance = 0;
