@@ -381,7 +381,7 @@ export default function GenerateVideo() {
         </div>
 
         {/* Tutorial */}
-        <Tutorial />
+        <VideoTutorial />
       </main>
     </div>
   );
