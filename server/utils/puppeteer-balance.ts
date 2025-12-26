@@ -24,10 +24,10 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
       "https://kie.ai/api/account",
     ];
 
-    for (const endpoint of balanceEndpoints) {
+    for (const fullUrl of apiEndpoints) {
       try {
-        console.log(`[Balance] Trying API endpoint: ${endpoint}`);
-        const response = await fetch(`${apiBaseUrl}${endpoint}`, {
+        console.log(`[Balance] Trying API endpoint: ${fullUrl}`);
+        const response = await fetch(fullUrl, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
