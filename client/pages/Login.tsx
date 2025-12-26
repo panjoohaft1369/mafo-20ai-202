@@ -176,6 +176,9 @@ export default function Login() {
                 <li>• کلید API شما شخصی و محرمانه است</li>
                 <li>• هرگز آن را با کسی به اشتراک نگذارید</li>
                 <li>• برای دریافت کلید جدید، کلید قدیمی را بازیابی کنید</li>
+                <li className="mt-2 pt-2 border-t border-blue-200">
+                  <strong>برای تست:</strong> از "demo-key-123" استفاده کنید
+                </li>
               </ul>
             </div>
           </form>
