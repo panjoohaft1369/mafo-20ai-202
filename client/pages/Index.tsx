@@ -105,12 +105,11 @@ export default function Index() {
           <section className="px-4 py-20 bg-muted/50">
             <div className="container mx-auto max-w-6xl">
               <div className="text-center mb-12">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4">
                   ویژگی‌های منحصربه‌فرد
                 </h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  ما به عنوان اولین پلتفرم هوش مصنوعی ایرانی، با فناوری پیشرفته
-                  و بدون محدودیت‌های تحریم، خدمات جهان‌سطح ارائه می‌دهیم
+                <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+                  ما به عنوان اولین پلتفرم هوش مصنوعی ایرانی، خدمات جهان‌سطح و قابل‌اعتماد ارائه می‌دهیم
                 </p>
               </div>
 
