@@ -37,17 +37,15 @@ export default function Index() {
         {/* Hero Section */}
         <section className="relative px-4 py-20 sm:py-32">
           <div className="container mx-auto max-w-4xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20">
-              <Sparkles className="h-4 w-4 text-brand-primary" />
-              <span className="text-sm font-medium text-brand-primary">
+            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border">
+              <Sparkles className="h-4 w-4" />
+              <span className="text-sm font-medium">
                 قدرت هوش مصنوعی در دستان شما
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">
-                تولید تصاویر و ویدیوهای هوش مصنوعی
-              </span>
+              تولید تصاویر و ویدیوهای هوش مصنوعی
             </h1>
 
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -59,7 +57,7 @@ export default function Index() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={handleStartClick}
-                className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base font-semibold"
+                className="py-6 text-base font-semibold"
                 size="lg"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
@@ -91,8 +89,8 @@ export default function Index() {
                 {/* Feature 1 */}
                 <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-brand-primary/10 flex items-center justify-center mb-3">
-                      <Image className="h-5 w-5 text-brand-primary" />
+                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
+                      <Image className="h-5 w-5" />
                     </div>
                     <CardTitle>تولید تصویر</CardTitle>
                   </CardHeader>
@@ -107,8 +105,8 @@ export default function Index() {
                 {/* Feature 2 */}
                 <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-brand-secondary/10 flex items-center justify-center mb-3">
-                      <Film className="h-5 w-5 text-brand-secondary" />
+                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
+                      <Film className="h-5 w-5" />
                     </div>
                     <CardTitle>تولید ویدیو</CardTitle>
                   </CardHeader>
@@ -123,8 +121,8 @@ export default function Index() {
                 {/* Feature 3 */}
                 <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-brand-accent/10 flex items-center justify-center mb-3">
-                      <Zap className="h-5 w-5 text-brand-accent" />
+                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
+                      <Zap className="h-5 w-5" />
                     </div>
                     <CardTitle>نتایج سریع</CardTitle>
                   </CardHeader>
@@ -139,8 +137,8 @@ export default function Index() {
                 {/* Feature 4 */}
                 <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-brand-primary/10 flex items-center justify-center mb-3">
-                      <TrendingUp className="h-5 w-5 text-brand-primary" />
+                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
+                      <TrendingUp className="h-5 w-5" />
                     </div>
                     <CardTitle>کنترل کامل</CardTitle>
                   </CardHeader>
@@ -161,7 +159,7 @@ export default function Index() {
         {/* CTA Section */}
         {!auth.isLoggedIn && (
           <section className="px-4 py-20">
-            <div className="container mx-auto max-w-4xl text-center bg-gradient-to-r from-brand-primary/10 to-brand-secondary/10 rounded-2xl p-12 border border-brand-primary/20">
+            <div className="container mx-auto max-w-4xl text-center bg-muted/50 rounded-2xl p-12 border border-border">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
                 آماده‌اید شروع کنید؟
               </h2>
@@ -171,7 +169,7 @@ export default function Index() {
               </p>
               <Button
                 onClick={() => navigate("/login")}
-                className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base font-semibold"
+                className="py-6 text-base font-semibold"
                 size="lg"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
@@ -187,10 +185,10 @@ export default function Index() {
             <div className="container mx-auto max-w-6xl">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 {/* Image Generator Card */}
-                <Card className="border-2 border-brand-primary/50">
+                <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-brand-primary/10 flex items-center justify-center mb-3">
-                      <Image className="h-5 w-5 text-brand-primary" />
+                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
+                      <Image className="h-5 w-5" />
                     </div>
                     <CardTitle className="text-xl">تولید تصویر</CardTitle>
                     <CardDescription>
@@ -200,7 +198,7 @@ export default function Index() {
                   <CardContent>
                     <Button
                       onClick={() => navigate("/generate")}
-                      className="w-full bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base"
+                      className="w-full py-6 text-base"
                       size="lg"
                     >
                       <Sparkles className="h-5 w-5 mr-2" />
@@ -210,10 +208,10 @@ export default function Index() {
                 </Card>
 
                 {/* Video Generator Card */}
-                <Card className="border-2 border-brand-secondary/50">
+                <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-brand-secondary/10 flex items-center justify-center mb-3">
-                      <Film className="h-5 w-5 text-brand-secondary" />
+                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
+                      <Film className="h-5 w-5" />
                     </div>
                     <CardTitle className="text-xl">تولید ویدیو</CardTitle>
                     <CardDescription>
@@ -223,7 +221,7 @@ export default function Index() {
                   <CardContent>
                     <Button
                       onClick={() => navigate("/generate-video")}
-                      className="w-full bg-gradient-to-r from-brand-secondary to-brand-accent hover:opacity-90 py-6 text-base"
+                      className="w-full py-6 text-base"
                       size="lg"
                     >
                       <Film className="h-5 w-5 mr-2" />
