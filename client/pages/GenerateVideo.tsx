@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { VideoTutorial } from "@/components/VideoTutorial";
