@@ -682,39 +682,48 @@ export async function handleFetchBilling(
           signal: controller.signal,
         });
 
+        const responseText = await response.text();
+        console.log(
+          `[Billing] ${endpoint} (${response.status}):`,
+          responseText.substring(0, 150),
+        );
+
         if (response.ok) {
-          data = await response.json();
-          console.log(`[Billing] ${endpoint} response:`, JSON.stringify(data).substring(0, 200));
+          try {
+            data = JSON.parse(responseText);
 
-          // Try to extract balance from various possible paths
-          const balance =
-            data?.data?.balance ||
-            data?.data?.credits ||
-            data?.data?.creditsRemaining ||
-            data?.data?.credit ||
-            data?.balance ||
-            data?.credits ||
-            data?.creditsRemaining ||
-            data?.credit ||
-            data?.account?.balance ||
-            data?.account?.credits ||
-            data?.user?.balance ||
-            data?.user?.credits;
+            // Try to extract balance from various possible paths
+            const balance =
+              data?.data?.balance ||
+              data?.data?.credits ||
+              data?.data?.creditsRemaining ||
+              data?.data?.credit ||
+              data?.balance ||
+              data?.credits ||
+              data?.creditsRemaining ||
+              data?.credit ||
+              data?.account?.balance ||
+              data?.account?.credits ||
+              data?.user?.balance ||
+              data?.user?.credits;
 
-          if (typeof balance === "number" && balance >= 0) {
-            console.log(`[Billing] Found balance from ${endpoint}:`, balance);
-            res.json({
-              success: true,
-              creditsRemaining: Math.floor(balance),
-              totalCredits: 0,
-              usedCredits: 0,
-            });
-            clearTimeout(timeoutId);
-            return;
+            if (typeof balance === "number" && balance >= 0) {
+              console.log(`[Billing] ✓ Found balance from ${endpoint}:`, balance);
+              res.json({
+                success: true,
+                creditsRemaining: Math.floor(balance),
+                totalCredits: 0,
+                usedCredits: 0,
+              });
+              clearTimeout(timeoutId);
+              return;
+            }
+          } catch (parseError) {
+            console.log(`[Billing] Could not parse JSON from ${endpoint}`);
           }
         }
-      } catch (e) {
-        console.log(`[Billing] ${endpoint} failed, trying next...`);
+      } catch (e: any) {
+        console.log(`[Billing] ${endpoint} error:`, e.message);
       }
     }
 
