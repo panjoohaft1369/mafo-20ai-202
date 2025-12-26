@@ -46,6 +46,16 @@ export function Footer() {
 
         {/* Divider */}
         <div className="border-t border-border pt-8">
+          <div className="mb-6 p-4 rounded-lg bg-primary/5 border border-primary/10">
+            <p className="text-center text-sm">
+              🇮🇷 <strong>MAFO</strong> - اولین هوش مصنوعی ایرانی برای تولید تصاویر و ویدیوهای پیشرفته
+              <br />
+              <span className="text-xs text-muted-foreground mt-2 block">
+                با حمایت شما، ما می‌توانیم به بهبود فناوری‌های ایرانی ادامه دهیم. این پروژه را با دوستان و همکاران خود به اشتراک بگذارید.
+              </span>
+            </p>
+          </div>
+
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
             <p>© {currentYear} MAFO AI. تمام حقوق محفوظ است.</p>
             <div className="flex gap-4">
