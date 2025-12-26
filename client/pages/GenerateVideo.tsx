@@ -398,14 +398,9 @@ export default function GenerateVideo() {
                       )}
                     </span>
                   </div>
-                  <a
-                    href="https://kie.ai/billing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-brand-primary hover:underline block"
-                  >
-                    مشاهده جزئیات اعتبار →
-                  </a>
+                  <p className="text-xs text-muted-foreground">
+                    اعتبار به صورت خودکار بروزرسانی می‌شود
+                  </p>
                 </div>
               </CardContent>
             </Card>
