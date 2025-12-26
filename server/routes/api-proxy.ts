@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import * as fs from "fs";
+import * as path from "path";
 
 // Updated to kie.ai v1 API
 const KIE_AI_API_BASE = "https://api.kie.ai/api/v1";
@@ -6,8 +8,17 @@ const KIE_AI_API_BASE = "https://api.kie.ai/api/v1";
 // Demo mode برای تست بدون API Key واقعی
 const DEMO_MODE = process.env.DEMO_MODE === "true";
 
+// Task results storage file
+const tasksDir = path.join(process.cwd(), "public", "tasks");
+const tasksFile = path.join(tasksDir, "results.json");
+
+// Ensure tasks directory exists
+if (!fs.existsSync(tasksDir)) {
+  fs.mkdirSync(tasksDir, { recursive: true });
+}
+
 // In-memory task storage (results received via callbacks)
-// In production, this should be a database
+// Tasks are persisted to a JSON file for durability
 const taskResults: Map<
   string,
   {
@@ -20,6 +31,38 @@ const taskResults: Map<
     resolution?: string;
   }
 > = new Map();
+
+// Load tasks from file on startup
+function loadTasksFromFile() {
+  try {
+    if (fs.existsSync(tasksFile)) {
+      const data = fs.readFileSync(tasksFile, "utf-8");
+      const tasks = JSON.parse(data);
+      for (const [key, value] of Object.entries(tasks)) {
+        taskResults.set(key, value as any);
+      }
+      console.log(`[Tasks] Loaded ${taskResults.size} tasks from file`);
+    }
+  } catch (error) {
+    console.error("[Tasks] خطا در بارگذاری tasks:", error);
+  }
+}
+
+// Save tasks to file
+function saveTasksToFile() {
+  try {
+    const tasks: any = {};
+    taskResults.forEach((value, key) => {
+      tasks[key] = value;
+    });
+    fs.writeFileSync(tasksFile, JSON.stringify(tasks, null, 2));
+  } catch (error) {
+    console.error("[Tasks] خطا در ذخیره tasks:", error);
+  }
+}
+
+// Load tasks on startup
+loadTasksFromFile();
 
 /**
  * تایید API Key از طریق Backend
