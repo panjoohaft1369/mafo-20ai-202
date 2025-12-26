@@ -61,100 +61,144 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
     // The HTML contains embedded JSON/data that's rendered by JavaScript
     // Let's try to extract it from the HTML
 
-    // Strategy 1: Look for JSON-like data in the HTML
-    // Try to find "currentBalance" or similar JSON keys
-    const jsonPatterns = [
-      /"currentBalance"\s*:\s*(\d+)/i,
-      /"balance"\s*:\s*(\d+)/i,
-      /"credit"\s*:\s*(\d+)/i,
-      /"credits"\s*:\s*(\d+)/i,
-      /"creditsRemaining"\s*:\s*(\d+)/i,
-    ];
+    // Strategy 1: Look for __NEXT_DATA__ which contains Next.js initial state
+    console.log("[Balance] Looking for __NEXT_DATA__...");
+    const nextDataMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+    if (nextDataMatch && nextDataMatch[1]) {
+      try {
+        const nextDataJson = JSON.parse(nextDataMatch[1]);
+        console.log("[Balance] Found __NEXT_DATA__, searching for balance...");
 
-    for (const pattern of jsonPatterns) {
-      const match = html.match(pattern);
-      if (match && match[1]) {
-        const num = parseInt(match[1], 10);
-        if (num > 0 && num < 100000) {
-          balance = num;
-          console.log("[Balance] Found in JSON:", balance, "Pattern:", pattern.toString());
-          break;
-        }
-      }
-    }
+        // Convert to string to search through all keys/values
+        const nextDataStr = JSON.stringify(nextDataJson);
 
-    // Strategy 2: Look for window data or script tags containing balance
-    if (balance === 0) {
-      console.log("[Balance] No JSON pattern matched, searching script tags...");
+        // Look for balance/credits values
+        const balancePatterns = [
+          /"currentBalance"\s*:\s*(\d+)/,
+          /"balance"\s*:\s*(\d+)/,
+          /"creditsRemaining"\s*:\s*(\d+)/,
+          /"credits"\s*:\s*(\d+)/,
+          /"credit"\s*:\s*(\d+)/,
+        ];
 
-      // Find all script tags
-      const scriptMatch = html.match(/<script[^>]*>([\s\S]*?)<\/script>/gi);
-      if (scriptMatch) {
-        for (const script of scriptMatch) {
-          // Look for JSON-like data
-          const jsonMatches = script.match(/"[^"]*"\s*:\s*\d+/g);
-          if (jsonMatches) {
-            for (const match of jsonMatches) {
-              const numMatch = match.match(/(\d+)$/);
-              if (numMatch && numMatch[1]) {
-                const num = parseInt(numMatch[1], 10);
-                if (num > 10 && num < 100000 && num !== 2024) {
-                  balance = num;
-                  console.log("[Balance] Found in script data:", balance);
-                  break;
-                }
-              }
+        for (const pattern of balancePatterns) {
+          const match = nextDataStr.match(pattern);
+          if (match && match[1]) {
+            const num = parseInt(match[1], 10);
+            if (num >= 0 && num < 1000000) {
+              balance = num;
+              console.log("[Balance] Found in __NEXT_DATA__:", balance);
+              break;
             }
           }
-          if (balance > 0) break;
         }
+      } catch (e) {
+        console.log("[Balance] Error parsing __NEXT_DATA__:", e);
       }
     }
 
-    // Strategy 3: Parse as much JSON-like content as possible
+    // Strategy 2: Search for window.__data__ or similar patterns
     if (balance === 0) {
-      console.log("[Balance] Trying deep JSON parsing...");
-
-      // Look for large JSON objects that might contain balance
-      const jsonMatch = html.match(/\{[^{}]*"[^"]*"\s*:\s*\d+[^{}]*\}/);
-      if (jsonMatch) {
+      console.log("[Balance] Looking for window.__data__ or props...");
+      const windowDataMatch = html.match(/window\.__(\w+)\s*=\s*({[\s\S]*?});\s*<\/script>/);
+      if (windowDataMatch && windowDataMatch[2]) {
         try {
-          // Try to extract and parse JSON
-          const jsonStr = jsonMatch[0];
-          // Simple regex extraction of key-value pairs
-          const pairs = jsonStr.match(/"(\w+)"\s*:\s*(\d+)/g) || [];
+          const windowData = JSON.parse(windowDataMatch[2]);
+          const windowDataStr = JSON.stringify(windowData);
 
-          for (const pair of pairs) {
-            const match = pair.match(/"(\w+)"\s*:\s*(\d+)/);
-            if (match && (match[1].toLowerCase().includes("balance") ||
-                         match[1].toLowerCase().includes("credit"))) {
-              const num = parseInt(match[2], 10);
-              if (num > 0 && num < 100000) {
+          const patterns = [
+            /"currentBalance"\s*:\s*(\d+)/,
+            /"balance"\s*:\s*(\d+)/,
+            /"creditsRemaining"\s*:\s*(\d+)/,
+          ];
+
+          for (const pattern of patterns) {
+            const match = windowDataStr.match(pattern);
+            if (match && match[1]) {
+              const num = parseInt(match[1], 10);
+              if (num >= 0 && num < 1000000) {
                 balance = num;
-                console.log("[Balance] Extracted from JSON pair:", balance);
+                console.log("[Balance] Found in window data:", balance);
                 break;
               }
             }
           }
         } catch (e) {
-          console.log("[Balance] JSON parsing error:", e);
+          console.log("[Balance] Error parsing window data:", e);
         }
       }
     }
 
-    // Strategy 4: Look for the exact rendered pattern in case it's there
+    // Strategy 3: Look for any JSON object in script tags with balance-related keys
     if (balance === 0) {
+      console.log("[Balance] Scanning all script tags for balance data...");
+
+      // Find all script tags
+      const scriptMatches = html.match(/<script[^>]*>([\s\S]*?)<\/script>/gi);
+      if (scriptMatches) {
+        for (const script of scriptMatches) {
+          // Look for JSON objects with numeric values
+          const jsonMatches = script.match(/\{[\s\S]*?["'](\w*balance\w*|credit\w*|remaining\w*)["']\s*:\s*(\d+)[\s\S]*?\}/gi);
+
+          if (jsonMatches) {
+            for (const jsonMatch of jsonMatches) {
+              // Try to extract the number
+              const numMatch = jsonMatch.match(/["'](\w*balance\w*|credit\w*|remaining\w*)["']\s*:\s*(\d+)/i);
+              if (numMatch && numMatch[2]) {
+                const num = parseInt(numMatch[2], 10);
+                if (num >= 0 && num < 1000000) {
+                  balance = num;
+                  console.log("[Balance] Found in script object:", balance, "Key:", numMatch[1]);
+                  break;
+                }
+              }
+            }
+            if (balance > 0) break;
+          }
+        }
+      }
+    }
+
+    // Strategy 4: Look for JSON-like data patterns anywhere in HTML
+    if (balance === 0) {
+      console.log("[Balance] Looking for JSON patterns with balance keywords...");
+
       const patterns = [
-        />(\d+)<\/span><\/span>\s*<[^>]*>credits/i,
-        />(\d+)<\/span>[^<]*credits/i,
-        /Balance\s+Information[\s\S]{0,500}>(\d{1,3})</i,
+        /"currentBalance"\s*:\s*(\d+)/i,
+        /"balance"\s*:\s*(\d+)/i,
+        /"creditsRemaining"\s*:\s*(\d+)/i,
+        /"credits"\s*:\s*(\d+)/i,
+        /"credit"\s*:\s*(\d+)/i,
       ];
 
       for (const pattern of patterns) {
         const match = html.match(pattern);
         if (match && match[1]) {
           const num = parseInt(match[1], 10);
-          if (num > 0 && num < 10000) {
+          if (num >= 0 && num < 1000000) {
+            balance = num;
+            console.log("[Balance] Found with regex:", balance);
+            break;
+          }
+        }
+      }
+    }
+
+    // Strategy 5: Look for the exact rendered pattern in case it's there
+    if (balance === 0) {
+      console.log("[Balance] Looking for HTML span pattern...");
+      const patterns = [
+        />(\d+)<\/span><\/span>\s*<[^>]*>credits/i,
+        />(\d+)<\/span>[^<]*credits/i,
+        /Balance\s+Information[\s\S]{0,1000}>(\d{1,3})</i,
+        /<span[^>]*>(\d+)<\/span>\s*credits/i,
+      ];
+
+      for (const pattern of patterns) {
+        const match = html.match(pattern);
+        if (match && match[1]) {
+          const num = parseInt(match[1], 10);
+          if (num >= 0 && num < 10000) {
             balance = num;
             console.log("[Balance] Regex found:", balance);
             break;
