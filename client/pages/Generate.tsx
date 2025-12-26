@@ -451,10 +451,18 @@ export default function Generate() {
                     <span className="text-muted-foreground">
                       اعتبار باقی‌مانده:
                     </span>
-                    <span className="font-semibold">{auth.credits || 0}</span>
+                    <span className="font-semibold">
+                      {loadingCredits ? (
+                        <Loader2 className="h-4 w-4 animate-spin inline" />
+                      ) : (
+                        credits ?? 0
+                      )}
+                    </span>
                   </div>
                   <a
-                    href="/billing"
+                    href="https://kie.ai/billing"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-xs text-brand-primary hover:underline block"
                   >
                     مشاهده جزئیات اعتبار →
