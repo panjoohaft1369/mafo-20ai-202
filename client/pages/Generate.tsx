@@ -204,6 +204,11 @@ export default function Generate() {
                 <CardDescription>
                   تصویری از گوشی یا کامپیوتر انتخاب کنید
                 </CardDescription>
+                <div className="mt-3 p-3 bg-blue-50 rounded-md border border-blue-200">
+                  <p className="text-xs text-blue-800 font-medium">
+                    <strong>هزینه اعتبار:</strong> هر تصویر ساخته شده با کیفیت 1K میزان 5 اعتبار و با کیفیت 2K میزان 7 اعتبار از شما کسر خواهد کرد
+                  </p>
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div
