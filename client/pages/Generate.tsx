@@ -52,7 +52,6 @@ export default function Generate() {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [taskId, setTaskId] = useState<string | null>(null);
-  const [historyModalOpen, setHistoryModalOpen] = useState(false);
 
   const handleLogout = () => {
     clearAuth();
