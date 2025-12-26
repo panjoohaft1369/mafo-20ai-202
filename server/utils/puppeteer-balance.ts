@@ -7,17 +7,21 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
   try {
     console.log("[Balance] Fetching balance for API Key:", apiKey.substring(0, 10) + "...");
 
-    // Strategy 1: Try kie.ai API v1 endpoints that might expose user balance
-    const apiBaseUrl = "https://api.kie.ai/api/v1";
-    const balanceEndpoints = [
-      `/user`,
-      `/user/info`,
-      `/user/balance`,
-      `/user/credits`,
-      `/account`,
-      `/account/balance`,
-      `/me`,
-      `/profile`,
+    // Strategy 1: Try various API endpoints where balance might be exposed
+    const apiEndpoints = [
+      "https://api.kie.ai/api/v1/user",
+      "https://api.kie.ai/api/v1/user/info",
+      "https://api.kie.ai/api/v1/user/balance",
+      "https://api.kie.ai/api/v1/user/credits",
+      "https://api.kie.ai/api/v1/account",
+      "https://api.kie.ai/api/v1/account/balance",
+      "https://api.kie.ai/api/v1/me",
+      "https://api.kie.ai/api/v1/profile",
+      "https://kie.ai/api/v1/user",
+      "https://kie.ai/api/user",
+      "https://kie.ai/api/balance",
+      "https://kie.ai/api/billing",
+      "https://kie.ai/api/account",
     ];
 
     for (const endpoint of balanceEndpoints) {
