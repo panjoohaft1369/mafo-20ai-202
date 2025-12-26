@@ -86,13 +86,6 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
       const html = await billingResponse.text();
       console.log("[Balance] HTML length:", html.length);
 
-      // Look for all occurrences of numbers that might be balance
-      const allNumbers = html.match(/:\s*(\d+)/g);
-      if (allNumbers) {
-        const uniqueNums = [...new Set(allNumbers.map(n => parseInt(n.replace(/[^\d]/g, ""), 10)))].filter(n => n > 0 && n < 100000);
-        console.log("[Balance] All unique numbers in HTML:", uniqueNums.slice(0, 20));
-      }
-
       // Look for __NEXT_DATA__ which contains the initial page state
       const nextDataMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
       if (nextDataMatch && nextDataMatch[1]) {
