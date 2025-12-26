@@ -647,13 +647,27 @@ export async function handleFetchBilling(
     let data = null;
 
     // Try multiple API endpoints where balance might be available
+    // kie.ai likely has an endpoint to get account/balance information
     const endpoints = [
+      // Try various endpoint patterns
       `/users/me`,
+      `/users/profile`,
+      `/user/me`,
       `/user/info`,
       `/user/profile`,
       `/user/balance`,
-      `/account/balance`,
+      `/user/credits`,
+      `/account`,
       `/account/info`,
+      `/account/balance`,
+      `/account/profile`,
+      `/account/credits`,
+      `/auth/me`,
+      `/auth/user`,
+      `/me`,
+      `/profile`,
+      `/balance`,
+      `/credits`,
     ];
 
     for (const endpoint of endpoints) {
