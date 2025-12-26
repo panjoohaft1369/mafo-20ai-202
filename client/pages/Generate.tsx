@@ -190,8 +190,8 @@ export default function Generate() {
           </p>
 
           {/* Credit Cost Info Box */}
-          <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 inline-block">
-            <p className="text-sm text-blue-800 font-medium">
+          <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-300 inline-block">
+            <p className="text-sm text-yellow-900 font-medium">
               💰 <strong>هزینه اعتبار:</strong> هر تصویر ساخته شده با کیفیت 1K میزان 5 اعتبار و با کیفیت 2K میزان 7 اعتبار از شما کسر خواهد کرد
             </p>
           </div>
@@ -243,7 +243,7 @@ export default function Generate() {
                                   prev.filter((_, i) => i !== index),
                                 );
                               }}
-                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
                             >
                               <Trash2 className="h-3 w-3" />
                             </button>
@@ -356,11 +356,11 @@ export default function Generate() {
             )}
 
             {/* Credit Cost Alert */}
-            <div className="p-4 bg-orange-50 rounded-lg border-2 border-orange-300 shadow-md">
-              <p className="text-sm text-orange-900 font-bold">
+            <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-400 shadow-md">
+              <p className="text-sm text-yellow-900 font-bold">
                 ⚠️ توجه: اعتبار شما کسر خواهد شد
               </p>
-              <p className="text-xs text-orange-800 mt-2">
+              <p className="text-xs text-yellow-800 mt-2">
                 هر تصویر ساخته شده با کیفیت 1K میزان 5 اعتبار و با کیفیت 2K میزان 7 اعتبار از شما کسر خواهد کرد
               </p>
             </div>
@@ -371,7 +371,7 @@ export default function Generate() {
               disabled={
                 loading || selectedImages.length === 0 || !prompt.trim()
               }
-              className="w-full bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base font-semibold"
+              className="w-full py-6 text-base font-semibold"
               size="lg"
             >
               {loading ? (
