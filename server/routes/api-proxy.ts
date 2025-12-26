@@ -198,9 +198,11 @@ export async function handleValidateApiKey(
         "[API] Error fetching balance with Puppeteer:",
         billingError,
       );
+      // Continue even if balance fetch fails
     }
 
     // Use actual balance if found, otherwise fallback to 100
+    // If balance is 0 or not found, assume user has credits
     const finalBalance = actualBalance > 0 ? actualBalance : 100;
 
     console.log("[API] Final balance to return:", finalBalance);
