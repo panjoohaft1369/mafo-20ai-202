@@ -3,17 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 export function TopNav() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const navItems = [
     { label: "خانه", href: "/" },
