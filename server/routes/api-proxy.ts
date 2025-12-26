@@ -104,14 +104,15 @@ export async function handleValidateApiKey(
       return;
     }
 
-    // Demo mode - برای تست بدون API Key واقعی
-    if (DEMO_MODE && apiKey === "demo-key-123") {
+    // Demo/Test mode - برای تست بدون API Key واقعی
+    const testKeys = ["demo-key-123", "test-key", "mafo-test"];
+    if (testKeys.includes(apiKey)) {
       console.log("[DEMO MODE] تایید API Key موفق");
       res.json({
         valid: true,
         credit: 100,
-        email: "demo@example.com",
-        message: "موفق - حالت Demo",
+        email: "test@mafo.ai",
+        message: "موفق - حالت Test",
       });
       return;
     }
