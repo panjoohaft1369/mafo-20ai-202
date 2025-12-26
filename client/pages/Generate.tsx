@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { BottomNav } from "@/components/BottomNav";
 import { Tutorial } from "@/components/Tutorial";
-import { HistoryModal } from "@/components/HistoryModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
