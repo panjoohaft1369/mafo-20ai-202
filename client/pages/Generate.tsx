@@ -46,7 +46,7 @@ export default function Generate() {
 
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [prompt, setPrompt] = useState("");
-  const [aspectRatio, setAspectRatio] = useState("1:1");
+  const [aspectRatio, setAspectRatio] = useState("auto");
   const [resolution, setResolution] = useState("1K");
   const [loading, setLoading] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
