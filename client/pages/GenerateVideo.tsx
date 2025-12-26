@@ -155,7 +155,7 @@ export default function GenerateVideo() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20">
       <Header isLoggedIn={true} onLogout={handleLogout} />
 
       <main className="container mx-auto px-4 py-8 sm:py-12">
