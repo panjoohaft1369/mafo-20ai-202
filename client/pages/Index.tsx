@@ -4,6 +4,7 @@ import { getAuthState } from "@/lib/auth";
 import { Header } from "@/components/Header";
 import { Tutorial } from "@/components/Tutorial";
 import { Footer } from "@/components/Footer";
+import { TopNav } from "@/components/TopNav";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Sparkles, Image, TrendingUp, Zap, Film } from "lucide-react";
+import { Sparkles, Image, TrendingUp, Zap, Film, Heart } from "lucide-react";
 
 export default function Index() {
   const navigate = useNavigate();
