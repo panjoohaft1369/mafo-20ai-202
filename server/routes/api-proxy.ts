@@ -781,13 +781,17 @@ export async function handleCallback(
     });
     console.log("[Callback] ========== CALLBACK PROCESSING COMPLETE ==========");
 
-    // Respond to kie.ai
-    res.json({ success: true, message: "Callback received" });
+    // Respond to kie.ai with 200 OK (important to prevent retries)
+    res.status(200).json({ success: true, message: "Callback received" });
   } catch (error: any) {
     console.error("[Callback] خطا:", error.message);
     console.error("[Callback] Stack:", error.stack);
-    res.status(500).json({
-      error: "خطا در پردازش callback",
+    console.error("[Callback] Request Body:", req.body);
+
+    // Still respond with 200 to prevent kie.ai from retrying
+    res.status(200).json({
+      success: false,
+      error: "Error processing callback, but request was received",
     });
   }
 }
