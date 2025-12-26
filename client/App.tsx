@@ -27,6 +27,8 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/generate" element={<Generate />} />
             <Route path="/generate-video" element={<GenerateVideo />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/history" element={<History />} />
             <Route path="/logs" element={<Logs />} />
             <Route path="/billing" element={<Billing />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
