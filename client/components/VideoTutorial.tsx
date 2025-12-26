@@ -3,7 +3,7 @@ export function VideoTutorial() {
     <section className="mt-16 border-t pt-12 pb-12 px-4 sm:px-8">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center">
-          آموزش نوشتن پرامپت ویدیو حرفه‌ای
+          نحوه نوشتن متن برای ویدیو
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
@@ -11,29 +11,29 @@ export function VideoTutorial() {
           <div className="space-y-4">
             <div>
               <h3 className="text-lg font-semibold mb-2 text-brand-primary">
-                🎬 توصیف حرکت و فعل
+                🎬 فقط حرکت رو بگو
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                تصویر شامل جزئیات است. شما فقط حرکت مورد نظر را توضیح دهید:
+                تصویرت که قبلاً داری، هیچ نیازی نیست لباس یا رنگو توضیح بدی. فقط بگو چی می‌خوای حرکت کنه:
                 <br />
                 <em className="block mt-2 p-2 bg-muted rounded">
                   ❌ "مردی با موهای سیاه و کت آبی دست برای دستان‌دادن دراز می‌کند"
                 </em>
                 <em className="block mt-2 p-2 bg-muted rounded">
-                  ✅ "مرد آهسته دست دراز می‌کند تا دست‌ها را بزند"
+                  ✅ "دست دراز می‌کند برای دستان‌دادن"
                 </em>
               </p>
             </div>
 
             <div>
               <h3 className="text-lg font-semibold mb-2 text-brand-secondary">
-                📹 حرکت دوربین
+                📹 دوربین کجا برو
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                دوربین چگونه حرکت کند را مشخص کنید (pan، zoom، tilt):
+                بگو دوربین چطور حرکت کنه (نزدیک شدن، چرخش، سمت و سو):
                 <br />
                 <em className="block mt-2 p-2 bg-muted rounded">
-                  "دوربین آهسته از چپ به راست حرکت می‌کند و منظره کوهستان را آشکار می‌کند"
+                  "دوربین آهسته نزدیک می‌شه تا صورت رو ببینیم"
                 </em>
               </p>
             </div>
@@ -43,26 +43,26 @@ export function VideoTutorial() {
           <div className="space-y-4">
             <div>
               <h3 className="text-lg font-semibold mb-2 text-brand-accent">
-                ✨ لایه‌های متعدد حرکت
+                ✨ چند حرکت با هم
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                بیش از یک عنصر حرکت کنید تا صحنه زنده‌تر به نظر رسد:
+                می‌تونی چند چیز رو باهم حرکت بدی تا بهتر شد:
                 <br />
                 <em className="block mt-2 p-2 bg-muted rounded">
-                  "موی مرد به ملایمت جریان می‌یابد، دوربین با آهستگی بزرگ‌نمایی می‌کند، برگ‌ها در زمینه می‌افتند"
+                  "موها واژنده، دوربین نزدیک می‌شه، نور طلایی ریخته میشه"
                 </em>
               </p>
             </div>
 
             <div>
               <h3 className="text-lg font-semibold mb-2">
-                🎞️ اصطلاحات سینمایی
+                🎞️ حس و فضای ویدیو
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                اصطلاحات فیلم‌سازی استفاده کنید:
+                بگو ویدیو چه احساسی داشته باشه:
                 <br />
                 <em className="block mt-2 p-2 bg-muted rounded">
-                  "تتراشناسی، نور نرم، عمق میدان کم، روشنایی طلایی"
+                  "آرام و رومانتیک"، "پرانرژی"، "سینمایی و درام‌دار"
                 </em>
               </p>
             </div>
