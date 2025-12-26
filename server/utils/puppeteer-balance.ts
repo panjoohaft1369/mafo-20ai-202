@@ -3,6 +3,9 @@
  * Tries multiple approaches to fetch the current credit balance
  */
 
+import * as fs from "fs";
+import * as path from "path";
+
 export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
   try {
     console.log("[Balance] Fetching balance for API Key:", apiKey.substring(0, 10) + "...");
@@ -86,6 +89,11 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
       const html = await billingResponse.text();
       console.log("[Balance] HTML length:", html.length);
 
+      // Save HTML for debugging (optional, commented out to avoid spam)
+      // const debugPath = path.join(process.cwd(), "public", "kie-billing-debug.html");
+      // fs.writeFileSync(debugPath, html);
+      // console.log("[Balance] Saved HTML for debugging to:", debugPath);
+
       // Look for __NEXT_DATA__ which contains the initial page state
       const nextDataMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
       if (nextDataMatch && nextDataMatch[1]) {
@@ -116,14 +124,15 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
             }
           }
 
-          console.log("[Balance] Found potential balance values:", [...new Set(foundValues)].sort((a, b) => b - a).slice(0, 5));
+          const uniqueValues = [...new Set(foundValues)].sort((a, b) => b - a);
+          console.log("[Balance] Found potential balance values:", uniqueValues.slice(0, 5));
 
           // Filter for reasonable balance values (not 0, not too large)
           const reasonableValues = foundValues.filter(v => v > 0 && v < 100000);
           if (reasonableValues.length > 0) {
             // Return the first reasonable value found
             const balance = reasonableValues[0];
-            console.log("[Balance] Selected balance:", balance);
+            console.log("[Balance] Selected balance from __NEXT_DATA__:", balance);
             return balance;
           }
         } catch (e) {
@@ -131,76 +140,78 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
         }
       }
 
-      // Fallback: Look for pattern "credits" with a number near it
-      console.log("[Balance] Looking for number followed by 'credits' keyword...");
+      // Fallback: Search through the entire HTML for the balance pattern
+      console.log("[Balance] Searching HTML for balance-related keywords and numbers...");
 
-      // Look for the specific pattern: number + "credits" (case-insensitive)
-      const creditsPattern = />(\d+)<\/span>\s*<[^>]*>\s*credits/i;
-      const creditsMatch = html.match(creditsPattern);
-      if (creditsMatch && creditsMatch[1]) {
-        const num = parseInt(creditsMatch[1], 10);
-        if (num > 0 && num < 100000) {
-          console.log("[Balance] Found balance from credits pattern:", num);
-          return num;
-        }
-      }
+      // Look for any occurrence of a 1-3 digit number followed by "credits"
+      const creditsPatterns = [
+        />\s*(\d{1,3})\s*<[^>]*>\s*credits/i,
+        />(\d{1,3})<\/span>\s*<[^>]*>\s*credits/i,
+        /"balance"\s*:\s*(\d+)/i,
+        /"credits"\s*:\s*(\d+)/i,
+        /"creditsRemaining"\s*:\s*(\d+)/i,
+      ];
 
-      // Try another pattern: look for "currentBalance" or "balance" in JSON
-      const jsonBalancePattern = /["'](?:currentBalance|balance|creditsRemaining|credits)["']\s*:\s*(\d+)/i;
-      const jsonMatch = html.match(jsonBalancePattern);
-      if (jsonMatch && jsonMatch[1]) {
-        const num = parseInt(jsonMatch[1], 10);
-        if (num > 0 && num < 100000) {
-          console.log("[Balance] Found balance from JSON pattern:", num);
-          return num;
-        }
-      }
-
-      // Last resort: extract all reasonable numbers from scripts containing "balance" or "credit"
-      console.log("[Balance] Searching script tags for balance-related numbers...");
-      const scriptRegex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
-      let scriptMatch;
-      let balanceRelatedNumbers: number[] = [];
-
-      while ((scriptMatch = scriptRegex.exec(html)) !== null) {
-        const scriptContent = scriptMatch[1];
-
-        // Only look in scripts that mention balance or credit
-        if (scriptContent.toLowerCase().includes("balance") || scriptContent.toLowerCase().includes("credit")) {
-          // Look for numbers that appear after a colon (JSON key-value pairs)
-          const matches = scriptContent.match(/:\s*(\d+)[,}]/g);
-          if (matches) {
-            matches.forEach(m => {
-              const num = parseInt(m.replace(/[^\d]/g, ""), 10);
-              if (num >= 10 && num < 100000) {  // Reasonable balance range
-                balanceRelatedNumbers.push(num);
-              }
-            });
+      for (const pattern of creditsPatterns) {
+        const match = html.match(pattern);
+        if (match && match[1]) {
+          const num = parseInt(match[1], 10);
+          if (num > 0 && num < 100000) {
+            console.log("[Balance] ✓ Found balance via pattern:", num);
+            return num;
           }
         }
       }
 
-      if (balanceRelatedNumbers.length > 0) {
-        // Get unique values and sort by how "likely" they are to be a balance
-        const unique = [...new Set(balanceRelatedNumbers)];
+      // Last resort: Look for any reasonable number in a JSON context
+      console.log("[Balance] Searching all script tags for balance data...");
+      const scriptRegex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
+      let scriptMatch;
+      let balanceNumbers: number[] = [];
+
+      while ((scriptMatch = scriptRegex.exec(html)) !== null) {
+        const scriptContent = scriptMatch[1];
+
+        // Only process large script blocks that might contain data
+        if (scriptContent.length > 100 && (scriptContent.includes("balance") || scriptContent.includes("credit"))) {
+          // Try to find JSON patterns with balance/credit keywords
+          const jsonPatterns = [
+            /"balance"\s*:\s*(\d+)/gi,
+            /"credits?\s*:\s*(\d+)/gi,
+            /"remaining"\s*:\s*(\d+)/gi,
+          ];
+
+          for (const pattern of jsonPatterns) {
+            let jsonMatch;
+            while ((jsonMatch = pattern.exec(scriptContent)) !== null) {
+              const num = parseInt(jsonMatch[1], 10);
+              if (num > 0 && num < 100000) {
+                balanceNumbers.push(num);
+              }
+            }
+          }
+        }
+      }
+
+      if (balanceNumbers.length > 0) {
+        // Get unique values and select the most reasonable one
+        const unique = [...new Set(balanceNumbers)].sort((a, b) => a - b);
         // Prefer numbers in a reasonable balance range (10-10000)
         const inRange = unique.filter(n => n >= 10 && n <= 10000);
         if (inRange.length > 0) {
-          const balance = inRange[0];
-          console.log("[Balance] Extracted balance from balance-related scripts:", balance);
-          return balance;
-        } else if (unique.length > 0) {
-          const balance = unique[0];
-          console.log("[Balance] Extracted balance from scripts:", balance);
-          return balance;
+          console.log("[Balance] ✓ Found balance from script tags:", inRange[0]);
+          return inRange[0];
+        } else if (unique.length > 0 && unique[0] > 0) {
+          console.log("[Balance] ✓ Found balance from scripts:", unique[0]);
+          return unique[0];
         }
       }
     }
 
-    console.log("[Balance] FINAL BALANCE: 0 (could not extract)");
+    console.log("[Balance] Could not extract balance - returning 0");
     return 0;
   } catch (error: any) {
-    console.error("[Balance] Error:", error.message);
+    console.error("[Balance] Fatal error:", error.message);
     return 0;
   }
 }
