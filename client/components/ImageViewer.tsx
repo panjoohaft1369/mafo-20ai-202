@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from "@/components/ui/dialog";
 
 interface ImageViewerProps {
@@ -21,6 +22,7 @@ export function ImageViewer({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl h-auto p-0 bg-black/90 border-0">
+        <DialogTitle className="sr-only">تصویر تولید شده</DialogTitle>
         <div className="relative w-full h-[600px] flex items-center justify-center">
           {/* Close Button */}
           <Button
