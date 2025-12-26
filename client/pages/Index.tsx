@@ -37,7 +37,7 @@ export default function Index() {
       <TopNav />
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
-      <main>
+      <main className="pt-32 md:pt-24">
         {/* Iranian Pride Banner */}
         <section className="px-4 py-4 bg-primary/10 border-b border-primary/20">
           <div className="container mx-auto max-w-6xl text-center">
