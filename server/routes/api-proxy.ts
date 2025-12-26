@@ -809,22 +809,21 @@ export async function handleFetchBilling(
     // Strategy 1: Try specific patterns for the balance value
     const patterns = [
       // Pattern 1: <span>65</span></span>credits (exact kie.ai structure)
-      /<span[^>]*>(\d+)<\/span><\/span>\s*credits/i,
-      // Pattern 2: More flexible <span>65</span> before credits
-      /<span[^>]*>(\d+)<\/span>[^<]*credits/i,
-      // Pattern 3: In Balance Information section
-      /Balance\s+Information[\s\S]{0,300}<span[^>]*>(\d+)<\/span>/i,
-      // Pattern 4: Number before credits keyword
-      />(\d+)<[^>]*credits/i,
-      // Pattern 5: Any number before credits
-      /(\d+)\s*credits/i,
+      /<span[^>]*>(\d+)<\/span><\/span>[^<]*credits/i,
+      // Pattern 2: More flexible - any span with number before credits
+      /<span[^>]*>(\d+)<\/span>[^<]{0,50}credits/i,
+      // Pattern 3: Number directly before "credits" text
+      />(\d+)\s*<[^>]*>credits/i,
+      // Pattern 4: Just number before credits (most flexible)
+      /(\d+)[^a-z]*credits/i,
     ];
 
     for (const pattern of patterns) {
       const match = html.match(pattern);
       if (match && match[1]) {
         const num = parseInt(match[1], 10);
-        if (!isNaN(num) && num >= 0 && num <= 100000) {
+        // Accept any reasonable balance (0-999999)
+        if (!isNaN(num) && num >= 0 && num <= 999999) {
           creditsRemaining = num;
           console.log("[Billing] Found balance:", creditsRemaining);
           break;
@@ -832,17 +831,28 @@ export async function handleFetchBilling(
       }
     }
 
-    // Fallback: search within Balance Information section
+    // Fallback: Extract all numbers and use heuristics to find balance
     if (creditsRemaining === 0) {
-      console.log("[Billing] Patterns failed, searching Balance Information section...");
-      const balanceIndex = html.toLowerCase().indexOf("balance information");
-      if (balanceIndex !== -1) {
-        const snippet = html.substring(balanceIndex, balanceIndex + 500);
-        const match = snippet.match(/>(\d+)</);
-        if (match && match[1]) {
-          creditsRemaining = parseInt(match[1], 10);
-          console.log("[Billing] Found in Balance section:", creditsRemaining);
-        }
+      console.log("[Billing] Direct patterns failed, trying comprehensive search...");
+
+      // Extract all 1-4 digit numbers
+      const allNumbers = [...html.matchAll(/\b(\d{1,4})\b/g)]
+        .map((m) => parseInt(m[1], 10))
+        .filter((n) => n > 0);
+
+      // Find all unique numbers
+      const unique = [...new Set(allNumbers)];
+      console.log("[Billing] Found unique numbers (first 20):", unique.slice(0, 20));
+
+      // Heuristic: Pick smallest non-trivial number (1-999)
+      // Balance is usually displayed early and is not a UI size number
+      const candidates = unique.filter((n) => n >= 1 && n <= 999);
+      if (candidates.length > 0) {
+        creditsRemaining = candidates[0];
+        console.log("[Billing] Using heuristic candidate:", creditsRemaining);
+      } else if (unique.length > 0) {
+        creditsRemaining = unique[0];
+        console.log("[Billing] Using first unique number:", creditsRemaining);
       }
     }
 
