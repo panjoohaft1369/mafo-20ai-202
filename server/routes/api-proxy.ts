@@ -690,6 +690,18 @@ export async function handleFetchBilling(
     console.log("[Billing] HTML length:", html.length);
     console.log("[Billing] HTML preview:", html.substring(0, 500));
 
+    // Log HTML around "Balance" keyword to debug
+    const balanceIndex = html.toLowerCase().indexOf("balance");
+    if (balanceIndex > -1) {
+      console.log(
+        "[Billing] HTML around 'Balance':",
+        html.substring(
+          Math.max(0, balanceIndex - 200),
+          Math.min(html.length, balanceIndex + 500),
+        ),
+      );
+    }
+
     // Extract credit balance from HTML
     // Look for the "Balance Information" section and extract the number
     let creditsRemaining = 0;
