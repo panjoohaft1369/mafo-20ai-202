@@ -145,12 +145,6 @@ export default function Generate() {
         setGeneratedImage(pollResult.imageUrl);
         toast.dismiss();
         toast.success("تصویر با موفقیت ایجاد شد!");
-
-        // Refresh credits after successful generation
-        const billingInfo = await fetchBillingInfo(auth.apiKey!);
-        if (billingInfo) {
-          setCredits(billingInfo.creditsRemaining);
-        }
       } else {
         setError(pollResult.error || "خطا در ایجاد تصویر");
         toast.dismiss();
