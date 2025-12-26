@@ -702,6 +702,20 @@ export async function handleFetchBilling(
       );
     }
 
+    // Also try to find where number data might be (could be in __NEXT_DATA__ or window.__data__)
+    const nextDataMatch = html.match(/__NEXT_DATA__\s*=\s*({[\s\S]*?})<\/script>/);
+    if (nextDataMatch) {
+      console.log("[Billing] Found __NEXT_DATA__");
+      const dataStr = nextDataMatch[1].substring(0, 500);
+      console.log("[Billing] __NEXT_DATA__ preview:", dataStr);
+    }
+
+    // Also search for JSON data in script tags
+    const jsonDataMatches = html.match(/<script[^>]*>[\s\S]*?"credits?"\s*:\s*(\d+)/i);
+    if (jsonDataMatches && jsonDataMatches[1]) {
+      console.log("[Billing] Found credits in JSON data:", jsonDataMatches[1]);
+    }
+
     // Extract credit balance from HTML
     // Look for the "Balance Information" section and extract the number
     let creditsRemaining = 0;
