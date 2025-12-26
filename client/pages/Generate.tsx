@@ -133,9 +133,7 @@ export default function Generate() {
 
       setTaskId(result.taskId);
       toast.dismiss();
-      toast.loading(
-        "درحال پردازش تصویر... (این ممکن است چند دقیقه طول بکشد)",
-      );
+      toast.loading("درحال پردازش تصویر... (این ممکن است چند دقیقه طول بکشد)");
 
       // Step 3: Poll for completion
       const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
@@ -352,7 +350,9 @@ export default function Generate() {
             {/* Generate Button */}
             <Button
               onClick={handleGenerate}
-              disabled={loading || selectedImages.length === 0 || !prompt.trim()}
+              disabled={
+                loading || selectedImages.length === 0 || !prompt.trim()
+              }
               className="w-full bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base font-semibold"
               size="lg"
             >

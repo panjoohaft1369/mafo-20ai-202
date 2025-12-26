@@ -8,10 +8,19 @@
     "error": "Task execution timeout"
   },
   "52fd304d901c0f87efee9e867b9aa05e": {
-    "status": "processing",
+    "status": "success",
     "timestamp": 1766762401031,
     "prompt": "این دو تا سوژه رو کنار هم قرار بده و رنگشون رو صورتی کن",
     "aspectRatio": "4:3",
-    "resolution": "1K"
+    "resolution": "1K",
+    "imageUrl": "https://tempfile.aiquickdraw.com/f/a0afa49e-7d54-4e0e-b39d-b21ddfaaae71_0.jpg"
+  },
+  "8798e797878a860276b06f771fa70b56": {
+    "status": "success",
+    "timestamp": 1766762826786,
+    "prompt": "این سه تا تصویر رو توی ویترین یه مغازه بچین",
+    "aspectRatio": "4:3",
+    "resolution": "1K",
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/8798e797878a860276b06f771fa70b56_1766762878.png"
   }
 }

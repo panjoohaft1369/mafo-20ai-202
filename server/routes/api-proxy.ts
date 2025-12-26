@@ -229,7 +229,14 @@ export async function handleGenerateImage(
       return;
     }
 
-    if (!imageUrls || !Array.isArray(imageUrls) || imageUrls.length === 0 || !prompt || !aspectRatio || !resolution) {
+    if (
+      !imageUrls ||
+      !Array.isArray(imageUrls) ||
+      imageUrls.length === 0 ||
+      !prompt ||
+      !aspectRatio ||
+      !resolution
+    ) {
       res.status(400).json({
         success: false,
         error:
@@ -249,7 +256,16 @@ export async function handleGenerateImage(
     console.log("[Image Gen] Resolution:", resolution);
 
     // Validate aspect ratio
-    const validAspectRatios = ["1:1", "4:3", "3:4", "16:9", "9:16", "3:2", "2:3", "auto"];
+    const validAspectRatios = [
+      "1:1",
+      "4:3",
+      "3:4",
+      "16:9",
+      "9:16",
+      "3:2",
+      "2:3",
+      "auto",
+    ];
     if (!validAspectRatios.includes(aspectRatio)) {
       console.error("[Image Gen] Invalid aspect ratio:", aspectRatio);
     }
@@ -698,7 +714,10 @@ export async function handleQueryTask(
     if (!result) {
       // Task not found - provide debugging info
       console.log("[Query Task] Task not found in memory");
-      console.log("[Query Task] All stored tasks:", Array.from(taskResults.keys()));
+      console.log(
+        "[Query Task] All stored tasks:",
+        Array.from(taskResults.keys()),
+      );
 
       // Check if file exists
       if (fs.existsSync(tasksFile)) {
@@ -748,27 +767,27 @@ export async function handleCallback(
   try {
     const data = req.body;
 
-    console.log("[Callback] ========== RECEIVED CALLBACK FROM KIE.AI ==========");
+    console.log(
+      "[Callback] ========== RECEIVED CALLBACK FROM KIE.AI ==========",
+    );
     console.log("[Callback] Full Body:", JSON.stringify(data, null, 2));
-    console.log("[Callback] Headers:", Object.fromEntries(
-      Object.entries(req.headers).filter(([key]) =>
-        !key.toLowerCase().includes("cookie") &&
-        !key.toLowerCase().includes("authorization")
-      )
-    ));
+    console.log(
+      "[Callback] Headers:",
+      Object.fromEntries(
+        Object.entries(req.headers).filter(
+          ([key]) =>
+            !key.toLowerCase().includes("cookie") &&
+            !key.toLowerCase().includes("authorization"),
+        ),
+      ),
+    );
 
     // Try different possible paths for taskId
     const taskId =
-      data?.data?.taskId ||
-      data?.taskId ||
-      data?.task_id ||
-      data?.id;
+      data?.data?.taskId || data?.taskId || data?.task_id || data?.id;
 
     // Try different possible paths for state
-    const state =
-      data?.data?.state ||
-      data?.state ||
-      data?.status;
+    const state = data?.data?.state || data?.state || data?.status;
 
     console.log("[Callback] Extracted TaskID:", taskId);
     console.log("[Callback] Extracted State:", state);
@@ -776,8 +795,13 @@ export async function handleCallback(
     console.log("[Callback] resultUrls exists:", !!data?.data?.resultUrls);
 
     if (!taskId) {
-      console.error("[Callback] No taskId found in callback - data structure unknown");
-      console.error("[Callback] Data structure:", JSON.stringify(data, null, 2));
+      console.error(
+        "[Callback] No taskId found in callback - data structure unknown",
+      );
+      console.error(
+        "[Callback] Data structure:",
+        JSON.stringify(data, null, 2),
+      );
       // Still return 200 to prevent retries, but log the issue for debugging
       res.status(200).json({ error: "No taskId provided" });
       return;
@@ -790,7 +814,10 @@ export async function handleCallback(
     if (data?.data?.resultJson) {
       try {
         const resultJson = JSON.parse(data.data.resultJson);
-        console.log("[Callback] Parsed resultJson:", JSON.stringify(resultJson, null, 2));
+        console.log(
+          "[Callback] Parsed resultJson:",
+          JSON.stringify(resultJson, null, 2),
+        );
         imageUrl =
           resultJson?.resultUrls?.[0] ||
           resultJson?.result_urls?.[0] ||
@@ -803,7 +830,11 @@ export async function handleCallback(
     }
 
     // Try resultUrls as array directly
-    if (!imageUrl && data?.data?.resultUrls && Array.isArray(data.data.resultUrls)) {
+    if (
+      !imageUrl &&
+      data?.data?.resultUrls &&
+      Array.isArray(data.data.resultUrls)
+    ) {
       imageUrl = data.data.resultUrls[0];
       console.log("[Callback] Found imageUrl in resultUrls:", imageUrl);
     }
@@ -826,7 +857,10 @@ export async function handleCallback(
       ...existingResult,
       status: state || "unknown",
       imageUrl: imageUrl,
-      error: state === "fail" ? (data?.data?.failMsg || data?.failMsg || "Unknown error") : undefined,
+      error:
+        state === "fail"
+          ? data?.data?.failMsg || data?.failMsg || "Unknown error"
+          : undefined,
       timestamp: existingResult?.timestamp || Date.now(),
     });
 
@@ -839,7 +873,9 @@ export async function handleCallback(
       hasImage: !!imageUrl,
       filePath: tasksFile,
     });
-    console.log("[Callback] ========== CALLBACK PROCESSING COMPLETE ==========");
+    console.log(
+      "[Callback] ========== CALLBACK PROCESSING COMPLETE ==========",
+    );
 
     // Respond to kie.ai with 200 OK (important to prevent retries)
     res.status(200).json({ success: true, message: "Callback received" });

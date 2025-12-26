@@ -30,12 +30,16 @@ export function createServer() {
     if (req.path === "/api/callback") {
       console.log("[REQUEST] Incoming callback request");
       console.log("[REQUEST] Method:", req.method);
-      console.log("[REQUEST] Headers:", Object.fromEntries(
-        Object.entries(req.headers).filter(([key]) =>
-          !key.toLowerCase().includes("cookie") &&
-          !key.toLowerCase().includes("authorization")
-        )
-      ));
+      console.log(
+        "[REQUEST] Headers:",
+        Object.fromEntries(
+          Object.entries(req.headers).filter(
+            ([key]) =>
+              !key.toLowerCase().includes("cookie") &&
+              !key.toLowerCase().includes("authorization"),
+          ),
+        ),
+      );
     }
     next();
   });
@@ -53,7 +57,12 @@ export function createServer() {
     const fs = require("fs");
     const path = require("path");
 
-    const tasksFile = path.join(process.cwd(), "public", "tasks", "results.json");
+    const tasksFile = path.join(
+      process.cwd(),
+      "public",
+      "tasks",
+      "results.json",
+    );
     let taskData: any = {};
 
     try {
