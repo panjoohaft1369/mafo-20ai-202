@@ -585,7 +585,7 @@ export async function handleGenerateVideo(
 
 /**
  * دریافت گزارشات (Logs)
- * Note: kie.ai doesn't provide a logs API, so we return locally stored task results
+ * Fetches complete history from kie.ai/logs page, with fallback to local storage
  */
 export async function handleFetchLogs(
   req: Request,
@@ -602,8 +602,26 @@ export async function handleFetchLogs(
       return;
     }
 
-    console.log("[Logs] دریافت تاریخ تصاویر از محفوظات محلی");
+    console.log("[Logs] دریافت تاریخ کامل تصاویر از kie.ai/logs");
 
+    // First, try to fetch from kie.ai/logs
+    const remoteLogs = await fetchCompleteLogsFromKie(apiKey);
+
+    if (remoteLogs && remoteLogs.length > 0) {
+      console.log(`[Logs] Fetched ${remoteLogs.length} entries from kie.ai/logs`);
+      // Sort by timestamp in descending order (newest first)
+      const sortedLogs = remoteLogs.sort((a, b) => b.timestamp - a.timestamp);
+      res.json({
+        success: true,
+        logs: sortedLogs,
+        source: "kie.ai",
+      });
+      return;
+    }
+
+    console.log("[Logs] No logs from kie.ai/logs, falling back to local storage");
+
+    // Fallback: Get locally stored task results
     const twoMonthsAgo = new Date();
     twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
@@ -621,11 +639,15 @@ export async function handleFetchLogs(
       return log.timestamp > twoMonthsAgo.getTime();
     });
 
-    console.log(`[Logs] Found ${filteredLogs.length} tasks in last 2 months`);
+    // Sort by timestamp in descending order (newest first)
+    const sortedLogs = filteredLogs.sort((a: any, b: any) => b.timestamp - a.timestamp);
+
+    console.log(`[Logs] Found ${sortedLogs.length} tasks in local storage`);
 
     res.json({
       success: true,
-      logs: filteredLogs,
+      logs: sortedLogs,
+      source: "local",
     });
   } catch (error) {
     console.error("[Logs] خطا:", error);
