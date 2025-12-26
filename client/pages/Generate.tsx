@@ -187,9 +187,16 @@ export default function Generate() {
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
             تولید تصویر هوش مصنوعی
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mb-4">
             تصویری انتخاب کنید و با پرامپت خود، نسخه جدیدی ایجاد کنید
           </p>
+
+          {/* Credit Cost Info Box */}
+          <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 inline-block">
+            <p className="text-sm text-blue-800 font-medium">
+              💰 <strong>هزینه اعتبار:</strong> هر تصویر ساخته شده با کیفیت 1K میزان 5 اعتبار و با کیفیت 2K میزان 7 اعتبار از شما کسر خواهد کرد
+            </p>
+          </div>
         </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
