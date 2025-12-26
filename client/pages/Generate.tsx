@@ -352,7 +352,7 @@ export default function Generate() {
             {/* Generate Button */}
             <Button
               onClick={handleGenerate}
-              disabled={loading || !selectedImage || !prompt.trim()}
+              disabled={loading || selectedImages.length === 0 || !prompt.trim()}
               className="w-full bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base font-semibold"
               size="lg"
             >
