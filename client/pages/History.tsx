@@ -127,10 +127,10 @@ export default function History() {
           </p>
 
           {/* Important Notice */}
-          <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 inline-block max-w-2xl">
+          <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-300 inline-block max-w-2xl">
             <div className="flex gap-2 items-start">
-              <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-blue-800 text-right">
+              <AlertCircle className="h-5 w-5 text-yellow-700 flex-shrink-0 mt-0.5" />
+              <div className="text-sm text-yellow-900 text-right">
                 <p className="font-semibold mb-1">⚠️ توجه: ذخیره‌سازی موقت</p>
                 <p>
                   این صفحه فقط تصاویر و ویدیوهایی را نگهداری می‌کند که در طی <strong>ماه گذشته</strong> ساخته‌اید. اگر می‌خواهید تصاویر و ویدیوهای خود را برای همیشه نگاه دارید، آن‌ها را <strong>دانلود کنید</strong> تا حذف نشوند.
