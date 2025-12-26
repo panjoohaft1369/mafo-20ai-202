@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuthState } from "@/lib/auth";
 import { Header } from "@/components/Header";
 import { Tutorial } from "@/components/Tutorial";
+import { ImageCarousel } from "@/components/ImageCarousel";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -74,6 +75,16 @@ export default function Index() {
                 </Button>
               )}
             </div>
+          </div>
+        </section>
+
+        {/* Image Carousel */}
+        <section className="px-4 py-20">
+          <div className="container mx-auto max-w-6xl">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
+              نمونه‌های تولید شده
+            </h2>
+            <ImageCarousel />
           </div>
         </section>
 
