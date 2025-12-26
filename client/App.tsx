@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Generate from "./pages/Generate";
 import GenerateVideo from "./pages/GenerateVideo";
+import Support from "./pages/Support";
+import History from "./pages/History";
 import Logs from "./pages/Logs";
 import Billing from "./pages/Billing";
 import NotFound from "./pages/NotFound";
