@@ -216,7 +216,7 @@ export async function handleGenerateImage(
         model: "flux-2/pro-image-to-image",
         callBackUrl: callbackUrl,
         input: {
-          input_urls: [imageUrl],
+          input_urls: imageUrls,
           prompt,
           aspect_ratio: aspectRatio,
           resolution: resolution,
