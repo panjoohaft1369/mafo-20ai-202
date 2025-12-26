@@ -141,23 +141,26 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
       }
 
       // Fallback: Search through the entire HTML for the balance pattern
-      console.log("[Balance] Searching HTML for balance-related keywords and numbers...");
+      console.log("[Balance] Searching HTML for balance-related patterns...");
 
-      // Look for any occurrence of a 1-3 digit number followed by "credits"
-      const creditsPatterns = [
-        />\s*(\d{1,3})\s*<[^>]*>\s*credits/i,
-        />(\d{1,3})<\/span>\s*<[^>]*>\s*credits/i,
+      // Look for the specific pattern from the user's HTML: >65</span></span>credits
+      const balancePatterns = [
+        />(\d+)<\/span><\/span>\s*<[^>]*>\s*credits/i,
+        />(\d{1,5})<\/span><\/span>.*?credits/i,
+        />(\d+)<\/span>\s*<[^>]*>\s*credits/i,
+        /(\d{1,5})\s*<\/span>\s*<[^>]*>\s*credits/i,
         /"balance"\s*:\s*(\d+)/i,
         /"credits"\s*:\s*(\d+)/i,
         /"creditsRemaining"\s*:\s*(\d+)/i,
+        /currentBalance["\']?\s*:\s*(\d+)/i,
       ];
 
-      for (const pattern of creditsPatterns) {
+      for (const pattern of balancePatterns) {
         const match = html.match(pattern);
         if (match && match[1]) {
           const num = parseInt(match[1], 10);
           if (num > 0 && num < 100000) {
-            console.log("[Balance] ✓ Found balance via pattern:", num);
+            console.log("[Balance] ✓ Found balance via pattern:", num, "Pattern:", pattern.toString().substring(0, 50));
             return num;
           }
         }
