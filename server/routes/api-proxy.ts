@@ -711,7 +711,12 @@ export async function handleCallback(
 
     console.log("[Callback] ========== RECEIVED CALLBACK FROM KIE.AI ==========");
     console.log("[Callback] Full Body:", JSON.stringify(data, null, 2));
-    console.log("[Callback] Headers:", Object.fromEntries(req.headers));
+    console.log("[Callback] Headers:", Object.fromEntries(
+      Object.entries(req.headers).filter(([key]) =>
+        !key.toLowerCase().includes("cookie") &&
+        !key.toLowerCase().includes("authorization")
+      )
+    ));
 
     // Try different possible paths for taskId
     const taskId =
