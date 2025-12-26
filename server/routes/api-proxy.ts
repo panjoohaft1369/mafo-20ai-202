@@ -679,7 +679,7 @@ export async function handleFetchBilling(
 
     // Try 2: Fetch billing page HTML as fallback
     console.log("[Billing] Trying HTML scraping from /billing page...");
-    const response2 = await fetch("https://kie.ai/billing", {
+    response = await fetch("https://kie.ai/billing", {
       method: "GET",
       headers: {
         "User-Agent":
@@ -692,7 +692,6 @@ export async function handleFetchBilling(
       signal: controller.signal,
     });
 
-    const response = response2;
     clearTimeout(timeoutId);
 
     console.log("[Billing] HTTP Status:", response.status);
