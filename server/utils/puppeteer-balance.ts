@@ -1,224 +1,169 @@
 /**
- * Balance fetcher utility for kie.ai/billing
- * Uses HTTP requests with regex parsing to extract balance
+ * Balance fetcher utility for kie.ai
+ * Tries multiple approaches to fetch the current credit balance
  */
 
-/**
- * Fetch balance from kie.ai/billing using Puppeteer
- * Renders the page so JavaScript executes and balance appears
- */
-/**
- * Fetch balance from kie.ai/billing using HTTP requests and regex parsing
- */
 export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
   try {
     console.log("[Balance] Fetching balance for API Key:", apiKey.substring(0, 10) + "...");
 
-    // Fetch the billing page with proper headers
-    const response = await fetch("https://kie.ai/billing", {
+    // Strategy 1: Try kie.ai API v1 endpoints that might expose user balance
+    const apiBaseUrl = "https://api.kie.ai/api/v1";
+    const balanceEndpoints = [
+      `/user`,
+      `/user/info`,
+      `/user/balance`,
+      `/user/credits`,
+      `/account`,
+      `/account/balance`,
+      `/me`,
+      `/profile`,
+    ];
+
+    for (const endpoint of balanceEndpoints) {
+      try {
+        console.log(`[Balance] Trying API endpoint: ${endpoint}`);
+        const response = await fetch(`${apiBaseUrl}${endpoint}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
+            "User-Agent": "MAFO-Client/1.0",
+          },
+          timeout: 10000,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(`[Balance] ${endpoint} response:`, JSON.stringify(data).substring(0, 500));
+
+          // Try to extract balance from various paths
+          const balance =
+            data?.balance ||
+            data?.credits ||
+            data?.creditsRemaining ||
+            data?.credit ||
+            data?.data?.balance ||
+            data?.data?.credits ||
+            data?.data?.creditsRemaining ||
+            data?.user?.balance ||
+            data?.user?.credits ||
+            data?.account?.balance ||
+            data?.account?.credits;
+
+          if (typeof balance === "number" && balance >= 0) {
+            console.log(`[Balance] Found balance via ${endpoint}:`, balance);
+            return balance;
+          }
+        } else {
+          console.log(`[Balance] ${endpoint} returned ${response.status}`);
+        }
+      } catch (e: any) {
+        console.log(`[Balance] ${endpoint} error:`, e.message);
+      }
+    }
+
+    // Strategy 2: Try fetching the billing HTML page and look for balance data
+    console.log("[Balance] Trying HTML scraping from /billing page...");
+    const billingResponse = await fetch("https://kie.ai/billing", {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${apiKey}`,
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
-        "Accept-Encoding": "gzip, deflate",
         "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
       },
-      timeout: 30000,
+      timeout: 15000,
     });
 
-    console.log("[Balance] Response status:", response.status);
-    console.log("[Balance] Response OK:", response.ok);
+    if (billingResponse.ok) {
+      const html = await billingResponse.text();
+      console.log("[Balance] HTML length:", html.length);
 
-    if (!response.ok) {
-      console.error("[Balance] Non-OK response:", response.status);
-      return 0;
-    }
+      // Look for __NEXT_DATA__ which contains the initial page state
+      const nextDataMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+      if (nextDataMatch && nextDataMatch[1]) {
+        try {
+          const nextData = JSON.parse(nextDataMatch[1]);
+          const nextDataStr = JSON.stringify(nextData);
 
-    const html = await response.text();
-    console.log("[Balance] HTML length:", html.length);
-    console.log("[Balance] Has 'Balance Information':", html.includes("Balance Information"));
-
-
-    let balance = 0;
-
-    // The HTML contains embedded JSON/data that's rendered by JavaScript
-    // Let's try to extract it from the HTML
-
-    // Strategy 1: Look for __NEXT_DATA__ which contains Next.js initial state
-    console.log("[Balance] Looking for __NEXT_DATA__...");
-    const nextDataMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-    if (nextDataMatch && nextDataMatch[1]) {
-      try {
-        const nextDataJson = JSON.parse(nextDataMatch[1]);
-        console.log("[Balance] Found __NEXT_DATA__, searching for balance...");
-
-        // Navigate to props.pageProps to find balance data
-        if (nextDataJson?.props?.pageProps) {
-          const pageProps = nextDataJson.props.pageProps;
-          console.log("[Balance] pageProps Keys:", Object.keys(pageProps).slice(0, 20));
-
-          const nextDataStr = JSON.stringify(nextDataJson);
-
-          // Search for balance/credit values anywhere in the data
-          const balancePatterns = [
-            /"balance":\s*(\d+)/g,
-            /"credits":\s*(\d+)/g,
-            /"creditsRemaining":\s*(\d+)/g,
-            /"currentBalance":\s*(\d+)/g,
-            /"credit":\s*(\d+)/g,
+          // Search for any numeric value near keywords like balance, credit, remaining
+          // This regex looks for patterns like "balance": 65 or "credits": 100
+          const patterns = [
+            /"balance"\s*:\s*(\d+)/gi,
+            /"credits"\s*:\s*(\d+)/gi,
+            /"creditsRemaining"\s*:\s*(\d+)/gi,
+            /"currentBalance"\s*:\s*(\d+)/gi,
+            /"credit"\s*:\s*(\d+)/gi,
+            /"remaining"\s*:\s*(\d+)/gi,
           ];
 
-          // Try to find all matches and pick the most reasonable one
-          let foundBalances: { value: number; pattern: string }[] = [];
+          let foundValues: number[] = [];
 
-          for (const pattern of balancePatterns) {
+          for (const pattern of patterns) {
             let match;
             while ((match = pattern.exec(nextDataStr)) !== null) {
               const num = parseInt(match[1], 10);
               if (num >= 0 && num < 1000000) {
-                foundBalances.push({ value: num, pattern: pattern.toString() });
+                foundValues.push(num);
               }
             }
           }
 
-          console.log("[Balance] Found balance candidates:", foundBalances.slice(0, 5));
+          console.log("[Balance] Found potential balance values:", [...new Set(foundValues)].sort((a, b) => b - a).slice(0, 5));
 
-          // Pick the first reasonable balance (preferring smaller reasonable numbers like 65)
-          if (foundBalances.length > 0) {
-            // Filter for reasonable balances (not 0, not too large)
-            const reasonableBs = foundBalances.filter(b => b.value > 0 && b.value < 100000);
-            if (reasonableBs.length > 0) {
-              balance = reasonableBs[0].value;
-              console.log("[Balance] Selected balance from candidates:", balance);
-            } else if (foundBalances.length > 0) {
-              balance = foundBalances[0].value;
-              console.log("[Balance] Selected first candidate:", balance);
-            }
-          }
-        }
-      } catch (e) {
-        console.log("[Balance] Error parsing __NEXT_DATA__:", e);
-      }
-    }
-
-    // Strategy 2: Search for window.__data__ or similar patterns
-    if (balance === 0) {
-      console.log("[Balance] Looking for window.__data__ or props...");
-      const windowDataMatch = html.match(/window\.__(\w+)\s*=\s*({[\s\S]*?});\s*<\/script>/);
-      if (windowDataMatch && windowDataMatch[2]) {
-        try {
-          const windowData = JSON.parse(windowDataMatch[2]);
-          const windowDataStr = JSON.stringify(windowData);
-
-          const patterns = [
-            /"currentBalance"\s*:\s*(\d+)/,
-            /"balance"\s*:\s*(\d+)/,
-            /"creditsRemaining"\s*:\s*(\d+)/,
-          ];
-
-          for (const pattern of patterns) {
-            const match = windowDataStr.match(pattern);
-            if (match && match[1]) {
-              const num = parseInt(match[1], 10);
-              if (num >= 0 && num < 1000000) {
-                balance = num;
-                console.log("[Balance] Found in window data:", balance);
-                break;
-              }
-            }
+          // Filter for reasonable balance values (not 0, not too large)
+          const reasonableValues = foundValues.filter(v => v > 0 && v < 100000);
+          if (reasonableValues.length > 0) {
+            // Return the first reasonable value found
+            const balance = reasonableValues[0];
+            console.log("[Balance] Selected balance:", balance);
+            return balance;
           }
         } catch (e) {
-          console.log("[Balance] Error parsing window data:", e);
+          console.log("[Balance] Error parsing __NEXT_DATA__:", e);
         }
       }
-    }
 
-    // Strategy 3: Look for any JSON object in script tags with balance-related keys
-    if (balance === 0) {
-      console.log("[Balance] Scanning all script tags for balance data...");
+      // Fallback: Look for any JSON with balance keywords in script tags
+      console.log("[Balance] Searching script tags for balance data...");
+      const scriptRegex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
+      let scriptMatch;
+      let allNumbers: number[] = [];
 
-      // Find all script tags
-      const scriptMatches = html.match(/<script[^>]*>([\s\S]*?)<\/script>/gi);
-      if (scriptMatches) {
-        for (const script of scriptMatches) {
-          // Look for JSON objects with numeric values
-          const jsonMatches = script.match(/\{[\s\S]*?["'](\w*balance\w*|credit\w*|remaining\w*)["']\s*:\s*(\d+)[\s\S]*?\}/gi);
+      while ((scriptMatch = scriptRegex.exec(html)) !== null) {
+        const scriptContent = scriptMatch[1];
 
-          if (jsonMatches) {
-            for (const jsonMatch of jsonMatches) {
-              // Try to extract the number
-              const numMatch = jsonMatch.match(/["'](\w*balance\w*|credit\w*|remaining\w*)["']\s*:\s*(\d+)/i);
-              if (numMatch && numMatch[2]) {
-                const num = parseInt(numMatch[2], 10);
-                if (num >= 0 && num < 1000000) {
-                  balance = num;
-                  console.log("[Balance] Found in script object:", balance, "Key:", numMatch[1]);
-                  break;
-                }
+        // Look for JSON objects with balance/credit keywords
+        if (scriptContent.includes("balance") || scriptContent.includes("credit")) {
+          // Extract all numbers from this script
+          const numbers = scriptContent.match(/:\s*(\d+)/g);
+          if (numbers) {
+            numbers.forEach(n => {
+              const num = parseInt(n.replace(/[^\d]/g, ""), 10);
+              if (num > 0 && num < 100000) {
+                allNumbers.push(num);
               }
-            }
-            if (balance > 0) break;
+            });
           }
+        }
+      }
+
+      if (allNumbers.length > 0) {
+        // Pick the smallest reasonable number (likely the current balance)
+        const filtered = [...new Set(allNumbers)].filter(n => n > 0 && n < 100000).sort((a, b) => a - b);
+        if (filtered.length > 0 && filtered[0] < 1000) {
+          console.log("[Balance] Extracted balance from scripts:", filtered[0]);
+          return filtered[0];
         }
       }
     }
 
-    // Strategy 4: Look for JSON-like data patterns anywhere in HTML
-    if (balance === 0) {
-      console.log("[Balance] Looking for JSON patterns with balance keywords...");
-
-      const patterns = [
-        /"currentBalance"\s*:\s*(\d+)/i,
-        /"balance"\s*:\s*(\d+)/i,
-        /"creditsRemaining"\s*:\s*(\d+)/i,
-        /"credits"\s*:\s*(\d+)/i,
-        /"credit"\s*:\s*(\d+)/i,
-      ];
-
-      for (const pattern of patterns) {
-        const match = html.match(pattern);
-        if (match && match[1]) {
-          const num = parseInt(match[1], 10);
-          if (num >= 0 && num < 1000000) {
-            balance = num;
-            console.log("[Balance] Found with regex:", balance);
-            break;
-          }
-        }
-      }
-    }
-
-    // Strategy 5: Look for the exact rendered pattern in case it's there
-    if (balance === 0) {
-      console.log("[Balance] Looking for HTML span pattern...");
-      const patterns = [
-        />(\d+)<\/span><\/span>\s*<[^>]*>credits/i,
-        />(\d+)<\/span>[^<]*credits/i,
-        /Balance\s+Information[\s\S]{0,1000}>(\d{1,3})</i,
-        /<span[^>]*>(\d+)<\/span>\s*credits/i,
-      ];
-
-      for (const pattern of patterns) {
-        const match = html.match(pattern);
-        if (match && match[1]) {
-          const num = parseInt(match[1], 10);
-          if (num >= 0 && num < 10000) {
-            balance = num;
-            console.log("[Balance] Regex found:", balance);
-            break;
-          }
-        }
-      }
-    }
-
-    console.log("[Balance] FINAL BALANCE:", balance);
-    return balance;
+    console.log("[Balance] FINAL BALANCE: 0 (could not extract)");
+    return 0;
   } catch (error: any) {
     console.error("[Balance] Error:", error.message);
-    console.error("[Balance] Stack:", error.stack);
     return 0;
   }
 }
