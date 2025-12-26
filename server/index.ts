@@ -95,5 +95,17 @@ export function createServer() {
     handleCallback(req, res);
   });
 
+  // Debug endpoint - shows recent logs
+  app.get("/api/debug-logs", (_req, res) => {
+    res.json({
+      message: "Check browser console and server logs for debug output",
+      endpoints: {
+        health: "/api/health",
+        test_callback: "/api/test-callback",
+        tasks_file: "/tasks/results.json",
+      },
+    });
+  });
+
   return app;
 }
