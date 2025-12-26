@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import EmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ImageCarouselProps {
@@ -12,13 +11,10 @@ export function ImageCarousel({ images = [
   "/images/samples/sample-2.jpg",
   "/images/samples/sample-3.jpg",
 ] }: ImageCarouselProps) {
-  const [emblaRef, emblaApi] = EmblaCarousel(
-    {
-      loop: true,
-      align: "center",
-    },
-    [Autoplay({ delay: 5000 })]
-  );
+  const [emblaRef, emblaApi] = EmblaCarousel({
+    loop: true,
+    align: "center",
+  });
 
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
