@@ -36,39 +36,6 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
           {/* Right side actions */}
           {isLoggedIn && (
             <div className="flex items-center gap-2 sm:gap-4">
-              {/* Support buttons - desktop */}
-              <div className="hidden sm:flex items-center gap-2">
-                <a
-                  href="tel:+989357887572"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button variant="outline" size="sm" className="text-xs">
-                    ☎ <span className="hidden sm:inline">تماس</span>
-                  </Button>
-                </a>
-                <a
-                  href="http://wa.me/+989357887572"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button variant="outline" size="sm" className="text-xs">
-                    💬 واتساپ
-                  </Button>
-                </a>
-              </div>
-
-              {/* Logout button */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onLogout}
-                className="gap-2"
-              >
-                <LogOut className="h-4 w-4" />
-                <span className="hidden sm:inline">خروج</span>
-              </Button>
-
               {/* Mobile menu */}
               <Button
                 variant="ghost"
