@@ -174,12 +174,21 @@ export function HistoryModal({
                     <CardContent className="space-y-4">
                       {/* Image Preview */}
                       {entry.imageUrl && entry.status === "success" ? (
-                        <div className="rounded-lg overflow-hidden border border-border bg-muted">
+                        <div
+                          onClick={() => {
+                            setViewerImage(entry.imageUrl!);
+                            setViewerOpen(true);
+                          }}
+                          className="relative rounded-lg overflow-hidden border border-border bg-muted h-48 flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors group"
+                        >
                           <img
                             src={entry.imageUrl}
                             alt="تصویر تولید شده"
-                            className="w-full max-h-64 object-cover"
+                            className="max-w-full max-h-full object-contain"
                           />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors">
+                            <Maximize2 className="h-6 w-6 text-white/0 group-hover:text-white transition-colors" />
+                          </div>
                         </div>
                       ) : entry.status === "fail" ? (
                         <div className="rounded-lg p-4 bg-red-50 border border-red-200">
