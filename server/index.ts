@@ -25,6 +25,21 @@ export function createServer() {
   // Serve static files from public directory
   app.use(express.static("public"));
 
+  // Logging middleware for debugging
+  app.use((req, res, next) => {
+    if (req.path === "/api/callback") {
+      console.log("[REQUEST] Incoming callback request");
+      console.log("[REQUEST] Method:", req.method);
+      console.log("[REQUEST] Headers:", Object.fromEntries(
+        Object.entries(req.headers).filter(([key]) =>
+          !key.toLowerCase().includes("cookie") &&
+          !key.toLowerCase().includes("authorization")
+        )
+      ));
+    }
+    next();
+  });
+
   // Example API routes
   app.get("/api/ping", (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
