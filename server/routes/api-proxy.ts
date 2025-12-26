@@ -719,7 +719,9 @@ export async function handleCallback(
 
     if (!taskId) {
       console.error("[Callback] No taskId found in callback - data structure unknown");
-      res.status(400).json({ error: "No taskId provided" });
+      console.error("[Callback] Data structure:", JSON.stringify(data, null, 2));
+      // Still return 200 to prevent retries, but log the issue for debugging
+      res.status(200).json({ error: "No taskId provided" });
       return;
     }
 
