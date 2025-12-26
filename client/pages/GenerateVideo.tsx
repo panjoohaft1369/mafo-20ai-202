@@ -191,9 +191,16 @@ export default function GenerateVideo() {
             تصویری انتخاب کنید و حرکت دلخواه را توصیف کنید تا ویدیویی خیره‌کننده
             ایجاد شود
           </p>
-          <p className="text-sm text-red-600 font-medium">
+          <p className="text-sm text-red-600 font-medium mb-4">
             استفاده از این هوش مصنوعی رایگان نمی‌باشد
           </p>
+
+          {/* Credit Cost Info Box */}
+          <div className="p-4 bg-red-50 rounded-lg border border-red-200 inline-block">
+            <p className="text-sm text-red-800 font-medium">
+              💰 <strong>هزینه اعتبار:</strong> ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
+            </p>
+          </div>
         </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
