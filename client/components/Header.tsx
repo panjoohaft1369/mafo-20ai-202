@@ -29,37 +29,6 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
             </div>
           </Link>
 
-          {/* Navigation Links */}
-          {isLoggedIn && (
-            <div className="hidden sm:flex items-center gap-2 mx-auto">
-              <Link to="/generate">
-                <Button
-                  variant={
-                    location.pathname === "/generate" ? "default" : "ghost"
-                  }
-                  size="sm"
-                  className="gap-2"
-                >
-                  <Wand2 className="h-4 w-4" />
-                  تصویر
-                </Button>
-              </Link>
-              <Link to="/generate-video">
-                <Button
-                  variant={
-                    location.pathname === "/generate-video"
-                      ? "default"
-                      : "ghost"
-                  }
-                  size="sm"
-                  className="gap-2"
-                >
-                  <Film className="h-4 w-4" />
-                  ویدیو
-                </Button>
-              </Link>
-            </div>
-          )}
 
           {/* Center spacer */}
           <div className="flex-1" />
