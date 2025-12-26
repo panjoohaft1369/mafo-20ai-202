@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import * as fs from "fs";
 import * as path from "path";
 import { fetchBalanceFromBilling } from "../utils/puppeteer-balance.js";
+import { fetchCompleteLogsFromKie } from "../utils/kie-logs-scraper.js";
 
 // Updated to kie.ai v1 API
 const KIE_AI_API_BASE = "https://api.kie.ai/api/v1";
