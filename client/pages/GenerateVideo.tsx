@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { VideoTutorial } from "@/components/VideoTutorial";
@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { generateVideo, pollTaskCompletion, uploadImage } from "@/lib/api";
+import { generateVideo, pollTaskCompletion, uploadImage, fetchBillingInfo } from "@/lib/api";
 import { getAuthState, clearAuth } from "@/lib/auth";
 import {
   Upload,
