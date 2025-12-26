@@ -118,7 +118,7 @@ export async function generateImage(
         Authorization: `Bearer ${request.apiKey}`,
       },
       body: JSON.stringify({
-        imageUrl: request.imageUrl,
+        imageUrls: request.imageUrls,
         prompt: request.prompt,
         aspectRatio: request.aspectRatio,
         resolution: request.resolution,
