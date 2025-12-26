@@ -140,29 +140,29 @@
   }
 
   html {
-    font-family: "Shabnami", sans-serif;
+    font-family: "Shabnam", sans-serif;
   }
 
   body {
     @apply bg-background text-foreground;
     direction: rtl;
-    font-family: "Shabnami", sans-serif;
+    font-family: "Shabnam", sans-serif;
     font-variant-numeric: tabular-nums;
   }
 
   html, body, button, input, textarea, select, div, p, span, li, a, label, td, th {
-    font-family: "Shabnami", sans-serif;
+    font-family: "Shabnam", sans-serif;
     font-variant-numeric: tabular-nums;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Shabnami", sans-serif;
+    font-family: "Shabnam", sans-serif;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
   }
 
   p, span, li, a, label, td, th {
-    font-family: "Shabnami", sans-serif;
+    font-family: "Shabnam", sans-serif;
     font-variant-numeric: tabular-nums;
   }
 
