@@ -68,11 +68,9 @@ export function BottomNav({ isLoggedIn, onLogout }: BottomNavProps) {
         </Link>
 
         {/* Logout Tab */}
-        <button
-          onClick={onLogout}
-          className="flex flex-col items-center justify-center h-full"
-        >
+        <div className="flex flex-col items-center justify-center h-full">
           <Button
+            onClick={onLogout}
             variant="ghost"
             size="icon"
             className="rounded-lg w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center"
@@ -80,7 +78,7 @@ export function BottomNav({ isLoggedIn, onLogout }: BottomNavProps) {
             <LogOut className="h-5 w-5 sm:h-6 sm:w-6" />
           </Button>
           <span className="text-xs sm:text-sm mt-1 font-medium">خروج</span>
-        </button>
+        </div>
       </div>
     </div>
   );
