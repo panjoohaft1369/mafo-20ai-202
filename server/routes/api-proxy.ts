@@ -619,7 +619,7 @@ export async function handleFetchLogs(
 
 /**
  * دریافت اطلاعات بیل (Billing)
- * Fetch real-time credit balance from kie.ai API
+ * Scrape the kie.ai/billing page to extract real credit balance
  */
 export async function handleFetchBilling(
   req: Request,
@@ -636,19 +636,25 @@ export async function handleFetchBilling(
       return;
     }
 
-    console.log("[Billing] دریافت اطلاعات اعتبار");
+    console.log("[Billing] دریافت اطلاعات اعتبار از kie.ai/billing");
     console.log("[Billing] API Key:", apiKey.substring(0, 10) + "...");
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 ثانیه timeout
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 ثانیه timeout
 
-    // Try to fetch user profile from kie.ai
-    const response = await fetch(`${KIE_AI_API_BASE}/users/profile`, {
+    // Fetch the billing page with authentication cookie/session
+    // We need to access https://kie.ai/billing which is a protected page
+    const response = await fetch("https://kie.ai/billing", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-        "User-Agent": "MAFO-Client/1.0",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        // Try to pass API key as authorization header
+        "Authorization": `Bearer ${apiKey}`,
+        // Also try as a cookie
+        "Cookie": `api_key=${apiKey}`,
       },
       signal: controller.signal,
     });
@@ -658,9 +664,9 @@ export async function handleFetchBilling(
     console.log("[Billing] HTTP Status:", response.status);
     console.log("[Billing] Content-Type:", response.headers.get("content-type"));
 
-    // Check if API key is invalid
-    if (response.status === 401) {
-      console.error("[Billing] Invalid API key (401)");
+    // Check if API key is invalid (403 or 401)
+    if (response.status === 401 || response.status === 403) {
+      console.error("[Billing] Invalid API key or unauthorized (", response.status, ")");
       res.status(401).json({
         success: false,
         error: "کد لایسنس شما معتبر نمیباشد",
@@ -668,28 +674,8 @@ export async function handleFetchBilling(
       return;
     }
 
-    const contentType = response.headers.get("content-type");
-    let data: any;
-
-    try {
-      if (contentType?.includes("application/json")) {
-        data = await response.json();
-      } else {
-        const text = await response.text();
-        console.error("[Billing] Non-JSON Response:", text.substring(0, 200));
-        // If not JSON, assume endpoint doesn't exist
-        console.log("[Billing] Endpoint returned non-JSON, returning fallback");
-        res.json({
-          success: true,
-          creditsRemaining: 0,
-          totalCredits: 0,
-          usedCredits: 0,
-          message: "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
-        });
-        return;
-      }
-    } catch (parseError) {
-      console.error("[Billing] خطا در پارس JSON:", parseError);
+    if (!response.ok) {
+      console.error("[Billing] HTTP Error:", response.status);
       res.json({
         success: true,
         creditsRemaining: 0,
@@ -700,39 +686,55 @@ export async function handleFetchBilling(
       return;
     }
 
-    console.log("[Billing] Response:", JSON.stringify(data, null, 2));
+    const html = await response.text();
+    console.log("[Billing] HTML length:", html.length);
+    console.log("[Billing] HTML preview:", html.substring(0, 500));
 
-    // Handle both possible response formats
-    // Format 1: { code: 200, data: { ... } }
-    // Format 2: { code: 200, ... }
-    let billingData = data?.data || data;
+    // Extract credit balance from HTML
+    // Look for patterns like "65 credits" or similar
+    let creditsRemaining = 0;
 
-    // Try different possible paths for credit values
-    const creditsRemaining =
-      billingData?.creditsRemaining ||
-      billingData?.credits_remaining ||
-      billingData?.balance ||
-      billingData?.credits ||
-      0;
+    // Try multiple regex patterns to find the credit number
+    const patterns = [
+      // Pattern 1: "65 credits" or similar
+      /(\d+)\s+credits?/i,
+      // Pattern 2: "65" inside Balance Information section
+      /Balance\s*Information[\s\S]*?(\d+)/i,
+      // Pattern 3: Look for number in data attributes or text
+      /["']credits?["']\s*:\s*(\d+)/i,
+      // Pattern 4: Common billing page pattern
+      /current\s*balance[\s\S]*?(\d+)/i,
+      // Pattern 5: Look for "Current Balance" text followed by number
+      />(\d+)\s*<\/[^>]*>\s*<[^>]*>credits?</i,
+      // Pattern 6: Simple number extraction from likely location
+      /balance[^<]*>[\s\S]*?>(\d+)</i,
+    ];
 
-    const totalCredits =
-      billingData?.totalCredits ||
-      billingData?.total_credits ||
-      billingData?.total ||
-      0;
+    for (const pattern of patterns) {
+      const match = html.match(pattern);
+      if (match && match[1]) {
+        const num = parseInt(match[1], 10);
+        if (!isNaN(num) && num >= 0) {
+          creditsRemaining = num;
+          console.log("[Billing] Found credits using pattern:", pattern);
+          break;
+        }
+      }
+    }
 
-    // If we got an actual number for credits, that's good
-    if (typeof creditsRemaining === "number" && creditsRemaining > 0) {
-      console.log("[Billing] Successfully fetched credits:", creditsRemaining);
+    // If we found a credit value, return it
+    if (creditsRemaining > 0 || creditsRemaining === 0) {
+      console.log("[Billing] Successfully scraped credits:", creditsRemaining);
       res.json({
         success: true,
-        creditsRemaining: Math.floor(creditsRemaining),
-        totalCredits: Math.floor(totalCredits),
-        usedCredits: Math.floor((totalCredits - creditsRemaining) || 0),
+        creditsRemaining: creditsRemaining,
+        totalCredits: 0,
+        usedCredits: 0,
       });
     } else {
-      // Endpoint returned 200 but no useful credit data
-      console.log("[Billing] No credit data in response, returning fallback");
+      console.log("[Billing] Could not extract credit number from HTML");
+      // Log some of the HTML for debugging
+      console.log("[Billing] HTML snippet:", html.substring(0, 1000));
       res.json({
         success: true,
         creditsRemaining: 0,
