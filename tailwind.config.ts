@@ -60,11 +60,6 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        brand: {
-          primary: "#22c55e",
-          secondary: "#a855f7",
-          accent: "#22c55e",
-        },
       },
       borderRadius: {
         lg: "var(--radius)",
