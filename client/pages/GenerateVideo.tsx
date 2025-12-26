@@ -326,6 +326,16 @@ export default function GenerateVideo() {
               </div>
             )}
 
+            {/* Credit Cost Alert */}
+            <div className="p-4 bg-red-50 rounded-lg border-2 border-red-300 shadow-md">
+              <p className="text-sm text-red-900 font-bold">
+                ⚠️ توجه: اعتبار شما کسر خواهد شد
+              </p>
+              <p className="text-xs text-red-800 mt-2">
+                ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
+              </p>
+            </div>
+
             {/* Generate Button */}
             <Button
               onClick={handleGenerate}
