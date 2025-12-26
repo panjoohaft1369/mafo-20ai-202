@@ -50,73 +50,107 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
 
     let balance = 0;
 
-    // Strategy 1: Look for pattern <span>NUMBER</span>credits
-    const patterns = [
-      // Exact pattern from screenshot: <span>65</span>credits
-      /Balance\s+Information[\s\S]{0,300}>(\d+)<\/span><\/span>\s*<[^>]*>credits/i,
-      /Balance\s+Information[\s\S]{0,300}>(\d+)<\/span>\s*credits/i,
-      // More flexible pattern
-      />(\d+)<\/span><\/span>[^<]*credits/i,
-      />(\d+)<\/span>[^<]{0,50}credits/i,
-      // Direct number before "credits"
-      />(\d+)<[^>]*credits/i,
-      // Fallback: any number in Balance section
-      /Balance\s+Information[\s\S]{0,500}>(\d{1,4})</i,
+    // The HTML contains embedded JSON/data that's rendered by JavaScript
+    // Let's try to extract it from the HTML
+
+    // Strategy 1: Look for JSON-like data in the HTML
+    // Try to find "currentBalance" or similar JSON keys
+    const jsonPatterns = [
+      /"currentBalance"\s*:\s*(\d+)/i,
+      /"balance"\s*:\s*(\d+)/i,
+      /"credit"\s*:\s*(\d+)/i,
+      /"credits"\s*:\s*(\d+)/i,
+      /"creditsRemaining"\s*:\s*(\d+)/i,
     ];
 
-    for (const pattern of patterns) {
+    for (const pattern of jsonPatterns) {
       const match = html.match(pattern);
       if (match && match[1]) {
         const num = parseInt(match[1], 10);
-        if (num > 0 && num < 10000) {
+        if (num > 0 && num < 100000) {
           balance = num;
-          console.log("[Balance] Pattern matched, found balance:", balance, "Pattern:", pattern.toString());
+          console.log("[Balance] Found in JSON:", balance, "Pattern:", pattern.toString());
           break;
         }
       }
     }
 
-    // Strategy 2: If no pattern worked, extract ALL numbers and find the most likely balance
+    // Strategy 2: Look for window data or script tags containing balance
     if (balance === 0) {
-      console.log("[Balance] No pattern matched, trying comprehensive number extraction...");
+      console.log("[Balance] No JSON pattern matched, searching script tags...");
 
-      // Find all numbers in the page
-      const numberMatches = html.match(/\b(\d{1,4})\b/g) || [];
-      const numbers = numberMatches.map((n) => parseInt(n, 10));
-      const uniqueNumbers = Array.from(new Set(numbers));
+      // Find all script tags
+      const scriptMatch = html.match(/<script[^>]*>([\s\S]*?)<\/script>/gi);
+      if (scriptMatch) {
+        for (const script of scriptMatch) {
+          // Look for JSON-like data
+          const jsonMatches = script.match(/"[^"]*"\s*:\s*\d+/g);
+          if (jsonMatches) {
+            for (const match of jsonMatches) {
+              const numMatch = match.match(/(\d+)$/);
+              if (numMatch && numMatch[1]) {
+                const num = parseInt(numMatch[1], 10);
+                if (num > 10 && num < 100000 && num !== 2024) {
+                  balance = num;
+                  console.log("[Balance] Found in script data:", balance);
+                  break;
+                }
+              }
+            }
+          }
+          if (balance > 0) break;
+        }
+      }
+    }
 
-      console.log("[Balance] All unique numbers found (first 30):", uniqueNumbers.slice(0, 30));
+    // Strategy 3: Parse as much JSON-like content as possible
+    if (balance === 0) {
+      console.log("[Balance] Trying deep JSON parsing...");
 
-      // Try to find the balance by looking for numbers in the Balance Information section
-      const balanceStart = html.toLowerCase().indexOf("balance information");
-      if (balanceStart !== -1) {
-        const balanceEnd = balanceStart + 1000;
-        const balanceSection = html.substring(balanceStart, balanceEnd);
-        const balanceNumbers = balanceSection.match(/\b(\d{1,4})\b/g) || [];
+      // Look for large JSON objects that might contain balance
+      const jsonMatch = html.match(/\{[^{}]*"[^"]*"\s*:\s*\d+[^{}]*\}/);
+      if (jsonMatch) {
+        try {
+          // Try to extract and parse JSON
+          const jsonStr = jsonMatch[0];
+          // Simple regex extraction of key-value pairs
+          const pairs = jsonStr.match(/"(\w+)"\s*:\s*(\d+)/g) || [];
 
-        console.log("[Balance] Numbers in Balance Information section:", balanceNumbers);
+          for (const pair of pairs) {
+            const match = pair.match(/"(\w+)"\s*:\s*(\d+)/);
+            if (match && (match[1].toLowerCase().includes("balance") ||
+                         match[1].toLowerCase().includes("credit"))) {
+              const num = parseInt(match[2], 10);
+              if (num > 0 && num < 100000) {
+                balance = num;
+                console.log("[Balance] Extracted from JSON pair:", balance);
+                break;
+              }
+            }
+          }
+        } catch (e) {
+          console.log("[Balance] JSON parsing error:", e);
+        }
+      }
+    }
 
-        for (const numStr of balanceNumbers) {
-          const num = parseInt(numStr, 10);
-          if (num > 0 && num < 1000) {
-            // Prefer numbers less than 1000 as they're more likely to be balance
+    // Strategy 4: Look for the exact rendered pattern in case it's there
+    if (balance === 0) {
+      const patterns = [
+        />(\d+)<\/span><\/span>\s*<[^>]*>credits/i,
+        />(\d+)<\/span>[^<]*credits/i,
+        /Balance\s+Information[\s\S]{0,500}>(\d{1,3})</i,
+      ];
+
+      for (const pattern of patterns) {
+        const match = html.match(pattern);
+        if (match && match[1]) {
+          const num = parseInt(match[1], 10);
+          if (num > 0 && num < 10000) {
             balance = num;
-            console.log("[Balance] Using number from Balance section:", balance);
+            console.log("[Balance] Regex found:", balance);
             break;
           }
-        }
-      }
-    }
-
-    // Strategy 3: If still 0, use first reasonable number found
-    if (balance === 0 && html.includes("Balance Information")) {
-      const allNumbers = html.match(/\d+/g) || [];
-      for (const numStr of allNumbers) {
-        const num = parseInt(numStr, 10);
-        if (num > 0 && num < 10000) {
-          balance = num;
-          console.log("[Balance] Using first reasonable number found:", balance);
-          break;
         }
       }
     }
