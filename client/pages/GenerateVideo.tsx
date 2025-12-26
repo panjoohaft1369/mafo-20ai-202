@@ -185,11 +185,14 @@ export default function GenerateVideo() {
         {/* Title Section */}
         <div className="max-w-4xl mx-auto mb-8 text-center">
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-            تولید ویدیو هوش مصنوعی
+            تولید ویدیو هوش مصنوعی (حالت آزمایشی)
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mb-2">
             تصویری انتخاب کنید و حرکت دلخواه را توصیف کنید تا ویدیویی خیره‌کننده
             ایجاد شود
+          </p>
+          <p className="text-sm text-red-600 font-medium">
+            استفاده از این هوش مصنوعی رایگان نمی‌باشد
           </p>
         </div>
 
