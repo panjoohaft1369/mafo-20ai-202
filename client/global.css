@@ -1,6 +1,5 @@
 /** @import must precede all other statements */
 @import url("https://fonts.googleapis.com/css2?family=Shabnami:wght@400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -123,19 +122,11 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: "Shabnami", sans-serif;
     font-weight: 700;
-    color: #8b3fe0;
-    -webkit-text-stroke: 1.5px white;
-    text-stroke: 1.5px white;
-    paint-order: stroke fill;
     font-variant-numeric: tabular-nums;
   }
 
   p, span, li, a, label, td, th {
     font-family: "Shabnami", sans-serif;
-    color: #7c3acc;
-    -webkit-text-stroke: 0.8px white;
-    text-stroke: 0.8px white;
-    paint-order: stroke fill;
     font-variant-numeric: tabular-nums;
   }
 
@@ -149,11 +140,6 @@
     overflow-x: auto;
     white-space: pre;
     direction: ltr;
-    font-family: "Courier New", monospace;
-  }
-
-  /* English text should use Inter font */
-  .english, [lang="en"], code, pre {
-    font-family: "Inter", "Courier New", monospace;
+    font-family: "Shabnami", sans-serif;
   }
 }
