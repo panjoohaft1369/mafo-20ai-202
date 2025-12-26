@@ -213,18 +213,39 @@ export default function Generate() {
                     ref={fileInputRef}
                     type="file"
                     accept="image/*"
+                    multiple
                     onChange={handleImageSelect}
                     className="hidden"
                   />
-                  {selectedImage ? (
-                    <div className="space-y-2">
-                      <img
-                        src={selectedImage}
-                        alt="انتخاب شده"
-                        className="max-h-48 mx-auto rounded"
-                      />
-                      <p className="text-sm text-muted-foreground">
-                        برای تغییر، دوباره کلیک کنید
+                  {selectedImages.length > 0 ? (
+                    <div className="space-y-4">
+                      <p className="text-sm font-medium">
+                        {selectedImages.length} تصویر انتخاب شده
+                      </p>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {selectedImages.map((image, index) => (
+                          <div key={index} className="relative group">
+                            <img
+                              src={image}
+                              alt={`تصویر ${index + 1}`}
+                              className="max-h-32 mx-auto rounded object-cover w-full"
+                            />
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedImages((prev) =>
+                                  prev.filter((_, i) => i !== index),
+                                );
+                              }}
+                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        برای اضافه کردن تصویر بیشتر کلیک کنید
                       </p>
                     </div>
                   ) : (
@@ -234,24 +255,24 @@ export default function Generate() {
                         تصویر را اینجا بگذارید
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        PNG, JPG یا WebP
+                        PNG, JPG یا WebP (میتوانید چند تصویر انتخاب کنید)
                       </p>
                     </div>
                   )}
                 </div>
 
-                {selectedImage && (
+                {selectedImages.length > 0 && (
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      setSelectedImage(null);
+                      setSelectedImages([]);
                       setGeneratedImage(null);
                     }}
                     className="w-full"
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
-                    حذف تصویر
+                    حذف تمام تصاویر
                   </Button>
                 )}
               </CardContent>
