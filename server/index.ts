@@ -48,6 +48,34 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Health check endpoint - shows all tasks and callback status
+  app.get("/api/health", (_req, res) => {
+    const fs = require("fs");
+    const path = require("path");
+
+    const tasksFile = path.join(process.cwd(), "public", "tasks", "results.json");
+    let taskData: any = {};
+
+    try {
+      if (fs.existsSync(tasksFile)) {
+        const content = fs.readFileSync(tasksFile, "utf-8");
+        taskData = JSON.parse(content);
+      }
+    } catch (e) {
+      console.error("[Health] Error reading tasks:", e);
+    }
+
+    res.json({
+      status: "ok",
+      public_url: process.env.PUBLIC_URL || "not set",
+      callback_url: `${process.env.PUBLIC_URL || "not set"}/api/callback`,
+      tasks_file: tasksFile,
+      tasks_count: Object.keys(taskData).length,
+      tasks: taskData,
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   // Image upload route
   app.post("/api/upload-image", handleImageUpload);
 
