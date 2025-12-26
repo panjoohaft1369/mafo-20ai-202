@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuthState } from "@/lib/auth";
 import { Header } from "@/components/Header";
 import { Tutorial } from "@/components/Tutorial";
+import { Footer } from "@/components/Footer";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { Button } from "@/components/ui/button";
 import {
