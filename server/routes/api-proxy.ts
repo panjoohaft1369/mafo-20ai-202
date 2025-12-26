@@ -184,14 +184,19 @@ export async function handleValidateApiKey(
     console.log("[API] تایید موفق!");
 
     // Now fetch the actual credit balance from kie.ai/billing using Puppeteer
-    console.log("[API] Fetching actual balance from kie.ai/billing using Puppeteer...");
+    console.log(
+      "[API] Fetching actual balance from kie.ai/billing using Puppeteer...",
+    );
     let actualBalance = 0;
 
     try {
       actualBalance = await fetchBalanceFromBilling(apiKey);
       console.log("[API] Puppeteer extracted balance:", actualBalance);
     } catch (billingError) {
-      console.error("[API] Error fetching balance with Puppeteer:", billingError);
+      console.error(
+        "[API] Error fetching balance with Puppeteer:",
+        billingError,
+      );
     }
 
     // Use actual balance if found, otherwise fallback to 100
@@ -608,7 +613,9 @@ export async function handleFetchLogs(
     const remoteLogs = await fetchCompleteLogsFromKie(apiKey);
 
     if (remoteLogs && remoteLogs.length > 0) {
-      console.log(`[Logs] Fetched ${remoteLogs.length} entries from kie.ai/logs`);
+      console.log(
+        `[Logs] Fetched ${remoteLogs.length} entries from kie.ai/logs`,
+      );
       // Sort by timestamp in descending order (newest first)
       const sortedLogs = remoteLogs.sort((a, b) => b.timestamp - a.timestamp);
       res.json({
@@ -619,7 +626,9 @@ export async function handleFetchLogs(
       return;
     }
 
-    console.log("[Logs] No logs from kie.ai/logs, falling back to local storage");
+    console.log(
+      "[Logs] No logs from kie.ai/logs, falling back to local storage",
+    );
 
     // Fallback: Get locally stored task results
     const twoMonthsAgo = new Date();
@@ -640,7 +649,9 @@ export async function handleFetchLogs(
     });
 
     // Sort by timestamp in descending order (newest first)
-    const sortedLogs = filteredLogs.sort((a: any, b: any) => b.timestamp - a.timestamp);
+    const sortedLogs = filteredLogs.sort(
+      (a: any, b: any) => b.timestamp - a.timestamp,
+    );
 
     console.log(`[Logs] Found ${sortedLogs.length} tasks in local storage`);
 
@@ -718,7 +729,7 @@ export async function handleFetchBilling(
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`,
+            Authorization: `Bearer ${apiKey}`,
           },
           signal: controller.signal,
         });
@@ -749,7 +760,10 @@ export async function handleFetchBilling(
               data?.user?.credits;
 
             if (typeof balance === "number" && balance >= 0) {
-              console.log(`[Billing] ✓ Found balance from ${endpoint}:`, balance);
+              console.log(
+                `[Billing] ✓ Found balance from ${endpoint}:`,
+                balance,
+              );
               res.json({
                 success: true,
                 creditsRemaining: Math.floor(balance),
@@ -775,10 +789,11 @@ export async function handleFetchBilling(
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
-        "Authorization": `Bearer ${apiKey}`,
-        "Cookie": `api_key=${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
+        Cookie: `api_key=${apiKey}`,
       },
       signal: controller.signal,
     });
@@ -786,11 +801,18 @@ export async function handleFetchBilling(
     clearTimeout(timeoutId);
 
     console.log("[Billing] HTTP Status:", response.status);
-    console.log("[Billing] Content-Type:", response.headers.get("content-type"));
+    console.log(
+      "[Billing] Content-Type:",
+      response.headers.get("content-type"),
+    );
 
     // Check if API key is invalid (403 or 401)
     if (response.status === 401 || response.status === 403) {
-      console.error("[Billing] Invalid API key or unauthorized (", response.status, ")");
+      console.error(
+        "[Billing] Invalid API key or unauthorized (",
+        response.status,
+        ")",
+      );
       res.status(401).json({
         success: false,
         error: "کد لایسنس شما معتبر نمیباشد",
@@ -805,7 +827,8 @@ export async function handleFetchBilling(
         creditsRemaining: 0,
         totalCredits: 0,
         usedCredits: 0,
-        message: "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
+        message:
+          "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
       });
       return;
     }
@@ -827,7 +850,9 @@ export async function handleFetchBilling(
     }
 
     // Also try to find where number data might be (could be in __NEXT_DATA__ or window.__data__)
-    const nextDataMatch = html.match(/__NEXT_DATA__\s*=\s*({[\s\S]*?})<\/script>/);
+    const nextDataMatch = html.match(
+      /__NEXT_DATA__\s*=\s*({[\s\S]*?})<\/script>/,
+    );
     if (nextDataMatch) {
       console.log("[Billing] Found __NEXT_DATA__");
       const dataStr = nextDataMatch[1].substring(0, 500);
@@ -835,7 +860,9 @@ export async function handleFetchBilling(
     }
 
     // Also search for JSON data in script tags
-    const jsonDataMatches = html.match(/<script[^>]*>[\s\S]*?"credits?"\s*:\s*(\d+)/i);
+    const jsonDataMatches = html.match(
+      /<script[^>]*>[\s\S]*?"credits?"\s*:\s*(\d+)/i,
+    );
     if (jsonDataMatches && jsonDataMatches[1]) {
       console.log("[Billing] Found credits in JSON data:", jsonDataMatches[1]);
     }
@@ -882,7 +909,8 @@ export async function handleFetchBilling(
       creditsRemaining: 0,
       totalCredits: 0,
       usedCredits: 0,
-      message: "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
+      message:
+        "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
     });
   }
 }

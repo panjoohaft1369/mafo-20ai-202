@@ -150,18 +150,42 @@
     font-variant-numeric: tabular-nums;
   }
 
-  html, body, button, input, textarea, select, div, p, span, li, a, label, td, th {
+  html,
+  body,
+  button,
+  input,
+  textarea,
+  select,
+  div,
+  p,
+  span,
+  li,
+  a,
+  label,
+  td,
+  th {
     font-family: "Shabnam", sans-serif;
     font-variant-numeric: tabular-nums;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: "Shabnam", sans-serif;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
   }
 
-  p, span, li, a, label, td, th {
+  p,
+  span,
+  li,
+  a,
+  label,
+  td,
+  th {
     font-family: "Shabnam", sans-serif;
     font-variant-numeric: tabular-nums;
   }

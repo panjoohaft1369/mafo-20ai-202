@@ -8,7 +8,10 @@ import * as path from "path";
 
 export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
   try {
-    console.log("[Balance] Fetching balance for API Key:", apiKey.substring(0, 10) + "...");
+    console.log(
+      "[Balance] Fetching balance for API Key:",
+      apiKey.substring(0, 10) + "...",
+    );
 
     // Strategy 1: Try various API endpoints where balance might be exposed
     const apiEndpoints = [
@@ -34,7 +37,7 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`,
+            Authorization: `Bearer ${apiKey}`,
             "User-Agent": "MAFO-Client/1.0",
           },
           timeout: 10000,
@@ -42,7 +45,10 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(`[Balance] API response from ${fullUrl}:`, JSON.stringify(data).substring(0, 300));
+          console.log(
+            `[Balance] API response from ${fullUrl}:`,
+            JSON.stringify(data).substring(0, 300),
+          );
 
           // Try to extract balance from various paths
           const balance =
@@ -75,12 +81,14 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
     const billingResponse = await fetch("https://kie.ai/billing", {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        Authorization: `Bearer ${apiKey}`,
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
         "Cache-Control": "no-cache",
-        "Referer": "https://kie.ai/",
+        Referer: "https://kie.ai/",
       },
       timeout: 15000,
     });
@@ -95,7 +103,9 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
       // console.log("[Balance] Saved HTML for debugging to:", debugPath);
 
       // Look for __NEXT_DATA__ which contains the initial page state
-      const nextDataMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+      const nextDataMatch = html.match(
+        /<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/,
+      );
       if (nextDataMatch && nextDataMatch[1]) {
         try {
           const nextData = JSON.parse(nextDataMatch[1]);
@@ -125,14 +135,22 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
           }
 
           const uniqueValues = [...new Set(foundValues)].sort((a, b) => b - a);
-          console.log("[Balance] Found potential balance values:", uniqueValues.slice(0, 5));
+          console.log(
+            "[Balance] Found potential balance values:",
+            uniqueValues.slice(0, 5),
+          );
 
           // Filter for reasonable balance values (not 0, not too large)
-          const reasonableValues = foundValues.filter(v => v > 0 && v < 100000);
+          const reasonableValues = foundValues.filter(
+            (v) => v > 0 && v < 100000,
+          );
           if (reasonableValues.length > 0) {
             // Return the first reasonable value found
             const balance = reasonableValues[0];
-            console.log("[Balance] Selected balance from __NEXT_DATA__:", balance);
+            console.log(
+              "[Balance] Selected balance from __NEXT_DATA__:",
+              balance,
+            );
             return balance;
           }
         } catch (e) {
@@ -179,7 +197,10 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
       // Look for any number near "credits" keyword in the entire HTML
       const creditsMatches = html.match(/[^>]*>(\d+)[^<]*credits/gi);
       if (creditsMatches) {
-        console.log("[Balance] Found patterns near 'credits':", creditsMatches.slice(0, 5));
+        console.log(
+          "[Balance] Found patterns near 'credits':",
+          creditsMatches.slice(0, 5),
+        );
         // Extract the first number found near "credits"
         const numMatch = creditsMatches[0].match(/(\d+)/);
         if (numMatch && numMatch[1]) {
@@ -220,7 +241,11 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
         const scriptContent = scriptMatch[1];
 
         // Only process large script blocks that might contain data
-        if (scriptContent.length > 100 && (scriptContent.includes("balance") || scriptContent.includes("credit"))) {
+        if (
+          scriptContent.length > 100 &&
+          (scriptContent.includes("balance") ||
+            scriptContent.includes("credit"))
+        ) {
           // Try to find JSON patterns with balance/credit keywords
           const jsonPatterns = [
             /"balance"\s*:\s*(\d+)/gi,
@@ -244,9 +269,12 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
         // Get unique values and select the most reasonable one
         const unique = [...new Set(balanceNumbers)].sort((a, b) => a - b);
         // Prefer numbers in a reasonable balance range (10-10000)
-        const inRange = unique.filter(n => n >= 10 && n <= 10000);
+        const inRange = unique.filter((n) => n >= 10 && n <= 10000);
         if (inRange.length > 0) {
-          console.log("[Balance] ✓ Found balance from script tags:", inRange[0]);
+          console.log(
+            "[Balance] ✓ Found balance from script tags:",
+            inRange[0],
+          );
           return inRange[0];
         } else if (unique.length > 0 && unique[0] > 0) {
           console.log("[Balance] ✓ Found balance from scripts:", unique[0]);
@@ -256,7 +284,9 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
     }
 
     console.log("[Balance] Could not extract balance from kie.ai/billing");
-    console.log("[Balance] Note: Balance is dynamically loaded by JavaScript on kie.ai, which we cannot execute");
+    console.log(
+      "[Balance] Note: Balance is dynamically loaded by JavaScript on kie.ai, which we cannot execute",
+    );
     console.log("[Balance] Returning fallback of 100 credits (estimate)");
 
     // Return a reasonable fallback
@@ -264,6 +294,6 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
     return 100;
   } catch (error: any) {
     console.error("[Balance] Fatal error:", error.message);
-    return 100;  // Also return fallback on error
+    return 100; // Also return fallback on error
   }
 }

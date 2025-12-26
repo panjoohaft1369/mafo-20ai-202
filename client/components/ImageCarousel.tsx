@@ -6,11 +6,13 @@ interface ImageCarouselProps {
   images?: string[];
 }
 
-export function ImageCarousel({ images = [
-  "/images/samples/sample-1.jpg",
-  "/images/samples/sample-2.jpg",
-  "/images/samples/sample-3.jpg",
-] }: ImageCarouselProps) {
+export function ImageCarousel({
+  images = [
+    "/images/samples/sample-1.jpg",
+    "/images/samples/sample-2.jpg",
+    "/images/samples/sample-3.jpg",
+  ],
+}: ImageCarouselProps) {
   const [emblaRef, emblaApi] = EmblaCarousel({
     loop: true,
     align: "center",

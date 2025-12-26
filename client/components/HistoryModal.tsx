@@ -17,7 +17,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ImageViewer } from "@/components/ImageViewer";
-import { Download, Loader2, AlertCircle, CheckCircle2, Maximize2 } from "lucide-react";
+import {
+  Download,
+  Loader2,
+  AlertCircle,
+  CheckCircle2,
+  Maximize2,
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface HistoryEntry {
@@ -75,7 +81,10 @@ export function HistoryModal({
     loadHistory();
   }, [open, apiKey]);
 
-  const handleDownload = async (imageUrl: string | undefined, prompt: string) => {
+  const handleDownload = async (
+    imageUrl: string | undefined,
+    prompt: string,
+  ) => {
     if (!imageUrl) {
       toast.error("تصویر موجود نیست");
       return;
@@ -129,9 +138,7 @@ export function HistoryModal({
             ) : history.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
                 <AlertCircle className="h-8 w-8 text-muted-foreground mb-2" />
-                <p className="text-muted-foreground">
-                  تاریخچه‌ای موجود نیست
-                </p>
+                <p className="text-muted-foreground">تاریخچه‌ای موجود نیست</p>
               </div>
             ) : (
               <div className="space-y-4 pb-4">
@@ -144,23 +151,22 @@ export function HistoryModal({
                             {entry.status === "success" ? (
                               <>
                                 <CheckCircle2 className="h-5 w-5 text-green-600" />
-                                <Badge variant="default" className="bg-green-600">
+                                <Badge
+                                  variant="default"
+                                  className="bg-green-600"
+                                >
                                   موفق
                                 </Badge>
                               </>
                             ) : entry.status === "fail" ? (
                               <>
                                 <AlertCircle className="h-5 w-5 text-red-600" />
-                                <Badge variant="destructive">
-                                  ناموفق
-                                </Badge>
+                                <Badge variant="destructive">ناموفق</Badge>
                               </>
                             ) : (
                               <>
                                 <Loader2 className="h-5 w-5 text-yellow-600 animate-spin" />
-                                <Badge variant="secondary">
-                                  درحال پردازش
-                                </Badge>
+                                <Badge variant="secondary">درحال پردازش</Badge>
                               </>
                             )}
                           </div>
@@ -193,8 +199,7 @@ export function HistoryModal({
                       ) : entry.status === "fail" ? (
                         <div className="rounded-lg p-4 bg-red-50 border border-red-200">
                           <p className="text-sm text-red-800">
-                            {entry.error ||
-                              "خطایی در ایجاد تصویر رخ داد"}
+                            {entry.error || "خطایی در ایجاد تصویر رخ داد"}
                           </p>
                         </div>
                       ) : null}
@@ -237,7 +242,7 @@ export function HistoryModal({
                           onClick={() =>
                             handleDownload(
                               entry.imageUrl,
-                              entry.prompt || "تصویر"
+                              entry.prompt || "تصویر",
                             )
                           }
                           variant="outline"

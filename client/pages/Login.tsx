@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { validateApiKey } from "@/lib/api";
 import { saveAuthCredentials } from "@/lib/auth";
 import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
@@ -32,7 +38,7 @@ export default function Login() {
       if (!result.valid) {
         setError(
           result.message ||
-          "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید."
+            "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
         );
         setLoading(false);
         return;
@@ -64,9 +70,7 @@ export default function Login() {
                 alt="MAFO"
                 className="h-16 w-16 mb-2 drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]"
               />
-              <h1 className="text-3xl font-bold">
-                MAFO
-              </h1>
+              <h1 className="text-3xl font-bold">MAFO</h1>
               <p className="text-sm text-muted-foreground">
                 هوش مصنوعی تصویرساز
               </p>
@@ -103,8 +107,8 @@ export default function Login() {
                   className="text-primary hover:underline"
                 >
                   اینجا
-                </a>
-                {" "}دریافت کنید
+                </a>{" "}
+                دریافت کنید
               </p>
             </div>
 

@@ -2,12 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { BottomNav } from "@/components/BottomNav";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ImageViewer } from "@/components/ImageViewer";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -79,7 +74,10 @@ export default function History() {
     loadHistory();
   }, [auth.apiKey]);
 
-  const handleDownload = async (imageUrl: string | undefined, prompt: string) => {
+  const handleDownload = async (
+    imageUrl: string | undefined,
+    prompt: string,
+  ) => {
     if (!imageUrl) {
       toast.error("تصویر موجود نیست");
       return;
@@ -118,10 +116,11 @@ export default function History() {
     if (!error) return "خطایی نامعلوم رخ داد";
 
     const errorMap: { [key: string]: string } = {
-      "Task execution timeout": "مهلت زمانی پردازش به پایان رسید. لطفاً دوباره تلاش کنید.",
-      "timeout": "مهلت زمانی به پایان رسید",
-      "failed": "عملیات ناموفق بود",
-      "error": "خطا در پردازش درخواست",
+      "Task execution timeout":
+        "مهلت زمانی پردازش به پایان رسید. لطفاً دوباره تلاش کنید.",
+      timeout: "مهلت زمانی به پایان رسید",
+      failed: "عملیات ناموفق بود",
+      error: "خطا در پردازش درخواست",
       "network error": "خطا در اتصال شبکه",
       "insufficient credits": "اعتبار کافی برای این عملیات نیست",
     };
@@ -158,7 +157,10 @@ export default function History() {
               <div className="text-sm text-yellow-900 text-right">
                 <p className="font-semibold mb-1">⚠️ توجه: ذخیره‌سازی موقت</p>
                 <p>
-                  این صفحه فقط تصاویر و ویدیوهایی را نگهداری می‌کند که در طی <strong>ماه گذشته</strong> ساخته‌اید. اگر می‌خواهید تصاویر و ویدیوهای خود را برای همیشه نگاه دارید، آن‌ها را <strong>دانلود کنید</strong> تا حذف نشوند.
+                  این صفحه فقط تصاویر و ویدیوهایی را نگهداری می‌کند که در طی{" "}
+                  <strong>ماه گذشته</strong> ساخته‌اید. اگر می‌خواهید تصاویر و
+                  ویدیوهای خود را برای همیشه نگاه دارید، آن‌ها را{" "}
+                  <strong>دانلود کنید</strong> تا حذف نشوند.
                 </p>
               </div>
             </div>
@@ -169,7 +171,9 @@ export default function History() {
         {loading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-            <span className="mr-2 text-muted-foreground">درحال بارگذاری...</span>
+            <span className="mr-2 text-muted-foreground">
+              درحال بارگذاری...
+            </span>
           </div>
         ) : history.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -190,7 +194,10 @@ export default function History() {
                         {entry.status === "success" ? (
                           <>
                             <CheckCircle2 className="h-5 w-5 text-green-400" />
-                            <Badge variant="default" className="bg-yellow-500 text-black">
+                            <Badge
+                              variant="default"
+                              className="bg-yellow-500 text-black"
+                            >
                               موفق
                             </Badge>
                           </>
@@ -261,7 +268,9 @@ export default function History() {
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     {entry.aspectRatio && (
                       <div>
-                        <p className="text-xs text-muted-foreground">نسبت ابعاد</p>
+                        <p className="text-xs text-muted-foreground">
+                          نسبت ابعاد
+                        </p>
                         <p className="font-medium">{entry.aspectRatio}</p>
                       </div>
                     )}
@@ -278,7 +287,10 @@ export default function History() {
                     <div className="flex justify-center">
                       <Button
                         onClick={() =>
-                          handleDownload(entry.imageUrl, entry.prompt || "تصویر")
+                          handleDownload(
+                            entry.imageUrl,
+                            entry.prompt || "تصویر",
+                          )
                         }
                         variant="default"
                         size="sm"

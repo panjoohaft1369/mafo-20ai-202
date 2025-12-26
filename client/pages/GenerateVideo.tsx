@@ -175,7 +175,8 @@ export default function GenerateVideo() {
           {/* Credit Cost Info Box */}
           <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-300 inline-block">
             <p className="text-sm text-yellow-900 font-medium">
-              💰 <strong>هزینه اعتبار:</strong> ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
+              💰 <strong>هزینه اعتبار:</strong> ساخت هر ویدیو 6 ثانیه‌ای با این
+              هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
             </p>
           </div>
         </div>
@@ -309,7 +310,8 @@ export default function GenerateVideo() {
                 ⚠️ توجه: اعتبار شما کسر خواهد شد
               </p>
               <p className="text-xs text-yellow-800 mt-2">
-                ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
+                ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر
+                خواهد کرد
               </p>
             </div>
 
@@ -375,7 +377,6 @@ export default function GenerateVideo() {
                 )}
               </CardContent>
             </Card>
-
           </div>
         </div>
 

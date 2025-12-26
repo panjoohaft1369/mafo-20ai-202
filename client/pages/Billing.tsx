@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { fetchBillingInfo } from "@/lib/api";
@@ -63,9 +69,7 @@ export default function Billing() {
       <main className="container mx-auto px-4 py-8 sm:py-12">
         {/* Title Section */}
         <div className="max-w-4xl mx-auto mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-            اعتبار و بیل
-          </h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2">اعتبار و بیل</h1>
           <p className="text-muted-foreground">
             مشاهده و مدیریت اعتبار حساب خود
           </p>
@@ -139,10 +143,7 @@ export default function Billing() {
                         {Math.round(usagePercentage)}%
                       </p>
                     </div>
-                    <Progress
-                      value={usagePercentage}
-                      className="h-2"
-                    />
+                    <Progress value={usagePercentage} className="h-2" />
                   </div>
                 </CardContent>
               </Card>
@@ -186,7 +187,8 @@ export default function Billing() {
                 <Card className="border-orange-200 bg-orange-50">
                   <CardContent className="pt-6">
                     <p className="text-orange-900 text-center">
-                      اعتبار شما کم است. برای خریدن اعتبار، با پشتیبانی تماس بگیرید.
+                      اعتبار شما کم است. برای خریدن اعتبار، با پشتیبانی تماس
+                      بگیرید.
                     </p>
                   </CardContent>
                 </Card>
@@ -195,7 +197,9 @@ export default function Billing() {
               {/* Contact Support */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">برای درخواست اعتبار اضافی</CardTitle>
+                  <CardTitle className="text-base">
+                    برای درخواست اعتبار اضافی
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col sm:flex-row gap-3">
                   <a

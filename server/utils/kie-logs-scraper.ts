@@ -84,7 +84,9 @@ function parseLogsFromHtml(html: string): KieLogEntry[] {
   // Try to find Next.js data in __NEXT_DATA__ or window.__data__
   try {
     // Look for __NEXT_DATA__ JSON block
-    const nextDataMatch = html.match(/__NEXT_DATA__\s*=\s*({[\s\S]*?})<\/script>/);
+    const nextDataMatch = html.match(
+      /__NEXT_DATA__\s*=\s*({[\s\S]*?})<\/script>/,
+    );
     if (nextDataMatch) {
       console.log("[Logs Scraper] Found __NEXT_DATA__ block");
       try {
@@ -120,12 +122,17 @@ function parseLogsFromHtml(html: string): KieLogEntry[] {
         // Try to find any array that might contain logs
         const allKeys = JSON.stringify(nextData);
         if (allKeys.includes("taskId") || allKeys.includes("imageUrl")) {
-          console.log("[Logs Scraper] Found references to taskId/imageUrl in nextData");
+          console.log(
+            "[Logs Scraper] Found references to taskId/imageUrl in nextData",
+          );
 
           // Recursively search for arrays with log-like structure
           const foundLogs = findLogsInObject(nextData);
           if (foundLogs.length > 0) {
-            console.log("[Logs Scraper] Found logs via recursive search:", foundLogs.length);
+            console.log(
+              "[Logs Scraper] Found logs via recursive search:",
+              foundLogs.length,
+            );
             return parseLogEntries(foundLogs);
           }
         }
@@ -208,7 +215,8 @@ function parseLogEntries(entries: any[]): KieLogEntry[] {
     .map((entry) => {
       try {
         // Handle different possible data structures
-        const id = entry.id || entry.taskId || entry.task_id || Math.random().toString();
+        const id =
+          entry.id || entry.taskId || entry.task_id || Math.random().toString();
         const timestamp =
           entry.timestamp ||
           entry.created_at ||
@@ -218,7 +226,9 @@ function parseLogEntries(entries: any[]): KieLogEntry[] {
 
         // Ensure timestamp is a number (milliseconds)
         const numTimestamp =
-          typeof timestamp === "string" ? new Date(timestamp).getTime() : timestamp;
+          typeof timestamp === "string"
+            ? new Date(timestamp).getTime()
+            : timestamp;
 
         // Get image URL from various possible paths
         let imageUrl: string | undefined;

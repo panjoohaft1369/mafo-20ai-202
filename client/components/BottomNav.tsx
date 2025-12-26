@@ -20,7 +20,10 @@ export function BottomNav({ isLoggedIn, onLogout }: BottomNavProps) {
     <div className="fixed bottom-0 left-0 right-0 z-40 w-full border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center justify-around px-4 sm:px-8">
         {/* Image Tab */}
-        <Link to="/generate" className="flex flex-col items-center justify-center h-full">
+        <Link
+          to="/generate"
+          className="flex flex-col items-center justify-center h-full"
+        >
           <Button
             variant={isActive("/generate") ? "default" : "ghost"}
             size="icon"
@@ -32,7 +35,10 @@ export function BottomNav({ isLoggedIn, onLogout }: BottomNavProps) {
         </Link>
 
         {/* Video Tab */}
-        <Link to="/generate-video" className="flex flex-col items-center justify-center h-full">
+        <Link
+          to="/generate-video"
+          className="flex flex-col items-center justify-center h-full"
+        >
           <Button
             variant={isActive("/generate-video") ? "default" : "ghost"}
             size="icon"
@@ -44,7 +50,10 @@ export function BottomNav({ isLoggedIn, onLogout }: BottomNavProps) {
         </Link>
 
         {/* Support Tab */}
-        <Link to="/support" className="flex flex-col items-center justify-center h-full">
+        <Link
+          to="/support"
+          className="flex flex-col items-center justify-center h-full"
+        >
           <Button
             variant={isActive("/support") ? "default" : "ghost"}
             size="icon"
@@ -56,7 +65,10 @@ export function BottomNav({ isLoggedIn, onLogout }: BottomNavProps) {
         </Link>
 
         {/* History Tab */}
-        <Link to="/history" className="flex flex-col items-center justify-center h-full">
+        <Link
+          to="/history"
+          className="flex flex-col items-center justify-center h-full"
+        >
           <Button
             variant={isActive("/history") ? "default" : "ghost"}
             size="icon"

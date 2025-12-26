@@ -23,7 +23,8 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
 
   // WhatsApp contact information
   const whatsappNumber = "+989123456789"; // Replace with actual WhatsApp number
-  const whatsappMessage = "سلام، من برای ثبت سفارش جدید اکانت در MAFO تماس می‌گیرم";
+  const whatsappMessage =
+    "سلام، من برای ثبت سفارش جدید اکانت در MAFO تماس می‌گیرم";
 
   return (
     <>
@@ -36,19 +37,16 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
               alt="MAFO"
               className="h-12 w-12 drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]"
               style={{
-                filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.8))'
+                filter: "drop-shadow(0 0 2px rgba(255,255,255,0.8))",
               }}
             />
             <div className="flex flex-col items-start">
-              <h1 className="text-lg sm:text-xl font-bold">
-                MAFO
-              </h1>
+              <h1 className="text-lg sm:text-xl font-bold">MAFO</h1>
               <p className="text-xs sm:text-sm text-muted-foreground">
                 هوش مصنوعی
               </p>
             </div>
           </Link>
-
 
           {/* Center spacer */}
           <div className="flex-1" />
@@ -116,12 +114,13 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
           <div className="space-y-4">
             <div className="bg-muted rounded-lg p-4">
               <p className="text-sm text-muted-foreground mb-3">
-                ⏱️ <strong>زمان پاسخگویی:</strong> شنبه تا پنج‌شنبه، ۹ صبح تا ۶ بعدازظهر
+                ⏱️ <strong>زمان پاسخگویی:</strong> شنبه تا پنج‌شنبه، ۹ صبح تا ۶
+                بعدازظهر
               </p>
             </div>
 
             <a
-              href={`https://wa.me/${whatsappNumber.replace(/[^\d]/g, '')}?text=${encodeURIComponent(whatsappMessage)}`}
+              href={`https://wa.me/${whatsappNumber.replace(/[^\d]/g, "")}?text=${encodeURIComponent(whatsappMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block"
