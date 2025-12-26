@@ -157,7 +157,7 @@ export async function handleGenerateImage(
   res: Response,
 ): Promise<void> {
   try {
-    const { imageUrl, prompt, aspectRatio, resolution } = req.body;
+    const { imageUrls, prompt, aspectRatio, resolution } = req.body;
     const apiKey = req.headers.authorization?.replace("Bearer ", "");
 
     if (!apiKey) {
@@ -168,11 +168,11 @@ export async function handleGenerateImage(
       return;
     }
 
-    if (!imageUrl || !prompt || !aspectRatio || !resolution) {
+    if (!imageUrls || !Array.isArray(imageUrls) || imageUrls.length === 0 || !prompt || !aspectRatio || !resolution) {
       res.status(400).json({
         success: false,
         error:
-          "تمام فیلدها الزامی هستند: imageUrl, prompt, aspectRatio, resolution",
+          "تمام فیلدها الزامی هستند: imageUrls (آرایه)، prompt، aspectRatio، resolution",
       });
       return;
     }
