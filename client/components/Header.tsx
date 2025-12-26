@@ -11,7 +11,6 @@ interface HeaderProps {
 
 export function Header({ isLoggedIn, onLogout }: HeaderProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation();
 
   return (
     <>
