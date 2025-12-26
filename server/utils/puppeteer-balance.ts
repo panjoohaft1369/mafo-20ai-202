@@ -81,22 +81,32 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
         const nextDataJson = JSON.parse(nextDataMatch[1]);
         console.log("[Balance] Found __NEXT_DATA__, searching for balance...");
 
+        // Log the structure to understand what we're looking at
+        console.log("[Balance] __NEXT_DATA__ Keys:", Object.keys(nextDataJson));
+
         // Convert to string to search through all keys/values
         const nextDataStr = JSON.stringify(nextDataJson);
+        console.log("[Balance] __NEXT_DATA__ stringified length:", nextDataStr.length);
+        console.log("[Balance] __NEXT_DATA__ preview (first 3000 chars):", nextDataStr.substring(0, 3000));
 
-        // Look for balance/credits values
+        // Look for balance/credits values - more flexible search
         const balancePatterns = [
           /"currentBalance"\s*:\s*(\d+)/,
           /"balance"\s*:\s*(\d+)/,
           /"creditsRemaining"\s*:\s*(\d+)/,
           /"credits"\s*:\s*(\d+)/,
           /"credit"\s*:\s*(\d+)/,
+          /"currentBalance":\s*(\d+)/,
+          /"balance":\s*(\d+)/,
+          /"creditsRemaining":\s*(\d+)/,
+          /"credits":\s*(\d+)/,
         ];
 
         for (const pattern of balancePatterns) {
           const match = nextDataStr.match(pattern);
           if (match && match[1]) {
             const num = parseInt(match[1], 10);
+            console.log("[Balance] Pattern matched:", pattern.toString(), "Value:", num);
             if (num >= 0 && num < 1000000) {
               balance = num;
               console.log("[Balance] Found in __NEXT_DATA__:", balance);
