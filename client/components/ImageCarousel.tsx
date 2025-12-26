@@ -34,6 +34,17 @@ export function ImageCarousel({ images = [
     };
   }, [emblaApi]);
 
+  // Autoplay functionality
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const interval = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [emblaApi]);
+
   const handlePrevClick = () => {
     emblaApi?.scrollPrev();
   };
