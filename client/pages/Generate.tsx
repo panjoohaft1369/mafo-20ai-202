@@ -460,6 +460,9 @@ export default function Generate() {
         onOpenChange={setHistoryModalOpen}
         apiKey={auth.apiKey!}
       />
+
+      {/* Bottom Navigation */}
+      <BottomNav isLoggedIn={true} onLogout={handleLogout} />
     </div>
   );
 }
