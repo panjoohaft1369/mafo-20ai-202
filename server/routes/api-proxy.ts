@@ -180,6 +180,8 @@ export async function handleGenerateImage(
     console.log(
       "[Image Gen] Creating task with model: flux-2/pro-image-to-image",
     );
+    console.log("[Image Gen] Number of images:", imageUrls.length);
+    console.log("[Image Gen] Image URLs:", imageUrls);
     console.log("[Image Gen] Prompt:", prompt.substring(0, 50) + "...");
     console.log("[Image Gen] Aspect Ratio:", aspectRatio);
     console.log("[Image Gen] Resolution:", resolution);
