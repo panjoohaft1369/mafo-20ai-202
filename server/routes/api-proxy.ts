@@ -42,6 +42,10 @@ function loadTasksFromFile() {
         taskResults.set(key, value as any);
       }
       console.log(`[Tasks] Loaded ${taskResults.size} tasks from file`);
+      console.log(`[Tasks] Task IDs:`, Array.from(taskResults.keys()));
+      console.log(`[Tasks] File path:`, tasksFile);
+    } else {
+      console.log(`[Tasks] Tasks file does not exist yet: ${tasksFile}`);
     }
   } catch (error) {
     console.error("[Tasks] خطا در بارگذاری tasks:", error);
