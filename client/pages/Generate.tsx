@@ -434,17 +434,6 @@ export default function Generate() {
                 )}
               </CardContent>
             </Card>
-
-            {/* History Button */}
-            <Button
-              onClick={() => setHistoryModalOpen(true)}
-              variant="outline"
-              className="w-full gap-2 py-6 text-base font-semibold"
-              size="lg"
-            >
-              <History className="h-5 w-5" />
-              تاریخچه تصاویر
-            </Button>
           </div>
         </div>
 
