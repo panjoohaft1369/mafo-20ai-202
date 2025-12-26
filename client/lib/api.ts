@@ -17,7 +17,7 @@ export interface ApiKeyValidationResponse {
 
 export interface ImageGenerationRequest {
   apiKey: string;
-  imageUrl: string;
+  imageUrls: string[];
   prompt: string;
   aspectRatio: string;
   resolution: string;
