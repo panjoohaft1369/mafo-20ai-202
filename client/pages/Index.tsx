@@ -37,15 +37,7 @@ export default function Index() {
       <TopNav />
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
-      <main className="pt-32 md:pt-24">
-        {/* Iranian Pride Banner */}
-        <section className="px-4 py-4 bg-primary/10 border-b border-primary/20">
-          <div className="container mx-auto max-w-6xl text-center">
-            <p className="text-xs sm:text-sm font-medium text-primary">
-              🇮🇷 اولین هوش مصنوعی ایرانی برای تولید تصاویر و ویدیوهای هوش مصنوعی
-            </p>
-          </div>
-        </section>
+      <main className="pt-20 md:pt-28">
 
         {/* Image Carousel - Top */}
         <section className="px-4 py-12 sm:py-16">
