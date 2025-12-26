@@ -6,7 +6,7 @@ export default {
   prefix: "",
   theme: {
     fontFamily: {
-      sans: ["Shabnami", "sans-serif"],
+      sans: ["Shabnam", "sans-serif"],
     },
     container: {
       center: true,
