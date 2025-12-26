@@ -256,6 +256,16 @@ export function HistoryModal({
           </div>
         </ScrollArea>
       </DialogContent>
+
+      {/* Image Viewer Modal */}
+      {viewerImage && (
+        <ImageViewer
+          open={viewerOpen}
+          onOpenChange={setViewerOpen}
+          imageUrl={viewerImage}
+          alt="تصویر تولید شده"
+        />
+      )}
     </Dialog>
   );
 }
