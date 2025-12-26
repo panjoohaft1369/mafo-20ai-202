@@ -84,7 +84,7 @@ export function ImageCarousel({ images = [
           className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
           aria-label="Previous slide"
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
       )}
 
@@ -94,7 +94,7 @@ export function ImageCarousel({ images = [
           className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
           aria-label="Next slide"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronRight className="h-5 w-5" />
         </button>
       )}
 
