@@ -26,9 +26,9 @@ export function TopNav() {
     <>
       {/* Desktop Navigation */}
       {isScrolled && (
-        <nav className="hidden md:block fixed top-0 left-4 right-4 z-40 mt-4">
-          <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-6 py-3 shadow-lg max-w-xs">
-            <ul className="flex flex-col gap-3">
+        <nav className="hidden md:block fixed top-0 left-0 right-0 z-40 px-4 pt-4">
+          <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-6 py-4 shadow-lg container mx-auto">
+            <ul className="flex gap-8 justify-center items-center">
               {navItems.map((item) => (
                 <li key={item.href}>
                   <Link
