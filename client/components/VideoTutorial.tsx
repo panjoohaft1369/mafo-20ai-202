@@ -135,38 +135,38 @@ export function VideoTutorial() {
 
         {/* Examples */}
         <div className="mt-8 space-y-6">
-          <h3 className="text-lg font-semibold text-center">📚 نمونه‌های عملی</h3>
-          
+          <h3 className="text-lg font-semibold text-center">📚 نمونه‌ها</h3>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Good Example */}
             <div className="p-4 border-2 border-green-500/30 rounded-lg bg-green-50 dark:bg-green-950/20">
-              <p className="font-semibold text-green-700 dark:text-green-400 mb-2">✅ مثال خوب:</p>
+              <p className="font-semibold text-green-700 dark:text-green-400 mb-2">✅ خوب:</p>
               <p className="text-sm text-muted-foreground italic">
-                "فرد آهسته سر را به سمت چپ می‌چرخاند. دوربین از راست به چپ حرکت می‌کند. موی‌ها با ملایمت جریان می‌یابند."
+                "آهسته سر میچرخونه، دوربین نزدیک میشه، موها واژنده"
               </p>
             </div>
 
             {/* Bad Example */}
             <div className="p-4 border-2 border-red-500/30 rounded-lg bg-red-50 dark:bg-red-950/20">
-              <p className="font-semibold text-red-700 dark:text-red-400 mb-2">❌ مثال ضعیف:</p>
+              <p className="font-semibold text-red-700 dark:text-red-400 mb-2">❌ بد:</p>
               <p className="text-sm text-muted-foreground italic">
-                "فرد با موهای سیاه و لباس آبی سر را به سمت چپ می‌چرخاند، دوربین ۳۶۰ درجه می‌چرخد، بزرگ‌نمایی می‌کند و پایین می‌رود"
+                "مردی با موهای سیاه و کت آبی، دوربین دور میزنه، بزرگ نمایی میشه، دور میچرخه، بالا میره"
               </p>
             </div>
 
             {/* Product Example */}
             <div className="p-4 border-2 border-blue-500/30 rounded-lg bg-blue-50 dark:bg-blue-950/20">
-              <p className="font-semibold text-blue-700 dark:text-blue-400 mb-2">🛍️ مثال کالا:</p>
+              <p className="font-semibold text-blue-700 dark:text-blue-400 mb-2">🛍️ برای محصول:</p>
               <p className="text-sm text-muted-foreground italic">
-                "دوربین آهسته محصول را دور می‌زند. نور نرم جزئیات را برجسته می‌کند. محصول در سینمایی و حرفه‌ای به نظر می‌رسد."
+                "دوربین دور و دور محصول میچرخه آهسته، نور نرم، جزئیات رو خوب می‌بینی"
               </p>
             </div>
 
             {/* Portrait Example */}
             <div className="p-4 border-2 border-purple-500/30 rounded-lg bg-purple-50 dark:bg-purple-950/20">
-              <p className="font-semibold text-purple-700 dark:text-purple-400 mb-2">🎭 مثال پرتره:</p>
+              <p className="font-semibold text-purple-700 dark:text-purple-400 mb-2">🎭 برای چهره:</p>
               <p className="text-sm text-muted-foreground italic">
-                "فرد به آهستگی نگاه خود را تغییر می‌دهد. دوربین با آهستگی بزرگ‌نمایی می‌کند. روشنایی طلایی از پشت."
+                "نگاه عوض میشه، دوربین نزدیک میشه، نور طلایی از پشت"
               </p>
             </div>
           </div>
