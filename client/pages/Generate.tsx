@@ -441,13 +441,6 @@ export default function Generate() {
         <Tutorial />
       </main>
 
-      {/* History Modal */}
-      <HistoryModal
-        open={historyModalOpen}
-        onOpenChange={setHistoryModalOpen}
-        apiKey={auth.apiKey!}
-      />
-
       {/* Bottom Navigation */}
       <BottomNav isLoggedIn={true} onLogout={handleLogout} />
     </div>
