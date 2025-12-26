@@ -679,29 +679,70 @@ export async function handleCallback(
   try {
     const data = req.body;
 
-    console.log("[Callback] Received callback from kie.ai");
-    console.log("[Callback] Task ID:", data?.data?.taskId);
-    console.log("[Callback] State:", data?.data?.state);
+    console.log("[Callback] ========== RECEIVED CALLBACK FROM KIE.AI ==========");
+    console.log("[Callback] Full Body:", JSON.stringify(data, null, 2));
+    console.log("[Callback] Headers:", Object.fromEntries(req.headers));
 
-    const taskId = data?.data?.taskId;
-    const state = data?.data?.state;
+    // Try different possible paths for taskId
+    const taskId =
+      data?.data?.taskId ||
+      data?.taskId ||
+      data?.task_id ||
+      data?.id;
+
+    // Try different possible paths for state
+    const state =
+      data?.data?.state ||
+      data?.state ||
+      data?.status;
+
+    console.log("[Callback] Extracted TaskID:", taskId);
+    console.log("[Callback] Extracted State:", state);
+    console.log("[Callback] resultJson exists:", !!data?.data?.resultJson);
+    console.log("[Callback] resultUrls exists:", !!data?.data?.resultUrls);
 
     if (!taskId) {
-      console.error("[Callback] No taskId in callback");
+      console.error("[Callback] No taskId found in callback - data structure unknown");
       res.status(400).json({ error: "No taskId provided" });
       return;
     }
 
-    // Parse the result
+    // Parse the result - try multiple possible structures
     let imageUrl: string | undefined;
-    if (state === "success" && data?.data?.resultJson) {
+
+    // Try parsing resultJson as JSON string
+    if (data?.data?.resultJson) {
       try {
         const resultJson = JSON.parse(data.data.resultJson);
-        imageUrl = resultJson?.resultUrls?.[0];
+        console.log("[Callback] Parsed resultJson:", JSON.stringify(resultJson, null, 2));
+        imageUrl =
+          resultJson?.resultUrls?.[0] ||
+          resultJson?.result_urls?.[0] ||
+          resultJson?.image ||
+          resultJson?.imageUrl ||
+          resultJson?.url;
       } catch (e) {
-        console.error("[Callback] Failed to parse resultJson:", e);
+        console.error("[Callback] Failed to parse resultJson as JSON:", e);
       }
     }
+
+    // Try resultUrls as array directly
+    if (!imageUrl && data?.data?.resultUrls && Array.isArray(data.data.resultUrls)) {
+      imageUrl = data.data.resultUrls[0];
+      console.log("[Callback] Found imageUrl in resultUrls:", imageUrl);
+    }
+
+    // Try result as object
+    if (!imageUrl && data?.data?.result) {
+      imageUrl =
+        data.data.result?.imageUrl ||
+        data.data.result?.url ||
+        data.data.result?.[0];
+      console.log("[Callback] Found imageUrl in result:", imageUrl);
+    }
+
+    console.log("[Callback] Final extracted imageUrl:", imageUrl);
+    console.log("[Callback] State is success:", state === "success");
 
     // Store the result, preserving any existing request details
     const existingResult = taskResults.get(taskId);
@@ -709,7 +750,7 @@ export async function handleCallback(
       ...existingResult,
       status: state || "unknown",
       imageUrl: imageUrl,
-      error: state === "fail" ? data?.data?.failMsg : undefined,
+      error: state === "fail" ? (data?.data?.failMsg || data?.failMsg || "Unknown error") : undefined,
       timestamp: existingResult?.timestamp || Date.now(),
     });
 
@@ -720,12 +761,15 @@ export async function handleCallback(
       taskId,
       status: state,
       hasImage: !!imageUrl,
+      filePath: tasksFile,
     });
+    console.log("[Callback] ========== CALLBACK PROCESSING COMPLETE ==========");
 
     // Respond to kie.ai
     res.json({ success: true, message: "Callback received" });
   } catch (error: any) {
     console.error("[Callback] خطا:", error.message);
+    console.error("[Callback] Stack:", error.stack);
     res.status(500).json({
       error: "خطا در پردازش callback",
     });
