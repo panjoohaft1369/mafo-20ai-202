@@ -80,8 +80,8 @@ export default function Generate() {
   const handleGenerate = async () => {
     setError("");
 
-    if (!selectedImage) {
-      setError("لطفا ابتدا یک تصویر انتخاب کنید");
+    if (selectedImages.length === 0) {
+      setError("لطفا ابتدا یک یا چند تصویر انتخاب کنید");
       return;
     }
 
@@ -94,23 +94,32 @@ export default function Generate() {
     setTaskId(null);
 
     try {
-      // Step 1: Upload image to get a public URL
-      toast.loading("آپلود تصویر...");
-      const uploadResult = await uploadImage(selectedImage);
+      // Step 1: Upload all images to get public URLs
+      toast.loading(`آپلود ${selectedImages.length} تصویر...`);
+      const uploadedUrls: string[] = [];
 
-      if (!uploadResult.success || !uploadResult.imageUrl) {
-        setError(uploadResult.error || "خطا در آپلود تصویر");
-        setLoading(false);
-        return;
+      for (let i = 0; i < selectedImages.length; i++) {
+        const uploadResult = await uploadImage(selectedImages[i]);
+
+        if (!uploadResult.success || !uploadResult.imageUrl) {
+          setError(
+            uploadResult.error ||
+              `خطا در آپلود تصویر ${i + 1} از ${selectedImages.length}`,
+          );
+          setLoading(false);
+          return;
+        }
+
+        uploadedUrls.push(uploadResult.imageUrl);
       }
 
       toast.dismiss();
       toast.loading("درخواست ایجاد تصویر...");
 
-      // Step 2: Send generation request with uploaded image URL
+      // Step 2: Send generation request with uploaded image URLs
       const result = await generateImage({
         apiKey: auth.apiKey!,
-        imageUrl: uploadResult.imageUrl,
+        imageUrls: uploadedUrls,
         prompt,
         aspectRatio,
         resolution,
@@ -125,7 +134,7 @@ export default function Generate() {
       setTaskId(result.taskId);
       toast.dismiss();
       toast.loading(
-        "درحال پردازش تصویر... (این ممکن است یند چند دقیقه طول بکشد)",
+        "درحال پردازش تصویر... (این ممکن است چند دقیقه طول بکشد)",
       );
 
       // Step 3: Poll for completion
