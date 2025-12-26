@@ -215,9 +215,6 @@ export default function GenerateVideo() {
                 <CardDescription>
                   تصویری از گوشی یا کامپیوتر انتخاب کنید
                 </CardDescription>
-                <p className="text-xs text-blue-600 font-medium mt-2">
-                  ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
-                </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div
