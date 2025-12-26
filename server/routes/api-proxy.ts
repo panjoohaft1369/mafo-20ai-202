@@ -56,10 +56,24 @@ function loadTasksFromFile() {
 function saveTasksToFile() {
   try {
     const tasks: any = {};
-    taskResults.forEach((value, key) => {
-      tasks[key] = value;
-    });
+
+    // Safely convert Map to object
+    if (taskResults instanceof Map) {
+      for (const [key, value] of taskResults.entries()) {
+        tasks[key] = value;
+      }
+    } else {
+      // Fallback if taskResults is already an object
+      Object.assign(tasks, taskResults);
+    }
+
+    // Ensure directory exists
+    if (!fs.existsSync(tasksDir)) {
+      fs.mkdirSync(tasksDir, { recursive: true });
+    }
+
     fs.writeFileSync(tasksFile, JSON.stringify(tasks, null, 2));
+    console.log("[Tasks] Tasks saved to file successfully");
   } catch (error) {
     console.error("[Tasks] خطا در ذخیره tasks:", error);
   }
