@@ -636,29 +636,63 @@ export async function handleFetchBilling(
       return;
     }
 
-    console.log("[Billing] دریافت اطلاعات اعتبار از kie.ai/billing");
+    console.log("[Billing] دریافت اطلاعات اعتبار از kie.ai");
     console.log("[Billing] API Key:", apiKey.substring(0, 10) + "...");
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 ثانیه timeout
 
-    // Fetch the billing page with authentication cookie/session
-    // We need to access https://kie.ai/billing which is a protected page
-    const response = await fetch("https://kie.ai/billing", {
+    // Try to fetch from multiple possible endpoints
+    let response = null;
+    let data = null;
+
+    // Try 1: Fetch from /api/v1/user/balance endpoint
+    console.log("[Billing] Trying /api/v1/user/balance endpoint...");
+    try {
+      response = await fetch(`${KIE_AI_API_BASE}/user/balance`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`,
+        },
+        signal: controller.signal,
+      });
+
+      if (response.ok) {
+        data = await response.json();
+        console.log("[Billing] /api/v1/user/balance response:", data);
+        if (data?.data?.balance || data?.balance) {
+          const credits = data?.data?.balance || data?.balance;
+          res.json({
+            success: true,
+            creditsRemaining: credits,
+            totalCredits: 0,
+            usedCredits: 0,
+          });
+          clearTimeout(timeoutId);
+          return;
+        }
+      }
+    } catch (e) {
+      console.log("[Billing] /api/v1/user/balance failed, trying next...");
+    }
+
+    // Try 2: Fetch billing page HTML as fallback
+    console.log("[Billing] Trying HTML scraping from /billing page...");
+    const response2 = await fetch("https://kie.ai/billing", {
       method: "GET",
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
-        // Try to pass API key as authorization header
         "Authorization": `Bearer ${apiKey}`,
-        // Also try as a cookie
         "Cookie": `api_key=${apiKey}`,
       },
       signal: controller.signal,
     });
 
+    const response = response2;
     clearTimeout(timeoutId);
 
     console.log("[Billing] HTTP Status:", response.status);
