@@ -168,13 +168,13 @@ export default function GenerateVideo() {
             تصویری انتخاب کنید و حرکت دلخواه را توصیف کنید تا ویدیویی خیره‌کننده
             ایجاد شود
           </p>
-          <p className="text-sm text-red-600 font-medium mb-4">
+          <p className="text-sm text-yellow-100 font-medium mb-4">
             استفاده از این هوش مصنوعی رایگان نمی‌باشد
           </p>
 
           {/* Credit Cost Info Box */}
-          <div className="p-4 bg-red-50 rounded-lg border border-red-200 inline-block">
-            <p className="text-sm text-red-800 font-medium">
+          <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-300 inline-block">
+            <p className="text-sm text-yellow-900 font-medium">
               💰 <strong>هزینه اعتبار:</strong> ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
             </p>
           </div>
@@ -304,11 +304,11 @@ export default function GenerateVideo() {
             )}
 
             {/* Credit Cost Alert */}
-            <div className="p-4 bg-red-50 rounded-lg border-2 border-red-300 shadow-md">
-              <p className="text-sm text-red-900 font-bold">
+            <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-400 shadow-md">
+              <p className="text-sm text-yellow-900 font-bold">
                 ⚠️ توجه: اعتبار شما کسر خواهد شد
               </p>
-              <p className="text-xs text-red-800 mt-2">
+              <p className="text-xs text-yellow-800 mt-2">
                 ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
               </p>
             </div>
@@ -317,7 +317,7 @@ export default function GenerateVideo() {
             <Button
               onClick={handleGenerate}
               disabled={loading || !selectedImage || !prompt.trim()}
-              className="w-full bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 py-6 text-base font-semibold"
+              className="w-full py-6 text-base font-semibold"
               size="lg"
             >
               {loading ? (
