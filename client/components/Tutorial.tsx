@@ -10,7 +10,7 @@ export function Tutorial() {
           {/* Basic Instructions */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2 text-brand-primary">
+              <h3 className="text-lg font-semibold mb-2">
                 🎨 نحوه شرح دادن رنگ و ظاهر
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -23,7 +23,7 @@ export function Tutorial() {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-2 text-brand-secondary">
+              <h3 className="text-lg font-semibold mb-2">
                 📍 تعیین موقعیت و محیط
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -39,7 +39,7 @@ export function Tutorial() {
           {/* Advanced Instructions */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2 text-brand-accent">
+              <h3 className="text-lg font-semibold mb-2">
                 ✏️ جزئیات مهم
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -67,7 +67,7 @@ export function Tutorial() {
         </div>
 
         {/* Tips section */}
-        <div className="mt-8 p-6 bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5 rounded-lg border border-brand-primary/20">
+        <div className="mt-8 p-6 bg-muted/50 rounded-lg border border-border">
           <h3 className="font-semibold mb-4">💡 نکات مهم برای بهترین نتایج:</h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>✓ پرامپت خود را به فارسی یا انگلیسی بنویسید</li>

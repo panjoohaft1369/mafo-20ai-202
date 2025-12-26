@@ -10,7 +10,7 @@ export function VideoTutorial() {
           {/* Motion Description */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2 text-brand-primary">
+              <h3 className="text-lg font-semibold mb-2">
                 🎬 فقط حرکت رو بگو
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -26,7 +26,7 @@ export function VideoTutorial() {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-2 text-brand-secondary">
+              <h3 className="text-lg font-semibold mb-2">
                 📹 دوربین کجا برو
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -42,7 +42,7 @@ export function VideoTutorial() {
           {/* Advanced Techniques */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2 text-brand-accent">
+              <h3 className="text-lg font-semibold mb-2">
                 ✨ چند حرکت با هم
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -102,7 +102,7 @@ export function VideoTutorial() {
         </div>
 
         {/* Tips section */}
-        <div className="p-6 bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5 rounded-lg border border-brand-primary/20">
+        <div className="p-6 bg-muted/50 rounded-lg border border-border">
           <h3 className="font-semibold mb-4">💡 نکاتی که نتیجه رو بهتر می‌کنه:</h3>
 
           <div className="space-y-2 text-sm text-muted-foreground">
