@@ -639,8 +639,16 @@ export async function handleQueryTask(
     const result = taskResults.get(taskId);
 
     if (!result) {
-      // Task not found
-      console.log("[Query Task] Task not found or not yet created");
+      // Task not found - provide debugging info
+      console.log("[Query Task] Task not found in memory");
+      console.log("[Query Task] All stored tasks:", Array.from(taskResults.keys()));
+
+      // Check if file exists
+      if (fs.existsSync(tasksFile)) {
+        const fileContent = fs.readFileSync(tasksFile, "utf-8");
+        console.log("[Query Task] Tasks in file:", fileContent);
+      }
+
       res.status(404).json({
         success: false,
         error: "تصویر یافت نشد",
@@ -648,7 +656,11 @@ export async function handleQueryTask(
       return;
     }
 
-    console.log("[Query Task] Result:", result);
+    console.log("[Query Task] Result found:", {
+      status: result.status,
+      hasImageUrl: !!result.imageUrl,
+      error: result.error,
+    });
 
     res.json({
       success: true,
