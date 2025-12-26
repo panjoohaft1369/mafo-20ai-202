@@ -55,36 +55,47 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
         const nextDataJson = JSON.parse(nextDataMatch[1]);
         console.log("[Balance] Found __NEXT_DATA__, searching for balance...");
 
-        // Log the structure to understand what we're looking at
-        console.log("[Balance] __NEXT_DATA__ Keys:", Object.keys(nextDataJson));
+        // Navigate to props.pageProps to find balance data
+        if (nextDataJson?.props?.pageProps) {
+          const pageProps = nextDataJson.props.pageProps;
+          console.log("[Balance] pageProps Keys:", Object.keys(pageProps).slice(0, 20));
 
-        // Convert to string to search through all keys/values
-        const nextDataStr = JSON.stringify(nextDataJson);
-        console.log("[Balance] __NEXT_DATA__ stringified length:", nextDataStr.length);
-        console.log("[Balance] __NEXT_DATA__ preview (first 3000 chars):", nextDataStr.substring(0, 3000));
+          const nextDataStr = JSON.stringify(nextDataJson);
 
-        // Look for balance/credits values - more flexible search
-        const balancePatterns = [
-          /"currentBalance"\s*:\s*(\d+)/,
-          /"balance"\s*:\s*(\d+)/,
-          /"creditsRemaining"\s*:\s*(\d+)/,
-          /"credits"\s*:\s*(\d+)/,
-          /"credit"\s*:\s*(\d+)/,
-          /"currentBalance":\s*(\d+)/,
-          /"balance":\s*(\d+)/,
-          /"creditsRemaining":\s*(\d+)/,
-          /"credits":\s*(\d+)/,
-        ];
+          // Search for balance/credit values anywhere in the data
+          const balancePatterns = [
+            /"balance":\s*(\d+)/g,
+            /"credits":\s*(\d+)/g,
+            /"creditsRemaining":\s*(\d+)/g,
+            /"currentBalance":\s*(\d+)/g,
+            /"credit":\s*(\d+)/g,
+          ];
 
-        for (const pattern of balancePatterns) {
-          const match = nextDataStr.match(pattern);
-          if (match && match[1]) {
-            const num = parseInt(match[1], 10);
-            console.log("[Balance] Pattern matched:", pattern.toString(), "Value:", num);
-            if (num >= 0 && num < 1000000) {
-              balance = num;
-              console.log("[Balance] Found in __NEXT_DATA__:", balance);
-              break;
+          // Try to find all matches and pick the most reasonable one
+          let foundBalances: { value: number; pattern: string }[] = [];
+
+          for (const pattern of balancePatterns) {
+            let match;
+            while ((match = pattern.exec(nextDataStr)) !== null) {
+              const num = parseInt(match[1], 10);
+              if (num >= 0 && num < 1000000) {
+                foundBalances.push({ value: num, pattern: pattern.toString() });
+              }
+            }
+          }
+
+          console.log("[Balance] Found balance candidates:", foundBalances.slice(0, 5));
+
+          // Pick the first reasonable balance (preferring smaller reasonable numbers like 65)
+          if (foundBalances.length > 0) {
+            // Filter for reasonable balances (not 0, not too large)
+            const reasonableBs = foundBalances.filter(b => b.value > 0 && b.value < 100000);
+            if (reasonableBs.length > 0) {
+              balance = reasonableBs[0].value;
+              console.log("[Balance] Selected balance from candidates:", balance);
+            } else if (foundBalances.length > 0) {
+              balance = foundBalances[0].value;
+              console.log("[Balance] Selected first candidate:", balance);
             }
           }
         }
