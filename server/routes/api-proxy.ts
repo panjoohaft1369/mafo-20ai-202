@@ -619,7 +619,7 @@ export async function handleFetchLogs(
 
 /**
  * دریافت اطلاعات بیل (Billing)
- * Try to get from kie.ai, but provide a fallback message
+ * Fetch real-time credit balance from kie.ai API
  */
 export async function handleFetchBilling(
   req: Request,
@@ -637,52 +637,131 @@ export async function handleFetchBilling(
     }
 
     console.log("[Billing] دریافت اطلاعات اعتبار");
+    console.log("[Billing] API Key:", apiKey.substring(0, 10) + "...");
 
-    // Try to get user profile from kie.ai
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 ثانیه timeout
+
+    // Try to fetch user profile from kie.ai
     const response = await fetch(`${KIE_AI_API_BASE}/users/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
+        "User-Agent": "MAFO-Client/1.0",
       },
+      signal: controller.signal,
     });
 
-    // If endpoint exists, use it
-    if (response.ok) {
-      const data = await response.json();
-      console.log("[Billing] Response:", data);
+    clearTimeout(timeoutId);
 
-      // Extract credit info from user profile
-      const credits = data?.data?.credits || data?.credits || 0;
-      const totalCredits = data?.data?.totalCredits || data?.totalCredits || 0;
+    console.log("[Billing] HTTP Status:", response.status);
+    console.log("[Billing] Content-Type:", response.headers.get("content-type"));
 
-      res.json({
-        success: true,
-        creditsRemaining: credits,
-        totalCredits: totalCredits,
-        usedCredits: totalCredits - credits || 0,
+    // Check if API key is invalid
+    if (response.status === 401) {
+      console.error("[Billing] Invalid API key (401)");
+      res.status(401).json({
+        success: false,
+        error: "کد لایسنس شما معتبر نمیباشد",
       });
-    } else {
-      // Endpoint doesn't exist - return a message to check kie.ai dashboard
-      console.log(
-        "[Billing] Profile endpoint not available, returning fallback",
-      );
+      return;
+    }
+
+    const contentType = response.headers.get("content-type");
+    let data: any;
+
+    try {
+      if (contentType?.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error("[Billing] Non-JSON Response:", text.substring(0, 200));
+        // If not JSON, assume endpoint doesn't exist
+        console.log("[Billing] Endpoint returned non-JSON, returning fallback");
+        res.json({
+          success: true,
+          creditsRemaining: 0,
+          totalCredits: 0,
+          usedCredits: 0,
+          message: "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
+        });
+        return;
+      }
+    } catch (parseError) {
+      console.error("[Billing] خطا در پارس JSON:", parseError);
       res.json({
         success: true,
         creditsRemaining: 0,
         totalCredits: 0,
         usedCredits: 0,
-        message: "برای مشاهده اعتبار خود به https://kie.ai مراجعه کنید",
+        message: "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
+      });
+      return;
+    }
+
+    console.log("[Billing] Response:", JSON.stringify(data, null, 2));
+
+    // Handle both possible response formats
+    // Format 1: { code: 200, data: { ... } }
+    // Format 2: { code: 200, ... }
+    let billingData = data?.data || data;
+
+    // Try different possible paths for credit values
+    const creditsRemaining =
+      billingData?.creditsRemaining ||
+      billingData?.credits_remaining ||
+      billingData?.balance ||
+      billingData?.credits ||
+      0;
+
+    const totalCredits =
+      billingData?.totalCredits ||
+      billingData?.total_credits ||
+      billingData?.total ||
+      0;
+
+    // If we got an actual number for credits, that's good
+    if (typeof creditsRemaining === "number" && creditsRemaining > 0) {
+      console.log("[Billing] Successfully fetched credits:", creditsRemaining);
+      res.json({
+        success: true,
+        creditsRemaining: Math.floor(creditsRemaining),
+        totalCredits: Math.floor(totalCredits),
+        usedCredits: Math.floor((totalCredits - creditsRemaining) || 0),
+      });
+    } else {
+      // Endpoint returned 200 but no useful credit data
+      console.log("[Billing] No credit data in response, returning fallback");
+      res.json({
+        success: true,
+        creditsRemaining: 0,
+        totalCredits: 0,
+        usedCredits: 0,
+        message: "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
       });
     }
-  } catch (error) {
-    console.error("[Billing] خطا:", error);
+  } catch (error: any) {
+    console.error("[Billing] خطا:", {
+      name: error.name,
+      message: error.message,
+    });
+
+    // If abort (timeout)
+    if (error.name === "AbortError") {
+      return res.status(504).json({
+        success: false,
+        error: "خطا: سرویس پاسخ نداد",
+      });
+    }
+
+    // For any other error, return fallback
     res.json({
       success: true,
       creditsRemaining: 0,
       totalCredits: 0,
       usedCredits: 0,
-      message: "برای مشاهده اعتبار خود به https://kie.ai مراجعه کنید",
+      message: "برای مشاهده اعتبار دقیق خود به https://kie.ai/billing مراجعه کنید",
     });
   }
 }
