@@ -717,26 +717,23 @@ export async function handleFetchBilling(
     }
 
     // Extract credit balance from HTML
-    // Look for the "Balance Information" section and extract the number
+    // The page is likely a React/Next.js app that loads data dynamically
+    // So we need to look for the credit data embedded in the page
     let creditsRemaining = 0;
 
+    console.log("[Billing] Searching for credit number in HTML...");
+
     // Try multiple regex patterns to find the credit number
-    // More specific patterns first to avoid matching irrelevant numbers
+    // Patterns ordered from most to least specific
     const patterns = [
-      // Pattern 1: Balance Information section with number
-      // This targets the main balance display area
-      /Balance\s+Information[\s\S]{0,200}?>(\d+)\s*</i,
-      // Pattern 2: Current Balance or similar label followed by number
-      /(?:Current\s+)?Balance[\s\S]{0,100}>(\d+)</i,
-      // Pattern 3: Look for credits text followed closely by number before it
-      />(\d+)\s*<[^>]*>\s*(?:credits?|اعتبار)/i,
-      // Pattern 4: Credit balance in format like "65 credits"
-      // But exclude small numbers like "1000 credits" (package prices)
-      />(\d+)\s+credits?\s*</i,
-      // Pattern 5: Data in common structure
-      /creditsRemaining["\']?\s*[:\-=]\s*["\']?(\d+)/i,
-      // Pattern 6: Fallback - first reasonable sized number
-      /(\d{2,})\s*credits?/i,
+      // Pattern 1: Look for explicit balance data
+      /balance["\']?\s*[=:]\s*(\d+)/i,
+      // Pattern 2: Current Balance format
+      /current\s+balance[\s\S]{0,100}>(\d+)</i,
+      // Pattern 3: Look for "65 credits" or similar
+      />(\d{2,})\s*</i,
+      // Pattern 4: Any reasonable 2-3 digit number
+      /\b(\d{2,})\b/,
     ];
 
     // Try each pattern
@@ -744,32 +741,21 @@ export async function handleFetchBilling(
       const match = html.match(pattern);
       if (match && match[1]) {
         const num = parseInt(match[1], 10);
-        // Only accept reasonable credit numbers (not 1000, 10000, etc which are package prices)
-        if (!isNaN(num) && num >= 0 && num < 10000) {
+        // Accept numbers that are reasonable for a balance (between 0 and 100000)
+        if (!isNaN(num) && num >= 0 && num <= 100000) {
           creditsRemaining = num;
-          console.log("[Billing] Found credits using pattern:", pattern);
-          console.log("[Billing] Extracted number:", creditsRemaining);
+          console.log("[Billing] Found credits using pattern, value:", creditsRemaining);
           break;
         }
       }
     }
 
-    // Additional fallback: if we still haven't found it, try a more aggressive search
+    // If not found yet, search for first 2+ digit number in the page
     if (creditsRemaining === 0) {
-      // Look for the number right before "credits" anywhere in the HTML
-      // but be more careful about context
-      const allMatches = [...html.matchAll(/>\s*(\d+)\s+</g)];
-      console.log("[Billing] Found", allMatches.length, "potential number matches");
-
-      // Try to find the first reasonable number that's not in price/package section
-      for (const match of allMatches) {
-        const num = parseInt(match[1], 10);
-        // Skip very large numbers (prices) and very small single digits
-        if (num > 0 && num < 10000 && !(num === 5 || num === 50 || num === 500 || num === 1250)) {
-          creditsRemaining = num;
-          console.log("[Billing] Found credits from fallback search:", creditsRemaining);
-          break;
-        }
+      const numberMatches = html.match(/\b(\d{2,})\b/);
+      if (numberMatches && numberMatches[1]) {
+        creditsRemaining = parseInt(numberMatches[1], 10);
+        console.log("[Billing] Using first multi-digit number found:", creditsRemaining);
       }
     }
 
