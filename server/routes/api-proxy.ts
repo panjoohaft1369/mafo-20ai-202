@@ -180,9 +180,64 @@ export async function handleValidateApiKey(
 
     // If we got here, the key is valid (even if the endpoint returned something else)
     console.log("[API] تایید موفق!");
+
+    // Now fetch the actual credit balance from kie.ai/billing
+    console.log("[API] Fetching actual balance from kie.ai/billing...");
+    let actualBalance = 0;
+
+    try {
+      const billingResponse = await fetch("https://kie.ai/billing", {
+        method: "GET",
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "Authorization": `Bearer ${apiKey}`,
+          "Cookie": `api_key=${apiKey}`,
+        },
+        signal: controller.signal,
+      });
+
+      if (billingResponse.ok) {
+        const billingHtml = await billingResponse.text();
+
+        // Try multiple patterns to extract balance
+        const patterns = [
+          /<span[^>]*>(\d+)<\/span><\/span>[^<]*credits/i,
+          /<span[^>]*>(\d+)<\/span>[^<]{0,50}credits/i,
+          /Balance\s+Information[\s\S]{0,300}<span[^>]*>(\d+)<\/span>/i,
+          />(\d+)<[^>]*credits/i,
+          /(\d+)[^a-z]*credits/i,
+        ];
+
+        for (const pattern of patterns) {
+          const match = billingHtml.match(pattern);
+          if (match && match[1]) {
+            const num = parseInt(match[1], 10);
+            if (!isNaN(num) && num >= 0 && num <= 999999) {
+              actualBalance = num;
+              console.log("[API] Successfully extracted balance:", actualBalance);
+              break;
+            }
+          }
+        }
+
+        if (actualBalance === 0) {
+          console.log("[API] Could not extract balance from HTML, using fallback");
+        }
+      }
+    } catch (billingError) {
+      console.error("[API] Error fetching billing info:", billingError);
+    }
+
+    // Use actual balance if found, otherwise fallback
+    const finalBalance = actualBalance > 0 ? actualBalance : (data?.data?.credit || data?.credit || 100);
+
+    console.log("[API] Final balance to return:", finalBalance);
+
     res.json({
       valid: true,
-      credit: data?.data?.credit || data?.credit || 100,
+      credit: finalBalance,
       email: data?.data?.email || data?.email || "user@mafo.ai",
       message: data?.message || "موفق",
     });
