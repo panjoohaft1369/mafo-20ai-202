@@ -104,9 +104,14 @@ export default function Index() {
         {!auth.isLoggedIn && (
           <section className="px-4 py-20 bg-muted/50">
             <div className="container mx-auto max-w-6xl">
-              <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-                ویژگی‌های منحصربه‌فرد
-              </h2>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                  ویژگی‌های منحصربه‌فرد
+                </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  ما به عنوان اولین پلتفرم هوش مصنوعی ایرانی، با فناوری پیشرفته و بدون محدودیت‌های تحریم، خدمات جهان‌سطح ارائه می‌دهیم
+                </p>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Feature 1 */}
