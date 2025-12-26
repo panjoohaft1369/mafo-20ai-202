@@ -15,8 +15,8 @@ export function TopNav() {
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="hidden md:block fixed top-0 left-0 right-0 z-40 px-4 pt-4">
-        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-6 py-4 shadow-lg container mx-auto">
+      <nav className="hidden md:flex fixed top-0 left-0 right-0 z-40 px-4 pt-4 justify-center items-start">
+        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-8 py-4 shadow-lg max-w-2xl w-full">
           <ul className="flex gap-8 justify-center items-center">
             {navItems.map((item) => (
               <li key={item.href}>
