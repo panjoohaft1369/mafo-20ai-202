@@ -52,24 +52,7 @@ export default function Generate() {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [taskId, setTaskId] = useState<string | null>(null);
-  const [credits, setCredits] = useState<number | null>(null);
-  const [loadingCredits, setLoadingCredits] = useState(true);
-
-  // Fetch billing info on component mount
-  useEffect(() => {
-    const fetchCredits = async () => {
-      if (!auth.apiKey) return;
-
-      setLoadingCredits(true);
-      const billingInfo = await fetchBillingInfo(auth.apiKey);
-      if (billingInfo) {
-        setCredits(billingInfo.creditsRemaining);
-      }
-      setLoadingCredits(false);
-    };
-
-    fetchCredits();
-  }, [auth.apiKey]);
+  const [historyModalOpen, setHistoryModalOpen] = useState(false);
 
   const handleLogout = () => {
     clearAuth();
