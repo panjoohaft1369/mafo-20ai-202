@@ -58,20 +58,20 @@ export default function Index() {
         </section>
 
         {/* Hero Section */}
-        <section className="relative px-4 py-20 sm:py-32">
+        <section className="relative px-4 py-16 sm:py-24">
           <div className="container mx-auto max-w-4xl text-center">
             <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border">
               <Sparkles className="h-4 w-4" />
-              <span className="text-sm font-medium">
+              <span className="text-xs sm:text-sm font-medium">
                 قدرت هوش مصنوعی در دستان شما
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
               تولید تصاویر و ویدیوهای هوش مصنوعی
             </h1>
 
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
               تصویری انتخاب کنید، پرامپت بنویسید، و تصویر یا ویدیوی جدید خود را
               ایجاد کنید. فناوری پیشرفته هوش مصنوعی ما کار را برای شما انجام
               می‌دهد.
