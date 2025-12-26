@@ -60,5 +60,12 @@ export function createServer() {
   app.get("/api/logs", handleFetchLogs);
   app.get("/api/billing", handleFetchBilling);
 
+  // Test endpoint - manually trigger callback for debugging
+  app.post("/api/test-callback", (req, res) => {
+    console.log("[TEST] Test callback received");
+    console.log("[TEST] Body:", JSON.stringify(req.body, null, 2));
+    handleCallback(req, res);
+  });
+
   return app;
 }
