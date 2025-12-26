@@ -646,35 +646,56 @@ export async function handleFetchBilling(
     let response = null;
     let data = null;
 
-    // Try 1: Fetch from /api/v1/user/balance endpoint
-    console.log("[Billing] Trying /api/v1/user/balance endpoint...");
-    try {
-      response = await fetch(`${KIE_AI_API_BASE}/user/balance`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`,
-        },
-        signal: controller.signal,
-      });
+    // Try multiple API endpoints where balance might be available
+    const endpoints = [
+      `/users/me`,
+      `/user/info`,
+      `/user/profile`,
+      `/user/balance`,
+      `/account/balance`,
+      `/account/info`,
+    ];
 
-      if (response.ok) {
-        data = await response.json();
-        console.log("[Billing] /api/v1/user/balance response:", data);
-        if (data?.data?.balance || data?.balance) {
-          const credits = data?.data?.balance || data?.balance;
-          res.json({
-            success: true,
-            creditsRemaining: credits,
-            totalCredits: 0,
-            usedCredits: 0,
-          });
-          clearTimeout(timeoutId);
-          return;
+    for (const endpoint of endpoints) {
+      try {
+        console.log(`[Billing] Trying ${endpoint} endpoint...`);
+        response = await fetch(`${KIE_AI_API_BASE}${endpoint}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
+          },
+          signal: controller.signal,
+        });
+
+        if (response.ok) {
+          data = await response.json();
+          console.log(`[Billing] ${endpoint} response:`, JSON.stringify(data).substring(0, 200));
+
+          // Try to extract balance from various possible paths
+          const balance =
+            data?.data?.balance ||
+            data?.data?.credits ||
+            data?.data?.creditsRemaining ||
+            data?.balance ||
+            data?.credits ||
+            data?.creditsRemaining;
+
+          if (typeof balance === "number" && balance > 0) {
+            console.log(`[Billing] Found balance from ${endpoint}:`, balance);
+            res.json({
+              success: true,
+              creditsRemaining: balance,
+              totalCredits: 0,
+              usedCredits: 0,
+            });
+            clearTimeout(timeoutId);
+            return;
+          }
         }
+      } catch (e) {
+        console.log(`[Billing] ${endpoint} failed, trying next...`);
       }
-    } catch (e) {
-      console.log("[Billing] /api/v1/user/balance failed, trying next...");
     }
 
     // Try 2: Fetch billing page HTML as fallback
