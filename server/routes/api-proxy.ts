@@ -691,15 +691,21 @@ export async function handleFetchBilling(
             data?.data?.balance ||
             data?.data?.credits ||
             data?.data?.creditsRemaining ||
+            data?.data?.credit ||
             data?.balance ||
             data?.credits ||
-            data?.creditsRemaining;
+            data?.creditsRemaining ||
+            data?.credit ||
+            data?.account?.balance ||
+            data?.account?.credits ||
+            data?.user?.balance ||
+            data?.user?.credits;
 
-          if (typeof balance === "number" && balance > 0) {
+          if (typeof balance === "number" && balance >= 0) {
             console.log(`[Billing] Found balance from ${endpoint}:`, balance);
             res.json({
               success: true,
-              creditsRemaining: balance,
+              creditsRemaining: Math.floor(balance),
               totalCredits: 0,
               usedCredits: 0,
             });
