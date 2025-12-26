@@ -318,6 +318,8 @@ export async function handleGenerateImage(
         aspectRatio,
         resolution,
       });
+      // Persist to file
+      saveTasksToFile();
     }
 
     // Return the task ID for polling
