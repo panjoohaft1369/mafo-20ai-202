@@ -771,45 +771,60 @@ export async function handleFetchBilling(
     }
 
     // Extract credit balance from HTML
-    // The page is likely a React/Next.js app that loads data dynamically
-    // So we need to look for the credit data embedded in the page
+    // Since the page is a JavaScript-rendered React app, balance is loaded dynamically
+    // We'll search for the balance number in JSON data or script tags
     let creditsRemaining = 0;
 
     console.log("[Billing] Searching for credit number in HTML...");
 
-    // Try multiple regex patterns to find the credit number
-    // Patterns ordered from most to least specific
-    const patterns = [
-      // Pattern 1: Look for explicit balance data
-      /balance["\']?\s*[=:]\s*(\d+)/i,
-      // Pattern 2: Current Balance format
-      /current\s+balance[\s\S]{0,100}>(\d+)</i,
-      // Pattern 3: Look for "65 credits" or similar
-      />(\d{2,})\s*</i,
-      // Pattern 4: Any reasonable 2-3 digit number
-      /\b(\d{2,})\b/,
+    // Strategy 1: Look for JSON data with balance/credit fields
+    const jsonPatterns = [
+      // Look for balance or credits in JSON
+      /"(?:balance|credits|creditsRemaining)"\s*:\s*(\d+)/i,
+      // Look for numeric values near "credit" keyword
+      /credits?["\']?\s*:\s*(\d+)/i,
     ];
 
-    // Try each pattern
-    for (const pattern of patterns) {
+    for (const pattern of jsonPatterns) {
       const match = html.match(pattern);
       if (match && match[1]) {
         const num = parseInt(match[1], 10);
-        // Accept numbers that are reasonable for a balance (between 0 and 100000)
-        if (!isNaN(num) && num >= 0 && num <= 100000) {
+        // Accept numbers between 0 and 99999 (reasonable credit range)
+        if (!isNaN(num) && num >= 0 && num < 100000) {
           creditsRemaining = num;
-          console.log("[Billing] Found credits using pattern, value:", creditsRemaining);
+          console.log("[Billing] Found in JSON pattern:", creditsRemaining);
           break;
         }
       }
     }
 
-    // If not found yet, search for first 2+ digit number in the page
+    // Strategy 2: Search for numbers in reasonable balance range (1-5000)
     if (creditsRemaining === 0) {
-      const numberMatches = html.match(/\b(\d{2,})\b/);
-      if (numberMatches && numberMatches[1]) {
-        creditsRemaining = parseInt(numberMatches[1], 10);
-        console.log("[Billing] Using first multi-digit number found:", creditsRemaining);
+      console.log("[Billing] JSON patterns failed, searching for balance-range numbers...");
+      // Look for 1-4 digit numbers
+      const numberMatches = [...html.matchAll(/\b(\d{1,4})\b/g)];
+
+      // Filter to reasonable balance numbers (prefer numbers in 1-5000 range)
+      const candidates = numberMatches
+        .map((m) => parseInt(m[1], 10))
+        .filter((num) => num > 0 && num < 5000);
+
+      console.log("[Billing] Candidates in 1-5000 range:", candidates.slice(0, 20));
+
+      // Take the first reasonable candidate (balance usually appears before prices)
+      if (candidates.length > 0) {
+        creditsRemaining = candidates[0];
+        console.log("[Billing] Selected first candidate:", creditsRemaining);
+      }
+    }
+
+    // Strategy 3: Last resort - any reasonable number
+    if (creditsRemaining === 0) {
+      console.log("[Billing] No balance found, trying fallback...");
+      const allNumbers = [...html.matchAll(/\b(\d{2,})\b/g)];
+      if (allNumbers.length > 0) {
+        creditsRemaining = parseInt(allNumbers[0][1], 10);
+        console.log("[Billing] Using fallback number:", creditsRemaining);
       }
     }
 
