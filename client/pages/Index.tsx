@@ -186,22 +186,21 @@ export default function Index() {
 
         {/* Support Iranian Tech Section */}
         {!auth.isLoggedIn && (
-          <section className="px-4 py-20 bg-primary/5 border-y border-primary/10">
+          <section className="px-4 py-16 bg-primary/5 border-y border-primary/10">
             <div className="container mx-auto max-w-4xl text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                <Heart className="h-8 w-8 inline-block mr-3 text-primary" />
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6">
+                <Heart className="h-6 w-6 inline-block mr-2 text-primary" />
                 حمایت از فناوری ایرانی
               </h2>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                با استفاده از MAFO، شما از یک تیم ایرانی را حمایت می‌کنید که بر
-                خلاف فشارها و تحریم‌ها، خدمات جهان‌سطح ارائه می‌دهند.
+              <p className="text-sm sm:text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
+                با استفاده از MAFO، شما از تیمی ایرانی را حمایت می‌کنید که
+                خدمات جهان‌سطح ارائه می‌دهند.
                 <br />
                 <br />
                 <strong>
                   ما را با دوستان و همکاران خود به اشتراک بگذارید
                 </strong>{" "}
-                تا بیشتر مردم بتوانند از خدمات اصیل و قابل‌اعتماد ایرانی
-                بهره‌برداری کنند.
+                تا بیشتر مردم از خدمات قابل‌اعتماد ایرانی بهره‌برداری کنند.
               </p>
             </div>
           </section>
