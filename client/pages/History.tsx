@@ -235,7 +235,7 @@ export default function History() {
                   ) : entry.status === "fail" ? (
                     <div className="rounded-lg p-4 bg-red-50 border border-red-200">
                       <p className="text-sm text-red-800">
-                        {entry.error || "خطایی در ایجاد تصویر رخ داد"}
+                        {getErrorMessage(entry.error)}
                       </p>
                     </div>
                   ) : null}
