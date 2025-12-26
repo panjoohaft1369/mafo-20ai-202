@@ -245,17 +245,19 @@ export default function History() {
 
                   {/* Download Button */}
                   {entry.status === "success" && entry.imageUrl && (
-                    <Button
-                      onClick={() =>
-                        handleDownload(entry.imageUrl, entry.prompt || "تصویر")
-                      }
-                      variant="default"
-                      size="sm"
-                      className="w-full gap-2 bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90"
-                    >
-                      <Download className="h-4 w-4" />
-                      دانلود و نگاه‌داری
-                    </Button>
+                    <div className="flex justify-center">
+                      <Button
+                        onClick={() =>
+                          handleDownload(entry.imageUrl, entry.prompt || "تصویر")
+                        }
+                        variant="default"
+                        size="sm"
+                        className="w-1/2 gap-2"
+                      >
+                        <Download className="h-4 w-4" />
+                        ذخیره
+                      </Button>
+                    </div>
                   )}
                 </CardContent>
               </Card>
