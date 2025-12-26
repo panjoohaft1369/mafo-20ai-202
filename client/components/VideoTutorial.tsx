@@ -71,31 +71,32 @@ export function VideoTutorial() {
 
         {/* Core Elements */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6 mb-8 dark:bg-blue-950/30 dark:border-blue-800">
-          <h3 className="text-lg font-semibold mb-4">🎯 اجزای اصلی پرامپت ویدیو</h3>
-          
+          <h3 className="text-lg font-semibold mb-4">🎯 چند نکته مهم</h3>
+
           <div className="space-y-3 text-sm">
             <div>
-              <p className="font-medium text-blue-900 dark:text-blue-100">۱. حرکت موضوع (Subject Motion)</p>
-              <p className="text-muted-foreground">سوژه چگونه حرکت می‌کند: دقیق و مشخص بنویسید</p>
-              <p className="text-xs mt-1 p-2 bg-white dark:bg-black/20 rounded italic">"فرد آهسته سر را می‌چرخاند"</p>
+              <p className="font-medium text-blue-900 dark:text-blue-100">۱. حرکت اشخاص و اشیا</p>
+              <p className="text-muted-foreground">چطور سوژه می‌خوای حرکت کنه. مثلاً:
+              </p>
+              <p className="text-xs mt-1 p-2 bg-white dark:bg-black/20 rounded italic">"سر رو آهسته می‌چرخونه" یا "لبخند می‌زنه"</p>
             </div>
 
             <div>
-              <p className="font-medium text-blue-900 dark:text-blue-100">۲. حرکت دوربین (Camera Motion)</p>
-              <p className="text-muted-foreground">دوربین کجا حرکت می‌کند: تنها ۱-۲ حرکت</p>
-              <p className="text-xs mt-1 p-2 bg-white dark:bg-black/20 rounded italic">"دوربین کند‌رو به جلو حرکت می‌کند"</p>
+              <p className="font-medium text-blue-900 dark:text-blue-100">۲. دوربین</p>
+              <p className="text-muted-foreground">دوربین چطور حرکت کنه (۱ یا ۲ حرکت بس)</p>
+              <p className="text-xs mt-1 p-2 bg-white dark:bg-black/20 rounded italic">"نزدیک میشه" یا "دور میره چپ و راست"</p>
             </div>
 
             <div>
-              <p className="font-medium text-blue-900 dark:text-blue-100">۳. روشنایی (Lighting)</p>
-              <p className="text-muted-foreground">روشنایی احساس و تم را تعیین می‌کند</p>
-              <p className="text-xs mt-1 p-2 bg-white dark:bg-black/20 rounded italic">"نور نرم، روشنایی طلایی از پنجره"</p>
+              <p className="font-medium text-blue-900 dark:text-blue-100">۳. نور</p>
+              <p className="text-muted-foreground">نور چطور باشه (گرم، سرد، مات، براق)</p>
+              <p className="text-xs mt-1 p-2 bg-white dark:bg-black/20 rounded italic">"نور نرم طلایی"</p>
             </div>
 
             <div>
-              <p className="font-medium text-blue-900 dark:text-blue-100">۴. حالت و فضا (Mood & Atmosphere)</p>
-              <p className="text-muted-foreground">احساس عمومی ویدیو را توضیح دهید</p>
-              <p className="text-xs mt-1 p-2 bg-white dark:bg-black/20 rounded italic">"سینمایی، آرام، رمزآلود"</p>
+              <p className="font-medium text-blue-900 dark:text-blue-100">۴. حس عمومی</p>
+              <p className="text-muted-foreground">ویدیو چی حس بدی داشته باشه</p>
+              <p className="text-xs mt-1 p-2 bg-white dark:bg-black/20 rounded italic">"رومانتیک و آرام" یا "انرژیک و حرارتی"</p>
             </div>
           </div>
         </div>
