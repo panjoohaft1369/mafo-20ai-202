@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Download, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { ImageViewer } from "@/components/ImageViewer";
+import { Download, Loader2, AlertCircle, CheckCircle2, Maximize2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface HistoryEntry {
