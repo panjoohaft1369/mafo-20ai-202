@@ -176,7 +176,7 @@ export function VideoTutorial() {
         <div className="mt-8 p-4 border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-950/20 rounded">
           <p className="text-sm font-semibold text-yellow-900 dark:text-yellow-200 mb-2">⚠️ نکته مهم:</p>
           <p className="text-sm text-muted-foreground">
-            هدف نوشتن پرامپت بهتر برای ویدیو این است که تنها <strong>حرکت و دید دوربین</strong> را توصیف کنید. تصویر شما قبلاً تمام جزئیات بصری (رنگ، لباس، محیط) را دارد. بیش از توصیف این موارد، بر روی حرکت تمرکز کنید.
+            فراموش نکن که تصویرت قبلاً داره! کاری نیست که لباس و رنگ و محیط رو دوباره توصیف کنی. فقط بگو <strong>چی قرار حرکت کنه</strong> و <strong>دوربین کجا برو</strong>.
           </p>
         </div>
       </div>
