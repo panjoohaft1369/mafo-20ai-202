@@ -208,21 +208,21 @@ export default function Index() {
 
         {/* CTA Section */}
         {!auth.isLoggedIn && (
-          <section className="px-4 py-20">
-            <div className="container mx-auto max-w-4xl text-center bg-muted/50 rounded-2xl p-12 border border-border">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          <section className="px-4 py-16">
+            <div className="container mx-auto max-w-4xl text-center bg-muted/50 rounded-2xl p-8 sm:p-12 border border-border">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4">
                 آماده‌اید شروع کنید؟
               </h2>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
                 با وارد کردن کلید API خود، به تمام قابلیت‌های ما دسترسی داشته
                 باشید
               </p>
               <Button
                 onClick={() => navigate("/login")}
-                className="py-6 text-base font-semibold"
+                className="py-5 text-sm font-semibold"
                 size="lg"
               >
-                <Sparkles className="h-5 w-5 mr-2" />
+                <Sparkles className="h-4 w-4 mr-2" />
                 ورود و شروع
               </Button>
             </div>
