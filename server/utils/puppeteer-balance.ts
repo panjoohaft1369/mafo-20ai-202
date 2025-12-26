@@ -167,6 +167,30 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
         }
       }
 
+      // Log what's actually in the HTML for debugging
+      const creditsIndex = html.indexOf("credits");
+      if (creditsIndex > -1) {
+        const contextStart = Math.max(0, creditsIndex - 300);
+        const contextEnd = Math.min(html.length, creditsIndex + 100);
+        const context = html.substring(contextStart, contextEnd);
+        console.log("[Balance] HTML context around 'credits':", context);
+      }
+
+      // Look for any number near "credits" keyword in the entire HTML
+      const creditsMatches = html.match(/[^>]*>(\d+)[^<]*credits/gi);
+      if (creditsMatches) {
+        console.log("[Balance] Found patterns near 'credits':", creditsMatches.slice(0, 5));
+        // Extract the first number found near "credits"
+        const numMatch = creditsMatches[0].match(/(\d+)/);
+        if (numMatch && numMatch[1]) {
+          const num = parseInt(numMatch[1], 10);
+          if (num > 0 && num < 100000) {
+            console.log("[Balance] ✓ Extracted number near 'credits':", num);
+            return num;
+          }
+        }
+      }
+
       // Also try JSON patterns as fallback
       const jsonPatterns = [
         /"balance"\s*:\s*(\d+)/i,
