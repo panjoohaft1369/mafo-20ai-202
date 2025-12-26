@@ -39,11 +39,10 @@ export default function Index() {
 
       <main>
         {/* Iranian Pride Banner */}
-        <section className="px-4 py-6 bg-primary/10 border-b border-primary/20">
+        <section className="px-4 py-4 bg-primary/10 border-b border-primary/20">
           <div className="container mx-auto max-w-6xl text-center">
-            <p className="text-sm sm:text-base font-medium text-primary">
-              🇮🇷 <strong>اولین هوش مصنوعی ایرانی</strong> - با همه تحریم‌ها و
-              فشارها، خدمات نوین در اختیار شما
+            <p className="text-xs sm:text-sm font-medium text-primary">
+              🇮🇷 اولین هوش مصنوعی ایرانی برای تولید تصاویر و ویدیوهای هوش مصنوعی
             </p>
           </div>
         </section>
