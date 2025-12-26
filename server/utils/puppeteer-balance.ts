@@ -131,36 +131,68 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
         }
       }
 
-      // Fallback: Look for any JSON with balance keywords in script tags
-      console.log("[Balance] Searching script tags for balance data...");
+      // Fallback: Look for pattern "credits" with a number near it
+      console.log("[Balance] Looking for number followed by 'credits' keyword...");
+
+      // Look for the specific pattern: number + "credits" (case-insensitive)
+      const creditsPattern = />(\d+)<\/span>\s*<[^>]*>\s*credits/i;
+      const creditsMatch = html.match(creditsPattern);
+      if (creditsMatch && creditsMatch[1]) {
+        const num = parseInt(creditsMatch[1], 10);
+        if (num > 0 && num < 100000) {
+          console.log("[Balance] Found balance from credits pattern:", num);
+          return num;
+        }
+      }
+
+      // Try another pattern: look for "currentBalance" or "balance" in JSON
+      const jsonBalancePattern = /["'](?:currentBalance|balance|creditsRemaining|credits)["']\s*:\s*(\d+)/i;
+      const jsonMatch = html.match(jsonBalancePattern);
+      if (jsonMatch && jsonMatch[1]) {
+        const num = parseInt(jsonMatch[1], 10);
+        if (num > 0 && num < 100000) {
+          console.log("[Balance] Found balance from JSON pattern:", num);
+          return num;
+        }
+      }
+
+      // Last resort: extract all reasonable numbers from scripts containing "balance" or "credit"
+      console.log("[Balance] Searching script tags for balance-related numbers...");
       const scriptRegex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
       let scriptMatch;
-      let allNumbers: number[] = [];
+      let balanceRelatedNumbers: number[] = [];
 
       while ((scriptMatch = scriptRegex.exec(html)) !== null) {
         const scriptContent = scriptMatch[1];
 
-        // Look for JSON objects with balance/credit keywords
-        if (scriptContent.includes("balance") || scriptContent.includes("credit")) {
-          // Extract all numbers from this script
-          const numbers = scriptContent.match(/:\s*(\d+)/g);
-          if (numbers) {
-            numbers.forEach(n => {
-              const num = parseInt(n.replace(/[^\d]/g, ""), 10);
-              if (num > 0 && num < 100000) {
-                allNumbers.push(num);
+        // Only look in scripts that mention balance or credit
+        if (scriptContent.toLowerCase().includes("balance") || scriptContent.toLowerCase().includes("credit")) {
+          // Look for numbers that appear after a colon (JSON key-value pairs)
+          const matches = scriptContent.match(/:\s*(\d+)[,}]/g);
+          if (matches) {
+            matches.forEach(m => {
+              const num = parseInt(m.replace(/[^\d]/g, ""), 10);
+              if (num >= 10 && num < 100000) {  // Reasonable balance range
+                balanceRelatedNumbers.push(num);
               }
             });
           }
         }
       }
 
-      if (allNumbers.length > 0) {
-        // Pick the smallest reasonable number (likely the current balance)
-        const filtered = [...new Set(allNumbers)].filter(n => n > 0 && n < 100000).sort((a, b) => a - b);
-        if (filtered.length > 0 && filtered[0] < 1000) {
-          console.log("[Balance] Extracted balance from scripts:", filtered[0]);
-          return filtered[0];
+      if (balanceRelatedNumbers.length > 0) {
+        // Get unique values and sort by how "likely" they are to be a balance
+        const unique = [...new Set(balanceRelatedNumbers)];
+        // Prefer numbers in a reasonable balance range (10-10000)
+        const inRange = unique.filter(n => n >= 10 && n <= 10000);
+        if (inRange.length > 0) {
+          const balance = inRange[0];
+          console.log("[Balance] Extracted balance from balance-related scripts:", balance);
+          return balance;
+        } else if (unique.length > 0) {
+          const balance = unique[0];
+          console.log("[Balance] Extracted balance from scripts:", balance);
+          return balance;
         }
       }
     }
