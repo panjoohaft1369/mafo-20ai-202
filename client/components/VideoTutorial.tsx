@@ -103,32 +103,32 @@ export function VideoTutorial() {
 
         {/* Tips section */}
         <div className="p-6 bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5 rounded-lg border border-brand-primary/20">
-          <h3 className="font-semibold mb-4">💡 نکات مهم برای نتایج بهتر:</h3>
-          
+          <h3 className="font-semibold mb-4">💡 نکاتی که نتیجه رو بهتر می‌کنه:</h3>
+
           <div className="space-y-2 text-sm text-muted-foreground">
             <div className="flex gap-3">
               <span className="text-lg">✓</span>
-              <span><strong>فقط حرکت را توضیح دهید:</strong> تصویر قبلاً رنگ، لباس و محیط را دارد</span>
+              <span><strong>فقط حرکت:</strong> تصویرت داره، نیازی نیست دوباره لباس و محیط توضیح بدی</span>
             </div>
             <div className="flex gap-3">
               <span className="text-lg">✓</span>
-              <span><strong>ساده و مختصر:</strong> پیچیدگی زیادی باعث نتایج ضعیف می‌شود</span>
+              <span><strong>کوتاه و سادی:</strong> بیش از حد طولانی نوشتن، عکس العمل عکس داره</span>
             </div>
             <div className="flex gap-3">
               <span className="text-lg">✓</span>
-              <span><strong>حرکت طبیعی:</strong> از حرکات فیزیکی واقعی استفاده کنید</span>
+              <span><strong>حرکت های واقعی:</strong> چیزایی که تو زندگی واقعی ممکنه، نه خیالی</span>
             </div>
             <div className="flex gap-3">
               <span className="text-lg">✓</span>
-              <span><strong>محدود کردن حرکات:</strong> بیش از ۲ حرکت دوربین مختلف استفاده نکنید</span>
+              <span><strong>یک دو حرکت دوربین:</strong> بیش از اون خراب میشه</span>
             </div>
             <div className="flex gap-3">
               <span className="text-lg">✓</span>
-              <span><strong>حذف نفی:</strong> به جای "بدون حرکت دوربین" از "دوربین ثابت" استفاده کنید</span>
+              <span><strong>نه برای نفی:</strong> نگو "بدون حرکت"، بگو "ثابت می‌مونه"</span>
             </div>
             <div className="flex gap-3">
               <span className="text-lg">✓</span>
-              <span><strong>کثافت حرکت:</strong> کلمات مانند "ملایم"، "آهسته"، "ظریف" برای حرکت دقیق استفاده کنید</span>
+              <span><strong>سرعت رو مشخص کن:</strong> "آهسته"، "سریع"، "ملایم" تفاوت داره</span>
             </div>
           </div>
         </div>
