@@ -91,10 +91,10 @@ export default function Billing() {
           ) : billing ? (
             <>
               {/* Credit Overview */}
-              <Card className="border-2 border-brand-primary/50 bg-gradient-to-br from-brand-primary/5 to-brand-secondary/5">
+              <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-brand-primary" />
+                    <TrendingUp className="h-5 w-5" />
                     اعتبار باقی‌مانده
                   </CardTitle>
                 </CardHeader>
@@ -105,7 +105,7 @@ export default function Billing() {
                       <p className="text-sm text-muted-foreground mb-1">
                         اعتبار باقی‌مانده
                       </p>
-                      <p className="text-3xl font-bold text-brand-primary">
+                      <p className="text-3xl font-bold">
                         {billing.creditsRemaining.toLocaleString()}
                       </p>
                     </div>
