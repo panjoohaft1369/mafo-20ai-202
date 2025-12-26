@@ -382,6 +382,9 @@ export default function GenerateVideo() {
         {/* Tutorial */}
         <VideoTutorial />
       </main>
+
+      {/* Bottom Navigation */}
+      <BottomNav isLoggedIn={true} onLogout={handleLogout} />
     </div>
   );
 }
