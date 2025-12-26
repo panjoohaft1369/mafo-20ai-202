@@ -800,64 +800,53 @@ export async function handleFetchBilling(
     }
 
     // Extract credit balance from HTML
-    // The page is JavaScript-rendered, so balance is loaded dynamically
-    // We need to be very specific about what we're looking for
+    // HTML structure from kie.ai/billing:
+    // <span class="mr-2 text-xl text-foreground"><span>65</span></span>credits
     let creditsRemaining = 0;
 
     console.log("[Billing] Searching for credit balance in HTML...");
 
-    // Strategy 1: Look for numbers right before the word "credits" or after "balance"
-    // This is the most reliable pattern
-    const creditPatterns = [
-      // Pattern: number immediately before "credits"
-      /(\d+)\s*credits?(?:\s|$|<)/i,
-      // Pattern: "balance: NUMBER" or "balance: NUMBER"
-      /balance\s*[:\-=]\s*(\d+)/i,
-      // Pattern: number right before "credit" tag
-      />(\d+)\s*<[^>]*>credits?/i,
-      // Pattern: Current Balance with number
-      /current\s+balance[^0-9]*(\d+)/i,
+    // Strategy 1: Try specific patterns for the balance value
+    const patterns = [
+      // Pattern 1: <span>65</span></span>credits (exact kie.ai structure)
+      /<span[^>]*>(\d+)<\/span><\/span>\s*credits/i,
+      // Pattern 2: More flexible <span>65</span> before credits
+      /<span[^>]*>(\d+)<\/span>[^<]*credits/i,
+      // Pattern 3: In Balance Information section
+      /Balance\s+Information[\s\S]{0,300}<span[^>]*>(\d+)<\/span>/i,
+      // Pattern 4: Number before credits keyword
+      />(\d+)<[^>]*credits/i,
+      // Pattern 5: Any number before credits
+      /(\d+)\s*credits/i,
     ];
 
-    for (const pattern of creditPatterns) {
+    for (const pattern of patterns) {
       const match = html.match(pattern);
       if (match && match[1]) {
         const num = parseInt(match[1], 10);
-        // Accept any number 0-100000 in this context
         if (!isNaN(num) && num >= 0 && num <= 100000) {
           creditsRemaining = num;
-          console.log("[Billing] Found credits in pattern:", creditsRemaining);
+          console.log("[Billing] Found balance:", creditsRemaining);
           break;
         }
       }
     }
 
-    // Strategy 2: Extract all 2-4 digit numbers and find the best candidate
+    // Fallback: search within Balance Information section
     if (creditsRemaining === 0) {
-      console.log("[Billing] Specific patterns failed, analyzing all numbers...");
-
-      // Extract all numbers 1-9999
-      const allNumbers = [...html.matchAll(/\b(\d{1,4})\b/g)]
-        .map((m) => parseInt(m[1], 10))
-        .filter((n) => n > 0);
-
-      // Remove duplicates and get unique values
-      const unique = [...new Set(allNumbers)];
-      console.log("[Billing] Found numbers:", unique.slice(0, 30));
-
-      // Heuristic: balance is usually displayed early on the page
-      // and is typically 1-3 digits for most users (0-999)
-      const likelyBalance = unique.find((n) => n < 1000);
-      if (likelyBalance !== undefined) {
-        creditsRemaining = likelyBalance;
-        console.log("[Billing] Selected likely balance:", creditsRemaining);
-      } else if (unique.length > 0) {
-        creditsRemaining = unique[0];
-        console.log("[Billing] Selected first unique number:", creditsRemaining);
+      console.log("[Billing] Patterns failed, searching Balance Information section...");
+      const balanceIndex = html.toLowerCase().indexOf("balance information");
+      if (balanceIndex !== -1) {
+        const snippet = html.substring(balanceIndex, balanceIndex + 500);
+        const match = snippet.match(/>(\d+)</);
+        if (match && match[1]) {
+          creditsRemaining = parseInt(match[1], 10);
+          console.log("[Billing] Found in Balance section:", creditsRemaining);
+        }
       }
     }
 
-    console.log("[Billing] Final extracted credits:", creditsRemaining);
+    console.log("[Billing] Final balance:", creditsRemaining);
 
     // Return the result
     res.json({
