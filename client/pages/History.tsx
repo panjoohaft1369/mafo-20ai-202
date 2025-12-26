@@ -33,6 +33,8 @@ interface HistoryEntry {
   prompt?: string;
   aspectRatio?: string;
   resolution?: string;
+  creditUsed?: number;
+  creditCost?: number;
 }
 
 export default function History() {
