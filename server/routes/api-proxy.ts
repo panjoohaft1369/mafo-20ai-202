@@ -347,9 +347,17 @@ export async function handleGenerateImage(
       return;
     }
 
-    console.log("[Image Gen] Response:", data);
+    console.log("[Image Gen] Full Response:", JSON.stringify(data, null, 2));
+    console.log("[Image Gen] Response code:", data?.code);
+    console.log("[Image Gen] Response message:", data?.message);
+    console.log("[Image Gen] Task ID:", data?.data?.taskId);
 
     if (!response.ok || data?.code !== 200) {
+      console.error("[Image Gen] API Error:", {
+        httpStatus: response.status,
+        code: data?.code,
+        message: data?.message,
+      });
       res.status(response.status).json({
         success: false,
         error: data?.message || "خطا در ایجاد تصویر",
