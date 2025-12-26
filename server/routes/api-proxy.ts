@@ -771,60 +771,60 @@ export async function handleFetchBilling(
     }
 
     // Extract credit balance from HTML
-    // Since the page is a JavaScript-rendered React app, balance is loaded dynamically
-    // We'll search for the balance number in JSON data or script tags
+    // The page is JavaScript-rendered, so balance is loaded dynamically
+    // We need to be very specific about what we're looking for
     let creditsRemaining = 0;
 
-    console.log("[Billing] Searching for credit number in HTML...");
+    console.log("[Billing] Searching for credit balance in HTML...");
 
-    // Strategy 1: Look for JSON data with balance/credit fields
-    const jsonPatterns = [
-      // Look for balance or credits in JSON
-      /"(?:balance|credits|creditsRemaining)"\s*:\s*(\d+)/i,
-      // Look for numeric values near "credit" keyword
-      /credits?["\']?\s*:\s*(\d+)/i,
+    // Strategy 1: Look for numbers right before the word "credits" or after "balance"
+    // This is the most reliable pattern
+    const creditPatterns = [
+      // Pattern: number immediately before "credits"
+      /(\d+)\s*credits?(?:\s|$|<)/i,
+      // Pattern: "balance: NUMBER" or "balance: NUMBER"
+      /balance\s*[:\-=]\s*(\d+)/i,
+      // Pattern: number right before "credit" tag
+      />(\d+)\s*<[^>]*>credits?/i,
+      // Pattern: Current Balance with number
+      /current\s+balance[^0-9]*(\d+)/i,
     ];
 
-    for (const pattern of jsonPatterns) {
+    for (const pattern of creditPatterns) {
       const match = html.match(pattern);
       if (match && match[1]) {
         const num = parseInt(match[1], 10);
-        // Accept numbers between 0 and 99999 (reasonable credit range)
-        if (!isNaN(num) && num >= 0 && num < 100000) {
+        // Accept any number 0-100000 in this context
+        if (!isNaN(num) && num >= 0 && num <= 100000) {
           creditsRemaining = num;
-          console.log("[Billing] Found in JSON pattern:", creditsRemaining);
+          console.log("[Billing] Found credits in pattern:", creditsRemaining);
           break;
         }
       }
     }
 
-    // Strategy 2: Search for numbers in reasonable balance range (1-5000)
+    // Strategy 2: Extract all 2-4 digit numbers and find the best candidate
     if (creditsRemaining === 0) {
-      console.log("[Billing] JSON patterns failed, searching for balance-range numbers...");
-      // Look for 1-4 digit numbers
-      const numberMatches = [...html.matchAll(/\b(\d{1,4})\b/g)];
+      console.log("[Billing] Specific patterns failed, analyzing all numbers...");
 
-      // Filter to reasonable balance numbers (prefer numbers in 1-5000 range)
-      const candidates = numberMatches
+      // Extract all numbers 1-9999
+      const allNumbers = [...html.matchAll(/\b(\d{1,4})\b/g)]
         .map((m) => parseInt(m[1], 10))
-        .filter((num) => num > 0 && num < 5000);
+        .filter((n) => n > 0);
 
-      console.log("[Billing] Candidates in 1-5000 range:", candidates.slice(0, 20));
+      // Remove duplicates and get unique values
+      const unique = [...new Set(allNumbers)];
+      console.log("[Billing] Found numbers:", unique.slice(0, 30));
 
-      // Take the first reasonable candidate (balance usually appears before prices)
-      if (candidates.length > 0) {
-        creditsRemaining = candidates[0];
-        console.log("[Billing] Selected first candidate:", creditsRemaining);
-      }
-    }
-
-    // Strategy 3: Last resort - any reasonable number
-    if (creditsRemaining === 0) {
-      console.log("[Billing] No balance found, trying fallback...");
-      const allNumbers = [...html.matchAll(/\b(\d{2,})\b/g)];
-      if (allNumbers.length > 0) {
-        creditsRemaining = parseInt(allNumbers[0][1], 10);
-        console.log("[Billing] Using fallback number:", creditsRemaining);
+      // Heuristic: balance is usually displayed early on the page
+      // and is typically 1-3 digits for most users (0-999)
+      const likelyBalance = unique.find((n) => n < 1000);
+      if (likelyBalance !== undefined) {
+        creditsRemaining = likelyBalance;
+        console.log("[Billing] Selected likely balance:", creditsRemaining);
+      } else if (unique.length > 0) {
+        creditsRemaining = unique[0];
+        console.log("[Billing] Selected first unique number:", creditsRemaining);
       }
     }
 
