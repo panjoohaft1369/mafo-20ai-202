@@ -54,19 +54,46 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
           <div className="flex-1" />
 
           {/* Right side actions */}
-          {isLoggedIn && (
-            <div className="flex items-center gap-2 sm:gap-4">
-              {/* Mobile menu */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setSidebarOpen(true)}
-                className="sm:hidden"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </div>
-          )}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {!isLoggedIn && (
+              <>
+                {/* Order Account Button */}
+                <Button
+                  onClick={() => setShowOrderModal(true)}
+                  variant="default"
+                  size="sm"
+                  className="hidden sm:flex gap-2"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  <span className="hidden md:inline">ثبت سفارش</span>
+                </Button>
+
+                {/* Login Button */}
+                <Button
+                  onClick={() => navigate("/login")}
+                  variant="outline"
+                  size="sm"
+                  className="hidden sm:flex"
+                >
+                  ورود
+                </Button>
+              </>
+            )}
+
+            {isLoggedIn && (
+              <>
+                {/* Mobile menu */}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSidebarOpen(true)}
+                  className="sm:hidden"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </header>
 
