@@ -57,13 +57,23 @@ export default function Generate() {
   };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setSelectedImage(event.target?.result as string);
-      };
-      reader.readAsDataURL(file);
+    const files = e.target.files;
+    if (files) {
+      const newImages: string[] = [];
+      let loadedCount = 0;
+
+      Array.from(files).forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          newImages.push(event.target?.result as string);
+          loadedCount++;
+
+          if (loadedCount === files.length) {
+            setSelectedImages((prev) => [...prev, ...newImages]);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
     }
   };
 
