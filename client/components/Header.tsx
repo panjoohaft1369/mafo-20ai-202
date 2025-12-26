@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface HeaderProps {
   isLoggedIn: boolean;
