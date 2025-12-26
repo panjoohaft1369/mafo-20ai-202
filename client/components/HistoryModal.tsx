@@ -109,13 +109,13 @@ export function HistoryModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col">
-        <DialogHeader>
+      <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col p-0">
+        <div className="px-6 py-4 border-b">
           <DialogTitle>تاریخچه تصاویر تولید شده</DialogTitle>
-        </DialogHeader>
+        </div>
 
-        <ScrollArea className="flex-1">
-          <div className="pr-4">
+        <ScrollArea className="flex-1 overflow-hidden">
+          <div className="px-6 py-4">
             {loading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -131,7 +131,7 @@ export function HistoryModal({
                 </p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-4 pb-4">
                 {history.map((entry) => (
                   <Card key={entry.id} className="overflow-hidden">
                     <CardHeader className="pb-3">
