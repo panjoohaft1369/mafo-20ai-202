@@ -39,7 +39,7 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(`[Balance] ${endpoint} response:`, JSON.stringify(data).substring(0, 500));
+          console.log(`[Balance] API response from ${fullUrl}:`, JSON.stringify(data).substring(0, 300));
 
           // Try to extract balance from various paths
           const balance =
@@ -56,14 +56,14 @@ export async function fetchBalanceFromBilling(apiKey: string): Promise<number> {
             data?.account?.credits;
 
           if (typeof balance === "number" && balance >= 0) {
-            console.log(`[Balance] Found balance via ${endpoint}:`, balance);
+            console.log(`[Balance] ✓ Found balance: ${balance}`);
             return balance;
           }
         } else {
-          console.log(`[Balance] ${endpoint} returned ${response.status}`);
+          console.log(`[Balance] HTTP ${response.status} from ${fullUrl}`);
         }
       } catch (e: any) {
-        console.log(`[Balance] ${endpoint} error:`, e.message);
+        console.log(`[Balance] Error with ${fullUrl}: ${e.message}`);
       }
     }
 
