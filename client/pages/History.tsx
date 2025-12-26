@@ -221,7 +221,7 @@ export default function History() {
                         setViewerImage(entry.imageUrl!);
                         setViewerOpen(true);
                       }}
-                      className="relative rounded-lg overflow-hidden border border-border bg-muted h-80 flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors group"
+                      className="relative rounded-lg overflow-hidden border border-border bg-muted h-[450px] flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors group"
                     >
                       <img
                         src={entry.imageUrl}
