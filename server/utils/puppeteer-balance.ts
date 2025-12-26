@@ -18,6 +18,7 @@ async function getBrowser(): Promise<Browser> {
   console.log("[Puppeteer] Launching browser...");
   browserInstance = await puppeteer.launch({
     headless: true,
+    executablePath: process.env.CHROME_PATH || "/root/.cache/puppeteer/chrome/linux-127.0.6533.88/chrome-linux64/chrome",
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
