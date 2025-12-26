@@ -435,6 +435,13 @@ export default function Generate() {
         {/* Tutorial */}
         <Tutorial />
       </main>
+
+      {/* History Modal */}
+      <HistoryModal
+        open={historyModalOpen}
+        onOpenChange={setHistoryModalOpen}
+        apiKey={auth.apiKey!}
+      />
     </div>
   );
 }
