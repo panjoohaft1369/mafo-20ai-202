@@ -42,10 +42,10 @@ export default function Support() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Phone Support */}
-          <Card className="border-2 border-brand-primary/50">
+          <Card>
             <CardHeader>
-              <div className="h-10 w-10 rounded-lg bg-brand-primary/10 flex items-center justify-center mb-3">
-                <Phone className="h-5 w-5 text-brand-primary" />
+              <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
+                <Phone className="h-5 w-5" />
               </div>
               <CardTitle>تماس تلفنی</CardTitle>
               <CardDescription>
@@ -70,10 +70,10 @@ export default function Support() {
           </Card>
 
           {/* WhatsApp Support */}
-          <Card className="border-2 border-green-500/50">
+          <Card>
             <CardHeader>
-              <div className="h-10 w-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-3">
-                <MessageCircle className="h-5 w-5 text-green-500" />
+              <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
+                <MessageCircle className="h-5 w-5" />
               </div>
               <CardTitle>پیام در واتساپ</CardTitle>
               <CardDescription>
