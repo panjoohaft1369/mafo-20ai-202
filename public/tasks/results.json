@@ -1,9 +1,17 @@
 {
   "68bbb604b48ed79f7a2587d125c01fa7": {
-    "status": "processing",
+    "status": "fail",
     "timestamp": 1766761815545,
     "prompt": "رنگ این دو تصویر رو سبز کن و کنار هم قرار بده",
     "aspectRatio": "1:1",
+    "resolution": "1K",
+    "error": "Task execution timeout"
+  },
+  "52fd304d901c0f87efee9e867b9aa05e": {
+    "status": "processing",
+    "timestamp": 1766762401031,
+    "prompt": "این دو تا سوژه رو کنار هم قرار بده و رنگشون رو صورتی کن",
+    "aspectRatio": "4:3",
     "resolution": "1K"
   }
 }
