@@ -38,6 +38,25 @@ export default function Index() {
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
       <main>
+        {/* Iranian Pride Banner */}
+        <section className="px-4 py-6 bg-primary/10 border-b border-primary/20">
+          <div className="container mx-auto max-w-6xl text-center">
+            <p className="text-sm sm:text-base font-medium text-primary">
+              🇮🇷 <strong>اولین هوش مصنوعی ایرانی</strong> - با همه تحریم‌ها و فشارها، خدمات نوین در اختیار شما
+            </p>
+          </div>
+        </section>
+
+        {/* Image Carousel - Top */}
+        <section className="px-4 py-12 sm:py-16">
+          <div className="container mx-auto max-w-6xl">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
+              نمونه‌های تولید شده
+            </h2>
+            <ImageCarousel />
+          </div>
+        </section>
+
         {/* Hero Section */}
         <section className="relative px-4 py-20 sm:py-32">
           <div className="container mx-auto max-w-4xl text-center">
@@ -78,16 +97,6 @@ export default function Index() {
                 </Button>
               )}
             </div>
-          </div>
-        </section>
-
-        {/* Image Carousel */}
-        <section className="px-4 py-20">
-          <div className="container mx-auto max-w-6xl">
-            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
-              نمونه‌های تولید شده
-            </h2>
-            <ImageCarousel />
           </div>
         </section>
 
