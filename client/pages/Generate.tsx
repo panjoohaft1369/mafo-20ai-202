@@ -29,7 +29,6 @@ import {
   CheckCircle,
   Download,
   Trash2,
-  History,
 } from "lucide-react";
 import { toast } from "sonner";
 
