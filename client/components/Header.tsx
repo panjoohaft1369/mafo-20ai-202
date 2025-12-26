@@ -102,6 +102,42 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
         onOpenChange={setSidebarOpen}
         onLogout={onLogout}
       />
+
+      {/* Order Account Modal */}
+      <Dialog open={showOrderModal} onOpenChange={setShowOrderModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>ثبت سفارش اکانت جدید</DialogTitle>
+            <DialogDescription>
+              برای ثبت سفارش اکانت جدید، لطفاً با پشتیبانی ما تماس بگیرید
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div className="bg-muted rounded-lg p-4">
+              <p className="text-sm text-muted-foreground mb-3">
+                ⏱️ <strong>زمان پاسخگویی:</strong> شنبه تا پنج‌شنبه، ۹ صبح تا ۶ بعدازظهر
+              </p>
+            </div>
+
+            <a
+              href={`https://wa.me/${whatsappNumber.replace(/[^\d]/g, '')}?text=${encodeURIComponent(whatsappMessage)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <Button className="w-full gap-2" size="lg">
+                <MessageCircle className="h-5 w-5" />
+                تماس از طریق واتساپ
+              </Button>
+            </a>
+
+            <p className="text-xs text-muted-foreground text-center">
+              {whatsappNumber}
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
