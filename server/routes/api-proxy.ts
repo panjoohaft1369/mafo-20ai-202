@@ -711,6 +711,9 @@ export async function handleCallback(
       timestamp: existingResult?.timestamp || Date.now(),
     });
 
+    // Persist to file
+    saveTasksToFile();
+
     console.log("[Callback] Task result stored:", {
       taskId,
       status: state,
