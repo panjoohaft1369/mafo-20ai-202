@@ -80,10 +80,10 @@ export default function Index() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={handleStartClick}
-                className="py-6 text-base font-semibold"
+                className="py-5 text-sm font-semibold"
                 size="lg"
               >
-                <Sparkles className="h-5 w-5 mr-2" />
+                <Sparkles className="h-4 w-4 mr-2" />
                 شروع کنید
               </Button>
               {!auth.isLoggedIn && (
@@ -91,7 +91,7 @@ export default function Index() {
                   variant="outline"
                   size="lg"
                   onClick={() => navigate("/login")}
-                  className="py-6 text-base font-semibold"
+                  className="py-5 text-sm font-semibold"
                 >
                   ورود با کلید API
                 </Button>
