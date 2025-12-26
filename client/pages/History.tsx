@@ -164,8 +164,8 @@ export default function History() {
                       <div className="flex items-center gap-2 mb-2">
                         {entry.status === "success" ? (
                           <>
-                            <CheckCircle2 className="h-5 w-5 text-green-600" />
-                            <Badge variant="default" className="bg-green-600">
+                            <CheckCircle2 className="h-5 w-5 text-green-400" />
+                            <Badge variant="default" className="bg-yellow-500 text-black">
                               موفق
                             </Badge>
                           </>
