@@ -114,6 +114,29 @@ export default function History() {
     }).format(date);
   };
 
+  const getErrorMessage = (error?: string): string => {
+    if (!error) return "خطایی نامعلوم رخ داد";
+
+    const errorMap: { [key: string]: string } = {
+      "Task execution timeout": "مهلت زمانی پردازش به پایان رسید. لطفاً دوباره تلاش کنید.",
+      "timeout": "مهلت زمانی به پایان رسید",
+      "failed": "عملیات ناموفق بود",
+      "error": "خطا در پردازش درخواست",
+      "network error": "خطا در اتصال شبکه",
+      "insufficient credits": "اعتبار کافی برای این عملیات نیست",
+    };
+
+    // Check if error contains any known keywords
+    for (const [key, value] of Object.entries(errorMap)) {
+      if (error.toLowerCase().includes(key.toLowerCase())) {
+        return value;
+      }
+    }
+
+    // If no match found, return original error with a prefix
+    return `خطا: ${error}`;
+  };
+
   return (
     <div className="min-h-screen bg-background pb-20">
       <Header isLoggedIn={true} onLogout={handleLogout} />
