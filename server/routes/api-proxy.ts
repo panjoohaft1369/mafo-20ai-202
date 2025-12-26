@@ -243,9 +243,40 @@ export async function handleGenerateImage(
     );
     console.log("[Image Gen] Number of images:", imageUrls.length);
     console.log("[Image Gen] Image URLs:", imageUrls);
-    console.log("[Image Gen] Prompt:", prompt.substring(0, 50) + "...");
+    console.log("[Image Gen] Prompt:", prompt);
+    console.log("[Image Gen] Prompt length:", prompt.length);
     console.log("[Image Gen] Aspect Ratio:", aspectRatio);
     console.log("[Image Gen] Resolution:", resolution);
+
+    // Validate aspect ratio
+    const validAspectRatios = ["1:1", "4:3", "3:4", "16:9", "9:16", "3:2", "2:3", "auto"];
+    if (!validAspectRatios.includes(aspectRatio)) {
+      console.error("[Image Gen] Invalid aspect ratio:", aspectRatio);
+    }
+
+    // Validate resolution
+    const validResolutions = ["1K", "2K"];
+    if (!validResolutions.includes(resolution)) {
+      console.error("[Image Gen] Invalid resolution:", resolution);
+    }
+
+    // Validate prompt length (3-5000 chars per docs)
+    if (prompt.length < 3 || prompt.length > 5000) {
+      res.status(400).json({
+        success: false,
+        error: `پرامپت باید بین 3 تا 5000 کاراکتر باشد (فعلی: ${prompt.length})`,
+      });
+      return;
+    }
+
+    // Validate image count (1-8 per docs)
+    if (imageUrls.length < 1 || imageUrls.length > 8) {
+      res.status(400).json({
+        success: false,
+        error: `تعداد تصاویر باید بین 1 تا 8 عکس باشد (فعلی: ${imageUrls.length})`,
+      });
+      return;
+    }
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 ثانیه برای generate
