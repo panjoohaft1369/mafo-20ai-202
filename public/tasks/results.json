@@ -22,5 +22,13 @@
     "aspectRatio": "4:3",
     "resolution": "1K",
     "imageUrl": "https://tempfile.aiquickdraw.com/h/8798e797878a860276b06f771fa70b56_1766762878.png"
+  },
+  "dbcce529b99675884fb50386a92cf467": {
+    "status": "success",
+    "timestamp": 1766783687563,
+    "prompt": "رنگ چوب مبل و میز رو تغییر بده به فندقی (قهوهای روشن)",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/dbcce529b99675884fb50386a92cf467_1766783733.png"
   }
 }
