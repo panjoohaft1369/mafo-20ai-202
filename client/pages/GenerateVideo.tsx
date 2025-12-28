@@ -318,7 +318,7 @@ export default function GenerateVideo() {
             <Button
               onClick={handleGenerate}
               disabled={loading || !selectedImage || !prompt.trim()}
-              className="w-full py-6 text-base font-semibold hover:shadow-xl hover:scale-110 active:scale-95"
+              className="w-full py-6 text-base font-semibold hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200"
               size="lg"
             >
               {loading ? (
