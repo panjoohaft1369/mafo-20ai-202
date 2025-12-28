@@ -26,6 +26,12 @@ import {
   handleAdminUpdateUser,
   handleAdminDeleteUser,
 } from "./routes/admin.js";
+import {
+  handleGetMenu,
+  handleSaveMenu,
+  handleGetSlides,
+  handleSaveSlides,
+} from "./routes/admin-content.js";
 
 export function createServer() {
   const app = express();
