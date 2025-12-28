@@ -6,7 +6,7 @@ export function Footer() {
   const footerLinks = {
     درباره: [
       { label: "درباره ما", href: "/about" },
-      { label: "تماس با ما", href: "/support" },
+      { label: "تماس با ما", href: "/contact" },
     ],
     منابع: [
       { label: "آموزش‌ها", href: "/tutorials" },
