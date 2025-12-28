@@ -336,7 +336,7 @@ export default function About() {
                 <span className="text-primary font-bold">آرامش و راحتی</span> در
                 زمان‌های لازم، از هوش مصنوعی ما استفاده کنید.
               </p>
-              <p className="text-muted-foreground mt-3">
+              <p className="text-foreground mt-3">
                 بدون فشار، بدون محدودیت، فقط وقتی که واقعا نیازتون باشه.
               </p>
             </div>
