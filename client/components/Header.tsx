@@ -63,16 +63,6 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
                   <MessageCircle className="h-4 w-4" />
                   <span className="hidden md:inline">ثبت سفارش</span>
                 </Button>
-
-                {/* Login Button */}
-                <Button
-                  onClick={() => navigate("/login")}
-                  variant="outline"
-                  size="sm"
-                  className="hidden sm:flex"
-                >
-                  ورود
-                </Button>
               </>
             )}
 
