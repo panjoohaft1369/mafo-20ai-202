@@ -57,17 +57,24 @@ export default function AdminLogin() {
         }),
       });
 
-      const data = await response.json();
-
+      // Check if response is OK before parsing JSON
       if (!response.ok) {
-        setError(
-          data.message ||
-            data.error ||
-            "نام کاربری یا رمز عبور نادرست است"
-        );
+        let errorMessage = "نام کاربری یا رمز عبور نادرست است";
+        try {
+          const contentType = response.headers.get("content-type");
+          if (contentType?.includes("application/json")) {
+            const data = await response.json();
+            errorMessage = data.message || data.error || errorMessage;
+          }
+        } catch (e) {
+          // If we can't parse error response, use default message
+        }
+        setError(errorMessage);
         setLoading(false);
         return;
       }
+
+      const data = await response.json();
 
       // Save token
       if (data.token) {
