@@ -135,7 +135,7 @@ export default function Contact() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">ساعات کاری</span>
-                    <span className="font-semibold">شنبه تا پنج‌شنبه، 10 صبح تا 21 بعدازظهر</span>
+                    <span className="font-semibold">شنبه تا پنج‌شنبه، 10 صبح تا 21</span>
                   </div>
                 </div>
               </CardContent>
