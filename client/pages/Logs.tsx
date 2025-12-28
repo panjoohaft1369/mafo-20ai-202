@@ -184,7 +184,7 @@ export default function Logs() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="flex-1"
+                            className="flex-1 hover:shadow-md hover:scale-105 active:scale-95"
                             onClick={() =>
                               handleDownloadImage(log.imageUrl!, log.id)
                             }
@@ -194,7 +194,7 @@ export default function Logs() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="flex-1"
+                            className="flex-1 hover:shadow-md hover:scale-105 active:scale-95"
                             onClick={() => {
                               setLogs(logs.filter((l) => l.id !== log.id));
                             }}
