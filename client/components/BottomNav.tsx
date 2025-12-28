@@ -80,38 +80,6 @@ export function BottomNav({ isLoggedIn, onLogout }: BottomNavProps) {
           </div>
         )}
 
-        {/* Support Tab */}
-        {isLoggedIn ? (
-          <Link
-            to="/support"
-            className="flex flex-col items-center justify-center h-full"
-          >
-            <Button
-              variant={isActive("/support") ? "default" : "ghost"}
-              size="icon"
-              className="rounded-lg w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center"
-            >
-              <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
-            </Button>
-            <span className="text-xs sm:text-sm mt-1 font-medium">
-              پشتیبانی
-            </span>
-          </Link>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full opacity-50 cursor-not-allowed">
-            <Button
-              disabled
-              size="icon"
-              className="rounded-lg w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center"
-            >
-              <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
-            </Button>
-            <span className="text-xs sm:text-sm mt-1 font-medium text-muted-foreground">
-              پشتیبانی
-            </span>
-          </div>
-        )}
-
         {/* History Tab */}
         {isLoggedIn ? (
           <Link
