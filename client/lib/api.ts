@@ -51,6 +51,7 @@ export interface LoginResponse {
     brandName: string;
     status: string;
     credits: number;
+    role: "user" | "admin";
     apiKey: string;
   };
   error?: string;
