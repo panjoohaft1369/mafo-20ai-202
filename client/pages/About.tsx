@@ -251,7 +251,9 @@ export default function About() {
         <section className="px-4 py-16 sm:py-20 bg-gradient-to-r from-blue-50 to-purple-50 border-b">
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-6 text-primary">تفاوت اساسی ما</h2>
+              <h2 className="text-3xl font-bold mb-6 text-primary">
+                تفاوت اساسی ما
+              </h2>
               <p className="text-lg text-primary max-w-3xl mx-auto leading-relaxed">
                 هوش مصنوعی های دنیا به روش سنتی کار می‌کنند: اشتراک‌های ماهیانه
                 گران‌قیمت و تعداد محدود خدمات. ما فلسفه متفاوتی داریم.
