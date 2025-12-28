@@ -231,7 +231,7 @@ export async function fetchLogs(apiKey: string): Promise<any[]> {
 }
 
 /**
- * دریافت اطلاعات اعتبار از طریق Backend
+ * Fetch billing info via Backend
  */
 export async function fetchBillingInfo(
   apiKey: string,
@@ -240,7 +240,7 @@ export async function fetchBillingInfo(
     const response = await fetch(`${BACKEND_API_BASE}/billing`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
         Authorization: `Bearer ${apiKey}`,
       },
     });
