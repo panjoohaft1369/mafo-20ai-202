@@ -345,6 +345,7 @@ export default function AdminDashboard() {
                             {user.name}
                           </h3>
                           {getStatusBadge(user.status)}
+                          {getRoleBadge(user.role)}
                         </div>
 
                         <div className="grid grid-cols-4 gap-4 text-sm text-right">
