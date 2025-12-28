@@ -55,13 +55,16 @@ export default function About() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleLogout = () => {
+    clearAuth();
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header
         isLoggedIn={auth.isLoggedIn}
-        onLogout={() => {
-          // logout logic
-        }}
+        onLogout={handleLogout}
       />
 
       <main className="flex-1 pt-20 md:pt-28">
