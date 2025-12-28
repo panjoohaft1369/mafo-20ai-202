@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterPending from "./pages/RegisterPending";
+import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminUserDetails from "./pages/AdminUserDetails";
 import Generate from "./pages/Generate";
