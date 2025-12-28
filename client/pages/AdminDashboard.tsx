@@ -49,11 +49,19 @@ export default function AdminDashboard() {
   >("all");
 
   useEffect(() => {
-    // Check admin authentication
+    // Check admin authentication and role
     const checkAuth = async () => {
       const isValid = await verifyAdminToken();
       if (!isValid) {
         navigate("/admin-login");
+        return;
+      }
+
+      // Check if user is admin
+      if (!isUserAdmin()) {
+        console.warn("[Admin Dashboard] User does not have admin role");
+        clearAdminToken();
+        navigate("/");
       }
     };
 
