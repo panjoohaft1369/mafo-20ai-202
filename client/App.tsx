@@ -14,6 +14,7 @@ import Logs from "./pages/Logs";
 import Billing from "./pages/Billing";
 import About from "./pages/About";
 import Tutorials from "./pages/Tutorials";
+import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
