@@ -221,6 +221,7 @@ export default function Contact() {
       </main>
 
       <Footer />
+      <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );
 }
