@@ -102,6 +102,16 @@ export function createServer() {
   // Authentication routes
   app.post("/api/register", handleRegister);
 
+  // Admin routes
+  app.post("/api/admin/login", handleAdminLogin);
+  app.post("/api/admin/verify", handleAdminVerify);
+  app.get("/api/admin/users", handleAdminGetUsers);
+  app.get("/api/admin/users/:userId", handleAdminGetUser);
+  app.put("/api/admin/users/:userId/credits", handleAdminUpdateCredits);
+  app.post("/api/admin/users/:userId/api-keys", handleAdminAddApiKey);
+  app.delete("/api/admin/users/:userId/api-keys/:keyId", handleAdminDeleteApiKey);
+  app.post("/api/admin/users/:userId/approve", handleAdminApproveUser);
+
   // KIE.AI API Proxy Routes
   app.post("/api/validate-key", handleValidateApiKey);
   app.post("/api/generate-image", handleGenerateImage);
