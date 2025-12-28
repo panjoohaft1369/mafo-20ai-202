@@ -15,7 +15,9 @@ import {
   ChevronRight,
   Users,
   Loader2,
+  LogOut,
 } from "lucide-react";
+import { getAdminToken, clearAdminToken, verifyAdminToken } from "@/lib/admin-auth";
 
 interface User {
   id: string;
