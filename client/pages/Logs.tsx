@@ -30,12 +30,6 @@ export default function Logs() {
   const navigate = useNavigate();
   const auth = getAuthState();
 
-  // Redirect if not logged in
-  if (!auth.isLoggedIn || !auth.apiKey) {
-    navigate("/login");
-    return null;
-  }
-
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -44,6 +38,14 @@ export default function Logs() {
     clearAuth();
     navigate("/login");
   };
+
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!auth.isLoggedIn || !auth.apiKey) {
+      navigate("/login");
+      return;
+    }
+  }, [auth.isLoggedIn, auth.apiKey, navigate]);
 
   useEffect(() => {
     const loadLogs = async () => {
