@@ -17,6 +17,10 @@ import {
   Users,
   Target,
   Award,
+  Server,
+  Cpu,
+  Gauge,
+  Globe,
 } from "lucide-react";
 
 export default function About() {
