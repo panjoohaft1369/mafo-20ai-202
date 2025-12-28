@@ -427,34 +427,6 @@ export async function pollTaskCompletion(
   };
 }
 
-/**
- * Get current user credits
- */
-export async function getUserCredits(
-  userId: string,
-  apiKey: string,
-): Promise<number | null> {
-  try {
-    const response = await fetch(`${BACKEND_API_BASE}/admin/users/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
-
-    if (!response.ok) {
-      console.error("Failed to fetch user credits");
-      return null;
-    }
-
-    const data = await response.json();
-    return data.user?.credits || 0;
-  } catch (error) {
-    console.error("Error fetching user credits:", error);
-    return null;
-  }
-}
 
 /**
  * Upload image to server (converts base64 to public URL)
