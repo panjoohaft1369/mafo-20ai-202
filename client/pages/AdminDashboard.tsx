@@ -173,19 +173,19 @@ export default function AdminDashboard() {
           <div className="flex gap-2">
             <Button
               onClick={() => navigate("/admin/users/add")}
-              className="bg-green-600 hover:bg-green-700"
+              className="bg-green-600 hover:bg-green-700 text-white"
             >
               + افزودن کاربر
             </Button>
             <Button
               onClick={() => navigate("/")}
-              className="bg-gray-600 hover:bg-gray-700"
+              className="bg-gray-600 hover:bg-gray-700 text-white"
             >
               بازگشت
             </Button>
             <Button
               onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-red-600 hover:bg-red-700 text-white"
             >
               <LogOut className="h-4 w-4" />
               خروج
