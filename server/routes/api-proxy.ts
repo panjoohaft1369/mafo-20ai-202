@@ -400,22 +400,26 @@ export async function handleGenerateImage(
 
     // Get the public URL for callback - prefer environment variable, then x-forwarded headers
     let callbackUrl: string;
+    let callbackSource: string;
 
     if (process.env.PUBLIC_URL) {
       callbackUrl = `${process.env.PUBLIC_URL}/api/callback`;
+      callbackSource = "PUBLIC_URL";
     } else {
       const protocol = req.headers["x-forwarded-proto"] || "https";
       const host = req.headers["x-forwarded-host"] || req.headers.host;
 
       if (host && !host.includes("localhost")) {
         callbackUrl = `${protocol}://${host}/api/callback`;
+        callbackSource = "x-forwarded headers";
       } else {
         // Fallback - won't work for external APIs from localhost
         callbackUrl = `http://localhost:8080/api/callback`;
+        callbackSource = "LOCALHOST FALLBACK ⚠️";
       }
     }
 
-    console.log("[Image Gen] Callback URL:", callbackUrl);
+    console.log(`[Image Gen] Callback URL: ${callbackUrl} (source: ${callbackSource})`);
 
     const response = await fetch(`${KIE_AI_API_BASE}/jobs/createTask`, {
       method: "POST",
