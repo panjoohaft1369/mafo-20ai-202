@@ -319,7 +319,7 @@ export async function handleGenerateImage(
   res: Response,
 ): Promise<void> {
   try {
-    const { imageUrls, prompt, aspectRatio, resolution } = req.body;
+    const { userId, imageUrls, prompt, aspectRatio, resolution } = req.body;
     const apiKey = req.headers.authorization?.replace("Bearer ", "");
 
     if (!apiKey) {
