@@ -262,6 +262,7 @@ export async function generateVideo(
         Authorization: `Bearer ${request.apiKey}`,
       },
       body: JSON.stringify({
+        userId: request.userId,
         imageUrl: request.imageUrl,
         prompt: request.prompt,
         mode: request.mode,
