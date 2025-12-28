@@ -58,6 +58,7 @@ export interface LoginResponse {
 
 export interface ImageGenerationRequest {
   apiKey: string;
+  userId: string;
   imageUrls: string[];
   prompt: string;
   aspectRatio: string;
@@ -66,6 +67,7 @@ export interface ImageGenerationRequest {
 
 export interface VideoGenerationRequest {
   apiKey: string;
+  userId: string;
   imageUrl: string;
   prompt: string;
   mode: string;
