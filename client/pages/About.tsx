@@ -435,7 +435,7 @@ export default function About() {
             <Button
               onClick={() => navigate(auth.isLoggedIn ? "/generate" : "/login")}
               size="lg"
-              className="text-lg py-6"
+              className="text-lg py-6 hover:shadow-2xl hover:scale-110 active:scale-95"
             >
               {auth.isLoggedIn ? "شروع تولید" : "ورود و شروع"}
             </Button>
