@@ -239,12 +239,12 @@ export default function Login() {
             <div className="space-y-3">
               <div className="p-4 rounded-lg bg-blue-50 border border-blue-200 text-right">
                 <p className="text-sm text-blue-900 font-medium mb-2">
-                  درباره کلید API
+                  درباره حسابتان
                 </p>
                 <ul className="text-xs text-blue-800 space-y-1">
-                  <li>• کلید API شما شخصی و محرمانه است</li>
-                  <li>• هرگز آن را با کسی به اشتراک نگذارید</li>
-                  <li>• برای دریافت کلید جدید، کلید قدیمی را بازیابی کنید</li>
+                  <li>• ایمیل و رمز عبور شما شخصی و محرمانه است</li>
+                  <li>• هرگز آنها را با کسی به اشتراک نگذارید</li>
+                  <li>• اگر رمز عبور خود را فراموش کردید، لطفا با پشتیبانی تماس بگیرید</li>
                   <li className="mt-2 pt-2 border-t border-blue-200">
                     برای استفاده از این هوش مصنوعی، لطفا ابتدا با پشتیبانی در تماس باشید.
                   </li>
