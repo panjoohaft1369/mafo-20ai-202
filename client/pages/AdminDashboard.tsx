@@ -33,6 +33,7 @@ interface User {
   createdAt: string;
   apiKeys: string[];
   credits: number;
+  role?: "user" | "admin";
 }
 
 export default function AdminDashboard() {
