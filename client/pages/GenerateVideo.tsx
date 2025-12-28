@@ -130,8 +130,13 @@ export default function GenerateVideo() {
 
       if (pollResult.success && pollResult.imageUrl) {
         setGeneratedVideo(pollResult.imageUrl);
+
+        // Calculate and deduct credits for video
+        const newCredits = Math.max(0, (auth.credits || 0) - VIDEO_CREDIT_COST);
+        updateStoredCredits(newCredits);
+
         toast.dismiss();
-        toast.success("ویدیو با موفقیت ایجاد شد!");
+        toast.success(`ویدیو با موفقیت ایجاد شد! (${VIDEO_CREDIT_COST} اعتبار کاهش یافت)`);
       } else {
         setError(
           translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو",
