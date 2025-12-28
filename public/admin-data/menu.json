@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "label": "خانه",
+      "href": "/",
+      "order": 1
+    },
+    {
+      "id": "2",
+      "label": "آموزش‌ها",
+      "href": "/tutorials",
+      "order": 2
+    },
+    {
+      "id": "3",
+      "label": "درباره ما",
+      "href": "/about",
+      "order": 3
+    },
+    {
+      "id": "4",
+      "label": "تماس با ما",
+      "href": "/contact",
+      "order": 4
+    }
+  ]
+}
