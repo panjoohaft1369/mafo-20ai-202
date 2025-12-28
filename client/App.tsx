@@ -12,6 +12,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminUserDetails from "./pages/AdminUserDetails";
 import AdminAddUser from "./pages/AdminAddUser";
+import Admin from "./pages/Admin";
 import Generate from "./pages/Generate";
 import GenerateVideo from "./pages/GenerateVideo";
 import Support from "./pages/Support";
