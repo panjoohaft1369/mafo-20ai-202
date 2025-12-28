@@ -3,6 +3,7 @@ const USER_ID_STORAGE_KEY = "mafo_user_id";
 const USER_NAME_STORAGE_KEY = "mafo_user_name";
 const USER_EMAIL_STORAGE_KEY = "mafo_user_email";
 const USER_CREDITS_STORAGE_KEY = "mafo_user_credits";
+const USER_ROLE_STORAGE_KEY = "mafo_user_role";
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -11,7 +12,7 @@ export interface AuthState {
   name: string | null;
   email: string | null;
   credits: number | null;
-  isAdmin?: boolean;
+  role?: "user" | "admin";
 }
 
 /**
