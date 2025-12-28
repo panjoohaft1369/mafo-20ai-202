@@ -87,6 +87,19 @@ export function TopNav() {
             </ul>
             <div className="border-t border-foreground/10 pt-3 space-y-2">
               <Link
+                to="/admin"
+                onClick={() => setIsOpen(false)}
+                className="block"
+              >
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full bg-transparent hover:bg-foreground/5"
+                >
+                  پنل ادمین
+                </Button>
+              </Link>
+              <Link
                 to="/login"
                 onClick={() => setIsOpen(false)}
                 className="block"
