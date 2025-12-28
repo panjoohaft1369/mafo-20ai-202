@@ -21,7 +21,9 @@ import {
   getAdminToken,
   clearAdminToken,
   verifyAdminToken,
+  isUserAdmin,
 } from "@/lib/admin-auth";
+import { getAuthState } from "@/lib/auth";
 
 export default function AdminAddUser() {
   const navigate = useNavigate();
