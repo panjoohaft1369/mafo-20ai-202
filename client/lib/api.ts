@@ -63,42 +63,50 @@ export interface TaskStatusResponse {
 }
 
 /**
- * تایید API Key از طریق Backend
+ * Validate API Key via Backend
  */
 export async function validateApiKey(
   apiKey: string,
 ): Promise<ApiKeyValidationResponse> {
   try {
-    const response = await fetch(`${BACKEND_API_BASE}/validate-key`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    const data = await response.json();
+    try {
+      const response = await fetch(`${BACKEND_API_BASE}/validate-key`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        signal: controller.signal,
+      });
 
-    if (!response.ok) {
+      clearTimeout(timeoutId);
+      const data = await response.json();
+
+      if (!response.ok) {
+        return {
+          valid: false,
+          message:
+            data.message || "Invalid license code. Please contact support.",
+        };
+      }
+
       return {
-        valid: false,
-        message:
-          data.message ||
-          "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
+        valid: true,
+        credit: data.credit,
+        email: data.email,
+        message: data.message,
       };
+    } finally {
+      clearTimeout(timeoutId);
     }
-
-    return {
-      valid: true,
-      credit: data.credit,
-      email: data.email,
-      message: data.message,
-    };
   } catch (error) {
     console.error("API validation error:", error);
     return {
       valid: false,
-      message: "خطا در اتصال به سرویس. لطفا بعدا دوباره سعی کنید.",
+      message: "Connection error. Please try again later.",
     };
   }
 }
