@@ -15,6 +15,7 @@ import Admin from "./pages/Admin";
 import Generate from "./pages/Generate";
 import GenerateVideo from "./pages/GenerateVideo";
 import Support from "./pages/Support";
+import Profile from "./pages/Profile";
 import History from "./pages/History";
 import Logs from "./pages/Logs";
 import Billing from "./pages/Billing";
