@@ -330,6 +330,14 @@ export async function handleGenerateImage(
       return;
     }
 
+    if (!userId) {
+      res.status(400).json({
+        success: false,
+        error: "شناسه کاربر یافت نشد",
+      });
+      return;
+    }
+
     if (
       !imageUrls ||
       !Array.isArray(imageUrls) ||
