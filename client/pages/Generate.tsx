@@ -407,7 +407,7 @@ export default function Generate() {
                       <Button
                         onClick={handleDownload}
                         variant="default"
-                        className="w-full gap-2"
+                        className="w-full gap-2 hover:shadow-lg hover:scale-105 active:scale-95"
                       >
                         <Download className="h-4 w-4" />
                         دانلود تصویر
@@ -415,7 +415,7 @@ export default function Generate() {
                       <Button
                         onClick={() => setGeneratedImage(null)}
                         variant="outline"
-                        className="w-full gap-2"
+                        className="w-full gap-2 hover:shadow-lg hover:scale-105 active:scale-95"
                       >
                         <Trash2 className="h-4 w-4" />
                         تولید دوباره
