@@ -118,13 +118,13 @@ export default function Contact() {
             {/* Response Time */}
             <Card className="bg-primary/5 border-primary/20">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <span className="text-2xl">⏱️</span>
+                <CardTitle className="flex items-center justify-end gap-2">
                   زمان پاسخگویی
+                  <span className="text-2xl">⏱️</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
+                <div className="space-y-3 text-right">
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">تماس تلفنی</span>
                     <span className="font-semibold">معمولاً فوری</span>
