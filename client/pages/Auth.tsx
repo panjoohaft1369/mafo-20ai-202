@@ -378,6 +378,8 @@ export default function Auth() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loginLoading}
+                  className="text-right"
+                  dir="rtl"
                 />
               </div>
 
