@@ -38,6 +38,10 @@ const taskResults: Map<
     prompt?: string;
     aspectRatio?: string;
     resolution?: string;
+    apiKey?: string;
+    userId?: string;
+    taskType?: "image" | "video";
+    creditsDeducted?: boolean;
   }
 > = new Map();
 
