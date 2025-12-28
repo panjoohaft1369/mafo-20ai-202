@@ -25,6 +25,7 @@ import {
   getAdminUserRole,
 } from "@/lib/admin-auth";
 import { getAuthState, clearAuth } from "@/lib/auth";
+import { AdminBottomNav } from "@/components/AdminBottomNav";
 
 interface User {
   id: string;
