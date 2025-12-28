@@ -17,7 +17,6 @@ interface HeaderProps {
 
 export function Header({ isLoggedIn, onLogout }: HeaderProps) {
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showOrderModal, setShowOrderModal] = useState(false);
 
   // WhatsApp contact information
