@@ -128,6 +128,7 @@ export default function Logs() {
                   <Button
                     onClick={() => navigate("/generate")}
                     variant="default"
+                    className="hover:shadow-lg hover:scale-105 active:scale-95"
                   >
                     شروع کنید
                   </Button>
