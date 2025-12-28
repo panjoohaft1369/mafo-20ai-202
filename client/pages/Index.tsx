@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuthState } from "@/lib/auth";
 import { Header } from "@/components/Header";
-import { Tutorial } from "@/components/Tutorial";
 import { Footer } from "@/components/Footer";
 import { TopNav } from "@/components/TopNav";
 import { ImageCarousel } from "@/components/ImageCarousel";
