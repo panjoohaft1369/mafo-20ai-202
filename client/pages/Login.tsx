@@ -48,9 +48,9 @@ export default function Login() {
       saveAuthCredentials(apiKey, result.email || "", result.credit || 0);
       setSuccess(true);
 
-      // Redirect to main page after a short delay
+      // Redirect to image generator page after a short delay
       setTimeout(() => {
-        navigate("/");
+        navigate("/generate");
       }, 1000);
     } catch (err) {
       setError("خطا در اتصال. لطفا بعدا دوباره سعی کنید.");
