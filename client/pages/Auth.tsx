@@ -361,6 +361,8 @@ export default function Auth() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loginLoading}
+                  className="text-right"
+                  dir="rtl"
                 />
               </div>
 
