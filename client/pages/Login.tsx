@@ -168,16 +168,7 @@ export default function Login() {
                 <li>• هرگز آن را با کسی به اشتراک نگذارید</li>
                 <li>• برای دریافت کلید جدید، کلید قدیمی را بازیابی کنید</li>
                 <li className="mt-2 pt-2 border-t border-blue-200">
-                  کلید خود را از{" "}
-                  <a
-                    href="https://kie.ai/api-key"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline font-medium"
-                  >
-                    kie.ai
-                  </a>{" "}
-                  دریافت کنید
+                  کلید API خود را از فروشنده‌ی خود دریافت کنید
                 </li>
               </ul>
             </div>
