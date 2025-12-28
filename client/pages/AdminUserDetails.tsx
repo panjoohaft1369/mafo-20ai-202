@@ -50,34 +50,46 @@ export default function AdminUserDetails() {
   const [newApiKey, setNewApiKey] = useState("");
   const [copiedKeyId, setCopiedKeyId] = useState<string | null>(null);
 
-  // Mock user data
-  const mockUser: User = {
-    id: userId || "1",
-    name: "علی محمدی",
-    email: "ali@example.com",
-    phone: "09123456789",
-    brandName: "شرکت الفا",
-    status: "pending",
-    createdAt: "2025-01-20",
-    apiKeys: [],
-    credits: 0,
-  };
+  useEffect(() => {
+    // Check admin authentication
+    const checkAuth = async () => {
+      const isValid = await verifyAdminToken();
+      if (!isValid) {
+        navigate("/admin-login");
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   useEffect(() => {
-    // In production, fetch from /api/admin/users/{userId}
+    // Fetch user from API
     const loadUser = async () => {
       try {
         setLoading(true);
-        // TODO: Replace with actual API call
-        // const response = await fetch(`/api/admin/users/${userId}`, {
-        //   headers: { 'Authorization': `Bearer ${adminToken}` }
-        // });
-        // const data = await response.json();
-        // setUser(data.user);
-        
-        // Mock data for now
-        setUser(mockUser);
-        setCredits(mockUser.credits.toString());
+        const token = getAdminToken();
+
+        const response = await fetch(`/api/admin/users/${userId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 401) {
+          clearAdminToken();
+          navigate("/admin-login");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user");
+        }
+
+        const data = await response.json();
+        setUser(data.user);
+        setCredits(data.user.credits.toString());
       } catch (err) {
         setError("خطا در بارگذاری اطلاعات کاربر");
         console.error(err);
@@ -86,8 +98,10 @@ export default function AdminUserDetails() {
       }
     };
 
-    loadUser();
-  }, [userId]);
+    if (userId) {
+      loadUser();
+    }
+  }, [userId, navigate]);
 
   const handleUpdateCredits = async () => {
     if (!credits || isNaN(Number(credits))) {
