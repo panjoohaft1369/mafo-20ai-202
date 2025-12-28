@@ -694,9 +694,12 @@ export async function handleGenerateVideo(
         prompt,
         resolution: mode, // Store mode as resolution for consistency
         apiKey,
+        userId,
         taskType: "video",
         creditsDeducted: false,
       });
+      // Persist to file
+      saveTasksToFile();
     }
 
     // Return the task ID for polling
