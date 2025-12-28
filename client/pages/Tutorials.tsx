@@ -435,6 +435,7 @@ export default function Tutorials() {
       </main>
 
       <Footer />
+      <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );
 }
