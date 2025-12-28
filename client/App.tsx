@@ -43,6 +43,7 @@ export default function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/users/add" element={<AdminAddUser />} />
             <Route path="/admin/users/:userId" element={<AdminUserDetails />} />
+            <Route path="/admin/content" element={<Admin />} />
             <Route path="/generate" element={<Generate />} />
             <Route path="/generate-video" element={<GenerateVideo />} />
             <Route path="/about" element={<About />} />
