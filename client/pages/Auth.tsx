@@ -461,10 +461,10 @@ export default function Auth() {
                 }}
               >
                 {loginLoading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin ml-2" />
+                  <div className="flex items-center justify-center gap-2">
+                    <Loading size="sm" inline text={undefined} />
                     درحال بارگذاری...
-                  </>
+                  </div>
                 ) : (
                   "ورود"
                 )}
