@@ -20,6 +20,13 @@ export default function Index() {
   const navigate = useNavigate();
   const auth = getAuthState();
 
+  // Redirect admin users to admin panel
+  useEffect(() => {
+    if (auth.isLoggedIn && auth.role === "admin") {
+      navigate("/admin");
+    }
+  }, [auth, navigate]);
+
   const handleStartClick = () => {
     if (auth.isLoggedIn) {
       navigate("/generate");
