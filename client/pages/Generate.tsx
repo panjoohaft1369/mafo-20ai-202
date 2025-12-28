@@ -26,6 +26,7 @@ import {
   translateErrorMessage,
 } from "@/lib/api";
 import { getAuthState, clearAuth, updateStoredCredits } from "@/lib/auth";
+import { HistoryModal } from "@/components/HistoryModal";
 import {
   Upload,
   Loader2,
