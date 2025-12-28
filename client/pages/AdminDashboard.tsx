@@ -173,8 +173,16 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = () => {
-    clearAdminToken();
-    navigate("/admin-login");
+    const regularAuth = getAuthState();
+    if (regularAuth.isLoggedIn && regularAuth.role === "admin") {
+      // User logged in via regular auth
+      clearAuth();
+      navigate("/login");
+    } else {
+      // User logged in via hardcoded admin login
+      clearAdminToken();
+      navigate("/admin-login");
+    }
   };
 
   if (loading) {
