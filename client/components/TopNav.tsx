@@ -1,10 +1,40 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, X, LogOut, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getAuthState, clearAuth } from "@/lib/auth";
 
 export function TopNav() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [auth, setAuth] = useState(getAuthState());
+
+  // Update auth state when component mounts or when location changes
+  useEffect(() => {
+    const checkAuth = () => {
+      setAuth(getAuthState());
+    };
+
+    // Check on component mount
+    checkAuth();
+
+    // Listen for storage changes (for multi-tab sync)
+    window.addEventListener("storage", checkAuth);
+
+    // Also check periodically
+    const interval = setInterval(checkAuth, 1000);
+
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    clearAuth();
+    setAuth(getAuthState());
+    navigate("/");
+  };
 
   const navItems = [
     { label: "خانه", href: "/" },
@@ -32,29 +62,67 @@ export function TopNav() {
               ))}
             </ul>
             <div className="flex gap-2 items-center border-l border-foreground/10 pl-8">
-              <Link to="/admin-login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-transparent hover:bg-foreground/5"
-                >
-                  پنل ادمین
-                </Button>
-              </Link>
-              <Link to="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-transparent hover:bg-foreground/5"
-                >
-                  ورود
-                </Button>
-              </Link>
-              <Link to="/register">
-                <Button size="sm" className="bg-primary hover:bg-primary/90">
-                  ثبت نام
-                </Button>
-              </Link>
+              {auth.isLoggedIn && auth.credits !== null ? (
+                // Logged In - Show Credits Box
+                <>
+                  <div className="flex items-center gap-2 bg-yellow-100/80 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded-lg px-4 py-2 min-w-max">
+                    <Zap className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                    <div className="flex flex-col items-end">
+                      <span className="text-xs text-yellow-700 dark:text-yellow-300">
+                        اعتبار باقی
+                      </span>
+                      <span className="text-lg font-bold text-yellow-700 dark:text-yellow-200">
+                        {auth.credits}
+                      </span>
+                    </div>
+                  </div>
+                  <Link to="/admin-login">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="bg-transparent hover:bg-foreground/5"
+                    >
+                      پنل ادمین
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-transparent hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 border-red-300 dark:border-red-600 hover:border-red-400"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="h-4 w-4" />
+                    خروج
+                  </Button>
+                </>
+              ) : (
+                // Not Logged In - Show Login/Register
+                <>
+                  <Link to="/admin-login">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="bg-transparent hover:bg-foreground/5"
+                    >
+                      پنل ادمین
+                    </Button>
+                  </Link>
+                  <Link to="/login">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="bg-transparent hover:bg-foreground/5"
+                    >
+                      ورود
+                    </Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button size="sm" className="bg-primary hover:bg-primary/90">
+                      ثبت نام
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -86,6 +154,19 @@ export function TopNav() {
               ))}
             </ul>
             <div className="border-t border-foreground/10 pt-3 space-y-2">
+              {auth.isLoggedIn && auth.credits !== null && (
+                <div className="flex items-center gap-2 bg-yellow-100/80 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded-lg px-4 py-2 w-full">
+                  <Zap className="h-5 w-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
+                  <div className="flex flex-col items-end flex-1">
+                    <span className="text-xs text-yellow-700 dark:text-yellow-300">
+                      اعتبار باقی
+                    </span>
+                    <span className="text-lg font-bold text-yellow-700 dark:text-yellow-200">
+                      {auth.credits}
+                    </span>
+                  </div>
+                </div>
+              )}
               <Link
                 to="/admin-login"
                 onClick={() => setIsOpen(false)}
@@ -99,31 +180,48 @@ export function TopNav() {
                   پنل ادمین
                 </Button>
               </Link>
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="block"
-              >
+              {!auth.isLoggedIn ? (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="block"
+                  >
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full bg-transparent hover:bg-foreground/5"
+                    >
+                      ورود
+                    </Button>
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="block"
+                  >
+                    <Button
+                      size="sm"
+                      className="w-full bg-primary hover:bg-primary/90"
+                    >
+                      ثبت نام
+                    </Button>
+                  </Link>
+                </>
+              ) : (
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full bg-transparent hover:bg-foreground/5"
+                  className="w-full bg-transparent hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 border-red-300 dark:border-red-600 hover:border-red-400"
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                  }}
                 >
-                  ورود
+                  <LogOut className="h-4 w-4" />
+                  خروج
                 </Button>
-              </Link>
-              <Link
-                to="/register"
-                onClick={() => setIsOpen(false)}
-                className="block"
-              >
-                <Button
-                  size="sm"
-                  className="w-full bg-primary hover:bg-primary/90"
-                >
-                  ثبت نام
-                </Button>
-              </Link>
+              )}
             </div>
           </div>
         )}
