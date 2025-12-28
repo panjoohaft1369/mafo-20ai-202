@@ -24,6 +24,7 @@ export function getAuthState(): AuthState {
   const name = localStorage.getItem(USER_NAME_STORAGE_KEY);
   const email = localStorage.getItem(USER_EMAIL_STORAGE_KEY);
   const creditsStr = localStorage.getItem(USER_CREDITS_STORAGE_KEY);
+  const role = (localStorage.getItem(USER_ROLE_STORAGE_KEY) as "user" | "admin" | null) || "user";
 
   return {
     isLoggedIn: !!apiKey && !!userId,
@@ -32,6 +33,7 @@ export function getAuthState(): AuthState {
     name,
     email,
     credits: creditsStr ? parseInt(creditsStr, 10) : null,
+    role: role as "user" | "admin",
   };
 }
 
