@@ -36,24 +36,16 @@ export default function Index() {
       <TopNav />
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
-      <main className="pt-20 md:pt-28">
-        {/* Image Carousel - Top */}
-        <section className="relative px-4 py-16 sm:py-24 bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full -mr-32 -mt-32 blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary/5 rounded-full -ml-32 -mb-32 blur-3xl" />
+      <main>
+        {/* Image Carousel - Full Width Top */}
+        <section className="relative w-full">
+          <ImageCarousel />
+        </section>
 
-          <div className="container mx-auto max-w-6xl relative z-10">
-            <div className="text-center mb-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-                <span className="text-xl">✨</span>
-                <span className="text-sm font-semibold text-primary">
-                  نتایج واقعی از MAFO
-                </span>
-              </div>
-            </div>
-
-            <div className="text-center mb-12">
+        {/* Carousel Description */}
+        <section className="px-4 py-12 sm:py-16 bg-background">
+          <div className="container mx-auto max-w-6xl">
+            <div className="text-center">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
                 نمونه‌های تولید شده
               </h2>
@@ -61,7 +53,6 @@ export default function Index() {
                 ببینید که MAFO چطور می‌تونه تصاویر شما را تبدیل کنه. این‌ها نمونه‌های واقعی از کاربران ما هستند
               </p>
             </div>
-            <ImageCarousel />
           </div>
         </section>
 
