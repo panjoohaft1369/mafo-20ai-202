@@ -110,6 +110,25 @@ export function BottomNav({ isLoggedIn, onLogout }: BottomNavProps) {
           </div>
         )}
 
+        {/* Profile Tab */}
+        {isLoggedIn ? (
+          <Link
+            to="/profile"
+            className="flex flex-col items-center justify-center h-full"
+          >
+            <Button
+              variant={isActive("/profile") ? "default" : "ghost"}
+              size="icon"
+              className="rounded-lg w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center"
+            >
+              <User className="h-5 w-5 sm:h-6 sm:w-6" />
+            </Button>
+            <span className="text-xs sm:text-sm mt-1 font-medium">
+              مشخصات کاربری
+            </span>
+          </Link>
+        ) : null}
+
         {/* Logout/Login Tab */}
         {isLoggedIn ? (
           <div className="flex flex-col items-center justify-center h-full">
