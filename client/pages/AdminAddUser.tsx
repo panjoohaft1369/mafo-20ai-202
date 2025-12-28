@@ -287,25 +287,6 @@ export default function AdminAddUser() {
                 />
               </div>
 
-              {/* Admin Role Checkbox */}
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
-                <input
-                  id="isAdmin"
-                  name="isAdmin"
-                  type="checkbox"
-                  checked={formData.isAdmin}
-                  onChange={handleInputChange}
-                  disabled={saving}
-                  className="h-4 w-4 cursor-pointer rounded"
-                />
-                <label
-                  htmlFor="isAdmin"
-                  className="text-sm font-medium cursor-pointer flex-1"
-                >
-                  این کاربر یک مدیر باشد
-                </label>
-              </div>
-
               {/* Password */}
               <div>
                 <label
