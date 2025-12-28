@@ -135,7 +135,7 @@ export default function AdminAddUser() {
           phone: formData.phone.trim(),
           password: formData.password,
           brandName: formData.brandName.trim(),
-          isAdmin: formData.isAdmin,
+          role: formData.role,
         }),
       });
 
