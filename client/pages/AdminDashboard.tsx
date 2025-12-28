@@ -73,7 +73,9 @@ export default function AdminDashboard() {
         }
 
         if (!response.ok) {
-          throw new Error("Failed to fetch users");
+          setError("خطا در بارگذاری کاربران. لطفا دوباره سعی کنید.");
+          setLoading(false);
+          return;
         }
 
         const data = await response.json();
