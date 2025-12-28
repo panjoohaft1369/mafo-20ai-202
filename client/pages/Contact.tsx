@@ -82,9 +82,9 @@ export default function Contact() {
               </Card>
 
               {/* WhatsApp Support */}
-              <Card className="hover:shadow-lg transition-shadow">
+              <Card className="hover:shadow-lg transition-shadow text-right">
                 <CardHeader>
-                  <div className="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center mb-4">
+                  <div className="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center mb-4 mr-auto">
                     <MessageCircle className="h-6 w-6 text-green-600" />
                   </div>
                   <CardTitle>پیام در واتساپ</CardTitle>
