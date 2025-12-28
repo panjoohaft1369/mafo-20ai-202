@@ -24,10 +24,7 @@ export default function Tutorials() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Header
-        isLoggedIn={auth.isLoggedIn}
-        onLogout={handleLogout}
-      />
+      <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
       <main className="flex-1 pt-20 md:pt-28">
         {/* Hero Section */}

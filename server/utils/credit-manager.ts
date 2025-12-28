@@ -75,7 +75,7 @@ export async function deductUserCredits(
 ): Promise<boolean> {
   try {
     console.log(
-      `[Credits] Deducting ${credits} credits from user ${userId} for ${type}`
+      `[Credits] Deducting ${credits} credits from user ${userId} for ${type}`,
     );
 
     // Get current user credits
@@ -94,7 +94,7 @@ export async function deductUserCredits(
 
     if (currentCredits < credits) {
       console.error(
-        `[Credits] User ${userId} does not have enough credits (has ${currentCredits}, needs ${credits})`
+        `[Credits] User ${userId} does not have enough credits (has ${currentCredits}, needs ${credits})`,
       );
       return false;
     }
@@ -109,35 +109,33 @@ export async function deductUserCredits(
       .eq("id", userId);
 
     if (updateError) {
-      console.error(`[Credits] Error updating user credits:`, updateError.message);
+      console.error(
+        `[Credits] Error updating user credits:`,
+        updateError.message,
+      );
       return false;
     }
 
     // Record transaction in usage_history
-    const { error: txnError } = await supabase
-      .from("usage_history")
-      .insert([
-        {
-          user_id: userId,
-          type,
-          credit_amount: credits,
-          task_id: taskId,
-          status: "completed",
-          metadata: {},
-        },
-      ]);
+    const { error: txnError } = await supabase.from("usage_history").insert([
+      {
+        user_id: userId,
+        type,
+        credit_amount: credits,
+        task_id: taskId,
+        status: "completed",
+        metadata: {},
+      },
+    ]);
 
     if (txnError) {
-      console.error(
-        `[Credits] Error recording transaction:`,
-        txnError.message
-      );
+      console.error(`[Credits] Error recording transaction:`, txnError.message);
       // Still return true since credits were deducted
       return true;
     }
 
     console.log(
-      `[Credits] Successfully deducted ${credits} credits from user ${userId}`
+      `[Credits] Successfully deducted ${credits} credits from user ${userId}`,
     );
 
     return true;
@@ -174,33 +172,28 @@ export async function getUserCredits(userId: string): Promise<number> {
  * Record a usage transaction
  */
 export async function recordUsageTransaction(
-  transaction: CreditTransaction
+  transaction: CreditTransaction,
 ): Promise<void> {
   try {
     console.log(
       `[Credits] Recording transaction:`,
       transaction.type,
-      transaction.creditAmount
+      transaction.creditAmount,
     );
 
-    const { error } = await supabase
-      .from("usage_history")
-      .insert([
-        {
-          user_id: transaction.userId,
-          type: transaction.type,
-          credit_amount: transaction.creditAmount,
-          task_id: transaction.taskId,
-          status: transaction.status,
-          metadata: transaction.metadata || {},
-        },
-      ]);
+    const { error } = await supabase.from("usage_history").insert([
+      {
+        user_id: transaction.userId,
+        type: transaction.type,
+        credit_amount: transaction.creditAmount,
+        task_id: transaction.taskId,
+        status: transaction.status,
+        metadata: transaction.metadata || {},
+      },
+    ]);
 
     if (error) {
-      console.error(
-        `[Credits] Error recording transaction:`,
-        error.message
-      );
+      console.error(`[Credits] Error recording transaction:`, error.message);
       return;
     }
 
@@ -215,7 +208,7 @@ export async function recordUsageTransaction(
  */
 export async function getUserUsageHistory(
   userId: string,
-  limit: number = 100
+  limit: number = 100,
 ): Promise<CreditTransaction[]> {
   try {
     const { data, error } = await supabase
@@ -226,10 +219,7 @@ export async function getUserUsageHistory(
       .limit(limit);
 
     if (error || !data) {
-      console.error(
-        `[Credits] Error fetching usage history:`,
-        error?.message
-      );
+      console.error(`[Credits] Error fetching usage history:`, error?.message);
       return [];
     }
 

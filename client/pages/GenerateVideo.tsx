@@ -136,7 +136,9 @@ export default function GenerateVideo() {
         updateStoredCredits(newCredits);
 
         toast.dismiss();
-        toast.success(`ویدیو با موفقیت ایجاد شد! (${VIDEO_CREDIT_COST} اعتبار کاهش یافت)`);
+        toast.success(
+          `ویدیو با موفقیت ایجاد شد! (${VIDEO_CREDIT_COST} اعتبار کاهش یافت)`,
+        );
       } else {
         setError(
           translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو",

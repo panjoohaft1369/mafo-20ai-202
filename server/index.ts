@@ -116,7 +116,10 @@ export function createServer() {
   app.delete("/api/admin/users/:userId", handleAdminDeleteUser);
   app.put("/api/admin/users/:userId/credits", handleAdminUpdateCredits);
   app.post("/api/admin/users/:userId/api-keys", handleAdminAddApiKey);
-  app.delete("/api/admin/users/:userId/api-keys/:keyId", handleAdminDeleteApiKey);
+  app.delete(
+    "/api/admin/users/:userId/api-keys/:keyId",
+    handleAdminDeleteApiKey,
+  );
   app.post("/api/admin/users/:userId/approve", handleAdminApproveUser);
 
   // KIE.AI API Proxy Routes

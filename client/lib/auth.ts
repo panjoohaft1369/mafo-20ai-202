@@ -41,7 +41,7 @@ export function saveAuthCredentials(
   apiKey: string,
   name: string,
   email: string,
-  credits: number
+  credits: number,
 ): void {
   localStorage.setItem(USER_ID_STORAGE_KEY, userId);
   localStorage.setItem(API_KEY_STORAGE_KEY, apiKey);

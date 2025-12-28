@@ -154,12 +154,15 @@ export default function Generate() {
         setGeneratedImage(pollResult.imageUrl);
 
         // Calculate and deduct credits
-        const creditCost = CREDIT_COSTS[resolution as keyof typeof CREDIT_COSTS] || 5;
+        const creditCost =
+          CREDIT_COSTS[resolution as keyof typeof CREDIT_COSTS] || 5;
         const newCredits = Math.max(0, (auth.credits || 0) - creditCost);
         updateStoredCredits(newCredits);
 
         toast.dismiss();
-        toast.success(`تصویر با موفقیت ایجاد شد! (${creditCost} اعتبار کاهش یافت)`);
+        toast.success(
+          `تصویر با موفقیت ایجاد شد! (${creditCost} اعتبار کاهش یافت)`,
+        );
       } else {
         setError(pollResult.error || "خطا در ایجاد تصویر");
         toast.dismiss();

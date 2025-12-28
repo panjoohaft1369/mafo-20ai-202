@@ -5,7 +5,7 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error(
-    "Missing Supabase environment variables: SUPABASE_URL or SUPABASE_ANON_KEY"
+    "Missing Supabase environment variables: SUPABASE_URL or SUPABASE_ANON_KEY",
   );
 }
 

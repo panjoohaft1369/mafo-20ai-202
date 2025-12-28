@@ -17,7 +17,11 @@ import {
   Loader2,
   LogOut,
 } from "lucide-react";
-import { getAdminToken, clearAdminToken, verifyAdminToken } from "@/lib/admin-auth";
+import {
+  getAdminToken,
+  clearAdminToken,
+  verifyAdminToken,
+} from "@/lib/admin-auth";
 
 interface User {
   id: string;
@@ -37,7 +41,9 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved" | "rejected">("all");
+  const [filterStatus, setFilterStatus] = useState<
+    "all" | "pending" | "approved" | "rejected"
+  >("all");
 
   useEffect(() => {
     // Check admin authentication
@@ -165,14 +171,22 @@ export default function AdminDashboard() {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button onClick={() => navigate("/admin/users/add")} className="bg-green-600 hover:bg-green-700">
-              +
-              افزودن کاربر
+            <Button
+              onClick={() => navigate("/admin/users/add")}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              + افزودن کاربر
             </Button>
-            <Button onClick={() => navigate("/")} className="bg-gray-600 hover:bg-gray-700">
+            <Button
+              onClick={() => navigate("/")}
+              className="bg-gray-600 hover:bg-gray-700"
+            >
               بازگشت
             </Button>
-            <Button onClick={handleLogout} className="bg-red-600 hover:bg-red-700">
+            <Button
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-700"
+            >
               <LogOut className="h-4 w-4" />
               خروج
             </Button>

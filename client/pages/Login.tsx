@@ -132,7 +132,9 @@ export default function Login() {
                   <p>{error}</p>
                   {error.includes("تایید") && (
                     <div className="mt-2 space-y-1 text-xs">
-                      <p className="font-medium">لطفا با پشتیبانی تماس بگیرید:</p>
+                      <p className="font-medium">
+                        لطفا با پشتیبانی تماس بگیرید:
+                      </p>
                       <a
                         href="tel:+989357887572"
                         className="block hover:underline"
@@ -210,7 +212,9 @@ export default function Login() {
               <ul className="text-xs text-blue-800 space-y-1">
                 <li>• از ایمیل و رمز عبور ثبت‌نام خود استفاده کنید</li>
                 <li>• حساب کاربری شما توسط تیم پشتیبانی باید تایید شود</li>
-                <li>• بعد از ورود، از کلید API خود بطور خودکار استفاده خواهید کرد</li>
+                <li>
+                  • بعد از ورود، از کلید API خود بطور خودکار استفاده خواهید کرد
+                </li>
                 <li className="mt-2 pt-2 border-t border-blue-200">
                   رمز عبور خود را فراموش کردید؟ با پشتیبانی تماس بگیرید
                 </li>

@@ -17,7 +17,11 @@ import {
   Eye,
   EyeOff,
 } from "lucide-react";
-import { getAdminToken, clearAdminToken, verifyAdminToken } from "@/lib/admin-auth";
+import {
+  getAdminToken,
+  clearAdminToken,
+  verifyAdminToken,
+} from "@/lib/admin-auth";
 
 export default function AdminAddUser() {
   const navigate = useNavigate();
@@ -62,7 +66,10 @@ export default function AdminAddUser() {
       return false;
     }
 
-    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    if (
+      !formData.email.trim() ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+    ) {
       setError("ایمیل معتبر نیست");
       return false;
     }
@@ -184,7 +191,9 @@ export default function AdminAddUser() {
           </button>
           <div>
             <h1 className="text-3xl font-bold">افزودن کاربر جدید</h1>
-            <p className="text-muted-foreground">ایجاد حساب کاربری جدید برای مشتری</p>
+            <p className="text-muted-foreground">
+              ایجاد حساب کاربری جدید برای مشتری
+            </p>
           </div>
         </div>
 
@@ -192,15 +201,16 @@ export default function AdminAddUser() {
         <Card>
           <CardHeader>
             <CardTitle>اطلاعات کاربر</CardTitle>
-            <CardDescription>
-              تمام فیلدها الزامی هستند
-            </CardDescription>
+            <CardDescription>تمام فیلدها الزامی هستند</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name */}
               <div>
-                <label htmlFor="name" className="text-sm font-medium block mb-1">
+                <label
+                  htmlFor="name"
+                  className="text-sm font-medium block mb-1"
+                >
                   نام
                 </label>
                 <Input
@@ -216,7 +226,10 @@ export default function AdminAddUser() {
 
               {/* Email */}
               <div>
-                <label htmlFor="email" className="text-sm font-medium block mb-1">
+                <label
+                  htmlFor="email"
+                  className="text-sm font-medium block mb-1"
+                >
                   ایمیل
                 </label>
                 <Input
@@ -233,7 +246,10 @@ export default function AdminAddUser() {
 
               {/* Phone */}
               <div>
-                <label htmlFor="phone" className="text-sm font-medium block mb-1">
+                <label
+                  htmlFor="phone"
+                  className="text-sm font-medium block mb-1"
+                >
                   شماره تماس
                 </label>
                 <Input
@@ -249,7 +265,10 @@ export default function AdminAddUser() {
 
               {/* Brand Name */}
               <div>
-                <label htmlFor="brandName" className="text-sm font-medium block mb-1">
+                <label
+                  htmlFor="brandName"
+                  className="text-sm font-medium block mb-1"
+                >
                   نام برند
                 </label>
                 <Input
@@ -265,7 +284,10 @@ export default function AdminAddUser() {
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="text-sm font-medium block mb-1">
+                <label
+                  htmlFor="password"
+                  className="text-sm font-medium block mb-1"
+                >
                   رمز عبور
                 </label>
                 <div className="relative">
@@ -296,7 +318,10 @@ export default function AdminAddUser() {
 
               {/* Confirm Password */}
               <div>
-                <label htmlFor="confirmPassword" className="text-sm font-medium block mb-1">
+                <label
+                  htmlFor="confirmPassword"
+                  className="text-sm font-medium block mb-1"
+                >
                   تأیید رمز عبور
                 </label>
                 <div className="relative">

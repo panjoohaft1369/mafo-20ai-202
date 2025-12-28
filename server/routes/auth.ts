@@ -49,10 +49,7 @@ function normalizePhone(phone: string): string {
 /**
  * Handle user login with email and password
  */
-export async function handleLogin(
-  req: Request,
-  res: Response,
-): Promise<void> {
+export async function handleLogin(req: Request, res: Response): Promise<void> {
   try {
     const { email, password } = req.body;
 
@@ -93,7 +90,7 @@ export async function handleLogin(
         credits,
         created_at,
         api_keys:api_keys(id, key, is_active, created_at)
-      `
+      `,
       )
       .eq("email", lowerEmail)
       .is("deleted_at", null)
@@ -113,7 +110,8 @@ export async function handleLogin(
       console.error("[Login] User not approved:", user.status);
       res.status(403).json({
         success: false,
-        error: "حساب کاربری شما هنوز تایید نشده است. لطفا منتظر تایید تیم پشتیبانی باشید.",
+        error:
+          "حساب کاربری شما هنوز تایید نشده است. لطفا منتظر تایید تیم پشتیبانی باشید.",
       });
       return;
     }
@@ -333,9 +331,7 @@ export async function handleRegister(
 
     res.status(500).json({
       success: false,
-      error:
-        error.message ||
-        "خطا در ثبت نام. لطفا دوباره سعی کنید.",
+      error: error.message || "خطا در ثبت نام. لطفا دوباره سعی کنید.",
     });
   }
 }

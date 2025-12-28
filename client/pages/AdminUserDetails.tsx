@@ -20,7 +20,11 @@ import {
   Key,
   Edit2,
 } from "lucide-react";
-import { getAdminToken, clearAdminToken, verifyAdminToken } from "@/lib/admin-auth";
+import {
+  getAdminToken,
+  clearAdminToken,
+  verifyAdminToken,
+} from "@/lib/admin-auth";
 
 interface User {
   id: string;
@@ -51,7 +55,12 @@ export default function AdminUserDetails() {
   const [newApiKey, setNewApiKey] = useState("");
   const [copiedKeyId, setCopiedKeyId] = useState<string | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editData, setEditData] = useState({ name: "", email: "", phone: "", brandName: "" });
+  const [editData, setEditData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    brandName: "",
+  });
   const [savingEdit, setSavingEdit] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -203,13 +212,16 @@ export default function AdminUserDetails() {
 
     try {
       const token = getAdminToken();
-      const response = await fetch(`/api/admin/users/${userId}/api-keys/${keyId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `/api/admin/users/${userId}/api-keys/${keyId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       if (response.status === 401) {
         clearAdminToken();
@@ -274,7 +286,9 @@ export default function AdminUserDetails() {
   };
 
   const handleDeleteUser = async () => {
-    if (!confirm("آیا از حذف این کاربر مطمئن هستید؟ این عملیات قابل بازگشت نیست.")) {
+    if (
+      !confirm("آیا از حذف این کاربر مطمئن هستید؟ این عملیات قابل بازگشت نیست.")
+    ) {
       return;
     }
 
@@ -312,7 +326,12 @@ export default function AdminUserDetails() {
 
   const handleEditUser = async () => {
     // Validate edit data
-    if (!editData.name.trim() || !editData.email.trim() || !editData.phone.trim() || !editData.brandName.trim()) {
+    if (
+      !editData.name.trim() ||
+      !editData.email.trim() ||
+      !editData.phone.trim() ||
+      !editData.brandName.trim()
+    ) {
       setError("تمام فیلدها الزامی هستند");
       return;
     }
@@ -376,10 +395,7 @@ export default function AdminUserDetails() {
           <CardContent className="pt-6">
             <AlertCircle className="h-12 w-12 text-red-600 mx-auto mb-4" />
             <p className="text-center text-muted-foreground">کاربر یافت نشد</p>
-            <Button
-              onClick={() => navigate("/admin")}
-              className="w-full mt-4"
-            >
+            <Button onClick={() => navigate("/admin")} className="w-full mt-4">
               بازگشت به پنل مدیریت
             </Button>
           </CardContent>
@@ -455,31 +471,45 @@ export default function AdminUserDetails() {
                   <label className="text-sm font-medium block mb-1">نام</label>
                   <Input
                     value={editData.name}
-                    onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                    onChange={(e) =>
+                      setEditData({ ...editData, name: e.target.value })
+                    }
                     className="text-right"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium block mb-1">ایمیل</label>
+                  <label className="text-sm font-medium block mb-1">
+                    ایمیل
+                  </label>
                   <Input
                     value={editData.email}
-                    onChange={(e) => setEditData({ ...editData, email: e.target.value })}
+                    onChange={(e) =>
+                      setEditData({ ...editData, email: e.target.value })
+                    }
                     className="text-right"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium block mb-1">شماره تماس</label>
+                  <label className="text-sm font-medium block mb-1">
+                    شماره تماس
+                  </label>
                   <Input
                     value={editData.phone}
-                    onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
+                    onChange={(e) =>
+                      setEditData({ ...editData, phone: e.target.value })
+                    }
                     className="text-right"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium block mb-1">نام برند</label>
+                  <label className="text-sm font-medium block mb-1">
+                    نام برند
+                  </label>
                   <Input
                     value={editData.brandName}
-                    onChange={(e) => setEditData({ ...editData, brandName: e.target.value })}
+                    onChange={(e) =>
+                      setEditData({ ...editData, brandName: e.target.value })
+                    }
                     className="text-right"
                   />
                 </div>
@@ -555,8 +585,8 @@ export default function AdminUserDetails() {
           <Card className="border-green-200 bg-green-50">
             <CardContent className="pt-6">
               <p className="text-sm text-green-900 mb-4">
-                این کاربر هنوز تایید نشده است. آن را تایید کنید تا بتواند درخواست
-                کلید API کند.
+                این کاربر هنوز تایید نشده است. آن را تایید کنید تا بتواند
+                درخواست کلید API کند.
               </p>
               <Button
                 onClick={handleApproveUser}

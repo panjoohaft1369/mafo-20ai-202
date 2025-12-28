@@ -427,7 +427,6 @@ export async function pollTaskCompletion(
   };
 }
 
-
 /**
  * Upload image to server (converts base64 to public URL)
  */

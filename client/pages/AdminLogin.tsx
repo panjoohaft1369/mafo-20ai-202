@@ -108,9 +108,7 @@ export default function AdminLogin() {
                 className="h-16 w-16 mb-2 drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]"
               />
               <h1 className="text-3xl font-bold">MAFO</h1>
-              <p className="text-sm text-muted-foreground">
-                پنل مدیریت
-              </p>
+              <p className="text-sm text-muted-foreground">پنل مدیریت</p>
             </div>
           </div>
           <CardTitle className="text-2xl">ورود ادمین</CardTitle>

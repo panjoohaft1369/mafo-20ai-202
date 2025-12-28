@@ -147,7 +147,7 @@ export async function handleAdminGetUsers(
         credits,
         created_at,
         api_keys:api_keys(id, key, is_active, created_at)
-      `
+      `,
       )
       .is("deleted_at", null)
       .order("created_at", { ascending: false });
@@ -162,17 +162,18 @@ export async function handleAdminGetUsers(
     }
 
     // Format response
-    const users = data?.map((user: any) => ({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      brandName: user.brand_name,
-      status: user.status,
-      createdAt: user.created_at,
-      apiKeys: user.api_keys || [],
-      credits: user.credits,
-    })) || [];
+    const users =
+      data?.map((user: any) => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        brandName: user.brand_name,
+        status: user.status,
+        createdAt: user.created_at,
+        apiKeys: user.api_keys || [],
+        credits: user.credits,
+      })) || [];
 
     res.json({
       success: true,
@@ -222,7 +223,7 @@ export async function handleAdminGetUser(
         credits,
         created_at,
         api_keys:api_keys(id, key, is_active, created_at)
-      `
+      `,
       )
       .eq("id", userId)
       .is("deleted_at", null)
@@ -667,7 +668,7 @@ export async function handleAdminUpdateUser(
         credits,
         created_at,
         api_keys:api_keys(id, key, is_active, created_at)
-      `
+      `,
       )
       .single();
 
