@@ -110,6 +110,7 @@ export default function GenerateVideo() {
       // Step 2: Send generation request with uploaded image URL
       const result = await generateVideo({
         apiKey: auth.apiKey!,
+        userId: auth.userId!,
         imageUrl: uploadResult.imageUrl,
         prompt,
         mode,
