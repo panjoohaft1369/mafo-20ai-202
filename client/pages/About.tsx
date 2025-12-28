@@ -180,6 +180,116 @@ export default function About() {
           </div>
         </section>
 
+        {/* Technical Infrastructure */}
+        <section className="px-4 py-16 sm:py-20 bg-gradient-to-b from-primary/5 to-background border-b">
+          <div className="container mx-auto max-w-4xl">
+            <h2 className="text-3xl font-bold mb-12 text-center">
+              بنیان تکنیکی ما
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6 mb-12">
+              {[
+                {
+                  icon: Cpu,
+                  title: "قدرت برنامه‌نویسی",
+                  desc: "تیم توسعه‌دهندگان متخصصی که سالها تجربه در زمینه هوش مصنوعی و محاسبات تصویری دارند. هر روز کد ما بهبود می‌یابه و ظرفیت جدید اضافه می‌شه.",
+                },
+                {
+                  icon: Server,
+                  title: "سرورهای خارجی قدرتمند",
+                  desc: "زیرساخت جهانی برای تضمین پاسخ سریع. سرورهایی در نقاط مختلف دنیا برای کمترین تاخیر و بیشترین قابلیت اطمینان.",
+                },
+                {
+                  icon: Cpu,
+                  title: "GPU های حرفه‌ای",
+                  desc: "سیستم سخت‌افزاری جدیدترین و قدرتمندترین کارت‌های گرافیکی (GPU) برای پردازش سریع و تولید تصاویر با کیفیت بالا.",
+                },
+                {
+                  icon: Gauge,
+                  title: "بروزرسانی مداوم",
+                  desc: "تمام‌وقت در حال بهبود و بروزرسانی الگوریتم‌ها و مدل‌های هوش مصنوعی. اطلاعات و توانایی‌های سیستم همیشه بروز و به روزترین هستند.",
+                },
+              ].map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <Card key={idx} className="border-primary/20">
+                    <CardHeader>
+                      <div className="flex items-start gap-4">
+                        <Icon className="h-8 w-8 text-primary flex-shrink-0 mt-1" />
+                        <CardTitle className="text-right text-lg">
+                          {item.title}
+                        </CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="text-right">
+                      <p className="text-muted-foreground">{item.desc}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+
+            {/* Global Coverage */}
+            <div className="bg-muted/50 rounded-lg p-8 text-center border">
+              <Globe className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold mb-4">پوشش جهانی</h3>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                شبکه‌ای از سرورهای توزیع‌شده در نقاط استراتژیک جهان برای اطمینان‌دهی به سرعت فوری درخواست‌ها و تحمل بار زیاد. هر درخواست شما به نزدیک‌ترین سرور برای کمترین تاخیر هدایت می‌شه.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm font-semibold text-muted-foreground">
+                <div>🇺🇸 آمریکا</div>
+                <div>🇪🇺 اروپا</div>
+                <div>🇸🇬 آسیا</div>
+                <div>🇬🇧 بریتانیا</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Activity Timeline */}
+        <section className="px-4 py-16 sm:py-20">
+          <div className="container mx-auto max-w-4xl">
+            <h2 className="text-3xl font-bold mb-12 text-center">
+              تاریخچه فعالیت ما
+            </h2>
+            <div className="space-y-6">
+              {[
+                {
+                  year: "۱۴۰۲",
+                  title: "شروع پروژه",
+                  desc: "تشکیل تیم متخصصین برای ایجاد اولین هوش مصنوعی تولید‌کننده تصاویر ایرانی",
+                },
+                {
+                  year: "۱۴۰۲-۱۴۰۳",
+                  title: "توسعه و بهبود",
+                  desc: "تحقیق عمیق در الگوریتم‌های پیشرفته و آموزش مدل‌های هوش مصنوعی",
+                },
+                {
+                  year: "۱۴۰۳",
+                  title: "راه‌اندازی اولیه",
+                  desc: "آغاز خدمات برای کسب‌وکارهای کوچک و متوسط و بدست‌آوردن بازخورد مشتریان",
+                },
+                {
+                  year: "۱۴۰۳ تا‌کنون",
+                  title: "رشد و بهبود مداوم",
+                  desc: "افزایش ظرفیت سرورها، بهبود کیفیت تصاویر، اضافه‌کردن ویژگی‌های جدید و پشتیبانی بیشتر",
+                },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="relative pl-8 pb-8 border-l-2 border-primary"
+                >
+                  <div className="absolute w-4 h-4 bg-primary rounded-full -left-[9px] top-1"></div>
+                  <div className="font-bold text-lg text-primary mb-2">
+                    {item.year}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Use Cases */}
         <section className="px-4 py-16 sm:py-20 bg-muted/50">
           <div className="container mx-auto max-w-4xl">
