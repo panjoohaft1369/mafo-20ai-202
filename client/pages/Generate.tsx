@@ -441,10 +441,10 @@ export default function Generate() {
               size="lg"
             >
               {loading ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
+                <div className="flex items-center justify-center gap-2">
+                  <Loading size="sm" inline text={undefined} />
                   درحال ایجاد تصویر...
-                </>
+                </div>
               ) : (
                 "ایجاد تصویر"
               )}
