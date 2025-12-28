@@ -111,13 +111,28 @@ export default function AdminUserDetails() {
 
     setSavingCredits(true);
     try {
-      // TODO: API call to update credits
-      // const response = await fetch(`/api/admin/users/${userId}/credits`, {
-      //   method: 'PUT',
-      //   headers: { 'Authorization': `Bearer ${adminToken}` },
-      //   body: JSON.stringify({ credits: Number(credits) })
-      // });
-      
+      const token = getAdminToken();
+      const response = await fetch(`/api/admin/users/${userId}/credits`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ credits: Number(credits) }),
+      });
+
+      if (response.status === 401) {
+        clearAdminToken();
+        navigate("/admin-login");
+        return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "خطا در بروزرسانی اعتبار");
+        return;
+      }
+
       if (user) {
         setUser({ ...user, credits: Number(credits) });
       }
