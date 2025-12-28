@@ -9,7 +9,7 @@ export function TopNav() {
     { label: "خانه", href: "/" },
     { label: "آموزش‌ها", href: "/tutorials" },
     { label: "درباره ما", href: "/about" },
-    { label: "تماس با ما", href: "/support" },
+    { label: "تماس با ما", href: "/contact" },
   ];
 
   return (
