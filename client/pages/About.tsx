@@ -545,6 +545,7 @@ export default function About() {
       </main>
 
       <Footer />
+      <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );
 }
