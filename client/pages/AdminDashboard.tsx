@@ -24,6 +24,7 @@ import {
   isUserAdmin,
   getAdminUserRole,
 } from "@/lib/admin-auth";
+import { getAuthState, clearAuth } from "@/lib/auth";
 
 interface User {
   id: string;
