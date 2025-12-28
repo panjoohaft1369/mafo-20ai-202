@@ -25,6 +25,7 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "lottie-react": "^2.4.1",
     "puppeteer": "^22.15.0",
     "zod": "^3.25.76"
   },
