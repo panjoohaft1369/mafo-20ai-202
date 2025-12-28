@@ -173,6 +173,7 @@ export async function handleAdminGetUsers(
         createdAt: user.created_at,
         apiKeys: user.api_keys || [],
         credits: user.credits,
+        role: user.role || "user",
       })) || [];
 
     res.json({
