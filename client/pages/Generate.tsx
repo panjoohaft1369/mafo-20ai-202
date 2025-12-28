@@ -25,7 +25,7 @@ import {
   uploadImage,
   translateErrorMessage,
 } from "@/lib/api";
-import { getAuthState, clearAuth } from "@/lib/auth";
+import { getAuthState, clearAuth, updateStoredCredits } from "@/lib/auth";
 import {
   Upload,
   Loader2,
@@ -35,6 +35,12 @@ import {
   Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+
+// Credit costs
+const CREDIT_COSTS = {
+  "1K": 5,
+  "2K": 7,
+};
 
 export default function Generate() {
   const navigate = useNavigate();
