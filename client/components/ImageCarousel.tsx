@@ -56,61 +56,76 @@ export function ImageCarousel({
   };
 
   return (
-    <div className="relative w-full h-80 bg-muted rounded-lg overflow-hidden group">
-      {/* Carousel Container */}
-      <div ref={emblaRef} className="h-full">
-        <div className="flex h-full">
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className="relative flex-[0_0_100%] h-full flex items-center justify-center bg-background"
-            >
-              <img
-                src={image}
-                alt={`Slide ${index + 1}`}
-                className="max-w-full max-h-full object-contain"
-                onError={(e) => {
-                  // Fallback for missing images
-                  (e.target as HTMLImageElement).src = "/placeholder.svg";
-                }}
-              />
-            </div>
-          ))}
+    <div className="relative w-full group">
+      {/* Main Carousel Container with Shadow & Rounded */}
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+        <div ref={emblaRef} className="h-96 sm:h-[500px]">
+          <div className="flex h-full">
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className="relative flex-[0_0_100%] h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50"
+              >
+                <img
+                  src={image}
+                  alt={`Generated Sample ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback for missing images
+                    (e.target as HTMLImageElement).src = "/placeholder.svg";
+                  }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* Gradient Overlay for Navigation Buttons */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+        {/* Navigation Buttons */}
+        {canScrollPrev && (
+          <button
+            onClick={handlePrevClick}
+            className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:shadow-xl hover:scale-110"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+        )}
+
+        {canScrollNext && (
+          <button
+            onClick={handleNextClick}
+            className="absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:shadow-xl hover:scale-110"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        )}
       </div>
 
-      {/* Navigation Buttons */}
-      {canScrollPrev && (
-        <button
-          onClick={handlePrevClick}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-      )}
-
-      {canScrollNext && (
-        <button
-          onClick={handleNextClick}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      )}
-
       {/* Slide Indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+      <div className="flex gap-2 justify-center mt-8">
         {images.map((_, index) => (
           <button
             key={index}
-            className={`h-2 rounded-full transition-all ${
-              index === 0 ? "w-6 bg-white" : "w-2 bg-white/50"
+            className={`h-3 rounded-full transition-all duration-300 ${
+              index === 0
+                ? "w-8 bg-primary"
+                : "w-3 bg-muted hover:bg-muted/80"
             }`}
             aria-label={`Go to slide ${index + 1}`}
+            onClick={() => emblaApi?.scrollTo(index)}
           />
         ))}
+      </div>
+
+      {/* Sample Count */}
+      <div className="text-center mt-6">
+        <p className="text-sm text-muted-foreground">
+          <span className="font-semibold text-foreground">نمونه‌های زنده</span> از قابلیت‌های MAFO
+        </p>
       </div>
     </div>
   );
