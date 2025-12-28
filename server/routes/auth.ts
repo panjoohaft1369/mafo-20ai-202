@@ -183,6 +183,137 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
 }
 
 /**
+ * Handle user profile update
+ */
+export async function handleUpdateProfile(req: Request, res: Response): Promise<void> {
+  try {
+    const { userId, name, email, phone, brandName } = req.body;
+
+    console.log("[UpdateProfile] Update attempt for user:", userId);
+
+    // Validate required fields
+    if (!userId) {
+      res.status(400).json({
+        success: false,
+        error: "شناسه کاربری الزامی است",
+      });
+      return;
+    }
+
+    // Validate name if provided
+    if (name && (typeof name !== "string" || name.trim().length < 3)) {
+      res.status(400).json({
+        success: false,
+        error: "نام باید حداقل 3 کاراکتر باشد",
+      });
+      return;
+    }
+
+    // Validate email if provided
+    if (email && !isValidEmail(email)) {
+      res.status(400).json({
+        success: false,
+        error: "ایمیل معتبر نیست",
+      });
+      return;
+    }
+
+    // Validate phone if provided
+    if (phone && !isValidPhone(phone)) {
+      res.status(400).json({
+        success: false,
+        error: "شماره تماس معتبر نیست. لطفا با 09 شروع کنید.",
+      });
+      return;
+    }
+
+    // Validate brand name if provided
+    if (brandName && (typeof brandName !== "string" || brandName.trim().length < 2)) {
+      res.status(400).json({
+        success: false,
+        error: "نام برند باید حداقل 2 کاراکتر باشد",
+      });
+      return;
+    }
+
+    // Prepare update data
+    const updateData: any = {};
+    if (name) updateData.name = name.trim();
+    if (email) updateData.email = email.toLowerCase();
+    if (phone) updateData.phone = normalizePhone(phone);
+    if (brandName) updateData.brand_name = brandName.trim();
+
+    // Check if email is already taken by another user
+    if (email) {
+      const { data: existingUser, error: checkError } = await supabase
+        .from("users")
+        .select("id")
+        .eq("email", email.toLowerCase())
+        .neq("id", userId)
+        .is("deleted_at", null)
+        .single();
+
+      if (checkError && checkError.code !== "PGRST116") {
+        console.error("[UpdateProfile] Database error:", checkError.message);
+        res.status(500).json({
+          success: false,
+          error: "خطا در بررسی ایمیل",
+        });
+        return;
+      }
+
+      if (existingUser) {
+        res.status(409).json({
+          success: false,
+          error: "ایمیل قبلا ثبت شده است",
+        });
+        return;
+      }
+    }
+
+    // Update user in database
+    const { data: updatedUser, error } = await supabase
+      .from("users")
+      .update(updateData)
+      .eq("id", userId)
+      .select("id, name, email, phone, brand_name, credits, role, status")
+      .single();
+
+    if (error) {
+      console.error("[UpdateProfile] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در به‌روزرسانی پروفایل. لطفا دوباره سعی کنید.",
+      });
+      return;
+    }
+
+    console.log("[UpdateProfile] Successfully updated user:", userId);
+
+    res.json({
+      success: true,
+      message: "پروفایل با موفقیت به‌روزرسانی شد",
+      data: {
+        userId: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        phone: updatedUser.phone,
+        brandName: updatedUser.brand_name,
+        credits: updatedUser.credits,
+        role: updatedUser.role || "user",
+        status: updatedUser.status,
+      },
+    });
+  } catch (error: any) {
+    console.error("[UpdateProfile] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در به‌روزرسانی پروفایل. لطفا دوباره سعی کنید.",
+    });
+  }
+}
+
+/**
  * Handle user registration
  */
 export async function handleRegister(
