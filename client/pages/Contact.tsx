@@ -50,9 +50,9 @@ export default function Contact() {
           <div className="container mx-auto max-w-4xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
               {/* Phone Support */}
-              <Card className="hover:shadow-lg transition-shadow">
+              <Card className="hover:shadow-lg transition-shadow text-right">
                 <CardHeader>
-                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 mr-auto">
                     <Phone className="h-6 w-6 text-primary" />
                   </div>
                   <CardTitle>تماس تلفنی</CardTitle>
