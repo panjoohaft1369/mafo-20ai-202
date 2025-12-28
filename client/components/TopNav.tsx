@@ -7,9 +7,9 @@ export function TopNav() {
 
   const navItems = [
     { label: "خانه", href: "/" },
-    { label: "آموزش‌ها", href: "#tutorials" },
-    { label: "درباره ما", href: "#about" },
-    { label: "تماس با ما", href: "#contact" },
+    { label: "آموزش‌ها", href: "/tutorials" },
+    { label: "درباره ما", href: "/about" },
+    { label: "تماس با ما", href: "/support" },
   ];
 
   return (
