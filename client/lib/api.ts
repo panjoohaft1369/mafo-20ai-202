@@ -215,6 +215,7 @@ export async function generateImage(
         Authorization: `Bearer ${request.apiKey}`,
       },
       body: JSON.stringify({
+        userId: request.userId,
         imageUrls: request.imageUrls,
         prompt: request.prompt,
         aspectRatio: request.aspectRatio,
