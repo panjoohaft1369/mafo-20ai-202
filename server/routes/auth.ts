@@ -169,6 +169,7 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
         brandName: user.brand_name,
         status: user.status,
         credits: user.credits,
+        role: user.role || "user",
         apiKey: userApiKey,
       },
     });
