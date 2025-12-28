@@ -99,16 +99,7 @@ export default function Login() {
                 className="font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground text-right">
-                کلید خود را از{" "}
-                <a
-                  href="https://kie.ai/api-key"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  اینجا
-                </a>{" "}
-                دریافت کنید
+                کلید API خود را دریافت کنید
               </p>
             </div>
 
