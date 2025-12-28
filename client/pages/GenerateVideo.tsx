@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { generateVideo, pollTaskCompletion, uploadImage } from "@/lib/api";
+import { generateVideo, pollTaskCompletion, uploadImage, translateErrorMessage } from "@/lib/api";
 import { getAuthState, clearAuth } from "@/lib/auth";
 import {
   Upload,
