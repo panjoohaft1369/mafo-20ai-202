@@ -32,7 +32,7 @@ export function TopNav() {
               ))}
             </ul>
             <div className="flex gap-2 items-center border-l border-foreground/10 pl-8">
-              <Link to="/admin">
+              <Link to="/admin-login">
                 <Button
                   variant="outline"
                   size="sm"
