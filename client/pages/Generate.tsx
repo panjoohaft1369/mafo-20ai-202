@@ -126,7 +126,7 @@ export default function Generate() {
       });
 
       if (!result.success || !result.taskId) {
-        setError(result.error || "خطا در ایجاد تصویر");
+        setError(translateErrorMessage(result.error) || "خطا در ایجاد تصویر");
         setLoading(false);
         return;
       }
