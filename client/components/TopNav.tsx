@@ -121,17 +121,24 @@ export function TopNav() {
         {isOpen && (
           <div className="backdrop-blur-md bg-background/80 border border-foreground/10 rounded-lg mt-3 p-4 absolute top-16 left-4 right-4 shadow-lg">
             <ul className="flex flex-col gap-3 mb-4">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    to={item.href}
-                    className="text-sm font-medium hover:text-primary transition-colors block"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {navItems.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <li key={item.href}>
+                    <Link
+                      to={item.href}
+                      className={`text-sm font-medium transition-colors block px-3 py-2 rounded-lg ${
+                        active
+                          ? "text-primary bg-primary/10 border border-primary/30"
+                          : "hover:text-primary"
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
             <div className="border-t border-foreground/10 pt-3 space-y-2">
               {auth.isLoggedIn && auth.credits !== null && (
