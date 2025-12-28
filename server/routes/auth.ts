@@ -305,7 +305,6 @@ export async function handleUpdateProfile(req: Request, res: Response): Promise<
         phone: updatedUser.phone,
         brandName: updatedUser.brand_name,
         credits: updatedUser.credits,
-        role: updatedUser.role || "user",
         status: updatedUser.status,
       },
     });
