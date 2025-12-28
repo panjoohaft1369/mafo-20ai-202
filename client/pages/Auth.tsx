@@ -287,8 +287,8 @@ export default function Auth() {
     Object.keys(errors).length === 0;
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted" dir="rtl">
+      <Card className="w-full max-w-md text-right">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="flex flex-col items-center">
