@@ -53,6 +53,16 @@ export function TopNav() {
     navItems.push({ label: "پنل ادمین", href: "/admin" });
   }
 
+  // Check if a menu item is active
+  const isActive = (href: string) => {
+    // For root path, only match exactly
+    if (href === "/") {
+      return location.pathname === "/";
+    }
+    // For other paths, match if pathname starts with href
+    return location.pathname.startsWith(href);
+  };
+
   return (
     <>
       {/* Desktop Navigation */}
