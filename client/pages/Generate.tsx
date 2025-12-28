@@ -220,6 +220,39 @@ export default function Generate() {
               میزان 5 اعتبار و با کیفیت 2K میزان 7 اعتبار از شما کسر خواهد کرد
             </p>
           </div>
+
+          {/* Localhost Warning */}
+          {isLocalhost && (
+            <div className="p-4 bg-blue-50 rounded-lg border border-blue-300 mt-6 inline-block max-w-2xl">
+              <p className="text-sm text-blue-900 font-medium mb-2">
+                ℹ️ <strong>توجه:</strong> شما روی محیط محلی (localhost) کار می‌کنید
+              </p>
+              <p className="text-xs text-blue-800 mb-3">
+                برای استفاده از تولید تصویر، باید آدرس عمومی سرور خود را تنظیم کنید.
+                Kie.ai نمی‌تواند تصاویری را از localhost دانلود کند.
+              </p>
+              <div className="text-xs text-blue-800 space-y-2 mb-3">
+                <p>
+                  <strong>راه حل 1:</strong> متغیر محیطی{" "}
+                  <code className="bg-blue-100 px-2 py-1 rounded">PUBLIC_URL</code>{" "}
+                  را تنظیم کنید:
+                </p>
+                <code className="block bg-blue-100 p-2 rounded font-mono whitespace-normal break-words">
+                  PUBLIC_URL=https://your-domain.com npm run dev
+                </code>
+                <p>
+                  <strong>راه حل 2:</strong> از ابزار تانل‌سازی مثل ngrok استفاده کنید
+                  برای افشای سرور محلی:
+                </p>
+                <code className="block bg-blue-100 p-2 rounded font-mono">
+                  ngrok http 8080
+                </code>
+              </div>
+              <p className="text-xs text-blue-700 italic">
+                پس از تنظیم، صفحه را تازه‌کنی کنید.
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
