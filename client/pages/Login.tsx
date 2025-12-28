@@ -71,9 +71,10 @@ export default function Login() {
 
       setSuccess(true);
 
-      // Redirect to image generator page after a short delay
+      // Redirect to admin panel if user is admin, otherwise to generate page
       setTimeout(() => {
-        navigate("/generate");
+        const redirectPath = result.data.role === "admin" ? "/admin" : "/generate";
+        navigate(redirectPath);
       }, 1000);
     } catch (err) {
       setError("خطا در اتصال. لطفا بعدا دوباره سعی کنید.");
