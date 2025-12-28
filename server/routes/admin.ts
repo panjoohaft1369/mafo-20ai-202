@@ -559,7 +559,7 @@ export async function handleAdminCreateUser(
           brand_name: brandName,
           status: "approved",
           credits: 0,
-          role: isAdmin ? "admin" : "user",
+          role: role === "admin" ? "admin" : "user",
         },
       ])
       .select()
