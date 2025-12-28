@@ -145,7 +145,7 @@ export default function Login() {
             <Button
               type="submit"
               disabled={loading || !apiKey.trim()}
-              className="w-full bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90"
+              className="w-full bg-white text-foreground border border-border hover:bg-gray-100 transition-colors"
               size="lg"
             >
               {loading ? (
