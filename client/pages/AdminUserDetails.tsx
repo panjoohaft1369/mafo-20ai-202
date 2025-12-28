@@ -573,6 +573,22 @@ export default function AdminUserDetails() {
                   </div>
                 </div>
                 <div>
+                  <p className="text-sm text-muted-foreground">نقش</p>
+                  <div className="mt-1">
+                    {user.role === "admin" ? (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        <div className="w-2 h-2 rounded-full bg-purple-600" />
+                        مدیر
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        <div className="w-2 h-2 rounded-full bg-gray-600" />
+                        کاربر معمولی
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div>
                   <p className="text-sm text-muted-foreground">تاریخ عضویت</p>
                   <p>{new Date(user.createdAt).toLocaleDateString("fa-IR")}</p>
                 </div>
