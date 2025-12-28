@@ -372,7 +372,7 @@ export default function Generate() {
               disabled={
                 loading || selectedImages.length === 0 || !prompt.trim()
               }
-              className="w-full py-6 text-base font-semibold"
+              className="w-full py-6 text-base font-semibold hover:shadow-xl hover:scale-110 active:scale-95"
               size="lg"
             >
               {loading ? (
