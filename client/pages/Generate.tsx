@@ -436,9 +436,6 @@ export default function Generate() {
             </Card>
           </div>
         </div>
-
-        {/* Tutorial */}
-        <Tutorial />
       </main>
 
       {/* Bottom Navigation */}
