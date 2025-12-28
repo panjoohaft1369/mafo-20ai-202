@@ -32,6 +32,7 @@ export default function AdminAddUser() {
     password: "",
     confirmPassword: "",
     brandName: "",
+    isAdmin: false,
   });
 
   const [loading, setLoading] = useState(true);
@@ -55,8 +56,11 @@ export default function AdminAddUser() {
   }, [navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
     if (error) setError("");
   };
 
@@ -131,6 +135,7 @@ export default function AdminAddUser() {
           phone: formData.phone.trim(),
           password: formData.password,
           brandName: formData.brandName.trim(),
+          isAdmin: formData.isAdmin,
         }),
       });
 
@@ -280,6 +285,25 @@ export default function AdminAddUser() {
                   disabled={saving}
                   className="text-right"
                 />
+              </div>
+
+              {/* Admin Role Checkbox */}
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
+                <input
+                  id="isAdmin"
+                  name="isAdmin"
+                  type="checkbox"
+                  checked={formData.isAdmin}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                  className="h-4 w-4 cursor-pointer rounded"
+                />
+                <label
+                  htmlFor="isAdmin"
+                  className="text-sm font-medium cursor-pointer flex-1"
+                >
+                  این کاربر یک مدیر باشد
+                </label>
               </div>
 
               {/* Password */}
