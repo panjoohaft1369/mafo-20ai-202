@@ -155,47 +155,6 @@ export function TopNav() {
                   پنل ادمین
                 </Button>
               </Link>
-              {!auth.isLoggedIn ? (
-                <>
-                  <Link
-                    to="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="block"
-                  >
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full bg-transparent hover:bg-foreground/5"
-                    >
-                      ورود
-                    </Button>
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setIsOpen(false)}
-                    className="block"
-                  >
-                    <Button
-                      size="sm"
-                      className="w-full bg-primary hover:bg-primary/90"
-                    >
-                      ثبت نام
-                    </Button>
-                  </Link>
-                </>
-              ) : (
-                <Button
-                  size="sm"
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-medium"
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                >
-                  <LogOut className="h-4 w-4" />
-                  خروج
-                </Button>
-              )}
             </div>
           </div>
         )}
