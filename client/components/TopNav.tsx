@@ -209,9 +209,8 @@ export function TopNav() {
                 </>
               ) : (
                 <Button
-                  variant="outline"
                   size="sm"
-                  className="w-full bg-transparent hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 border-red-300 dark:border-red-600 hover:border-red-400"
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-medium"
                   onClick={() => {
                     handleLogout();
                     setIsOpen(false);
