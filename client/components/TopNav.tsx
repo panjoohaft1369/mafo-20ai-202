@@ -18,18 +18,36 @@ export function TopNav() {
       {/* Desktop Navigation */}
       <nav className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4">
         <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-8 py-3 shadow-lg">
-          <ul className="flex gap-10 justify-center items-center">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  to={item.href}
-                  className="text-sm font-medium hover:text-primary transition-colors"
+          <div className="flex gap-10 justify-center items-center">
+            <ul className="flex gap-10 justify-center items-center">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    to={item.href}
+                    className="text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="flex gap-3 items-center border-l border-foreground/10 pl-10">
+              <Link to="/login">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-transparent hover:bg-foreground/5"
                 >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+                  ورود
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button size="sm" className="bg-primary hover:bg-primary/90">
+                  ثبت نام
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </nav>
 
