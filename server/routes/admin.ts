@@ -695,6 +695,7 @@ export async function handleAdminUpdateUser(
       createdAt: data.created_at,
       apiKeys: data.api_keys || [],
       credits: data.credits,
+      role: data.role || "user",
     };
 
     console.log("[Admin] User updated successfully");
