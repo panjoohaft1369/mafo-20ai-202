@@ -569,6 +569,14 @@ export async function handleGenerateVideo(
       return;
     }
 
+    if (!userId) {
+      res.status(400).json({
+        success: false,
+        error: "شناسه کاربر یافت نشد",
+      });
+      return;
+    }
+
     if (!imageUrl || !prompt || !mode) {
       res.status(400).json({
         success: false,
