@@ -60,6 +60,14 @@ export default function Login() {
         result.data.email,
         result.data.credits,
       );
+
+      // Save email if "Remember me" is checked
+      if (rememberMe) {
+        localStorage.setItem("rememberMe_email", email);
+      } else {
+        localStorage.removeItem("rememberMe_email");
+      }
+
       setSuccess(true);
 
       // Redirect to image generator page after a short delay
