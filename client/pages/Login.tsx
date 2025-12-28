@@ -9,13 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { validateApiKey } from "@/lib/api";
+import { login } from "@/lib/api";
 import { saveAuthCredentials } from "@/lib/auth";
 import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [apiKey, setApiKey] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -25,29 +26,35 @@ export default function Login() {
     setError("");
     setSuccess(false);
 
-    if (!apiKey.trim()) {
-      setError("لطفا کلید API خود را وارد کنید");
+    if (!email.trim()) {
+      setError("لطفا ایمیل خود را وارد کنید");
+      return;
+    }
+
+    if (!password.trim()) {
+      setError("لطفا رمز عبور خود را وارد کنید");
       return;
     }
 
     setLoading(true);
 
     try {
-      const result = await validateApiKey(apiKey);
+      const result = await login({ email, password });
 
-      if (!result.valid) {
-        const errorMessage =
-          result.message === "Invalid license code. Please contact support."
-            ? "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید."
-            : result.message ||
-              "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.";
-        setError(errorMessage);
+      if (!result.success || !result.data) {
+        setError(result.error || "خطا در ورود");
         setLoading(false);
         return;
       }
 
       // Save auth data
-      saveAuthCredentials(apiKey, result.email || "", result.credit || 0);
+      saveAuthCredentials(
+        result.data.userId,
+        result.data.apiKey,
+        result.data.name,
+        result.data.email,
+        result.data.credits,
+      );
       setSuccess(true);
 
       // Redirect to image generator page after a short delay
@@ -80,29 +87,40 @@ export default function Login() {
           </div>
           <CardTitle className="text-2xl">خوش آمدید</CardTitle>
           <CardDescription>
-            برای شروع، کلید API خود را وارد کنید
+            برای شروع، ایمیل و رمز عبور خود را وارد کنید
           </CardDescription>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* API Key Input */}
+            {/* Email Input */}
             <div className="space-y-2">
-              <label htmlFor="api-key" className="text-sm font-medium">
-                کلید API
+              <label htmlFor="email" className="text-sm font-medium">
+                ایمیل
               </label>
               <Input
-                id="api-key"
-                type="password"
-                placeholder="API Key خود را اینجا بگذارید"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
+                id="email"
+                type="email"
+                placeholder="example@domain.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
-                className="font-mono text-sm"
               />
-              <p className="text-xs text-muted-foreground text-right">
-                کلید API خود را دریافت کنید
-              </p>
+            </div>
+
+            {/* Password Input */}
+            <div className="space-y-2">
+              <label htmlFor="password" className="text-sm font-medium">
+                رمز عبور
+              </label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="رمز عبور خود را وارد کنید"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={loading}
+              />
             </div>
 
             {/* Error Message */}
@@ -112,9 +130,9 @@ export default function Login() {
                 <div className="text-sm text-red-800 text-right">
                   <p className="font-medium">خطا</p>
                   <p>{error}</p>
-                  {error.includes("پشتیبانی") && (
+                  {error.includes("تایید") && (
                     <div className="mt-2 space-y-1 text-xs">
-                      <p className="font-medium">اطلاعات تماس:</p>
+                      <p className="font-medium">لطفا با پشتیبانی تماس بگیرید:</p>
                       <a
                         href="tel:+989357887572"
                         className="block hover:underline"
@@ -146,7 +164,7 @@ export default function Login() {
             {/* Submit Button */}
             <Button
               type="submit"
-              disabled={loading || !apiKey.trim()}
+              disabled={loading || !email.trim() || !password.trim()}
               className="w-full"
               size="lg"
               style={{
@@ -164,24 +182,37 @@ export default function Login() {
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  درحال تایید...
+                  درحال ورود...
                 </>
               ) : (
                 "ورود"
               )}
             </Button>
 
+            {/* Register Link */}
+            <div className="text-center text-sm text-muted-foreground">
+              <p>
+                حساب کاربری ندارید؟{" "}
+                <a
+                  href="/register"
+                  className="text-primary hover:underline font-medium"
+                >
+                  ثبت نام کنید
+                </a>
+              </p>
+            </div>
+
             {/* Help Text */}
             <div className="p-4 rounded-lg bg-blue-50 border border-blue-200 text-right">
               <p className="text-sm text-blue-900 font-medium mb-2">
-                درباره کلید API
+                راهنمای ورود
               </p>
               <ul className="text-xs text-blue-800 space-y-1">
-                <li>• کلید API شما شخصی و محرمانه است</li>
-                <li>• هرگز آن را با کسی به اشتراک نگذارید</li>
-                <li>• برای دریافت کلید جدید، کلید قدیمی را بازیابی کنید</li>
+                <li>• از ایمیل و رمز عبور ثبت‌نام خود استفاده کنید</li>
+                <li>• حساب کاربری شما توسط تیم پشتیبانی باید تایید شود</li>
+                <li>• بعد از ورود، از کلید API خود بطور خودکار استفاده خواهید کرد</li>
                 <li className="mt-2 pt-2 border-t border-blue-200">
-                  کلید API خود را از فروشنده‌ی خود دریافت کنید
+                  رمز عبور خود را فراموش کردید؟ با پشتیبانی تماس بگیرید
                 </li>
               </ul>
             </div>
