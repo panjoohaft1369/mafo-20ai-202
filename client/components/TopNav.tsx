@@ -43,6 +43,12 @@ export function TopNav() {
     { label: "تماس با ما", href: "/contact" },
   ];
 
+  // Add admin panel link if user is admin
+  const isAdmin = auth.email === "panjoohaft@gmail.com";
+  if (isAdmin) {
+    navItems.push({ label: "🔧 ادمین", href: "/admin" });
+  }
+
   return (
     <>
       {/* Desktop Navigation */}
