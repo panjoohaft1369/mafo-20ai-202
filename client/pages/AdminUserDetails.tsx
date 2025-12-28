@@ -50,6 +50,10 @@ export default function AdminUserDetails() {
   const [addingKey, setAddingKey] = useState(false);
   const [newApiKey, setNewApiKey] = useState("");
   const [copiedKeyId, setCopiedKeyId] = useState<string | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editData, setEditData] = useState({ name: "", email: "", phone: "", brandName: "" });
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     // Check admin authentication
