@@ -22,6 +22,9 @@ import {
   handleAdminAddApiKey,
   handleAdminDeleteApiKey,
   handleAdminApproveUser,
+  handleAdminCreateUser,
+  handleAdminUpdateUser,
+  handleAdminDeleteUser,
 } from "./routes/admin.js";
 
 export function createServer() {
