@@ -378,9 +378,6 @@ export default function GenerateVideo() {
             </Card>
           </div>
         </div>
-
-        {/* Tutorial */}
-        <VideoTutorial />
       </main>
 
       {/* Bottom Navigation */}
