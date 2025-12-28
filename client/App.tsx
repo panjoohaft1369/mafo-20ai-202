@@ -35,8 +35,8 @@ export default function App() {
           <TopNav />
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Auth />} />
+            <Route path="/register" element={<Auth />} />
             <Route path="/register-pending" element={<RegisterPending />} />
             <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
