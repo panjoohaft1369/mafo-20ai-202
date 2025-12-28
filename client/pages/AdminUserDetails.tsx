@@ -392,16 +392,43 @@ export default function AdminUserDetails() {
     <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-background to-muted pt-20">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate("/admin")}
-            className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-          <div>
-            <h1 className="text-3xl font-bold">{user.name}</h1>
-            <p className="text-muted-foreground">{user.brandName}</p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => navigate("/admin")}
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+            <div>
+              <h1 className="text-3xl font-bold">{user.name}</h1>
+              <p className="text-muted-foreground">{user.brandName}</p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setIsEditMode(!isEditMode)}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              <Edit2 className="h-4 w-4" />
+              {isEditMode ? "لغو" : "ویرایش"}
+            </Button>
+            <Button
+              onClick={handleDeleteUser}
+              disabled={deleting}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              {deleting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                </>
+              ) : (
+                <>
+                  <Trash2 className="h-4 w-4" />
+                  حذف کاربر
+                </>
+              )}
+            </Button>
           </div>
         </div>
 
