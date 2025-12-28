@@ -21,6 +21,8 @@ import {
   getAdminToken,
   clearAdminToken,
   verifyAdminToken,
+  isUserAdmin,
+  getAdminUserRole,
 } from "@/lib/admin-auth";
 
 interface User {
