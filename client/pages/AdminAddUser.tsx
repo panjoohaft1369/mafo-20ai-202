@@ -32,7 +32,7 @@ export default function AdminAddUser() {
     password: "",
     confirmPassword: "",
     brandName: "",
-    isAdmin: false,
+    role: "user",
   });
 
   const [loading, setLoading] = useState(true);
