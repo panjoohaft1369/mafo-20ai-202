@@ -273,6 +273,91 @@ export default function AdminUserDetails() {
     }
   };
 
+  const handleDeleteUser = async () => {
+    if (!confirm("آیا از حذف این کاربر مطمئن هستید؟ این عملیات قابل بازگشت نیست.")) {
+      return;
+    }
+
+    setDeleting(true);
+    try {
+      const token = getAdminToken();
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 401) {
+        clearAdminToken();
+        navigate("/admin-login");
+        return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "خطا در حذف کاربر");
+        setDeleting(false);
+        return;
+      }
+
+      // Successfully deleted, redirect to admin dashboard
+      navigate("/admin");
+    } catch (err) {
+      setError("خطا در حذف کاربر");
+      setDeleting(false);
+    }
+  };
+
+  const handleEditUser = async () => {
+    // Validate edit data
+    if (!editData.name.trim() || !editData.email.trim() || !editData.phone.trim() || !editData.brandName.trim()) {
+      setError("تمام فیلدها الزامی هستند");
+      return;
+    }
+
+    setSavingEdit(true);
+    try {
+      const token = getAdminToken();
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: editData.name.trim(),
+          email: editData.email.trim(),
+          phone: editData.phone.trim(),
+          brandName: editData.brandName.trim(),
+        }),
+      });
+
+      if (response.status === 401) {
+        clearAdminToken();
+        navigate("/admin-login");
+        return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "خطا در ویرایش کاربر");
+        setSavingEdit(false);
+        return;
+      }
+
+      const data = await response.json();
+      setUser(data.user);
+      setIsEditMode(false);
+      setError("");
+    } catch (err) {
+      setError("خطا در ویرایش کاربر");
+    } finally {
+      setSavingEdit(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted">
