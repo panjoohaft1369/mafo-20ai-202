@@ -569,6 +569,16 @@ export async function handleGenerateVideo(
     console.log(
       "[Video Gen] Creating task with model: grok-imagine/image-to-video",
     );
+    console.log("[Video Gen] Image URL:", imageUrl);
+
+    // Check if URL is localhost
+    if (imageUrl.includes("localhost")) {
+      console.warn(
+        "[Video Gen] ⚠️  WARNING: Image URL is localhost which Kie.ai cannot access:",
+        imageUrl
+      );
+    }
+
     console.log("[Video Gen] Prompt:", prompt.substring(0, 50) + "...");
     console.log("[Video Gen] Mode:", mode);
 
@@ -577,22 +587,26 @@ export async function handleGenerateVideo(
 
     // Get the public URL for callback
     let callbackUrl: string;
+    let callbackSource: string;
 
     if (process.env.PUBLIC_URL) {
       callbackUrl = `${process.env.PUBLIC_URL}/api/callback`;
+      callbackSource = "PUBLIC_URL";
     } else {
       const protocol = req.headers["x-forwarded-proto"] || "https";
       const host = req.headers["x-forwarded-host"] || req.headers.host;
 
       if (host && !host.includes("localhost")) {
         callbackUrl = `${protocol}://${host}/api/callback`;
+        callbackSource = "x-forwarded headers";
       } else {
         // Fallback - won't work for external APIs from localhost
         callbackUrl = `http://localhost:8080/api/callback`;
+        callbackSource = "LOCALHOST FALLBACK ⚠️";
       }
     }
 
-    console.log("[Video Gen] Callback URL:", callbackUrl);
+    console.log(`[Video Gen] Callback URL: ${callbackUrl} (source: ${callbackSource})`);
 
     const response = await fetch(`${KIE_AI_API_BASE}/jobs/createTask`, {
       method: "POST",
