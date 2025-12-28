@@ -135,6 +135,7 @@ export default function Generate() {
       // Step 2: Send generation request with uploaded image URLs
       const result = await generateImage({
         apiKey: auth.apiKey!,
+        userId: auth.userId!,
         imageUrls: uploadedUrls,
         prompt,
         aspectRatio,
