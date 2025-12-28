@@ -158,7 +158,7 @@ export async function generateImage(
 }
 
 /**
- * تولید ویدیو از طریق Backend
+ * Generate video via Backend
  * Note: API returns taskId, results delivered via callback
  */
 export async function generateVideo(
@@ -168,7 +168,7 @@ export async function generateVideo(
     const response = await fetch(`${BACKEND_API_BASE}/generate-video`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
         Authorization: `Bearer ${request.apiKey}`,
       },
       body: JSON.stringify({
@@ -183,7 +183,7 @@ export async function generateVideo(
     if (!response.ok) {
       return {
         success: false,
-        error: data.error || "خطا در ایجاد ویدیو",
+        error: data.error || "Error generating video",
       };
     }
 
@@ -197,7 +197,7 @@ export async function generateVideo(
     console.error("Video generation error:", error);
     return {
       success: false,
-      error: "خطا در اتصال به سرویس. لطفا بعدا دوباره سعی کنید.",
+      error: "Connection error. Please try again later.",
     };
   }
 }
