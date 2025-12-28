@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import * as bcrypt from "bcrypt";
+import { supabase } from "../utils/supabase-client.js";
 
 /**
  * Basic email validation
@@ -46,12 +48,6 @@ function normalizePhone(phone: string): string {
 
 /**
  * Handle user registration
- * TODO: This endpoint should:
- * 1. Validate input data
- * 2. Check if email already exists in database
- * 3. Hash password using bcrypt
- * 4. Store user record in database with "pending" status
- * 5. Send confirmation email (optional)
  */
 export async function handleRegister(
   req: Request,
@@ -121,46 +117,78 @@ export async function handleRegister(
       return;
     }
 
-    // TODO: Database Integration Required
-    // ======================================
-    // At this point, you need to:
-    //
-    // 1. Connect to a database (Supabase, Neon, or similar)
-    // 2. Check if email already exists:
-    //    const existingUser = await db.query('SELECT * FROM users WHERE email = ?', [email])
-    //    if (existingUser) {
-    //      return res.status(409).json({ error: "ایمیل قبلا ثبت شده است" })
-    //    }
-    //
-    // 3. Hash the password using bcrypt:
-    //    const hashedPassword = await bcrypt.hash(password, 10)
-    //
-    // 4. Normalize phone number:
+    // Normalize phone number
     const normalizedPhone = normalizePhone(phone);
-    //
-    // 5. Insert user into database with "pending" status:
-    //    await db.query(
-    //      'INSERT INTO users (name, email, password_hash, phone, brand_name, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    //      [name, email.toLowerCase(), hashedPassword, normalizedPhone, brandName, 'pending', new Date()]
-    //    )
-    //
-    // 6. (Optional) Send confirmation email
-    // ======================================
+    const lowerEmail = email.toLowerCase();
 
-    // For now, return a mock success response
-    console.log("[Register] User registered successfully (mock)");
-    console.log("[Register] Normalized Phone:", normalizedPhone);
+    // Check if email already exists in database
+    const { data: existingUser, error: checkError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", lowerEmail)
+      .is("deleted_at", null)
+      .single();
+
+    if (checkError && checkError.code !== "PGRST116") {
+      // PGRST116 is "not found" error, which is what we want
+      console.error("[Register] Database error:", checkError.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در بررسی ایمیل",
+      });
+      return;
+    }
+
+    if (existingUser) {
+      res.status(409).json({
+        success: false,
+        error: "ایمیل قبلا ثبت شده است",
+      });
+      return;
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert user into database with "pending" status
+    const { data, error } = await supabase
+      .from("users")
+      .insert([
+        {
+          name: name.trim(),
+          email: lowerEmail,
+          password_hash: hashedPassword,
+          phone: normalizedPhone,
+          brand_name: brandName.trim(),
+          status: "pending",
+          credits: 0,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error("[Register] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در ثبت نام. لطفا دوباره سعی کنید.",
+      });
+      return;
+    }
+
+    console.log("[Register] User registered successfully:", data.id);
 
     res.status(201).json({
       success: true,
       message:
         "ثبت نام موفق! لطفا براي تاييد اشتراك خود قوانين و مقررات استفاده از سايت را بپذيريد و منتظر تائيد تيم پشتيباني باشيد.",
       data: {
-        email: email.toLowerCase(),
-        name: name.trim(),
-        phone: normalizedPhone,
-        brandName: brandName.trim(),
-        status: "pending",
+        id: data.id,
+        email: data.email,
+        name: data.name,
+        phone: data.phone,
+        brandName: data.brand_name,
+        status: data.status,
       },
     });
   } catch (error: any) {
