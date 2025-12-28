@@ -27,9 +27,9 @@ import {
 } from "@/lib/api";
 import { getAuthState, clearAuth, updateStoredCredits } from "@/lib/auth";
 import { HistoryModal } from "@/components/HistoryModal";
+import { Loading } from "@/components/Loading";
 import {
   Upload,
-  Loader2,
   AlertCircle,
   CheckCircle,
   Download,
