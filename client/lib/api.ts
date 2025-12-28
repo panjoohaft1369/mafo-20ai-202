@@ -203,14 +203,14 @@ export async function generateVideo(
 }
 
 /**
- * دریافت گزارشات از طریق Backend (2 ماه اخیر)
+ * Fetch logs via Backend (last 2 months)
  */
 export async function fetchLogs(apiKey: string): Promise<any[]> {
   try {
     const response = await fetch(`${BACKEND_API_BASE}/logs`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
         Authorization: `Bearer ${apiKey}`,
       },
     });
