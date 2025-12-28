@@ -18,6 +18,7 @@ import {
   Copy,
   CheckCircle,
   Key,
+  Edit2,
 } from "lucide-react";
 import { getAdminToken, clearAdminToken, verifyAdminToken } from "@/lib/admin-auth";
 
