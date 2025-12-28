@@ -59,6 +59,7 @@ export default function Login() {
         result.data.name,
         result.data.email,
         result.data.credits,
+        result.data.role || "user",
       );
 
       // Save email if "Remember me" is checked
