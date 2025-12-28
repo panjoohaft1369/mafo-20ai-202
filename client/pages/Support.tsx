@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Header } from "@/components/Header";
 import { BottomNav } from "@/components/BottomNav";
 import {
@@ -17,10 +18,11 @@ export default function Support() {
   const auth = getAuthState();
 
   // Redirect if not logged in
-  if (!auth.isLoggedIn || !auth.apiKey) {
-    navigate("/login");
-    return null;
-  }
+  useEffect(() => {
+    if (!auth.isLoggedIn || !auth.apiKey) {
+      navigate("/login");
+    }
+  }, [auth.isLoggedIn, auth.apiKey, navigate]);
 
   const handleLogout = () => {
     clearAuth();
