@@ -1164,6 +1164,56 @@ export async function handleCallback(
 
     // Store the result, preserving any existing request details
     const existingResult = taskResults.get(taskId);
+    const isSuccess = state === "success" && imageUrl;
+
+    // Deduct credits if task completed successfully
+    if (
+      isSuccess &&
+      existingResult &&
+      !existingResult.creditsDeducted &&
+      existingResult.apiKey
+    ) {
+      try {
+        let creditType: CreditType;
+        let creditCost: number;
+
+        if (existingResult.taskType === "image") {
+          creditType = getImageCreditType(existingResult.resolution || "1K");
+          creditCost = CREDIT_COSTS[creditType];
+        } else if (existingResult.taskType === "video") {
+          creditType = CreditType.VIDEO;
+          creditCost = CREDIT_COSTS[creditType];
+        } else {
+          creditType = CreditType.IMAGE_1K;
+          creditCost = CREDIT_COSTS[creditType];
+        }
+
+        console.log(
+          `[Callback] Deducting ${creditCost} credits for ${creditType}`,
+        );
+
+        await recordUsageTransaction({
+          userId: existingResult.userId,
+          apiKey: existingResult.apiKey,
+          type: creditType,
+          creditAmount: creditCost,
+          taskId,
+          status: "completed",
+          createdAt: new Date().toISOString(),
+          metadata: {
+            resolution: existingResult.resolution,
+            prompt: existingResult.prompt,
+            imageUrl,
+          },
+        });
+
+        existingResult.creditsDeducted = true;
+        console.log("[Callback] Credits deducted successfully");
+      } catch (creditError) {
+        console.error("[Callback] Error deducting credits:", creditError);
+      }
+    }
+
     taskResults.set(taskId, {
       ...existingResult,
       status: state || "unknown",
