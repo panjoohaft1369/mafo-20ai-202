@@ -29,7 +29,8 @@ export default function Index() {
   };
 
   const handleLogout = () => {
-    // This is called from Header when logged in
+    clearAuth();
+    navigate("/");
   };
 
   return (
