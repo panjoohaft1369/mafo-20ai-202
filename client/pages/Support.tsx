@@ -96,7 +96,7 @@ export default function Support() {
                 rel="noopener noreferrer"
               >
                 <Button
-                  className="w-full gap-2"
+                  className="w-full gap-2 hover:shadow-lg hover:scale-105 active:scale-95"
                   variant="default"
                   style={{ backgroundColor: "#25D366" }}
                 >
