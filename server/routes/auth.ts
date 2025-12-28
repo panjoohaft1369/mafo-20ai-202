@@ -47,6 +47,142 @@ function normalizePhone(phone: string): string {
 }
 
 /**
+ * Handle user login with email and password
+ */
+export async function handleLogin(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const { email, password } = req.body;
+
+    console.log("[Login] Login attempt for email:", email);
+
+    // Validate required fields
+    if (!email || !password) {
+      res.status(400).json({
+        success: false,
+        error: "ایمیل و رمز عبور الزامی هستند",
+      });
+      return;
+    }
+
+    // Validate email format
+    if (!isValidEmail(email)) {
+      res.status(400).json({
+        success: false,
+        error: "ایمیل معتبر نیست",
+      });
+      return;
+    }
+
+    const lowerEmail = email.toLowerCase();
+
+    // Find user by email
+    const { data: user, error: userError } = await supabase
+      .from("users")
+      .select(
+        `
+        id,
+        name,
+        email,
+        phone,
+        brand_name,
+        password_hash,
+        status,
+        credits,
+        created_at,
+        api_keys:api_keys(id, key, is_active, created_at)
+      `
+      )
+      .eq("email", lowerEmail)
+      .is("deleted_at", null)
+      .single();
+
+    if (userError || !user) {
+      console.error("[Login] User not found:", lowerEmail);
+      res.status(401).json({
+        success: false,
+        error: "ایمیل یا رمز عبور نادرست است",
+      });
+      return;
+    }
+
+    // Check if user is approved
+    if (user.status !== "approved") {
+      console.error("[Login] User not approved:", user.status);
+      res.status(403).json({
+        success: false,
+        error: "حساب کاربری شما هنوز تایید نشده است. لطفا منتظر تایید تیم پشتیبانی باشید.",
+      });
+      return;
+    }
+
+    // Verify password
+    const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+    if (!passwordMatch) {
+      console.error("[Login] Invalid password for:", lowerEmail);
+      res.status(401).json({
+        success: false,
+        error: "ایمیل یا رمز عبور نادرست است",
+      });
+      return;
+    }
+
+    // Get user's API key
+    let userApiKey = null;
+    if (user.api_keys && user.api_keys.length > 0) {
+      const activeKey = user.api_keys.find((k: any) => k.is_active);
+      userApiKey = activeKey ? activeKey.key : user.api_keys[0].key;
+    }
+
+    // If user has no API key, create one
+    if (!userApiKey) {
+      const newKey = `mafo_${require("crypto").randomBytes(16).toString("hex")}`;
+      const { data: newApiKey, error: keyError } = await supabase
+        .from("api_keys")
+        .insert([
+          {
+            user_id: user.id,
+            key: newKey,
+            is_active: true,
+          },
+        ])
+        .select()
+        .single();
+
+      if (!keyError && newApiKey) {
+        userApiKey = newApiKey.key;
+      }
+    }
+
+    console.log("[Login] Successful login for:", lowerEmail);
+
+    res.json({
+      success: true,
+      message: "ورود موفق",
+      data: {
+        userId: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        brandName: user.brand_name,
+        status: user.status,
+        credits: user.credits,
+        apiKey: userApiKey,
+      },
+    });
+  } catch (error: any) {
+    console.error("[Login] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در ورود. لطفا دوباره سعی کنید.",
+    });
+  }
+}
+
+/**
  * Handle user registration
  */
 export async function handleRegister(
@@ -203,11 +339,3 @@ export async function handleRegister(
     });
   }
 }
-
-/**
- * TODO: Add additional auth endpoints as needed:
- * - handleLogin: Authenticate user with email and password
- * - handleForgotPassword: Send password reset email
- * - handleResetPassword: Reset password with token
- * - handleVerifyEmail: Verify email with token
- */
