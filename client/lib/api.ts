@@ -104,6 +104,52 @@ export interface TaskStatusResponse {
 }
 
 /**
+ * Login user with email and password
+ */
+export async function login(request: LoginRequest): Promise<LoginResponse> {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch(`${BACKEND_API_BASE}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify(request),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const data = await response.json();
+        return {
+          success: false,
+          error: data.error || "خطا در ورود",
+        };
+      }
+
+      const data = await response.json();
+      return {
+        success: true,
+        message: data.message,
+        data: data.data,
+      };
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    return {
+      success: false,
+      error: "خطا در اتصال. لطفا بعدا دوباره سعی کنید.",
+    };
+  }
+}
+
+/**
  * Validate API Key via Backend
  */
 export async function validateApiKey(
