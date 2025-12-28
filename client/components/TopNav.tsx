@@ -46,7 +46,7 @@ export function TopNav() {
   // Add admin panel link if user is admin
   const isAdmin = auth.email === "panjoohaft@gmail.com";
   if (isAdmin) {
-    navItems.push({ label: "🔧 ادمین", href: "/admin" });
+    navItems.push({ label: "🔧 ادمین", href: "/admin/content" });
   }
 
   return (
