@@ -252,7 +252,7 @@ export default function About() {
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-6">تفاوت اساسی ما</h2>
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg text-foreground max-w-3xl mx-auto leading-relaxed">
                 هوش مصنوعی های دنیا به روش سنتی کار می‌کنند: اشتراک‌های ماهیانه
                 گران‌قیمت و تعداد محدود خدمات. ما فلسفه متفاوتی داریم.
               </p>
