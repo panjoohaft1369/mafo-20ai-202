@@ -207,7 +207,9 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-background to-muted pt-20">
+    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-background to-muted pt-20 pb-24">
+      {/* Users Tab Content */}
+      {activeTab === "users" && (
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -440,6 +442,56 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+      )}
+
+      {/* Edit Page Tab Content */}
+      {activeTab === "edit" && (
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold">ویرایش صفحه</h1>
+          <Button
+            onClick={handleLogout}
+            className="bg-red-600 hover:bg-red-700 text-white"
+          >
+            <LogOut className="h-4 w-4" />
+            خروج
+          </Button>
+        </div>
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-center text-muted-foreground py-12">
+              این بخش به زودی فعال خواهد شد
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+      )}
+
+      {/* Gallery Tab Content */}
+      {activeTab === "gallery" && (
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold">گالری تصاویر</h1>
+          <Button
+            onClick={handleLogout}
+            className="bg-red-600 hover:bg-red-700 text-white"
+          >
+            <LogOut className="h-4 w-4" />
+            خروج
+          </Button>
+        </div>
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-center text-muted-foreground py-12">
+              این بخش به زودی فعال خواهد شد
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+      )}
+
+      {/* Admin Bottom Navigation */}
+      <AdminBottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
 }
