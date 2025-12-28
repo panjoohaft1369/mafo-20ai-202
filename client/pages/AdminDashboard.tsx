@@ -139,6 +139,20 @@ export default function AdminDashboard() {
     }
   };
 
+  const getRoleBadge = (role?: string) => {
+    if (!role || role === "user") return null;
+
+    if (role === "admin") {
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+          <div className="w-2 h-2 rounded-full bg-purple-600" />
+          مدیر
+        </span>
+      );
+    }
+    return null;
+  };
+
   const handleLogout = () => {
     clearAdminToken();
     navigate("/admin-login");
