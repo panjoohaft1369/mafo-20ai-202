@@ -243,6 +243,7 @@ export default function Index() {
       </main>
 
       <Footer />
+      <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );
 }
