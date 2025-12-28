@@ -147,24 +147,33 @@ export default function AdminUserDetails() {
   const handleAddApiKey = async () => {
     setAddingKey(true);
     try {
-      // TODO: API call to generate and assign API key
-      // const response = await fetch(`/api/admin/users/${userId}/api-keys`, {
-      //   method: 'POST',
-      //   headers: { 'Authorization': `Bearer ${adminToken}` }
-      // });
-      // const data = await response.json();
-      
-      const mockKey = {
-        id: `key_${Date.now()}`,
-        key: `mafo_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`,
-        createdAt: new Date().toISOString(),
-        isActive: true,
-      };
+      const token = getAdminToken();
+      const response = await fetch(`/api/admin/users/${userId}/api-keys`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ apiKey: newApiKey || undefined }),
+      });
 
+      if (response.status === 401) {
+        clearAdminToken();
+        navigate("/admin-login");
+        return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "خطا در افزودن کلید API");
+        return;
+      }
+
+      const data = await response.json();
       if (user) {
         setUser({
           ...user,
-          apiKeys: [...user.apiKeys, mockKey],
+          apiKeys: [...user.apiKeys, data.apiKey],
         });
       }
       setNewApiKey("");
