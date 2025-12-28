@@ -63,7 +63,7 @@ export function TopNav() {
         {/* Mobile Menu Dropdown */}
         {isOpen && (
           <div className="backdrop-blur-md bg-background/80 border border-foreground/10 rounded-lg mt-3 p-4 absolute top-16 left-4 right-4 shadow-lg">
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-3 mb-4">
               {navItems.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -76,6 +76,30 @@ export function TopNav() {
                 </li>
               ))}
             </ul>
+            <div className="border-t border-foreground/10 pt-3 space-y-2">
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="block"
+              >
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full bg-transparent hover:bg-foreground/5"
+                >
+                  ورود
+                </Button>
+              </Link>
+              <Link
+                to="/register"
+                onClick={() => setIsOpen(false)}
+                className="block"
+              >
+                <Button size="sm" className="w-full bg-primary hover:bg-primary/90">
+                  ثبت نام
+                </Button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
