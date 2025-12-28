@@ -130,6 +130,11 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleLogout = () => {
+    clearAdminToken();
+    navigate("/admin-login");
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted">
@@ -157,9 +162,15 @@ export default function AdminDashboard() {
               مدیریت حسابهای کاربری و اختصاص کلیدهای API
             </p>
           </div>
-          <Button onClick={() => navigate("/")} className="bg-gray-600 hover:bg-gray-700">
-            بازگشت
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={() => navigate("/")} className="bg-gray-600 hover:bg-gray-700">
+              بازگشت
+            </Button>
+            <Button onClick={handleLogout} className="bg-red-600 hover:bg-red-700">
+              <LogOut className="h-4 w-4" />
+              خروج
+            </Button>
+          </div>
         </div>
 
         {/* Stats */}
