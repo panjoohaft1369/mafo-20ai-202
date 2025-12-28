@@ -189,12 +189,27 @@ export default function AdminUserDetails() {
     if (!confirm("آیا از حذف این کلید API مطمئن هستید؟")) return;
 
     try {
-      // TODO: API call to delete API key
-      // const response = await fetch(`/api/admin/users/${userId}/api-keys/${keyId}`, {
-      //   method: 'DELETE',
-      //   headers: { 'Authorization': `Bearer ${adminToken}` }
-      // });
-      
+      const token = getAdminToken();
+      const response = await fetch(`/api/admin/users/${userId}/api-keys/${keyId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 401) {
+        clearAdminToken();
+        navigate("/admin-login");
+        return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "خطا در حذف کلید API");
+        return;
+      }
+
       if (user) {
         setUser({
           ...user,
