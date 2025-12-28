@@ -350,7 +350,7 @@ export async function uploadImage(
     const response = await fetch(`${BACKEND_API_BASE}/upload-image`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
       },
       body: JSON.stringify({
         imageData,
@@ -362,7 +362,7 @@ export async function uploadImage(
     if (!response.ok) {
       return {
         success: false,
-        error: data.error || "خطا در آپلود تصویر",
+        error: data.error || "Error uploading image",
       };
     }
 
@@ -375,7 +375,7 @@ export async function uploadImage(
     console.error("Image upload error:", error);
     return {
       success: false,
-      error: "خطا در آپلود تصویر",
+      error: "Error uploading image",
     };
   }
 }
