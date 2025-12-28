@@ -88,6 +88,7 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
         password_hash,
         status,
         credits,
+        role,
         created_at,
         api_keys:api_keys(id, key, is_active, created_at)
       `,
