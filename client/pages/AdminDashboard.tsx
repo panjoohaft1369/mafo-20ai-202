@@ -321,41 +321,47 @@ export default function AdminDashboard() {
                   <div
                     key={user.id}
                     onClick={() => navigate(`/admin/users/${user.id}`)}
-                    className="p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                    className="p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg hover:bg-amber-900"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="font-semibold text-right">
+                          <h3 className="font-semibold text-right hover:text-white transition-colors">
                             {user.name}
                           </h3>
                           {getStatusBadge(user.status)}
                         </div>
 
-                        <div className="grid grid-cols-4 gap-4 text-sm text-muted-foreground text-right">
+                        <div className="grid grid-cols-4 gap-4 text-sm text-right">
                           <div>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                               ایمیل
                             </p>
-                            <p className="font-mono">{user.email}</p>
+                            <p className="font-mono text-muted-foreground hover:text-white transition-colors">
+                              {user.email}
+                            </p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                               شماره تماس
                             </p>
-                            <p>{user.phone}</p>
+                            <p className="text-muted-foreground hover:text-white transition-colors">
+                              {user.phone}
+                            </p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                               نام برند
                             </p>
-                            <p>{user.brandName}</p>
+                            <p className="text-muted-foreground hover:text-white transition-colors">
+                              {user.brandName}
+                            </p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                               کلیدهای API
                             </p>
-                            <p className="font-semibold text-foreground">
+                            <p className="font-semibold text-foreground hover:text-white transition-colors">
                               {user.apiKeys.length}
                             </p>
                           </div>
@@ -364,14 +370,14 @@ export default function AdminDashboard() {
 
                       <div className="flex flex-col items-end gap-2 ml-4">
                         <div className="text-right">
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                             اعتبار
                           </p>
-                          <p className="text-2xl font-bold text-primary">
+                          <p className="text-2xl font-bold text-primary hover:text-white transition-colors">
                             {user.credits}
                           </p>
                         </div>
-                        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                        <ChevronRight className="h-5 w-5 text-muted-foreground hover:text-white transition-colors" />
                       </div>
                     </div>
                   </div>
