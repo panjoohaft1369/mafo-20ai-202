@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { handleDemo } from "./routes/demo";
+import { handleDemo } from "./routes/demo.js";
 import {
   handleValidateApiKey,
   handleGenerateImage,
@@ -10,9 +10,9 @@ import {
   handleFetchBilling,
   handleQueryTask,
   handleCallback,
-} from "./routes/api-proxy";
-import { handleImageUpload } from "./routes/upload";
-import { handleRegister } from "./routes/auth";
+} from "./routes/api-proxy.js";
+import { handleImageUpload } from "./routes/upload.js";
+import { handleRegister } from "./routes/auth.js";
 import {
   handleAdminLogin,
   handleAdminVerify,
@@ -22,7 +22,7 @@ import {
   handleAdminAddApiKey,
   handleAdminDeleteApiKey,
   handleAdminApproveUser,
-} from "./routes/admin";
+} from "./routes/admin.js";
 
 export function createServer() {
   const app = express();
