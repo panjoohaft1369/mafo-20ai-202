@@ -13,6 +13,16 @@ import {
 } from "./routes/api-proxy";
 import { handleImageUpload } from "./routes/upload";
 import { handleRegister } from "./routes/auth";
+import {
+  handleAdminLogin,
+  handleAdminVerify,
+  handleAdminGetUsers,
+  handleAdminGetUser,
+  handleAdminUpdateCredits,
+  handleAdminAddApiKey,
+  handleAdminDeleteApiKey,
+  handleAdminApproveUser,
+} from "./routes/admin";
 
 export function createServer() {
   const app = express();
