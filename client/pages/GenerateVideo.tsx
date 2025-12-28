@@ -37,10 +37,11 @@ export default function GenerateVideo() {
   const auth = getAuthState();
 
   // Redirect if not logged in
-  if (!auth.isLoggedIn || !auth.apiKey) {
-    navigate("/login");
-    return null;
-  }
+  useEffect(() => {
+    if (!auth.isLoggedIn || !auth.apiKey) {
+      navigate("/login");
+    }
+  }, [auth.isLoggedIn, auth.apiKey, navigate]);
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [prompt, setPrompt] = useState("");
