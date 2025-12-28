@@ -448,36 +448,105 @@ export default function AdminUserDetails() {
           <CardHeader>
             <CardTitle>اطلاعات کاربر</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-muted-foreground">ایمیل</p>
-              <p className="font-mono">{user.email}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">شماره تماس</p>
-              <p>{user.phone}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">وضعیت</p>
-              <div className="mt-1">
-                {user.status === "pending" && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                    <div className="w-2 h-2 rounded-full bg-yellow-600" />
-                    منتظر تایید
-                  </span>
-                )}
-                {user.status === "approved" && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    <CheckCircle className="w-3 h-3" />
-                    تایید شده
-                  </span>
-                )}
+          <CardContent>
+            {isEditMode ? (
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium block mb-1">نام</label>
+                  <Input
+                    value={editData.name}
+                    onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                    className="text-right"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium block mb-1">ایمیل</label>
+                  <Input
+                    value={editData.email}
+                    onChange={(e) => setEditData({ ...editData, email: e.target.value })}
+                    className="text-right"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium block mb-1">شماره تماس</label>
+                  <Input
+                    value={editData.phone}
+                    onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
+                    className="text-right"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium block mb-1">نام برند</label>
+                  <Input
+                    value={editData.brandName}
+                    onChange={(e) => setEditData({ ...editData, brandName: e.target.value })}
+                    className="text-right"
+                  />
+                </div>
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    onClick={handleEditUser}
+                    disabled={savingEdit}
+                    className="bg-green-600 hover:bg-green-700 flex-1"
+                  >
+                    {savingEdit ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      </>
+                    ) : (
+                      "ذخیره تغییرات"
+                    )}
+                  </Button>
+                  <Button
+                    onClick={() => setIsEditMode(false)}
+                    variant="outline"
+                    className="flex-1"
+                  >
+                    انصراف
+                  </Button>
+                </div>
               </div>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">تاریخ عضویت</p>
-              <p>{new Date(user.createdAt).toLocaleDateString("fa-IR")}</p>
-            </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-muted-foreground">نام</p>
+                  <p className="font-semibold">{user.name}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">ایمیل</p>
+                  <p className="font-mono">{user.email}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">شماره تماس</p>
+                  <p>{user.phone}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">نام برند</p>
+                  <p>{user.brandName}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">وضعیت</p>
+                  <div className="mt-1">
+                    {user.status === "pending" && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        <div className="w-2 h-2 rounded-full bg-yellow-600" />
+                        منتظر تایید
+                      </span>
+                    )}
+                    {user.status === "approved" && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <CheckCircle className="w-3 h-3" />
+                        تایید شده
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">تاریخ عضویت</p>
+                  <p>{new Date(user.createdAt).toLocaleDateString("fa-IR")}</p>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
