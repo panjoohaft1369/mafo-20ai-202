@@ -356,7 +356,7 @@ export default function AdminDashboard() {
 
                       <div className="flex flex-col items-end gap-2 ml-4">
                         <div className="text-right">
-                          <p className="text-xs text-gray-500">اعتبار</p>
+                          <p className="text-xs text-muted-foreground">اعتبار</p>
                           <p className="text-2xl font-bold text-primary">
                             {user.credits}
                           </p>
