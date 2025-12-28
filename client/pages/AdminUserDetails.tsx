@@ -230,12 +230,27 @@ export default function AdminUserDetails() {
 
   const handleApproveUser = async () => {
     try {
-      // TODO: API call to approve user
-      // const response = await fetch(`/api/admin/users/${userId}/approve`, {
-      //   method: 'POST',
-      //   headers: { 'Authorization': `Bearer ${adminToken}` }
-      // });
-      
+      const token = getAdminToken();
+      const response = await fetch(`/api/admin/users/${userId}/approve`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 401) {
+        clearAdminToken();
+        navigate("/admin-login");
+        return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "خطا در تایید کاربر");
+        return;
+      }
+
       if (user) {
         setUser({ ...user, status: "approved" });
       }
