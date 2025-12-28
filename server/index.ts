@@ -128,6 +128,12 @@ export function createServer() {
   );
   app.post("/api/admin/users/:userId/approve", handleAdminApproveUser);
 
+  // Admin content routes (menu & slides)
+  app.get("/api/admin/menu", handleGetMenu);
+  app.post("/api/admin/menu", handleSaveMenu);
+  app.get("/api/admin/slides", handleGetSlides);
+  app.post("/api/admin/slides", handleSaveSlides);
+
   // KIE.AI API Proxy Routes
   app.post("/api/validate-key", handleValidateApiKey);
   app.post("/api/generate-image", handleGenerateImage);
