@@ -15,8 +15,6 @@ import {
 import { Plus, Trash2, Edit2, Save, X, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
-const ADMIN_EMAIL = "panjoohaft@gmail.com"; // Change this to your admin email
-
 interface MenuItem {
   id: string;
   label: string;
@@ -45,7 +43,7 @@ export default function Admin() {
 
   // Check if user is admin
   useEffect(() => {
-    if (!auth.isLoggedIn || auth.email !== ADMIN_EMAIL) {
+    if (!auth.isLoggedIn || auth.role !== "admin") {
       navigate("/");
     } else {
       loadData();
