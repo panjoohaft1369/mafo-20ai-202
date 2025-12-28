@@ -527,7 +527,7 @@ export async function handleAdminCreateUser(
       return;
     }
 
-    console.log("[Admin] Creating new user:", email, "isAdmin:", isAdmin);
+    console.log("[Admin] Creating new user:", email, "role:", role);
 
     // Check if email already exists
     const { data: existing } = await supabase
