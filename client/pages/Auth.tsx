@@ -681,36 +681,6 @@ export default function Auth() {
           )}
         </CardContent>
       </Card>
-
-      {/* Business Hours and Support */}
-      <div className="w-full max-w-md mt-6 space-y-4" dir="rtl">
-        {/* Business Hours */}
-        <Card className="bg-primary/5 border-primary/20">
-          <CardContent className="pt-6">
-            <div className="space-y-3 text-right">
-              <div className="flex items-center justify-end gap-2">
-                <span className="font-medium">ساعات کاری</span>
-                <span className="text-lg">⏱️</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                شنبه تا پنج‌شنبه، 10 صبح تا 21
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Phone Support Button */}
-        <a href="tel:+989357887572" className="block">
-          <Button
-            size="lg"
-            className="w-full gap-2 justify-end"
-            variant="outline"
-          >
-            <span className="text-lg">📞</span>
-            تماس با پشتیبانی: 09357887572
-          </Button>
-        </a>
-      </div>
     </div>
   );
 }
