@@ -86,9 +86,8 @@ export function TopNav() {
                     </Button>
                   </Link>
                   <Button
-                    variant="outline"
                     size="sm"
-                    className="bg-transparent hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 border-red-300 dark:border-red-600 hover:border-red-400"
+                    className="bg-red-600 hover:bg-red-700 text-white font-medium"
                     onClick={handleLogout}
                   >
                     <LogOut className="h-4 w-4" />
