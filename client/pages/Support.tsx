@@ -88,7 +88,7 @@ export default function Support() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                شماره واتساپ: <span className="font-semibold">۰۹۳۵۷۸۸۷۵۷۲</span>
+                شماره واتساپ: <span className="font-semibold">09357887572</span>
               </p>
               <a
                 href="http://wa.me/+989357887572"
