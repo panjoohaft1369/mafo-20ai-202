@@ -15,9 +15,13 @@ import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(
+    localStorage.getItem("rememberMe_email") || ""
+  );
   const [password, setPassword] = useState("");
-  const [apiKey, setApiKey] = useState("");
+  const [rememberMe, setRememberMe] = useState(
+    !!localStorage.getItem("rememberMe_email")
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
