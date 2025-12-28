@@ -87,7 +87,7 @@ export function TopNav() {
             </ul>
             <div className="border-t border-foreground/10 pt-3 space-y-2">
               <Link
-                to="/admin"
+                to="/admin-login"
                 onClick={() => setIsOpen(false)}
                 className="block"
               >
