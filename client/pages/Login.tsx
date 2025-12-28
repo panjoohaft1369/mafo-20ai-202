@@ -10,7 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { login } from "@/lib/api";
-import { saveAuthCredentials } from "@/lib/auth";
+import { saveAuthCredentials, clearAuth } from "@/lib/auth";
+import { BottomNav } from "@/components/BottomNav";
 import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
 export default function Login() {
