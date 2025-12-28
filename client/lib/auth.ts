@@ -65,6 +65,7 @@ export function clearAuth(): void {
   localStorage.removeItem(USER_NAME_STORAGE_KEY);
   localStorage.removeItem(USER_EMAIL_STORAGE_KEY);
   localStorage.removeItem(USER_CREDITS_STORAGE_KEY);
+  localStorage.removeItem(USER_ROLE_STORAGE_KEY);
 }
 
 /**
