@@ -122,7 +122,7 @@ export default function GenerateVideo() {
         toast.dismiss();
         toast.success("ویدیو با موفقیت ایجاد شد!");
       } else {
-        setError(pollResult.error || "خطا در ایجاد ویدیو");
+        setError(translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو");
         toast.dismiss();
       }
     } catch (err) {
