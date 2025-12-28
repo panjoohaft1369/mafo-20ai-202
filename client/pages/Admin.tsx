@@ -50,7 +50,7 @@ export default function Admin() {
     } else {
       loadData();
     }
-  }, []);
+  }, [auth, navigate]);
 
   const loadData = async () => {
     setLoading(true);
