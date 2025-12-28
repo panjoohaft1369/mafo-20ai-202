@@ -46,12 +46,14 @@ export function saveAuthCredentials(
   name: string,
   email: string,
   credits: number,
+  role: "user" | "admin" = "user",
 ): void {
   localStorage.setItem(USER_ID_STORAGE_KEY, userId);
   localStorage.setItem(API_KEY_STORAGE_KEY, apiKey);
   localStorage.setItem(USER_NAME_STORAGE_KEY, name);
   localStorage.setItem(USER_EMAIL_STORAGE_KEY, email);
   localStorage.setItem(USER_CREDITS_STORAGE_KEY, credits.toString());
+  localStorage.setItem(USER_ROLE_STORAGE_KEY, role);
 }
 
 /**
