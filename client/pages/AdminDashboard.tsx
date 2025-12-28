@@ -39,57 +39,45 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved" | "rejected">("all");
 
-  // Mock data for development
-  const mockUsers: User[] = [
-    {
-      id: "1",
-      name: "علی محمدی",
-      email: "ali@example.com",
-      phone: "09123456789",
-      brandName: "شرکت الفا",
-      status: "pending",
-      createdAt: "2025-01-20",
-      apiKeys: [],
-      credits: 0,
-    },
-    {
-      id: "2",
-      name: "فاطمه احمدی",
-      email: "fateme@example.com",
-      phone: "09987654321",
-      brandName: "استودیو بتا",
-      status: "approved",
-      createdAt: "2025-01-15",
-      apiKeys: ["key_abc123"],
-      credits: 100,
-    },
-    {
-      id: "3",
-      name: "محمد حسنی",
-      email: "mohammad@example.com",
-      phone: "09111111111",
-      brandName: "دیجیتال گاما",
-      status: "approved",
-      createdAt: "2025-01-10",
-      apiKeys: ["key_def456", "key_ghi789"],
-      credits: 250,
-    },
-  ];
+  useEffect(() => {
+    // Check admin authentication
+    const checkAuth = async () => {
+      const isValid = await verifyAdminToken();
+      if (!isValid) {
+        navigate("/admin-login");
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   useEffect(() => {
-    // In production, fetch from /api/admin/users
+    // Fetch users from API
     const loadUsers = async () => {
       try {
         setLoading(true);
-        // TODO: Replace with actual API call
-        // const response = await fetch('/api/admin/users', {
-        //   headers: { 'Authorization': `Bearer ${adminToken}` }
-        // });
-        // const data = await response.json();
-        // setUsers(data.users);
-        
-        // Mock data for now
-        setUsers(mockUsers);
+        const token = getAdminToken();
+
+        const response = await fetch("/api/admin/users", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 401) {
+          clearAdminToken();
+          navigate("/admin-login");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+
+        const data = await response.json();
+        setUsers(data.users || []);
       } catch (err) {
         setError("خطا در بارگذاری کاربران. لطفا دوباره سعی کنید.");
         console.error(err);
@@ -99,7 +87,7 @@ export default function AdminDashboard() {
     };
 
     loadUsers();
-  }, []);
+  }, [navigate]);
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
