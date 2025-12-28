@@ -103,7 +103,7 @@ export default function Generate() {
 
         if (!uploadResult.success || !uploadResult.imageUrl) {
           setError(
-            uploadResult.error ||
+            translateErrorMessage(uploadResult.error) ||
               `خطا در آپلود تصویر ${i + 1} از ${selectedImages.length}`,
           );
           setLoading(false);
