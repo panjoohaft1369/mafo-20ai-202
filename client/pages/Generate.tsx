@@ -33,6 +33,7 @@ import {
   CheckCircle,
   Download,
   Trash2,
+  History,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -62,6 +63,7 @@ export default function Generate() {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [taskId, setTaskId] = useState<string | null>(null);
+  const [historyModalOpen, setHistoryModalOpen] = useState(false);
 
   // Detect if running on localhost
   const isLocalhost =
@@ -446,6 +448,17 @@ export default function Generate() {
                 "ایجاد تصویر"
               )}
             </Button>
+
+            {/* History Button */}
+            <Button
+              onClick={() => setHistoryModalOpen(true)}
+              variant="outline"
+              className="w-full gap-2 py-6 text-base font-semibold"
+              size="lg"
+            >
+              <History className="h-5 w-5" />
+              تاریخچه تصاویر
+            </Button>
           </div>
 
           {/* Right Column - Output */}
@@ -499,6 +512,13 @@ export default function Generate() {
           </div>
         </div>
       </main>
+
+      {/* History Modal */}
+      <HistoryModal
+        open={historyModalOpen}
+        onOpenChange={setHistoryModalOpen}
+        apiKey={auth.apiKey!}
+      />
 
       {/* Bottom Navigation */}
       <BottomNav isLoggedIn={true} onLogout={handleLogout} />
