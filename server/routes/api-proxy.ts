@@ -642,6 +642,9 @@ export async function handleGenerateVideo(
         timestamp: Date.now(),
         prompt,
         resolution: mode, // Store mode as resolution for consistency
+        apiKey,
+        taskType: "video",
+        creditsDeducted: false,
       });
     }
 
