@@ -56,15 +56,15 @@ export function ImageCarousel({
   };
 
   return (
-    <div className="relative w-full group">
-      {/* Main Carousel Container with Shadow & Rounded */}
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-        <div ref={emblaRef} className="h-96 sm:h-[500px]">
-          <div className="flex h-full">
+    <div className="relative w-full h-screen group">
+      {/* Main Carousel Container - Full Width */}
+      <div className="relative w-full h-full overflow-hidden">
+        <div ref={emblaRef} className="h-full w-full">
+          <div className="flex h-full w-full">
             {images.map((image, index) => (
               <div
                 key={index}
-                className="relative flex-[0_0_100%] h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50"
+                className="relative flex-[0_0_100%] h-full w-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50"
               >
                 <img
                   src={image}
@@ -87,7 +87,7 @@ export function ImageCarousel({
         {canScrollPrev && (
           <button
             onClick={handlePrevClick}
-            className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:shadow-xl hover:scale-110"
+            className="absolute left-8 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:shadow-xl hover:scale-110"
             aria-label="Previous slide"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -97,35 +97,28 @@ export function ImageCarousel({
         {canScrollNext && (
           <button
             onClick={handleNextClick}
-            className="absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:shadow-xl hover:scale-110"
+            className="absolute right-8 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:shadow-xl hover:scale-110"
             aria-label="Next slide"
           >
             <ChevronRight className="h-6 w-6" />
           </button>
         )}
-      </div>
 
-      {/* Slide Indicators */}
-      <div className="flex gap-2 justify-center mt-8">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            className={`h-3 rounded-full transition-all duration-300 ${
-              index === 0
-                ? "w-8 bg-primary"
-                : "w-3 bg-muted hover:bg-muted/80"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-            onClick={() => emblaApi?.scrollTo(index)}
-          />
-        ))}
-      </div>
-
-      {/* Sample Count */}
-      <div className="text-center mt-6">
-        <p className="text-sm text-muted-foreground">
-          <span className="font-semibold text-foreground">نمونه‌های زنده</span> از قابلیت‌های MAFO
-        </p>
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              className={`h-3 rounded-full transition-all duration-300 ${
+                index === 0
+                  ? "w-8 bg-white"
+                  : "w-3 bg-white/50 hover:bg-white/75"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+              onClick={() => emblaApi?.scrollTo(index)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
