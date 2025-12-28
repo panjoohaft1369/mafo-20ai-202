@@ -311,6 +311,7 @@ export default function Auth() {
                 setActiveTab("login");
                 setRegisterError("");
                 setLoginError("");
+                navigate("/login");
               }}
               className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
                 activeTab === "login"
@@ -325,6 +326,7 @@ export default function Auth() {
                 setActiveTab("register");
                 setRegisterError("");
                 setLoginError("");
+                navigate("/register");
               }}
               className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
                 activeTab === "register"
