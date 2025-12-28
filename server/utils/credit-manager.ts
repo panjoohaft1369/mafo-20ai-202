@@ -2,6 +2,8 @@
  * Credit management utilities for tracking and deducting user credits
  */
 
+import { supabase } from "./supabase-client.js";
+
 export enum CreditType {
   IMAGE_1K = "image_1k",
   IMAGE_2K = "image_2k",
@@ -63,121 +65,194 @@ export function hasEnoughCredits(
 }
 
 /**
- * TODO: Implement database functions:
- * 
- * export async function deductUserCredits(
- *   userId: string,
- *   credits: number,
- *   type: CreditType,
- *   metadata?: any
- * ): Promise<boolean> {
- *   // 1. Check if user has enough credits
- *   // 2. Deduct credits from users table
- *   // 3. Log transaction in usage_history table
- *   // 4. Return success/failure
- * }
- *
- * export async function getUserCredits(userId: string): Promise<number> {
- *   // Fetch current credit balance from database
- * }
- *
- * export async function recordUsageTransaction(
- *   transaction: CreditTransaction
- * ): Promise<void> {
- *   // Record usage in database for tracking and billing
- * }
- *
- * export async function getUserUsageHistory(
- *   userId: string,
- *   limit: number = 100
- * ): Promise<CreditTransaction[]> {
- *   // Fetch usage history for user
- * }
+ * Deduct user credits and record transaction
  */
-
-// Mock implementations for now
-const mockUserCredits: Map<string, number> = new Map();
-const mockUsageHistory: CreditTransaction[] = [];
-
 export async function deductUserCredits(
   userId: string,
   credits: number,
   type: CreditType,
   taskId?: string,
 ): Promise<boolean> {
-  console.log(
-    `[Credits] Deducting ${credits} credits from user ${userId} for ${type}`,
-  );
-
-  // TODO: Replace with database call
-  // const currentCredits = await db.query('SELECT credits FROM users WHERE id = ?', [userId]);
-  // if (!currentCredits || currentCredits.credits < credits) return false;
-  // await db.query('UPDATE users SET credits = credits - ? WHERE id = ?', [credits, userId]);
-
-  // Mock implementation
-  const current = mockUserCredits.get(userId) || 0;
-  if (current < credits) {
-    console.error(
-      `[Credits] User ${userId} does not have enough credits (has ${current}, needs ${credits})`,
+  try {
+    console.log(
+      `[Credits] Deducting ${credits} credits from user ${userId} for ${type}`
     );
+
+    // Get current user credits
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("credits")
+      .eq("id", userId)
+      .single();
+
+    if (userError || !userData) {
+      console.error(`[Credits] User not found: ${userId}`);
+      return false;
+    }
+
+    const currentCredits = userData.credits;
+
+    if (currentCredits < credits) {
+      console.error(
+        `[Credits] User ${userId} does not have enough credits (has ${currentCredits}, needs ${credits})`
+      );
+      return false;
+    }
+
+    // Deduct credits from user
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({
+        credits: currentCredits - credits,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", userId);
+
+    if (updateError) {
+      console.error(`[Credits] Error updating user credits:`, updateError.message);
+      return false;
+    }
+
+    // Record transaction in usage_history
+    const { error: txnError } = await supabase
+      .from("usage_history")
+      .insert([
+        {
+          user_id: userId,
+          type,
+          credit_amount: credits,
+          task_id: taskId,
+          status: "completed",
+          metadata: {},
+        },
+      ]);
+
+    if (txnError) {
+      console.error(
+        `[Credits] Error recording transaction:`,
+        txnError.message
+      );
+      // Still return true since credits were deducted
+      return true;
+    }
+
+    console.log(
+      `[Credits] Successfully deducted ${credits} credits from user ${userId}`
+    );
+
+    return true;
+  } catch (error: any) {
+    console.error(`[Credits] Error deducting credits:`, error.message);
     return false;
   }
-
-  mockUserCredits.set(userId, current - credits);
-
-  // Log transaction
-  const transaction: CreditTransaction = {
-    id: `txn_${Date.now()}`,
-    userId,
-    type,
-    creditAmount: credits,
-    taskId,
-    status: "completed",
-    createdAt: new Date().toISOString(),
-  };
-
-  mockUsageHistory.push(transaction);
-  console.log(`[Credits] Successfully deducted ${credits} credits from user ${userId}`);
-
-  return true;
 }
 
+/**
+ * Get user's current credit balance
+ */
 export async function getUserCredits(userId: string): Promise<number> {
-  // TODO: Replace with database call
-  // const result = await db.query('SELECT credits FROM users WHERE id = ?', [userId]);
-  // return result?.credits || 0;
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("credits")
+      .eq("id", userId)
+      .single();
 
-  return mockUserCredits.get(userId) || 0;
+    if (error || !data) {
+      console.error(`[Credits] Error fetching user credits:`, error?.message);
+      return 0;
+    }
+
+    return data.credits || 0;
+  } catch (error: any) {
+    console.error(`[Credits] Error:`, error.message);
+    return 0;
+  }
 }
 
+/**
+ * Record a usage transaction
+ */
 export async function recordUsageTransaction(
-  transaction: CreditTransaction,
+  transaction: CreditTransaction
 ): Promise<void> {
-  console.log(
-    `[Credits] Recording transaction:`,
-    transaction.type,
-    transaction.creditAmount,
-  );
+  try {
+    console.log(
+      `[Credits] Recording transaction:`,
+      transaction.type,
+      transaction.creditAmount
+    );
 
-  // TODO: Save to database usage_history table
-  mockUsageHistory.push({
-    ...transaction,
-    id: transaction.id || `txn_${Date.now()}`,
-    createdAt: transaction.createdAt || new Date().toISOString(),
-  });
+    const { error } = await supabase
+      .from("usage_history")
+      .insert([
+        {
+          user_id: transaction.userId,
+          type: transaction.type,
+          credit_amount: transaction.creditAmount,
+          task_id: transaction.taskId,
+          status: transaction.status,
+          metadata: transaction.metadata || {},
+        },
+      ]);
+
+    if (error) {
+      console.error(
+        `[Credits] Error recording transaction:`,
+        error.message
+      );
+      return;
+    }
+
+    console.log(`[Credits] Transaction recorded successfully`);
+  } catch (error: any) {
+    console.error(`[Credits] Error:`, error.message);
+  }
 }
 
+/**
+ * Get user's usage history
+ */
 export async function getUserUsageHistory(
   userId: string,
-  limit: number = 100,
+  limit: number = 100
 ): Promise<CreditTransaction[]> {
-  // TODO: Replace with database call
-  return mockUsageHistory
-    .filter((t) => t.userId === userId)
-    .sort((a, b) => (new Date(b.createdAt!) as any) - (new Date(a.createdAt!) as any))
-    .slice(0, limit);
+  try {
+    const { data, error } = await supabase
+      .from("usage_history")
+      .select("*")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error || !data) {
+      console.error(
+        `[Credits] Error fetching usage history:`,
+        error?.message
+      );
+      return [];
+    }
+
+    return data.map((record: any) => ({
+      id: record.id,
+      userId: record.user_id,
+      type: record.type,
+      creditAmount: record.credit_amount,
+      taskId: record.task_id,
+      status: record.status,
+      createdAt: record.created_at,
+      completedAt: record.completed_at,
+      metadata: record.metadata,
+    }));
+  } catch (error: any) {
+    console.error(`[Credits] Error:`, error.message);
+    return [];
+  }
 }
 
+/**
+ * Format credit type for display
+ */
 export function formatCreditType(type: CreditType): string {
   switch (type) {
     case CreditType.IMAGE_1K:
