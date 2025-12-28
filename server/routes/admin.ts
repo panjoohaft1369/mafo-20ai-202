@@ -508,7 +508,7 @@ export async function handleAdminCreateUser(
 ): Promise<void> {
   try {
     const token = req.headers.authorization?.replace("Bearer ", "");
-    const { name, email, phone, password, brandName, isAdmin = false } = req.body;
+    const { name, email, phone, password, brandName, role = "user" } = req.body;
 
     if (!token || !verifyAdminToken(token)) {
       res.status(401).json({
