@@ -263,7 +263,7 @@ export async function fetchBillingInfo(
 }
 
 /**
- * دریافت وضعیت تصویری تولید شده (برای API v1 غیرهمزمان)
+ * Fetch task status for async API v1
  */
 export async function queryTaskStatus(
   apiKey: string,
@@ -275,7 +275,7 @@ export async function queryTaskStatus(
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
           Authorization: `Bearer ${apiKey}`,
         },
       },
@@ -287,7 +287,7 @@ export async function queryTaskStatus(
       console.error("Failed to query task status:", data);
       return {
         success: false,
-        error: data.error || "خطا در دریافت وضعیت تصویر",
+        error: data.error || "Error fetching image status",
       };
     }
 
@@ -301,7 +301,7 @@ export async function queryTaskStatus(
     console.error("Error querying task status:", error);
     return {
       success: false,
-      error: "خطا در اتصال به سرویس",
+      error: "Connection error",
     };
   }
 }
