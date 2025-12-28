@@ -90,80 +90,61 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* How It Works Section */}
         {!auth.isLoggedIn && (
           <section className="px-4 py-20 bg-muted/50">
             <div className="container mx-auto max-w-6xl">
               <div className="text-center mb-12">
                 <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-                  ویژگی‌های منحصربه‌فرد
+                  چطوری کار می‌کنه؟
                 </h2>
                 <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-                  ما به عنوان اولین پلتفرم هوش مصنوعی ایرانی، خدمات جهان‌سطح و
-                  قابل‌اعتماد ارائه می‌دهیم
+                  سه مرحله ساده برای ایجاد محتوای تصویری و ویدیویی
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* Feature 1 */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Step 1 */}
                 <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
-                      <Image className="h-5 w-5" />
+                    <div className="h-10 w-10 rounded-lg bg-primary text-white flex items-center justify-center mb-3 font-bold text-lg">
+                      1
                     </div>
-                    <CardTitle>تولید تصویر</CardTitle>
+                    <CardTitle>انتخاب تصویر و توضیح</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      تصویری انتخاب کنید و با ابعاد و کیفیت دلخواه تصاویر جدید
-                      ایجاد کنید
+                      یک تصویر پایه انتخاب کنید و توضیح بدهید چه تغییری می‌خواهید
                     </CardDescription>
                   </CardContent>
                 </Card>
 
-                {/* Feature 2 */}
+                {/* Step 2 */}
                 <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
-                      <Film className="h-5 w-5" />
+                    <div className="h-10 w-10 rounded-lg bg-primary text-white flex items-center justify-center mb-3 font-bold text-lg">
+                      2
                     </div>
-                    <CardTitle>تولید ویدیو</CardTitle>
+                    <CardTitle>تنظیم پارامترها</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      تصویری را به ویدیوی متحرک تبدیل کنید و حرکات خود را کنترل
-                      کنید
+                      سایز، کیفیت و سبک تصویر یا ویدیو را انتخاب کنید
                     </CardDescription>
                   </CardContent>
                 </Card>
 
-                {/* Feature 3 */}
+                {/* Step 3 */}
                 <Card>
                   <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
-                      <Zap className="h-5 w-5" />
+                    <div className="h-10 w-10 rounded-lg bg-primary text-white flex items-center justify-center mb-3 font-bold text-lg">
+                      3
                     </div>
-                    <CardTitle>نتایج سریع</CardTitle>
+                    <CardTitle>دریافت نتیجه</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      نتایج فوری و کیفیت بالا. تصاویر و ویدیوهای خود را فوراً
-                      دریافت کنید
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-
-                {/* Feature 4 */}
-                <Card>
-                  <CardHeader>
-                    <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center mb-3">
-                      <TrendingUp className="h-5 w-5" />
-                    </div>
-                    <CardTitle>کنترل کامل</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>
-                      تمام پارامترها را کنترل کنید و نتایج دقیق دریافت کنید
+                      تصویر یا ویدیو تولید شده را دانلود و استفاده کنید
                     </CardDescription>
                   </CardContent>
                 </Card>
