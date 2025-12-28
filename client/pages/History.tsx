@@ -41,16 +41,18 @@ export default function History() {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerImage, setViewerImage] = useState<string | null>(null);
 
-  // Redirect if not logged in
-  if (!auth.isLoggedIn || !auth.apiKey) {
-    navigate("/login");
-    return null;
-  }
-
   const handleLogout = () => {
     clearAuth();
     navigate("/login");
   };
+
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!auth.isLoggedIn || !auth.apiKey) {
+      navigate("/login");
+      return;
+    }
+  }, [auth.isLoggedIn, auth.apiKey, navigate]);
 
   // Load history on mount
   useEffect(() => {
