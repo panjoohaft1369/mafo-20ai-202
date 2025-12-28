@@ -63,6 +63,10 @@ export default function Generate() {
   const [error, setError] = useState("");
   const [taskId, setTaskId] = useState<string | null>(null);
 
+  // Detect if running on localhost
+  const isLocalhost =
+    typeof window !== "undefined" && window.location.hostname === "localhost";
+
   const handleLogout = () => {
     clearAuth();
     navigate("/login");
