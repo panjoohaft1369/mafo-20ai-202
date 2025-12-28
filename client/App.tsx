@@ -34,6 +34,7 @@ export default function App() {
             <Route path="/generate-video" element={<GenerateVideo />} />
             <Route path="/about" element={<About />} />
             <Route path="/tutorials" element={<Tutorials />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/support" element={<Support />} />
             <Route path="/history" element={<History />} />
             <Route path="/logs" element={<Logs />} />
