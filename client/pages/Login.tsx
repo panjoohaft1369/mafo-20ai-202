@@ -145,8 +145,19 @@ export default function Login() {
             <Button
               type="submit"
               disabled={loading || !apiKey.trim()}
-              className="w-full bg-white text-foreground border border-border hover:bg-gray-100 transition-colors"
+              className="w-full"
               size="lg"
+              style={{
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                border: "1px solid #d1d5db",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#f3f4f6";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#ffffff";
+              }}
             >
               {loading ? (
                 <>
