@@ -88,7 +88,7 @@ export default function GenerateVideo() {
       const uploadResult = await uploadImage(selectedImage);
 
       if (!uploadResult.success || !uploadResult.imageUrl) {
-        setError(uploadResult.error || "خطا در آپلود تصویر");
+        setError(translateErrorMessage(uploadResult.error) || "خطا در آپلود تصویر");
         setLoading(false);
         return;
       }
