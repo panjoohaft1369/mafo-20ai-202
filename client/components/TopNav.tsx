@@ -85,42 +85,18 @@ export function TopNav() {
                       پنل ادمین
                     </Button>
                   </Link>
-                  <Button
-                    size="sm"
-                    className="bg-red-600 hover:bg-red-700 text-white font-medium"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="h-4 w-4" />
-                    خروج
-                  </Button>
                 </>
               ) : (
-                // Not Logged In - Show Login/Register
-                <>
-                  <Link to="/admin-login">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="bg-transparent hover:bg-foreground/5"
-                    >
-                      پنل ادمین
-                    </Button>
-                  </Link>
-                  <Link to="/login">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="bg-transparent hover:bg-foreground/5"
-                    >
-                      ورود
-                    </Button>
-                  </Link>
-                  <Link to="/register">
-                    <Button size="sm" className="bg-primary hover:bg-primary/90">
-                      ثبت نام
-                    </Button>
-                  </Link>
-                </>
+                // Not Logged In - Show Admin Link Only
+                <Link to="/admin-login">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-transparent hover:bg-foreground/5"
+                  >
+                    پنل ادمین
+                  </Button>
+                </Link>
               )}
             </div>
           </div>
