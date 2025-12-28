@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useNavigate as useNavigateHook } from "react-router-dom";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
