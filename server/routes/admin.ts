@@ -506,7 +506,7 @@ export async function handleAdminCreateUser(
 ): Promise<void> {
   try {
     const token = req.headers.authorization?.replace("Bearer ", "");
-    const { name, email, phone, password, brandName } = req.body;
+    const { name, email, phone, password, brandName, isAdmin = false } = req.body;
 
     if (!token || !verifyAdminToken(token)) {
       res.status(401).json({
@@ -525,7 +525,7 @@ export async function handleAdminCreateUser(
       return;
     }
 
-    console.log("[Admin] Creating new user:", email);
+    console.log("[Admin] Creating new user:", email, "isAdmin:", isAdmin);
 
     // Check if email already exists
     const { data: existing } = await supabase
@@ -557,6 +557,7 @@ export async function handleAdminCreateUser(
           brand_name: brandName,
           status: "approved",
           credits: 0,
+          role: isAdmin ? "admin" : "user",
         },
       ])
       .select()
@@ -581,9 +582,10 @@ export async function handleAdminCreateUser(
       createdAt: data.created_at,
       apiKeys: [],
       credits: data.credits,
+      role: data.role || "user",
     };
 
-    console.log("[Admin] User created successfully");
+    console.log("[Admin] User created successfully with role:", newUser.role);
 
     res.status(201).json({
       success: true,
