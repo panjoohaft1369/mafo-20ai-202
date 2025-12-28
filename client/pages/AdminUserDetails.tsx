@@ -41,6 +41,7 @@ interface User {
     isActive: boolean;
   }>;
   credits: number;
+  role?: "user" | "admin";
 }
 
 export default function AdminUserDetails() {
