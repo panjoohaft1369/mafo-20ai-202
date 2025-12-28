@@ -90,7 +90,7 @@ export default function Contact() {
                   <CardTitle>پیام در واتساپ</CardTitle>
                   <CardDescription>پیام صوتی یا متنی بفرستید</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 text-right">
                   <div>
                     <p className="text-sm text-muted-foreground mb-1">
                       شماره واتساپ
@@ -103,7 +103,7 @@ export default function Contact() {
                     rel="noopener noreferrer"
                   >
                     <Button
-                      className="w-full gap-2 hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200"
+                      className="w-full gap-2 justify-end hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200"
                       variant="default"
                       style={{ backgroundColor: "#25D366" }}
                     >
