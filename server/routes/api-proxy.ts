@@ -1232,6 +1232,7 @@ export async function handleCallback(
       taskId,
       status: state,
       hasImage: !!imageUrl,
+      creditsDeducted: existingResult?.creditsDeducted,
       filePath: tasksFile,
     });
     console.log(
