@@ -281,7 +281,7 @@ export async function handleUpdateProfile(req: Request, res: Response): Promise<
       .from("users")
       .update(updateData)
       .eq("id", userId)
-      .select("id, name, email, phone, brand_name, credits, role, status")
+      .select("id, name, email, phone, brand_name, credits, status")
       .single();
 
     if (error) {
