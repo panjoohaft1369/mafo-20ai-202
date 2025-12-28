@@ -44,10 +44,12 @@ export function TopNav() {
     { label: "تماس با ما", href: "/contact" },
   ];
 
+  // Check if user is admin (either via hardcoded admin token or role-based admin)
+  const isAdmin = (auth.isLoggedIn && auth.role === "admin") || !!getAdminToken();
+
   // Add admin panel link if user is admin
-  const isAdmin = auth.email === "panjoohaft@gmail.com";
   if (isAdmin) {
-    navItems.push({ label: "🔧 ادمین", href: "/admin/content" });
+    navItems.push({ label: "پنل ادمین", href: "/admin" });
   }
 
   return (
