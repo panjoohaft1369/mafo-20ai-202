@@ -491,6 +491,9 @@ export async function handleGenerateImage(
         prompt,
         aspectRatio,
         resolution,
+        apiKey,
+        taskType: "image",
+        creditsDeducted: false,
       });
       // Persist to file
       saveTasksToFile();
