@@ -350,7 +350,19 @@ export async function handleGenerateImage(
       "[Image Gen] Creating task with model: flux-2/pro-image-to-image",
     );
     console.log("[Image Gen] Number of images:", imageUrls.length);
+
+    // Check if any URLs are localhost
+    const localhostUrls = imageUrls.filter((url: string) =>
+      url.includes("localhost")
+    );
     console.log("[Image Gen] Image URLs:", imageUrls);
+    if (localhostUrls.length > 0) {
+      console.warn(
+        `[Image Gen] ⚠️  WARNING: ${localhostUrls.length} image URL(s) are localhost URLs which Kie.ai cannot access:`,
+        localhostUrls
+      );
+    }
+
     console.log("[Image Gen] Prompt:", prompt);
     console.log("[Image Gen] Prompt length:", prompt.length);
     console.log("[Image Gen] Aspect Ratio:", aspectRatio);
