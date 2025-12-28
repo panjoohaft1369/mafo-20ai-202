@@ -76,19 +76,7 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
               </>
             )}
 
-            {isLoggedIn && (
-              <>
-                {/* Mobile menu */}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setSidebarOpen(true)}
-                  className="sm:hidden"
-                >
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </>
-            )}
+            {isLoggedIn && <div className="h-5 w-5" />}
           </div>
         </div>
       </header>
