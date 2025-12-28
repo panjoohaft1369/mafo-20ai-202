@@ -89,6 +89,9 @@ export function createServer() {
   // Image upload route
   app.post("/api/upload-image", handleImageUpload);
 
+  // Authentication routes
+  app.post("/api/register", handleRegister);
+
   // KIE.AI API Proxy Routes
   app.post("/api/validate-key", handleValidateApiKey);
   app.post("/api/generate-image", handleGenerateImage);
