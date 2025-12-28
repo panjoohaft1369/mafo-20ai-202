@@ -355,6 +355,27 @@ export default function AdminAddUser() {
                 </div>
               </div>
 
+              {/* User Role Select */}
+              <div>
+                <label
+                  htmlFor="role"
+                  className="text-sm font-medium block mb-1"
+                >
+                  نقش کاربر
+                </label>
+                <select
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                  className="w-full px-3 py-2 rounded-md border border-input bg-background text-right focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                >
+                  <option value="user">مشتری</option>
+                  <option value="admin">ادمین</option>
+                </select>
+              </div>
+
               {/* Error Message */}
               {error && (
                 <div className="flex gap-3 p-3 rounded-lg bg-red-50 border border-red-200">
