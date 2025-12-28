@@ -49,6 +49,9 @@ export default function AdminDashboard() {
   const [filterStatus, setFilterStatus] = useState<
     "all" | "pending" | "approved" | "rejected"
   >("all");
+  const [activeTab, setActiveTab] = useState<"users" | "edit" | "gallery">(
+    "users",
+  );
 
   useEffect(() => {
     // Check admin authentication and role
