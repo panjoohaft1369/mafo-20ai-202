@@ -558,7 +558,7 @@ export async function handleGenerateVideo(
   res: Response,
 ): Promise<void> {
   try {
-    const { imageUrl, prompt, mode } = req.body;
+    const { userId, imageUrl, prompt, mode } = req.body;
     const apiKey = req.headers.authorization?.replace("Bearer ", "");
 
     if (!apiKey) {
