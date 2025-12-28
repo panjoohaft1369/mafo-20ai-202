@@ -246,6 +246,83 @@ export default function About() {
           </div>
         </section>
 
+        {/* Our Philosophy - Difference from Others */}
+        <section className="px-4 py-16 sm:py-20 bg-gradient-to-r from-blue-50 to-purple-50 border-b">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-6">تفاوت اساسی ما</h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                هوش مصنوعی های دنیا به روش سنتی کار می‌کنند: اشتراک‌های ماهیانه گران‌قیمت و تعداد محدود خدمات. ما فلسفه متفاوتی داریم.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              {/* Left Side - Their Model */}
+              <div className="space-y-4">
+                <div className="p-6 rounded-lg border-2 border-red-200 bg-red-50">
+                  <h3 className="text-xl font-bold text-red-900 mb-4 flex items-center gap-2">
+                    <span className="text-2xl">❌</span> سایر هوش مصنوعی ها
+                  </h3>
+                  <ul className="space-y-3 text-right">
+                    <li className="flex gap-3 items-start">
+                      <span className="text-red-500 font-bold mt-1">•</span>
+                      <span className="text-red-800">اشتراک‌های ماهیانه گران قیمت بدون بازگشت</span>
+                    </li>
+                    <li className="flex gap-3 items-start">
+                      <span className="text-red-500 font-bold mt-1">•</span>
+                      <span className="text-red-800">تعداد محدود درخواست در هر ماه</span>
+                    </li>
+                    <li className="flex gap-3 items-start">
+                      <span className="text-red-500 font-bold mt-1">•</span>
+                      <span className="text-red-800">استفاده نکردن = پول هدر رفته</span>
+                    </li>
+                    <li className="flex gap-3 items-start">
+                      <span className="text-red-500 font-bold mt-1">•</span>
+                      <span className="text-red-800">فشار برای استفاده بیش‌تر از توان واقعی</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Right Side - Our Model */}
+              <div className="space-y-4">
+                <div className="p-6 rounded-lg border-2 border-green-200 bg-green-50">
+                  <h3 className="text-xl font-bold text-green-900 mb-4 flex items-center gap-2">
+                    <span className="text-2xl">✅</span> مدل MAFO
+                  </h3>
+                  <ul className="space-y-3 text-right">
+                    <li className="flex gap-3 items-start">
+                      <span className="text-green-500 font-bold mt-1">•</span>
+                      <span className="text-green-800">پرداخت فقط برای آنچه استفاده می‌کنید</span>
+                    </li>
+                    <li className="flex gap-3 items-start">
+                      <span className="text-green-500 font-bold mt-1">•</span>
+                      <span className="text-green-800">بدون محدودیت‌های مصنوعی</span>
+                    </li>
+                    <li className="flex gap-3 items-start">
+                      <span className="text-green-500 font-bold mt-1">•</span>
+                      <span className="text-green-800">استفاده کنید وقتی که نیاز دارید</span>
+                    </li>
+                    <li className="flex gap-3 items-start">
+                      <span className="text-green-500 font-bold mt-1">•</span>
+                      <span className="text-green-800">آرامش و راحتی در استفاده</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 text-center p-8 rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
+              <p className="text-lg text-foreground font-medium">
+                ما می‌خواهیم شما با <span className="text-primary font-bold">آرامش و راحتی</span> در زمان‌های لازم، از هوش مصنوعی ما استفاده کنید.
+              </p>
+              <p className="text-muted-foreground mt-3">
+                بدون فشار، بدون محدودیت، فقط وقتی که واقعا نیازتون باشه.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Technical Infrastructure */}
         <section className="px-4 py-16 sm:py-20 bg-gradient-to-b from-primary/5 to-background border-b">
           <div className="container mx-auto max-w-4xl">
