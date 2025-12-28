@@ -207,22 +207,6 @@ export default function Login() {
 
             {/* Help Text */}
             <div className="space-y-3">
-              <div className="p-3 rounded-lg bg-green-50 border border-green-200 text-right">
-                <p className="text-sm text-green-900 font-medium mb-2">
-                  🧪 تست بدون API Key
-                </p>
-                <p className="text-xs text-green-800 mb-2">
-                  برای تست سریع، از این کلید استفاده کنید:
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setApiKey("demo-key-123")}
-                  className="inline-block px-3 py-1 bg-green-200 hover:bg-green-300 text-green-900 rounded text-xs font-mono transition"
-                >
-                  demo-key-123
-                </button>
-              </div>
-
               <div className="p-4 rounded-lg bg-blue-50 border border-blue-200 text-right">
                 <p className="text-sm text-blue-900 font-medium mb-2">
                   درباره کلید API
