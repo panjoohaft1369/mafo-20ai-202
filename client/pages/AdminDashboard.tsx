@@ -52,6 +52,14 @@ export default function AdminDashboard() {
   useEffect(() => {
     // Check admin authentication and role
     const checkAuth = async () => {
+      // Check if user is logged in with regular auth and has admin role
+      const regularAuth = getAuthState();
+      if (regularAuth.isLoggedIn && regularAuth.role === "admin") {
+        // User is logged in via regular auth and has admin role
+        return;
+      }
+
+      // Otherwise, check for hardcoded admin token
       const isValid = await verifyAdminToken();
       if (!isValid) {
         navigate("/admin-login");
