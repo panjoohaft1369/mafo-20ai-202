@@ -105,7 +105,7 @@ export default function GenerateVideo() {
       });
 
       if (!result.success || !result.taskId) {
-        setError(result.error || "خطا در ایجاد ویدیو");
+        setError(translateErrorMessage(result.error) || "خطا در ایجاد ویدیو");
         setLoading(false);
         return;
       }
