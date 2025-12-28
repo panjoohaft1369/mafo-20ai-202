@@ -20,21 +20,25 @@ This is the simplest approach for local development and testing.
 **Step 1**: Download and install ngrok from https://ngrok.com/
 
 **Step 2**: Start ngrok to tunnel your local port 8080:
+
 ```bash
 ngrok http 8080
 ```
 
 ngrok will output something like:
+
 ```
 Forwarding   https://a1b2c3d4e5f6.ngrok.io -> http://localhost:8080
 ```
 
 **Step 3**: Set PUBLIC_URL and run the dev server:
+
 ```bash
 PUBLIC_URL=https://a1b2c3d4e5f6.ngrok.io npm run dev
 ```
 
 Or on Windows (PowerShell):
+
 ```powershell
 $env:PUBLIC_URL='https://a1b2c3d4e5f6.ngrok.io'; npm run dev
 ```
@@ -59,6 +63,7 @@ For production use, deploy MAFO to a hosting service:
 #### Using Other Hosts
 
 For any hosting service (AWS, DigitalOcean, Heroku, etc.):
+
 1. Deploy the application
 2. Set `PUBLIC_URL` environment variable to your domain
 
@@ -71,6 +76,7 @@ PUBLIC_URL=https://your-domain.com
 ```
 
 Then run:
+
 ```bash
 npm run dev
 ```
@@ -101,6 +107,7 @@ Kie.ai نمی‌تواند تصاویری را از localhost دانلود کن�
 ```
 
 This message will **automatically disappear** once you:
+
 - Set the `PUBLIC_URL` environment variable
 - Refresh the browser page
 
@@ -109,6 +116,7 @@ This message will **automatically disappear** once you:
 When generating an image, check your server logs (terminal output) to verify PUBLIC_URL is being used:
 
 **With PUBLIC_URL set:**
+
 ```
 [Upload] Public URL generated: https://your-domain.com/uploads/... (source: PUBLIC_URL env variable)
 [Image Gen] Callback URL: https://your-domain.com/api/callback (source: PUBLIC_URL)
@@ -116,6 +124,7 @@ When generating an image, check your server logs (terminal output) to verify PUB
 ```
 
 **Without PUBLIC_URL (localhost fallback):**
+
 ```
 [Upload] ⚠️  WARNING: Using localhost URL which external APIs cannot access.
 [Upload] ℹ️  Set PUBLIC_URL environment variable for production URLs:
@@ -128,6 +137,7 @@ When generating an image, check your server logs (terminal output) to verify PUB
 ### Issue: Still getting localhost URLs after setting PUBLIC_URL
 
 **Solution**: Restart your dev server after setting the environment variable
+
 ```bash
 # Kill the current npm run dev (Ctrl+C)
 PUBLIC_URL=https://your-domain.com npm run dev
@@ -135,14 +145,16 @@ PUBLIC_URL=https://your-domain.com npm run dev
 
 ### Issue: ngrok tunnel connection fails
 
-**Solution**: 
+**Solution**:
+
 1. Make sure ngrok is properly installed: `ngrok --version`
 2. Your firewall might be blocking ngrok. Try disabling it temporarily
 3. Use ngrok with authentication if needed
 
 ### Issue: Image generation still fails with public URL
 
-**Solution**: 
+**Solution**:
+
 1. Verify the PUBLIC_URL is actually accessible: Try visiting `{PUBLIC_URL}/uploads/` in your browser
 2. Check Kie.ai logs at https://kie.ai/logs
 3. Verify your firewall/proxy allows outbound connections to Kie.ai

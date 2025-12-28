@@ -353,13 +353,13 @@ export async function handleGenerateImage(
 
     // Check if any URLs are localhost
     const localhostUrls = imageUrls.filter((url: string) =>
-      url.includes("localhost")
+      url.includes("localhost"),
     );
     console.log("[Image Gen] Image URLs:", imageUrls);
     if (localhostUrls.length > 0) {
       console.warn(
         `[Image Gen] ⚠️  WARNING: ${localhostUrls.length} image URL(s) are localhost URLs which Kie.ai cannot access:`,
-        localhostUrls
+        localhostUrls,
       );
     }
 
@@ -431,7 +431,9 @@ export async function handleGenerateImage(
       }
     }
 
-    console.log(`[Image Gen] Callback URL: ${callbackUrl} (source: ${callbackSource})`);
+    console.log(
+      `[Image Gen] Callback URL: ${callbackUrl} (source: ${callbackSource})`,
+    );
 
     const response = await fetch(`${KIE_AI_API_BASE}/jobs/createTask`, {
       method: "POST",
@@ -575,7 +577,7 @@ export async function handleGenerateVideo(
     if (imageUrl.includes("localhost")) {
       console.warn(
         "[Video Gen] ⚠️  WARNING: Image URL is localhost which Kie.ai cannot access:",
-        imageUrl
+        imageUrl,
       );
     }
 
@@ -606,7 +608,9 @@ export async function handleGenerateVideo(
       }
     }
 
-    console.log(`[Video Gen] Callback URL: ${callbackUrl} (source: ${callbackSource})`);
+    console.log(
+      `[Video Gen] Callback URL: ${callbackUrl} (source: ${callbackSource})`,
+    );
 
     const response = await fetch(`${KIE_AI_API_BASE}/jobs/createTask`, {
       method: "POST",

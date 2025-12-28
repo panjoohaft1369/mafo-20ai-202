@@ -334,19 +334,27 @@ export default function AdminDashboard() {
 
                         <div className="grid grid-cols-4 gap-4 text-sm text-muted-foreground text-right">
                           <div>
-                            <p className="text-xs text-muted-foreground">ایمیل</p>
+                            <p className="text-xs text-muted-foreground">
+                              ایمیل
+                            </p>
                             <p className="font-mono">{user.email}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground">شماره تماس</p>
+                            <p className="text-xs text-muted-foreground">
+                              شماره تماس
+                            </p>
                             <p>{user.phone}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground">نام برند</p>
+                            <p className="text-xs text-muted-foreground">
+                              نام برند
+                            </p>
                             <p>{user.brandName}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground">کلیدهای API</p>
+                            <p className="text-xs text-muted-foreground">
+                              کلیدهای API
+                            </p>
                             <p className="font-semibold text-foreground">
                               {user.apiKeys.length}
                             </p>
@@ -356,7 +364,9 @@ export default function AdminDashboard() {
 
                       <div className="flex flex-col items-end gap-2 ml-4">
                         <div className="text-right">
-                          <p className="text-xs text-muted-foreground">اعتبار</p>
+                          <p className="text-xs text-muted-foreground">
+                            اعتبار
+                          </p>
                           <p className="text-2xl font-bold text-primary">
                             {user.credits}
                           </p>

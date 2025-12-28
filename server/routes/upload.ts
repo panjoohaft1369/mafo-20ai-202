@@ -93,17 +93,17 @@ export async function handleImageUpload(
     }
 
     console.log(
-      `[Upload] Public URL generated: ${publicUrl} (source: ${urlSource})`
+      `[Upload] Public URL generated: ${publicUrl} (source: ${urlSource})`,
     );
     if (urlSource.includes("LOCALHOST")) {
       console.warn(
-        "[Upload] ⚠️  WARNING: Using localhost URL which external APIs cannot access."
+        "[Upload] ⚠️  WARNING: Using localhost URL which external APIs cannot access.",
       );
       console.warn(
-        "[Upload] ℹ️  Set PUBLIC_URL environment variable for production URLs:"
+        "[Upload] ℹ️  Set PUBLIC_URL environment variable for production URLs:",
       );
       console.warn(
-        '[Upload]    PUBLIC_URL=https://your-domain.com npm run dev'
+        "[Upload]    PUBLIC_URL=https://your-domain.com npm run dev",
       );
     }
 
