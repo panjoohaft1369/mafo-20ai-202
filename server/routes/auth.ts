@@ -88,7 +88,6 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
         password_hash,
         status,
         credits,
-        role,
         created_at,
         api_keys:api_keys(id, key, is_active, created_at)
       `,
@@ -98,7 +97,7 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
       .single();
 
     if (userError || !user) {
-      console.error("[Login] User not found:", lowerEmail);
+      console.error("[Login] User not found:", lowerEmail, userError);
       res.status(401).json({
         success: false,
         error: "ایمیل یا رمز عبور نادرست است",
