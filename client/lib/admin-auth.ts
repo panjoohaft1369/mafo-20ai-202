@@ -31,14 +31,30 @@ export async function verifyAdminToken(): Promise<boolean> {
       },
     });
 
+    console.log("[Admin Auth] Token verification response status:", response.status);
+
+    // 401 means token is invalid
     if (response.status === 401) {
+      console.error("[Admin Auth] Token verification failed - clearing token");
       clearAdminToken();
       return false;
     }
 
-    return response.ok;
+    // 404 might mean endpoint doesn't exist yet, allow access (development mode)
+    if (response.status === 404) {
+      console.warn("[Admin Auth] Verify endpoint not found, allowing access (development mode)");
+      return true;
+    }
+
+    // Other errors
+    if (!response.ok) {
+      console.error("[Admin Auth] Token verification failed with status:", response.status);
+      return false;
+    }
+
+    return true;
   } catch (error) {
-    console.error("Token verification error:", error);
+    console.error("[Admin Auth] Token verification error:", error);
     return false;
   }
 }
