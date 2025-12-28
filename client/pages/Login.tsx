@@ -204,6 +204,24 @@ export default function Login() {
               )}
             </Button>
 
+            {/* Remember Me Checkbox */}
+            <div className="flex items-center gap-2">
+              <input
+                id="remember"
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                disabled={loading}
+                className="h-4 w-4 rounded border-border cursor-pointer"
+              />
+              <label
+                htmlFor="remember"
+                className="text-sm font-medium cursor-pointer"
+              >
+                من را به خاطر داشته باش
+              </label>
+            </div>
+
             {/* Register Link */}
             <div className="text-center text-sm text-muted-foreground">
               <p>
