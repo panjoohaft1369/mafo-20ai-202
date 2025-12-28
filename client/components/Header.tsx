@@ -112,7 +112,7 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
             </a>
 
             <p className="text-xs text-muted-foreground text-center">
-              {whatsappNumber}
+              {whatsappNumber.replace("+98", "0")}
             </p>
           </div>
         </DialogContent>
