@@ -35,6 +35,27 @@ export interface ApiKeyValidationResponse {
   email?: string;
 }
 
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  success: boolean;
+  message?: string;
+  data?: {
+    userId: string;
+    name: string;
+    email: string;
+    phone: string;
+    brandName: string;
+    status: string;
+    credits: number;
+    apiKey: string;
+  };
+  error?: string;
+}
+
 export interface ImageGenerationRequest {
   apiKey: string;
   imageUrls: string[];
