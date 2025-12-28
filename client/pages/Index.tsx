@@ -70,7 +70,7 @@ export default function Index() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={handleStartClick}
-                className="py-5 text-sm font-semibold"
+                className="py-5 text-sm font-semibold hover:shadow-2xl hover:scale-110 active:scale-95"
                 size="lg"
               >
                 <Sparkles className="h-4 w-4 mr-2" />
@@ -81,7 +81,7 @@ export default function Index() {
                   variant="outline"
                   size="lg"
                   onClick={() => navigate("/login")}
-                  className="py-5 text-sm font-semibold"
+                  className="py-5 text-sm font-semibold hover:shadow-lg hover:scale-105 active:scale-95"
                 >
                   ورود با کلید API
                 </Button>
