@@ -37,6 +37,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/register-pending" element={<RegisterPending />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/users/:userId" element={<AdminUserDetails />} />
             <Route path="/generate" element={<Generate />} />
