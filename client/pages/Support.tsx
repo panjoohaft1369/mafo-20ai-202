@@ -67,7 +67,7 @@ export default function Support() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button className="w-full gap-2" variant="default">
+                <Button className="w-full gap-2 hover:shadow-lg hover:scale-105 active:scale-95" variant="default">
                   <Phone className="h-4 w-4" />
                   تماس فوری
                 </Button>
