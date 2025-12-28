@@ -1171,7 +1171,7 @@ export async function handleCallback(
       isSuccess &&
       existingResult &&
       !existingResult.creditsDeducted &&
-      existingResult.apiKey
+      existingResult.userId
     ) {
       try {
         let creditType: CreditType;
@@ -1189,26 +1189,25 @@ export async function handleCallback(
         }
 
         console.log(
-          `[Callback] Deducting ${creditCost} credits for ${creditType}`,
+          `[Callback] Deducting ${creditCost} credits for ${creditType} from user ${existingResult.userId}`,
         );
 
-        await recordUsageTransaction({
-          userId: existingResult.userId,
-          apiKey: existingResult.apiKey,
-          type: creditType,
-          creditAmount: creditCost,
+        // Deduct credits from user's account
+        const deductionSuccess = await deductUserCredits(
+          existingResult.userId,
+          creditCost,
+          creditType,
           taskId,
-          status: "completed",
-          createdAt: new Date().toISOString(),
-          metadata: {
-            resolution: existingResult.resolution,
-            prompt: existingResult.prompt,
-            imageUrl,
-          },
-        });
+        );
 
-        existingResult.creditsDeducted = true;
-        console.log("[Callback] Credits deducted successfully");
+        if (deductionSuccess) {
+          existingResult.creditsDeducted = true;
+          console.log("[Callback] Credits deducted successfully");
+        } else {
+          console.warn(
+            "[Callback] Credit deduction returned false - user may not have enough credits",
+          );
+        }
       } catch (creditError) {
         console.error("[Callback] Error deducting credits:", creditError);
       }
