@@ -26,9 +26,9 @@ import {
   translateErrorMessage,
 } from "@/lib/api";
 import { getAuthState, clearAuth, updateStoredCredits } from "@/lib/auth";
+import { Loading } from "@/components/Loading";
 import {
   Upload,
-  Loader2,
   AlertCircle,
   CheckCircle,
   Download,
