@@ -15,12 +15,18 @@ import { getAuthState, clearAuth } from "@/lib/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Contact() {
+  const navigate = useNavigate();
   const auth = getAuthState();
+
+  const handleLogout = () => {
+    clearAuth();
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <TopNav />
-      <Header isLoggedIn={auth.isLoggedIn} onLogout={() => {}} />
+      <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
       <main className="flex-1 pt-20 md:pt-28">
         {/* Title Section */}
