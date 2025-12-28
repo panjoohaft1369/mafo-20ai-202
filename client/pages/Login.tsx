@@ -17,6 +17,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [apiKey, setApiKey] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -205,20 +206,45 @@ export default function Login() {
             </div>
 
             {/* Help Text */}
-            <div className="p-4 rounded-lg bg-blue-50 border border-blue-200 text-right">
-              <p className="text-sm text-blue-900 font-medium mb-2">
-                راهنمای ورود
-              </p>
-              <ul className="text-xs text-blue-800 space-y-1">
-                <li>• از ایمیل و رمز عبور ثبت‌نام خود استفاده کنید</li>
-                <li>• حساب کاربری شما توسط تیم پشتیبانی باید تایید شود</li>
-                <li>
-                  • بعد از ورود، از کلید API خود بطور خودکار استفاده خواهید کرد
-                </li>
-                <li className="mt-2 pt-2 border-t border-blue-200">
-                  رمز عبور خود را فراموش کردید؟ با پشتیبانی تماس بگیرید
-                </li>
-              </ul>
+            <div className="space-y-3">
+              <div className="p-3 rounded-lg bg-green-50 border border-green-200 text-right">
+                <p className="text-sm text-green-900 font-medium mb-2">
+                  🧪 تست بدون API Key
+                </p>
+                <p className="text-xs text-green-800 mb-2">
+                  برای تست سریع، از این کلید استفاده کنید:
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setApiKey("demo-key-123")}
+                  className="inline-block px-3 py-1 bg-green-200 hover:bg-green-300 text-green-900 rounded text-xs font-mono transition"
+                >
+                  demo-key-123
+                </button>
+              </div>
+
+              <div className="p-4 rounded-lg bg-blue-50 border border-blue-200 text-right">
+                <p className="text-sm text-blue-900 font-medium mb-2">
+                  درباره کلید API
+                </p>
+                <ul className="text-xs text-blue-800 space-y-1">
+                  <li>• کلید API شما شخصی و محرمانه است</li>
+                  <li>• هرگز آن را با کسی به اشتراک نگذارید</li>
+                  <li>• برای دریافت کلید جدید، کلید قدیمی را بازیابی کنید</li>
+                  <li className="mt-2 pt-2 border-t border-blue-200">
+                    کلید خود را از{" "}
+                    <a
+                      href="https://kie.ai/api-key"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline font-medium"
+                    >
+                      kie.ai
+                    </a>{" "}
+                    دریافت کنید
+                  </li>
+                </ul>
+              </div>
             </div>
           </form>
         </CardContent>
