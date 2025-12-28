@@ -154,12 +154,27 @@ export default function Contact() {
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">
-                    چطوری کلید API بگیرم؟
+                    چطوری اکانتم رو تایید کنم؟
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="text-muted-foreground">
-                  برای دریافت کلید API، لطفا از طریق تماس تلفنی یا واتساپ با ما
-                  صحبت کنید. تیم ما شما را در تمام مراحل راهنمایی می‌کند
+                <CardContent className="space-y-4 text-muted-foreground">
+                  <p>
+                    برای تایید اکانت، با تیم پشتیبانی از طریق واتساپ صحبت کنید
+                  </p>
+                  <a
+                    href="http://wa.me/+989357887572"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      className="w-full gap-2 justify-end hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200"
+                      variant="default"
+                      style={{ backgroundColor: "#25D366" }}
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      پیام در واتساپ
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
 
