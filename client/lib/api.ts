@@ -105,7 +105,7 @@ export async function validateApiKey(
 
 /**
  * تولید تصویر از طریق Backend
- * Note: kie.ai v1 API returns taskId, results delivered via callback
+ * Note: API returns taskId, results delivered via callback
  */
 export async function generateImage(
   request: ImageGenerationRequest,
