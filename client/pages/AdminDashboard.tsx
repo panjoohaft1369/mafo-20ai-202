@@ -54,14 +54,23 @@ export default function AdminDashboard() {
     const checkAuth = async () => {
       // Check if user is logged in with regular auth and has admin role
       const regularAuth = getAuthState();
+      console.log("[AdminDashboard] Regular auth state:", {
+        isLoggedIn: regularAuth.isLoggedIn,
+        role: regularAuth.role,
+        email: regularAuth.email,
+      });
+
       if (regularAuth.isLoggedIn && regularAuth.role === "admin") {
         // User is logged in via regular auth and has admin role
+        console.log("[AdminDashboard] User authorized via regular auth");
         return;
       }
 
       // Otherwise, check for hardcoded admin token
+      console.log("[AdminDashboard] Checking hardcoded admin token");
       const isValid = await verifyAdminToken();
       if (!isValid) {
+        console.warn("[AdminDashboard] No valid admin token, redirecting to login");
         navigate("/admin-login");
         return;
       }
