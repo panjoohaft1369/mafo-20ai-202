@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Image, Film, Phone, History, LogOut, LogIn } from "lucide-react";
+import { Image, Film, History, User, LogOut, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface BottomNavProps {
