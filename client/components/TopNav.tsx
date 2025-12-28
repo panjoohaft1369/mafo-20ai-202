@@ -61,44 +61,22 @@ export function TopNav() {
                 </li>
               ))}
             </ul>
-            <div className="flex gap-2 items-center border-l border-foreground/10 pl-8">
-              {auth.isLoggedIn && auth.credits !== null ? (
-                // Logged In - Show Credits Box
-                <>
-                  <div className="flex items-center gap-2 bg-yellow-100/80 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded-lg px-4 py-2 min-w-max">
-                    <Zap className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                    <div className="flex flex-col items-end">
-                      <span className="text-xs text-yellow-700 dark:text-yellow-300">
-                        اعتبار باقی
-                      </span>
-                      <span className="text-lg font-bold text-yellow-700 dark:text-yellow-200">
-                        {auth.credits}
-                      </span>
-                    </div>
+            {auth.isLoggedIn && auth.credits !== null && (
+              <div className="flex gap-2 items-center border-l border-foreground/10 pl-8">
+                {/* Logged In - Show Credits Box */}
+                <div className="flex items-center gap-2 bg-yellow-100/80 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded-lg px-4 py-2 min-w-max">
+                  <Zap className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                  <div className="flex flex-col items-end">
+                    <span className="text-xs text-yellow-700 dark:text-yellow-300">
+                      اعتبار باقی
+                    </span>
+                    <span className="text-lg font-bold text-yellow-700 dark:text-yellow-200">
+                      {auth.credits}
+                    </span>
                   </div>
-                  <Link to="/admin-login">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="bg-transparent hover:bg-foreground/5"
-                    >
-                      پنل ادمین
-                    </Button>
-                  </Link>
-                </>
-              ) : (
-                // Not Logged In - Show Admin Link Only
-                <Link to="/admin-login">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="bg-transparent hover:bg-foreground/5"
-                  >
-                    پنل ادمین
-                  </Button>
-                </Link>
-              )}
-            </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </nav>
