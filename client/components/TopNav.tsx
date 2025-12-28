@@ -17,9 +17,9 @@ export function TopNav() {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4">
-        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-8 py-3 shadow-lg">
-          <div className="flex gap-10 justify-center items-center">
-            <ul className="flex gap-10 justify-center items-center">
+        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-10 py-3 shadow-lg">
+          <div className="flex gap-12 justify-center items-center whitespace-nowrap">
+            <ul className="flex gap-12 justify-center items-center">
               {navItems.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -31,7 +31,16 @@ export function TopNav() {
                 </li>
               ))}
             </ul>
-            <div className="flex gap-3 items-center border-l border-foreground/10 pl-10">
+            <div className="flex gap-2 items-center border-l border-foreground/10 pl-8">
+              <Link to="/admin">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-transparent hover:bg-foreground/5"
+                >
+                  پنل ادمین
+                </Button>
+              </Link>
               <Link to="/login">
                 <Button
                   variant="outline"
