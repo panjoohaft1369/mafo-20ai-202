@@ -50,6 +50,7 @@ export default function App() {
             <Route path="/tutorials" element={<Tutorials />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/history" element={<History />} />
             <Route path="/logs" element={<Logs />} />
             <Route path="/billing" element={<Billing />} />
