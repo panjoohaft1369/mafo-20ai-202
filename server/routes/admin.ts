@@ -382,7 +382,7 @@ export async function handleAdminApproveUser(
     console.log("[Admin] Approving user:", userId);
 
     // TODO: Update in database
-    // await db.query('UPDATE users SET status = ?, approved_at = ? WHERE id = ?', 
+    // await db.query('UPDATE users SET status = ?, approved_at = ? WHERE id = ?',
     //   ['approved', new Date(), userId]);
 
     res.json({
@@ -394,6 +394,185 @@ export async function handleAdminApproveUser(
     res.status(500).json({
       success: false,
       error: "خطا در تایید کاربر",
+    });
+  }
+}
+
+/**
+ * Create new user
+ */
+export async function handleAdminCreateUser(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const token = req.headers.authorization?.replace("Bearer ", "");
+    const { name, email, phone, password, brandName } = req.body;
+
+    if (!token || !verifyAdminToken(token)) {
+      res.status(401).json({
+        success: false,
+        error: "توکن نامعتبر است",
+      });
+      return;
+    }
+
+    // Validate required fields
+    if (!name || !email || !phone || !password || !brandName) {
+      res.status(400).json({
+        success: false,
+        error: "تمام فیلدها الزامی هستند",
+      });
+      return;
+    }
+
+    console.log("[Admin] Creating new user:", email);
+
+    // TODO: Check if email already exists
+    // const existing = await db.query('SELECT id FROM users WHERE email = ?', [email]);
+    // if (existing) {
+    //   return res.status(409).json({ error: "ایمیل قبلا ثبت شده است" });
+    // }
+
+    // TODO: Hash password and insert user
+    // const hashedPassword = await bcrypt.hash(password, 10);
+    // await db.query(
+    //   'INSERT INTO users (name, email, password_hash, phone, brand_name, status, credits, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    //   [name, email, hashedPassword, phone, brandName, 'approved', 0, new Date()]
+    // );
+
+    // Mock response
+    const newUser = {
+      id: `user_${Date.now()}`,
+      name,
+      email,
+      phone,
+      brandName,
+      status: "approved",
+      createdAt: new Date().toISOString(),
+      apiKeys: [],
+      credits: 0,
+    };
+
+    console.log("[Admin] User created successfully");
+
+    res.status(201).json({
+      success: true,
+      message: "کاربر با موفقیت افزوده شد",
+      user: newUser,
+    });
+  } catch (error: any) {
+    console.error("[Admin Create User] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در افزودن کاربر",
+    });
+  }
+}
+
+/**
+ * Update user
+ */
+export async function handleAdminUpdateUser(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const token = req.headers.authorization?.replace("Bearer ", "");
+    const { userId } = req.params;
+    const { name, email, phone, brandName } = req.body;
+
+    if (!token || !verifyAdminToken(token)) {
+      res.status(401).json({
+        success: false,
+        error: "توکن نامعتبر است",
+      });
+      return;
+    }
+
+    // Validate required fields
+    if (!name || !email || !phone || !brandName) {
+      res.status(400).json({
+        success: false,
+        error: "تمام فیلدها الزامی هستند",
+      });
+      return;
+    }
+
+    console.log("[Admin] Updating user:", userId);
+
+    // TODO: Update in database
+    // await db.query(
+    //   'UPDATE users SET name = ?, email = ?, phone = ?, brand_name = ? WHERE id = ?',
+    //   [name, email, phone, brandName, userId]
+    // );
+
+    // Mock response - return updated user
+    const updatedUser = {
+      id: userId,
+      name,
+      email,
+      phone,
+      brandName,
+      status: "approved",
+      createdAt: new Date().toISOString(),
+      apiKeys: [],
+      credits: 0,
+    };
+
+    console.log("[Admin] User updated successfully");
+
+    res.json({
+      success: true,
+      message: "کاربر با موفقیت بروزرسانی شد",
+      user: updatedUser,
+    });
+  } catch (error: any) {
+    console.error("[Admin Update User] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در ویرایش کاربر",
+    });
+  }
+}
+
+/**
+ * Delete user
+ */
+export async function handleAdminDeleteUser(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const token = req.headers.authorization?.replace("Bearer ", "");
+    const { userId } = req.params;
+
+    if (!token || !verifyAdminToken(token)) {
+      res.status(401).json({
+        success: false,
+        error: "توکن نامعتبر است",
+      });
+      return;
+    }
+
+    console.log("[Admin] Deleting user:", userId);
+
+    // TODO: Delete from database (soft delete recommended)
+    // await db.query('UPDATE users SET deleted_at = ? WHERE id = ?', [new Date(), userId]);
+    // Or hard delete:
+    // await db.query('DELETE FROM users WHERE id = ?', [userId]);
+
+    console.log("[Admin] User deleted successfully");
+
+    res.json({
+      success: true,
+      message: "کاربر با موفقیت حذف شد",
+    });
+  } catch (error: any) {
+    console.error("[Admin Delete User] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در حذف کاربر",
     });
   }
 }
