@@ -25,7 +25,7 @@ import {
   uploadImage,
   translateErrorMessage,
 } from "@/lib/api";
-import { getAuthState, clearAuth } from "@/lib/auth";
+import { getAuthState, clearAuth, updateStoredCredits } from "@/lib/auth";
 import {
   Upload,
   Loader2,
@@ -35,6 +35,9 @@ import {
   Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+
+// Credit costs
+const VIDEO_CREDIT_COST = 20;
 
 export default function GenerateVideo() {
   const navigate = useNavigate();
