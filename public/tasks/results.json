@@ -30,5 +30,15 @@
     "aspectRatio": "auto",
     "resolution": "1K",
     "imageUrl": "https://tempfile.aiquickdraw.com/h/dbcce529b99675884fb50386a92cf467_1766783733.png"
+  },
+  "927260649cd909dfef73a396fc25a659": {
+    "status": "processing",
+    "timestamp": 1766951882876,
+    "prompt": "رنگ این لباس رو آبی کمرنگ کن",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "eb1e4272952ed5e1acdc29f8378bce8e",
+    "taskType": "image",
+    "creditsDeducted": false
   }
 }
