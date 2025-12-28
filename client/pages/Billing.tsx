@@ -24,12 +24,6 @@ export default function Billing() {
   const navigate = useNavigate();
   const auth = getAuthState();
 
-  // Redirect if not logged in
-  if (!auth.isLoggedIn || !auth.apiKey) {
-    navigate("/login");
-    return null;
-  }
-
   const [billing, setBilling] = useState<BillingInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -38,6 +32,14 @@ export default function Billing() {
     clearAuth();
     navigate("/login");
   };
+
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!auth.isLoggedIn || !auth.apiKey) {
+      navigate("/login");
+      return;
+    }
+  }, [auth.isLoggedIn, auth.apiKey, navigate]);
 
   useEffect(() => {
     const loadBilling = async () => {
