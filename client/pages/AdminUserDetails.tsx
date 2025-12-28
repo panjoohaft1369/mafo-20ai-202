@@ -97,6 +97,12 @@ export default function AdminUserDetails() {
         const data = await response.json();
         setUser(data.user);
         setCredits(data.user.credits.toString());
+        setEditData({
+          name: data.user.name,
+          email: data.user.email,
+          phone: data.user.phone,
+          brandName: data.user.brandName,
+        });
       } catch (err) {
         setError("خطا در بارگذاری اطلاعات کاربر");
         console.error(err);
