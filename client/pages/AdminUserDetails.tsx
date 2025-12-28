@@ -1,0 +1,459 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  AlertCircle,
+  ChevronLeft,
+  Loader2,
+  Trash2,
+  Plus,
+  Copy,
+  CheckCircle,
+  Key,
+} from "lucide-react";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  brandName: string;
+  status: "pending" | "approved" | "rejected";
+  createdAt: string;
+  apiKeys: Array<{
+    id: string;
+    key: string;
+    createdAt: string;
+    isActive: boolean;
+  }>;
+  credits: number;
+}
+
+export default function AdminUserDetails() {
+  const navigate = useNavigate();
+  const { userId } = useParams();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [credits, setCredits] = useState("");
+  const [savingCredits, setSavingCredits] = useState(false);
+  const [addingKey, setAddingKey] = useState(false);
+  const [newApiKey, setNewApiKey] = useState("");
+  const [copiedKeyId, setCopiedKeyId] = useState<string | null>(null);
+
+  // Mock user data
+  const mockUser: User = {
+    id: userId || "1",
+    name: "علی محمدی",
+    email: "ali@example.com",
+    phone: "09123456789",
+    brandName: "شرکت الفا",
+    status: "pending",
+    createdAt: "2025-01-20",
+    apiKeys: [],
+    credits: 0,
+  };
+
+  useEffect(() => {
+    // In production, fetch from /api/admin/users/{userId}
+    const loadUser = async () => {
+      try {
+        setLoading(true);
+        // TODO: Replace with actual API call
+        // const response = await fetch(`/api/admin/users/${userId}`, {
+        //   headers: { 'Authorization': `Bearer ${adminToken}` }
+        // });
+        // const data = await response.json();
+        // setUser(data.user);
+        
+        // Mock data for now
+        setUser(mockUser);
+        setCredits(mockUser.credits.toString());
+      } catch (err) {
+        setError("خطا در بارگذاری اطلاعات کاربر");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUser();
+  }, [userId]);
+
+  const handleUpdateCredits = async () => {
+    if (!credits || isNaN(Number(credits))) {
+      setError("لطفا عدد معتبر وارد کنید");
+      return;
+    }
+
+    setSavingCredits(true);
+    try {
+      // TODO: API call to update credits
+      // const response = await fetch(`/api/admin/users/${userId}/credits`, {
+      //   method: 'PUT',
+      //   headers: { 'Authorization': `Bearer ${adminToken}` },
+      //   body: JSON.stringify({ credits: Number(credits) })
+      // });
+      
+      if (user) {
+        setUser({ ...user, credits: Number(credits) });
+      }
+      setError("");
+    } catch (err) {
+      setError("خطا در بروزرسانی اعتبار");
+    } finally {
+      setSavingCredits(false);
+    }
+  };
+
+  const handleAddApiKey = async () => {
+    setAddingKey(true);
+    try {
+      // TODO: API call to generate and assign API key
+      // const response = await fetch(`/api/admin/users/${userId}/api-keys`, {
+      //   method: 'POST',
+      //   headers: { 'Authorization': `Bearer ${adminToken}` }
+      // });
+      // const data = await response.json();
+      
+      const mockKey = {
+        id: `key_${Date.now()}`,
+        key: `mafo_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`,
+        createdAt: new Date().toISOString(),
+        isActive: true,
+      };
+
+      if (user) {
+        setUser({
+          ...user,
+          apiKeys: [...user.apiKeys, mockKey],
+        });
+      }
+      setNewApiKey("");
+      setError("");
+    } catch (err) {
+      setError("خطا در افزودن کلید API");
+    } finally {
+      setAddingKey(false);
+    }
+  };
+
+  const handleDeleteApiKey = async (keyId: string) => {
+    if (!confirm("آیا از حذف این کلید API مطمئن هستید؟")) return;
+
+    try {
+      // TODO: API call to delete API key
+      // const response = await fetch(`/api/admin/users/${userId}/api-keys/${keyId}`, {
+      //   method: 'DELETE',
+      //   headers: { 'Authorization': `Bearer ${adminToken}` }
+      // });
+      
+      if (user) {
+        setUser({
+          ...user,
+          apiKeys: user.apiKeys.filter((k) => k.id !== keyId),
+        });
+      }
+      setError("");
+    } catch (err) {
+      setError("خطا در حذف کلید API");
+    }
+  };
+
+  const handleCopyKey = (key: string) => {
+    navigator.clipboard.writeText(key);
+    setCopiedKeyId(key);
+    setTimeout(() => setCopiedKeyId(null), 2000);
+  };
+
+  const handleApproveUser = async () => {
+    try {
+      // TODO: API call to approve user
+      // const response = await fetch(`/api/admin/users/${userId}/approve`, {
+      //   method: 'POST',
+      //   headers: { 'Authorization': `Bearer ${adminToken}` }
+      // });
+      
+      if (user) {
+        setUser({ ...user, status: "approved" });
+      }
+      setError("");
+    } catch (err) {
+      setError("خطا در تایید کاربر");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">درحال بارگذاری...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted">
+        <Card className="w-full max-w-md">
+          <CardContent className="pt-6">
+            <AlertCircle className="h-12 w-12 text-red-600 mx-auto mb-4" />
+            <p className="text-center text-muted-foreground">کاربر یافت نشد</p>
+            <Button
+              onClick={() => navigate("/admin")}
+              className="w-full mt-4"
+            >
+              بازگشت به پنل مدیریت
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-background to-muted pt-20">
+      <div className="max-w-4xl mx-auto space-y-6">
+        {/* Header */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate("/admin")}
+            className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <div>
+            <h1 className="text-3xl font-bold">{user.name}</h1>
+            <p className="text-muted-foreground">{user.brandName}</p>
+          </div>
+        </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="flex gap-3 p-4 rounded-lg bg-red-50 border border-red-200">
+            <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <div className="text-sm text-red-800">
+              <p className="font-medium">خطا</p>
+              <p>{error}</p>
+            </div>
+          </div>
+        )}
+
+        {/* User Info */}
+        <Card>
+          <CardHeader>
+            <CardTitle>اطلاعات کاربر</CardTitle>
+          </CardHeader>
+          <CardContent className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-sm text-muted-foreground">ایمیل</p>
+              <p className="font-mono">{user.email}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">شماره تماس</p>
+              <p>{user.phone}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">وضعیت</p>
+              <div className="mt-1">
+                {user.status === "pending" && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    <div className="w-2 h-2 rounded-full bg-yellow-600" />
+                    منتظر تایید
+                  </span>
+                )}
+                {user.status === "approved" && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <CheckCircle className="w-3 h-3" />
+                    تایید شده
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">تاریخ عضویت</p>
+              <p>{new Date(user.createdAt).toLocaleDateString("fa-IR")}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Approve User */}
+        {user.status === "pending" && (
+          <Card className="border-green-200 bg-green-50">
+            <CardContent className="pt-6">
+              <p className="text-sm text-green-900 mb-4">
+                این کاربر هنوز تایید نشده است. آن را تایید کنید تا بتواند درخواست
+                کلید API کند.
+              </p>
+              <Button
+                onClick={handleApproveUser}
+                className="bg-green-600 hover:bg-green-700"
+              >
+                تایید کاربر
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Credits Management */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <div className="p-1 rounded bg-blue-100">
+                <Key className="h-5 w-5 text-blue-600" />
+              </div>
+              مدیریت اعتبار
+            </CardTitle>
+            <CardDescription>
+              تعداد درخواست هایی را تعیین کنید که کاربر می‌تواند انجام دهد
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-sm font-medium">اعتبار فعلی</label>
+                <span className="text-2xl font-bold text-primary">
+                  {user.credits}
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  type="number"
+                  placeholder="تعداد اعتبارات جدید"
+                  value={credits}
+                  onChange={(e) => setCredits(e.target.value)}
+                  className="text-right"
+                />
+                <Button
+                  onClick={handleUpdateCredits}
+                  disabled={savingCredits || !credits}
+                  className="whitespace-nowrap"
+                >
+                  {savingCredits ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </>
+                  ) : (
+                    "بروزرسانی"
+                  )}
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* API Keys Management */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <div className="p-1 rounded bg-purple-100">
+                <Key className="h-5 w-5 text-purple-600" />
+              </div>
+              کلیدهای API
+            </CardTitle>
+            <CardDescription>
+              کلیدهای API ای که به این کاربر اختصاص داده شده‌اند
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Add New Key */}
+            <div className="flex gap-2">
+              <Input
+                placeholder="یا کلید API را اینجا بچسبانید"
+                value={newApiKey}
+                onChange={(e) => setNewApiKey(e.target.value)}
+                className="text-right"
+              />
+              <Button
+                onClick={handleAddApiKey}
+                disabled={addingKey}
+                className="whitespace-nowrap bg-green-600 hover:bg-green-700"
+              >
+                {addingKey ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    <Plus className="h-4 w-4" />
+                    افزودن کلید
+                  </>
+                )}
+              </Button>
+            </div>
+
+            {/* API Keys List */}
+            {user.apiKeys.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <Key className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                <p>هنوز کلید API برای این کاربر تعیین نشده است</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {user.apiKeys.map((apiKey) => (
+                  <div
+                    key={apiKey.id}
+                    className="p-4 border rounded-lg bg-gray-50"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-sm font-medium truncate">
+                            {apiKey.key}
+                          </p>
+                          {apiKey.isActive && (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 flex-shrink-0">
+                              <div className="w-1.5 h-1.5 rounded-full bg-green-600" />
+                              فعال
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          ایجاد شده:{" "}
+                          {new Date(apiKey.createdAt).toLocaleDateString(
+                            "fa-IR",
+                          )}
+                        </p>
+                      </div>
+
+                      <div className="flex gap-2 flex-shrink-0">
+                        <button
+                          onClick={() => handleCopyKey(apiKey.key)}
+                          className="p-2 hover:bg-gray-200 rounded transition-colors"
+                          title="کپی کنید"
+                        >
+                          {copiedKeyId === apiKey.key ? (
+                            <CheckCircle className="h-4 w-4 text-green-600" />
+                          ) : (
+                            <Copy className="h-4 w-4 text-muted-foreground" />
+                          )}
+                        </button>
+                        <button
+                          onClick={() => handleDeleteApiKey(apiKey.id)}
+                          className="p-2 hover:bg-red-100 rounded transition-colors text-red-600"
+                          title="حذف کنید"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
