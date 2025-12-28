@@ -37,10 +37,11 @@ export default function Generate() {
   const auth = getAuthState();
 
   // Redirect if not logged in
-  if (!auth.isLoggedIn || !auth.apiKey) {
-    navigate("/login");
-    return null;
-  }
+  useEffect(() => {
+    if (!auth.isLoggedIn || !auth.apiKey) {
+      navigate("/login");
+    }
+  }, [auth.isLoggedIn, auth.apiKey, navigate]);
 
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [prompt, setPrompt] = useState("");
