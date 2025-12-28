@@ -1,5 +1,25 @@
-// استفاده از Backend برای تمام درخواست‌های API
+// Backend API for all requests
 const BACKEND_API_BASE = "/api";
+
+/**
+ * Translate API error messages from English to Persian
+ */
+export function translateErrorMessage(message?: string): string {
+  if (!message) return "خطای نامشخص";
+
+  const translations: Record<string, string> = {
+    "Connection error. Please try again later.":
+      "خطا در اتصال. لطفا بعدا دوباره سعی کنید.",
+    "Error generating image": "خطا در ایجاد تصویر",
+    "Error generating video": "خطا در ایجاد ویدیو",
+    "Error uploading image": "خطا در آپلود تصویر",
+    "Error fetching image status": "خطا در دریافت وضعیت تصویر",
+    "Invalid license code. Please contact support.":
+      "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
+  };
+
+  return translations[message] || message;
+}
 
 export interface UploadImageResponse {
   success: boolean;
