@@ -9,16 +9,18 @@ Image and video generation was **not working** because the **`userId` was not be
 ### The Missing Link: userId
 
 1. **Frontend**: User logs in and `userId` is stored in localStorage
+
    ```typescript
    // client/lib/auth.ts
-   const auth = getAuthState();  // Contains userId, apiKey, credits, etc.
+   const auth = getAuthState(); // Contains userId, apiKey, credits, etc.
    ```
 
 2. **Generation Request**: When calling `generateImage()` or `generateVideo()`, the `userId` was **NOT included** in the request
+
    ```typescript
    // BEFORE (Broken)
    const result = await generateImage({
-     apiKey: auth.apiKey!,  // ✅ API key sent
+     apiKey: auth.apiKey!, // ✅ API key sent
      imageUrls: uploadedUrls,
      prompt,
      // ❌ userId NOT sent!
@@ -26,6 +28,7 @@ Image and video generation was **not working** because the **`userId` was not be
    ```
 
 3. **Backend**: The generation handlers didn't know which user made the request
+
    ```typescript
    // server/routes/api-proxy.ts - BEFORE
    taskResults.set(taskId, {
@@ -39,7 +42,12 @@ Image and video generation was **not working** because the **`userId` was not be
 4. **Callback Handler**: When Kie.ai returned results, it couldn't find the userId to deduct credits
    ```typescript
    // BEFORE - This condition always failed
-   if (isSuccess && existingResult && !existingResult.creditsDeducted && existingResult.userId) {
+   if (
+     isSuccess &&
+     existingResult &&
+     !existingResult.creditsDeducted &&
+     existingResult.userId
+   ) {
      // ❌ existingResult.userId is undefined!
      // No credits were deducted
    }
@@ -48,10 +56,11 @@ Image and video generation was **not working** because the **`userId` was not be
 ## The Fix
 
 ### 1. **Update API Request Interfaces** (client/lib/api.ts)
+
 ```typescript
 export interface ImageGenerationRequest {
   apiKey: string;
-  userId: string;  // ✅ Added userId
+  userId: string; // ✅ Added userId
   imageUrls: string[];
   prompt: string;
   aspectRatio: string;
@@ -60,7 +69,7 @@ export interface ImageGenerationRequest {
 
 export interface VideoGenerationRequest {
   apiKey: string;
-  userId: string;  // ✅ Added userId
+  userId: string; // ✅ Added userId
   imageUrl: string;
   prompt: string;
   mode: string;
@@ -68,12 +77,13 @@ export interface VideoGenerationRequest {
 ```
 
 ### 2. **Update API Functions** (client/lib/api.ts)
+
 ```typescript
 export async function generateImage(request: ImageGenerationRequest) {
   const response = await fetch(`${BACKEND_API_BASE}/generate-image`, {
     // ...
     body: JSON.stringify({
-      userId: request.userId,  // ✅ Send userId
+      userId: request.userId, // ✅ Send userId
       imageUrls: request.imageUrls,
       prompt: request.prompt,
       aspectRatio: request.aspectRatio,
@@ -84,11 +94,12 @@ export async function generateImage(request: ImageGenerationRequest) {
 ```
 
 ### 3. **Update Frontend Components**
+
 ```typescript
 // client/pages/Generate.tsx
 const result = await generateImage({
   apiKey: auth.apiKey!,
-  userId: auth.userId!,      // ✅ Now passing userId
+  userId: auth.userId!, // ✅ Now passing userId
   imageUrls: uploadedUrls,
   prompt,
   aspectRatio,
@@ -98,7 +109,7 @@ const result = await generateImage({
 // client/pages/GenerateVideo.tsx
 const result = await generateVideo({
   apiKey: auth.apiKey!,
-  userId: auth.userId!,      // ✅ Now passing userId
+  userId: auth.userId!, // ✅ Now passing userId
   imageUrl: uploadResult.imageUrl,
   prompt,
   mode,
@@ -106,11 +117,12 @@ const result = await generateVideo({
 ```
 
 ### 4. **Update Backend Handlers** (server/routes/api-proxy.ts)
+
 ```typescript
 export async function handleGenerateImage(req: Request, res: Response) {
   const { userId, imageUrls, prompt, aspectRatio, resolution } = req.body;
   // ✅ Extract userId from request body
-  
+
   // Validate userId
   if (!userId) {
     res.status(400).json({
@@ -119,7 +131,7 @@ export async function handleGenerateImage(req: Request, res: Response) {
     });
     return;
   }
-  
+
   // Store userId with task
   taskResults.set(taskId, {
     status: "processing",
@@ -128,7 +140,7 @@ export async function handleGenerateImage(req: Request, res: Response) {
     aspectRatio,
     resolution,
     apiKey,
-    userId,        // ✅ Now stored!
+    userId, // ✅ Now stored!
     taskType: "image",
     creditsDeducted: false,
   });
@@ -136,17 +148,18 @@ export async function handleGenerateImage(req: Request, res: Response) {
 ```
 
 ### 5. **Callback Handler Now Works**
+
 ```typescript
 // server/routes/api-proxy.ts - handleCallback
 if (
   isSuccess &&
   existingResult &&
   !existingResult.creditsDeducted &&
-  existingResult.userId  // ✅ Now available!
+  existingResult.userId // ✅ Now available!
 ) {
   // Deduct credits successfully
   const deductionSuccess = await deductUserCredits(
-    existingResult.userId,  // ✅ Can now deduct credits
+    existingResult.userId, // ✅ Can now deduct credits
     creditCost,
     creditType,
     taskId,
@@ -177,6 +190,7 @@ if (
 ## How It Works Now
 
 ### Image Generation Flow
+
 1. User logs in → `userId` is stored in localStorage
 2. User uploads image → `userId` is sent to backend
 3. Backend stores `userId` with task
@@ -184,6 +198,7 @@ if (
 5. Callback finds `userId` → deducts credits ✅
 
 ### Video Generation Flow
+
 1. User logs in → `userId` is stored in localStorage
 2. User uploads image → `userId` is sent to backend
 3. Backend stores `userId` with task
@@ -212,11 +227,13 @@ To verify the fix works:
 ## Localhost URL Warning
 
 Note: If you're still on localhost without `PUBLIC_URL` set, you'll see:
+
 ```
 [Upload] ⚠️  WARNING: Using localhost URL which external APIs cannot access.
 ```
 
 To fix this, see `PUBLIC_URL_SETUP.md` for instructions on:
+
 - Using ngrok for tunneling
 - Setting the PUBLIC_URL environment variable
 - Deploying to production
