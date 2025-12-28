@@ -172,9 +172,6 @@ export default function Index() {
           </section>
         )}
 
-        {/* Tutorial Section */}
-        {!auth.isLoggedIn && <Tutorial />}
-
         {/* Support Iranian Tech Section */}
         {!auth.isLoggedIn && (
           <section className="px-4 py-16 bg-primary/5 border-y border-primary/10">
