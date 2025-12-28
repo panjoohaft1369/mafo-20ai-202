@@ -518,6 +518,7 @@ export async function handleGenerateImage(
         aspectRatio,
         resolution,
         apiKey,
+        userId,
         taskType: "image",
         creditsDeducted: false,
       });
