@@ -60,7 +60,7 @@ export default function Support() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                شماره تلفن: <span className="font-semibold">۰۹۳۵۷۸۸۷۵۷۲</span>
+                شماره تلفن: <span className="font-semibold">09357887572</span>
               </p>
               <a
                 href="tel:+989357887572"
