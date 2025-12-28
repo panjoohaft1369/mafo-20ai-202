@@ -84,7 +84,9 @@ export default function AdminUserDetails() {
         }
 
         if (!response.ok) {
-          throw new Error("Failed to fetch user");
+          setError("خطا در بارگذاری اطلاعات کاربر");
+          setLoading(false);
+          return;
         }
 
         const data = await response.json();
