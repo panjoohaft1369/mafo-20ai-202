@@ -37,7 +37,10 @@ interface ValidationErrors {
 
 export default function Auth() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState<"login" | "register">(
+    location.pathname === "/register" ? "register" : "login",
+  );
 
   // Login state
   const [email, setEmail] = useState(
