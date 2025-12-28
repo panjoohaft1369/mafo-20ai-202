@@ -157,6 +157,12 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
 
     console.log("[Login] Successful login for:", lowerEmail);
 
+    // Get role if it exists, otherwise default to "user"
+    let userRole = "user";
+    if (user.role) {
+      userRole = user.role;
+    }
+
     res.json({
       success: true,
       message: "ورود موفق",
@@ -168,7 +174,7 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
         brandName: user.brand_name,
         status: user.status,
         credits: user.credits,
-        role: user.role || "user",
+        role: userRole,
         apiKey: userApiKey,
       },
     });
