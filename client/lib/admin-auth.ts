@@ -12,10 +12,34 @@ export function saveAdminToken(token: string): void {
 
 export function clearAdminToken(): void {
   localStorage.removeItem("adminToken");
+  localStorage.removeItem("adminUserRole");
+  localStorage.removeItem("adminUserInfo");
+}
+
+export function getAdminUserRole(): string | null {
+  return localStorage.getItem("adminUserRole");
+}
+
+export function saveAdminUserRole(role: string): void {
+  localStorage.setItem("adminUserRole", role);
+}
+
+export function saveAdminUserInfo(userInfo: any): void {
+  localStorage.setItem("adminUserInfo", JSON.stringify(userInfo));
+}
+
+export function getAdminUserInfo(): any {
+  const info = localStorage.getItem("adminUserInfo");
+  return info ? JSON.parse(info) : null;
 }
 
 export function isAdminLoggedIn(): boolean {
   return !!getAdminToken();
+}
+
+export function isUserAdmin(): boolean {
+  const role = getAdminUserRole();
+  return role === "admin";
 }
 
 export async function verifyAdminToken(): Promise<boolean> {
