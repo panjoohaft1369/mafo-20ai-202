@@ -73,5 +73,28 @@
     "userId": "08448efc-9c3e-4fc3-9764-8b9a5ba0269b",
     "taskType": "image",
     "creditsDeducted": false
+  },
+  "71fab19697c5696020bdd6010b27a450": {
+    "status": "success",
+    "timestamp": 1766954426607,
+    "prompt": "تصویر سوژه رو قرمز کن",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "eb1e4272952ed5e1acdc29f8378bce8e",
+    "userId": "08448efc-9c3e-4fc3-9764-8b9a5ba0269b",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/71fab19697c5696020bdd6010b27a450_1766954455.png"
+  },
+  "2bd6520c84d2e6a886b52967441f52d1": {
+    "status": "success",
+    "timestamp": 1766954525921,
+    "prompt": "این لباس برقصه",
+    "resolution": "normal",
+    "apiKey": "eb1e4272952ed5e1acdc29f8378bce8e",
+    "userId": "08448efc-9c3e-4fc3-9764-8b9a5ba0269b",
+    "taskType": "video",
+    "creditsDeducted": true,
+    "imageUrl": "https://tempfile.aiquickdraw.com/r/users/487b74fe-5f0f-42bb-a36e-8845ec847992/generated/883b07a2-1e0e-4843-b274-326048afc9f1/generated_video.mp4"
   }
 }
