@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { TopNav } from "@/components/TopNav";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import RegisterPending from "./pages/RegisterPending";
 import Generate from "./pages/Generate";
 import GenerateVideo from "./pages/GenerateVideo";
 import Support from "./pages/Support";
