@@ -153,24 +153,43 @@ export default function Index() {
           </section>
         )}
 
-        {/* Support Iranian Tech Section */}
+        {/* Use Cases Section */}
         {!auth.isLoggedIn && (
           <section className="px-4 py-16 bg-primary/5 border-y border-primary/10">
-            <div className="container mx-auto max-w-4xl text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-6">
-                <Heart className="h-6 w-6 inline-block mr-2 text-primary" />
-                حمایت از فناوری ایرانی
+            <div className="container mx-auto max-w-4xl">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-12 text-center">
+                چه کسانی از MAFO استفاده می‌کنند؟
               </h2>
-              <p className="text-sm sm:text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
-                با استفاده از MAFO، شما از تیمی ایرانی را حمایت می‌کنید که خدمات
-                جهان‌سطح ارائه می‌دهند.
-                <br />
-                <br />
-                <strong>
-                  ما را با دوستان و همکاران خود به اشتراک بگذارید
-                </strong>{" "}
-                تا بیشتر مردم از خدمات قابل‌اعتماد ایرانی بهره‌برداری کنند.
-              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-6 rounded-lg bg-background border">
+                  <h3 className="font-semibold text-lg mb-2">📦 فروشندگان آنلاین</h3>
+                  <p className="text-sm text-muted-foreground">
+                    محصولات خود را با رنگ‌ها و محیط‌های مختلف نمایش بدهید و فروش را بیشتر کنید
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-lg bg-background border">
+                  <h3 className="font-semibold text-lg mb-2">🎨 طراحان و تبلیغ‌کنندگان</h3>
+                  <p className="text-sm text-muted-foreground">
+                    محتوای جذاب‌تری برای شبکه‌های اجتماعی ایجاد کنید و مخاطبان خود را بیشتر جذب کنید
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-lg bg-background border">
+                  <h3 className="font-semibold text-lg mb-2">⚙️ تولیدکنندگان</h3>
+                  <p className="text-sm text-muted-foreground">
+                    قبل از تولید انبوه، طرح‌ها را با رنگ‌ها و سبک‌های مختلف تجربه کنید
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-lg bg-background border">
+                  <h3 className="font-semibold text-lg mb-2">📱 محتوا‌ساز‌ها</h3>
+                  <p className="text-sm text-muted-foreground">
+                    بدون هزینه عکاسی یا فیلم‌برداری، محتوای ویژه ایجاد کنید
+                  </p>
+                </div>
+              </div>
             </div>
           </section>
         )}
