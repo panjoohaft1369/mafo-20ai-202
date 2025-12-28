@@ -19,6 +19,7 @@ import {
   CheckCircle,
   Key,
 } from "lucide-react";
+import { getAdminToken, clearAdminToken, verifyAdminToken } from "@/lib/admin-auth";
 
 interface User {
   id: string;
