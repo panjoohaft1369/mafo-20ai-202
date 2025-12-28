@@ -11,6 +11,7 @@ export interface AuthState {
   name: string | null;
   email: string | null;
   credits: number | null;
+  isAdmin?: boolean;
 }
 
 /**
