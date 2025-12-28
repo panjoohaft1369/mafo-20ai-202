@@ -5,19 +5,13 @@ export function Footer() {
 
   const footerLinks = {
     درباره: [
-      { label: "درباره ما", href: "/support" },
-      { label: "تماس با ما", href: "#contact" },
-      { label: "شرایط استفاده", href: "#terms" },
+      { label: "درباره ما", href: "/about" },
+      { label: "تماس با ما", href: "/support" },
     ],
     منابع: [
-      { label: "آموزش‌ها", href: "#tutorials" },
+      { label: "آموزش‌ها", href: "/tutorials" },
       { label: "تاریخچه", href: "/history" },
       { label: "پشتیبانی", href: "/support" },
-    ],
-    حقوقی: [
-      { label: "سیاست حریم خصوصی", href: "#privacy" },
-      { label: "شرایط سرویس", href: "#terms" },
-      { label: "سیاست کوکی‌ها", href: "#cookies" },
     ],
   };
 
