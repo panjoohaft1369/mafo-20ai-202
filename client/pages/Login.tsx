@@ -39,7 +39,8 @@ export default function Login() {
         const errorMessage =
           result.message === "Invalid license code. Please contact support."
             ? "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید."
-            : result.message || "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.";
+            : result.message ||
+              "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.";
         setError(errorMessage);
         setLoading(false);
         return;

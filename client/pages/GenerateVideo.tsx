@@ -19,7 +19,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { generateVideo, pollTaskCompletion, uploadImage, translateErrorMessage } from "@/lib/api";
+import {
+  generateVideo,
+  pollTaskCompletion,
+  uploadImage,
+  translateErrorMessage,
+} from "@/lib/api";
 import { getAuthState, clearAuth } from "@/lib/auth";
 import {
   Upload,
@@ -89,7 +94,9 @@ export default function GenerateVideo() {
       const uploadResult = await uploadImage(selectedImage);
 
       if (!uploadResult.success || !uploadResult.imageUrl) {
-        setError(translateErrorMessage(uploadResult.error) || "خطا در آپلود تصویر");
+        setError(
+          translateErrorMessage(uploadResult.error) || "خطا در آپلود تصویر",
+        );
         setLoading(false);
         return;
       }
@@ -123,7 +130,9 @@ export default function GenerateVideo() {
         toast.dismiss();
         toast.success("ویدیو با موفقیت ایجاد شد!");
       } else {
-        setError(translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو");
+        setError(
+          translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو",
+        );
         toast.dismiss();
       }
     } catch (err) {

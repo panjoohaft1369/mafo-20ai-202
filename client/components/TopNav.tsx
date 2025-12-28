@@ -95,7 +95,10 @@ export function TopNav() {
                 onClick={() => setIsOpen(false)}
                 className="block"
               >
-                <Button size="sm" className="w-full bg-primary hover:bg-primary/90">
+                <Button
+                  size="sm"
+                  className="w-full bg-primary hover:bg-primary/90"
+                >
                   ثبت نام
                 </Button>
               </Link>

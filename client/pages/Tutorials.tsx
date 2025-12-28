@@ -86,8 +86,8 @@ export default function Tutorials() {
                     </p>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    توصیف محیط اطراف محصول باعث می‌شه تصویر بیشتر واقعی‌تر
-                    نمایش داده بشه.
+                    توصیف محیط اطراف محصول باعث می‌شه تصویر بیشتر واقعی‌تر نمایش
+                    داده بشه.
                   </p>
                 </CardContent>
               </Card>
@@ -111,8 +111,8 @@ export default function Tutorials() {
                     </p>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    می‌تونید تصویر در محیط مشتری نمایش بدید یا فقط تغییرات
-                    محصول رو بررسی کنید.
+                    می‌تونید تصویر در محیط مشتری نمایش بدید یا فقط تغییرات محصول
+                    رو بررسی کنید.
                   </p>
                 </CardContent>
               </Card>
@@ -140,9 +140,7 @@ export default function Tutorials() {
                     <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0" />
                   </li>
                   <li className="flex gap-3 items-start justify-end">
-                    <span>
-                      اگر نتیجه را دوست ندارید، پرامپت را اصلاح کنید
-                    </span>
+                    <span>اگر نتیجه را دوست ندارید، پرامپت را اصلاح کنید</span>
                     <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0" />
                   </li>
                 </ul>
@@ -168,8 +166,8 @@ export default function Tutorials() {
                 </CardHeader>
                 <CardContent className="text-right space-y-4">
                   <p className="text-muted-foreground">
-                    تصویرت که قبلاً داری، هیچ نیازی نیست لباس یا رنگو توضیح
-                    بدی. فقط بگو چی می‌خوای حرکت کنه:
+                    تصویرت که قبلاً داری، هیچ نیازی نیست لباس یا رنگو توضیح بدی.
+                    فقط بگو چی می‌خوای حرکت کنه:
                   </p>
                   <div className="space-y-3">
                     <div className="p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800">
@@ -321,8 +319,8 @@ export default function Tutorials() {
                   </li>
                   <li className="flex gap-3 items-start justify-end">
                     <span>
-                      <strong>کوتاه و سادی:</strong> بیش از حد طولانی نوشتن،
-                      عکس العمل عکس داره
+                      <strong>کوتاه و سادی:</strong> بیش از حد طولانی نوشتن، عکس
+                      العمل عکس داره
                     </span>
                     <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
                   </li>
@@ -351,7 +349,9 @@ export default function Tutorials() {
 
               {/* Examples */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-center">📚 نمونه‌ها</h3>
+                <h3 className="text-lg font-semibold text-center">
+                  📚 نمونه‌ها
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 border-2 border-green-500/30 rounded-lg bg-green-50 dark:bg-green-950/20">
                     <p className="font-semibold text-green-700 dark:text-green-400 mb-2 text-right">
@@ -367,8 +367,8 @@ export default function Tutorials() {
                       ❌ بد
                     </p>
                     <p className="text-sm text-muted-foreground italic text-right">
-                      "مردی با موهای سیاه و کت آبی، دوربین دور میزنه، بزرگ
-                      نمایی میشه"
+                      "مردی با موهای سیاه و کت آبی، دوربین دور میزنه، بزرگ نمایی
+                      میشه"
                     </p>
                   </div>
 

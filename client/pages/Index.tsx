@@ -50,7 +50,8 @@ export default function Index() {
                 نمونه‌های تولید شده
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                ببینید که MAFO چطور می‌تونه تصاویر شما را تبدیل کنه. این‌ها نمونه‌های واقعی از کاربران ما هستند
+                ببینید که MAFO چطور می‌تونه تصاویر شما را تبدیل کنه. این‌ها
+                نمونه‌های واقعی از کاربران ما هستند
               </p>
             </div>
           </div>
@@ -123,7 +124,8 @@ export default function Index() {
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      یک تصویر پایه انتخاب کنید و توضیح بدهید چه تغییری می‌خواهید
+                      یک تصویر پایه انتخاب کنید و توضیح بدهید چه تغییری
+                      می‌خواهید
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -172,28 +174,39 @@ export default function Index() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="p-6 rounded-lg bg-background border">
-                  <h3 className="font-semibold text-lg mb-2">📦 فروشندگان آنلاین</h3>
+                  <h3 className="font-semibold text-lg mb-2">
+                    📦 فروشندگان آنلاین
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    محصولات خود را با رنگ‌ها و محیط‌های مختلف نمایش بدهید و فروش را بیشتر کنید
+                    محصولات خود را با رنگ‌ها و محیط‌های مختلف نمایش بدهید و فروش
+                    را بیشتر کنید
                   </p>
                 </div>
 
                 <div className="p-6 rounded-lg bg-background border">
-                  <h3 className="font-semibold text-lg mb-2">🎨 طراحان و تبلیغ‌کنندگان</h3>
+                  <h3 className="font-semibold text-lg mb-2">
+                    🎨 طراحان و تبلیغ‌کنندگان
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    محتوای جذاب‌تری برای شبکه‌های اجتماعی ایجاد کنید و مخاطبان خود را بیشتر جذب کنید
+                    محتوای جذاب‌تری برای شبکه‌های اجتماعی ایجاد کنید و مخاطبان
+                    خود را بیشتر جذب کنید
                   </p>
                 </div>
 
                 <div className="p-6 rounded-lg bg-background border">
-                  <h3 className="font-semibold text-lg mb-2">⚙️ تولیدکنندگان</h3>
+                  <h3 className="font-semibold text-lg mb-2">
+                    ⚙️ تولیدکنندگان
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    قبل از تولید انبوه، طرح‌ها را با رنگ‌ها و سبک‌های مختلف تجربه کنید
+                    قبل از تولید انبوه، طرح‌ها را با رنگ‌ها و سبک‌های مختلف
+                    تجربه کنید
                   </p>
                 </div>
 
                 <div className="p-6 rounded-lg bg-background border">
-                  <h3 className="font-semibold text-lg mb-2">📱 محتوا‌ساز‌ها</h3>
+                  <h3 className="font-semibold text-lg mb-2">
+                    📱 محتوا‌ساز‌ها
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     بدون هزینه عکاسی یا فیلم‌برداری، محتوای ویژه ایجاد کنید
                   </p>

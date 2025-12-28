@@ -181,7 +181,10 @@ export default function History() {
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <AlertCircle className="h-8 w-8 text-muted-foreground mb-2" />
             <p className="text-muted-foreground mb-4">تاریخچه‌ای موجود نیست</p>
-            <Button onClick={() => navigate("/generate")} className="hover:shadow-lg hover:scale-105 active:scale-95">
+            <Button
+              onClick={() => navigate("/generate")}
+              className="hover:shadow-lg hover:scale-105 active:scale-95"
+            >
               شروع ساختن تصویر
             </Button>
           </div>

@@ -191,7 +191,8 @@ export async function handleValidateApiKey(
           clearTimeout(timeoutId);
           res.status(401).json({
             valid: false,
-            message: "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
+            message:
+              "کد لایسنس شما معتبر نمیباشد. لطفا با پشتیبانی تماس بگیرید.",
           });
           return;
         }
@@ -254,7 +255,8 @@ export async function handleValidateApiKey(
       res.json({
         valid: true,
         credit: finalBalance,
-        email: responseData?.data?.email || responseData?.email || "user@mafo.ai",
+        email:
+          responseData?.data?.email || responseData?.email || "user@mafo.ai",
         message: responseData?.message || "موفق",
       });
       return;

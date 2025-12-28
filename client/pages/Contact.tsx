@@ -48,9 +48,7 @@ export default function Contact() {
                     <Phone className="h-6 w-6 text-primary" />
                   </div>
                   <CardTitle>تماس تلفنی</CardTitle>
-                  <CardDescription>
-                    مستقیماً با ما تماس بگیرید
-                  </CardDescription>
+                  <CardDescription>مستقیماً با ما تماس بگیرید</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
@@ -59,8 +57,15 @@ export default function Contact() {
                     </p>
                     <p className="text-lg font-semibold">09357887572</p>
                   </div>
-                  <a href="tel:+989357887572" target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full gap-2 hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200" variant="default">
+                  <a
+                    href="tel:+989357887572"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      className="w-full gap-2 hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200"
+                      variant="default"
+                    >
                       <Phone className="h-4 w-4" />
                       تماس فوری
                     </Button>
@@ -75,9 +80,7 @@ export default function Contact() {
                     <MessageCircle className="h-6 w-6 text-green-600" />
                   </div>
                   <CardTitle>پیام در واتساپ</CardTitle>
-                  <CardDescription>
-                    پیام صوتی یا متنی بفرستید
-                  </CardDescription>
+                  <CardDescription>پیام صوتی یا متنی بفرستید</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
@@ -142,7 +145,9 @@ export default function Contact() {
             <div className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">چطوری کلید API بگیرم؟</CardTitle>
+                  <CardTitle className="text-lg">
+                    چطوری کلید API بگیرم؟
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="text-muted-foreground">
                   برای دریافت کلید API، لطفا از طریق تماس تلفنی یا واتساپ با ما
@@ -162,7 +167,9 @@ export default function Contact() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">از چه تکنولوژی استفاده می‌کنید؟</CardTitle>
+                  <CardTitle className="text-lg">
+                    از چه تکنولوژی استفاده می‌کنید؟
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="text-muted-foreground">
                   MAFO از جدیدترین مدل‌های هوش مصنوعی و GPU‌های قدرتمند استفاده
@@ -177,8 +184,8 @@ export default function Contact() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-muted-foreground">
-                  حریم خصوصی شما برای ما بسیار مهم است. تمام اطلاعات و تصاویری که
-                  با ما به اشتراک می‌گذارید، کاملاً محفوظ و رمزگذاری شده است
+                  حریم خصوصی شما برای ما بسیار مهم است. تمام اطلاعات و تصاویری
+                  که با ما به اشتراک می‌گذارید، کاملاً محفوظ و رمزگذاری شده است
                 </CardContent>
               </Card>
             </div>

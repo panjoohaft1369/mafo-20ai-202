@@ -97,7 +97,8 @@ export default function Register() {
 
       case "brandName":
         if (!value.trim()) return "نام برند الزامی است";
-        if (value.trim().length < 2) return "نام برند باید حداقل 2 کاراکتر باشد";
+        if (value.trim().length < 2)
+          return "نام برند باید حداقل 2 کاراکتر باشد";
         return undefined;
 
       default:

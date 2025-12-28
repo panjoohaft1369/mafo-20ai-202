@@ -69,8 +69,8 @@ export default function RegisterPending() {
               <div className="text-right flex-1">
                 <h4 className="font-medium text-sm mb-1">انتظار برای تایید</h4>
                 <p className="text-xs text-gray-600">
-                  تیم پشتیبانی ما درخواست شما را بررسی خواهد کرد (معمولا
-                  24 تا 48 ساعت)
+                  تیم پشتیبانی ما درخواست شما را بررسی خواهد کرد (معمولا 24 تا
+                  48 ساعت)
                 </p>
               </div>
             </div>
@@ -150,9 +150,13 @@ export default function RegisterPending() {
           {/* Terms Agreement Message */}
           <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 text-right">
             <p className="text-xs text-amber-900 leading-relaxed">
-              <span className="font-medium">توجه:</span> با ثبت نام در MAFO،
-              شما قوانین و شرایط استفاده از سرویس را پذیرفته‌اید. لطفاً قبل
-              از شروع کار حتماً <a href="/terms" className="underline hover:no-underline">قوانین و شرایط</a> را مطالعه کنید.
+              <span className="font-medium">توجه:</span> با ثبت نام در MAFO، شما
+              قوانین و شرایط استفاده از سرویس را پذیرفته‌اید. لطفاً قبل از شروع
+              کار حتماً{" "}
+              <a href="/terms" className="underline hover:no-underline">
+                قوانین و شرایط
+              </a>{" "}
+              را مطالعه کنید.
             </p>
           </div>
 
