@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TopNav } from "@/components/TopNav";
+import { BottomNav } from "@/components/BottomNav";
 import {
   Card,
   CardContent,
@@ -10,7 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle, Mail, MapPin } from "lucide-react";
-import { getAuthState } from "@/lib/auth";
+import { getAuthState, clearAuth } from "@/lib/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Contact() {
   const auth = getAuthState();
