@@ -16,11 +16,11 @@ import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState(
-    localStorage.getItem("rememberMe_email") || ""
+    localStorage.getItem("rememberMe_email") || "",
   );
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(
-    !!localStorage.getItem("rememberMe_email")
+    !!localStorage.getItem("rememberMe_email"),
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -244,9 +244,13 @@ export default function Login() {
                 <ul className="text-xs text-blue-800 space-y-1">
                   <li>• ایمیل و رمز عبور شما شخصی و محرمانه است</li>
                   <li>• هرگز آنها را با کسی به اشتراک نگذارید</li>
-                  <li>• اگر رمز عبور خود را فراموش کردید، لطفا با پشتیبانی تماس بگیرید</li>
+                  <li>
+                    • اگر رمز عبور خود را فراموش کردید، لطفا با پشتیبانی تماس
+                    بگیرید
+                  </li>
                   <li className="mt-2 pt-2 border-t border-blue-200">
-                    برای استفاده از این هوش مصنوعی، لطفا ابتدا با پشتیبانی در تماس باشید.
+                    برای استفاده از این هوش مصنوعی، لطفا ابتدا با پشتیبانی در
+                    تماس باشید.
                   </li>
                 </ul>
               </div>

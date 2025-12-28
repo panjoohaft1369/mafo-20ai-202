@@ -135,7 +135,9 @@ export default function Admin() {
 
   const updateMenuItem = (id: string, updated: Partial<MenuItem>) => {
     setMenuItems(
-      menuItems.map((item) => (item.id === id ? { ...item, ...updated } : item))
+      menuItems.map((item) =>
+        item.id === id ? { ...item, ...updated } : item,
+      ),
     );
   };
 
@@ -158,8 +160,8 @@ export default function Admin() {
   const updateSlide = (id: string, updated: Partial<Slide>) => {
     setSlides(
       slides.map((slide) =>
-        slide.id === id ? { ...slide, ...updated } : slide
-      )
+        slide.id === id ? { ...slide, ...updated } : slide,
+      ),
     );
   };
 
@@ -338,11 +340,7 @@ export default function Admin() {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">اسلاید‌های نمایش</h2>
-                <Button
-                  onClick={addSlide}
-                  className="gap-2"
-                  disabled={loading}
-                >
+                <Button onClick={addSlide} className="gap-2" disabled={loading}>
                   <Plus className="h-4 w-4" />
                   افزودن اسلاید
                 </Button>
@@ -502,15 +500,9 @@ export default function Admin() {
             <div className="text-sm text-amber-800">
               <p className="font-medium mb-1">نکات مهم:</p>
               <ul className="space-y-1 list-disc list-inside">
-                <li>
-                  تغییرات منو بلافاصله در نوار بالای سایت اعمال می‌شود
-                </li>
-                <li>
-                  برای رنگ‌های پس‌زمینه، از فرمت Tailwind استفاده کنید
-                </li>
-                <li>
-                  اسلاید‌ها در صفحه درباره ما نمایش داده می‌شوند
-                </li>
+                <li>تغییرات منو بلافاصله در نوار بالای سایت اعمال می‌شود</li>
+                <li>برای رنگ‌های پس‌زمینه، از فرمت Tailwind استفاده کنید</li>
+                <li>اسلاید‌ها در صفحه درباره ما نمایش داده می‌شوند</li>
               </ul>
             </div>
           </div>
