@@ -12,6 +12,7 @@ import {
   handleCallback,
 } from "./routes/api-proxy";
 import { handleImageUpload } from "./routes/upload";
+import { handleRegister } from "./routes/auth";
 
 export function createServer() {
   const app = express();
