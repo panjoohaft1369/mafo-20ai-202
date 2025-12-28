@@ -81,12 +81,6 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
         </div>
       </header>
 
-      <Sidebar
-        open={sidebarOpen}
-        onOpenChange={setSidebarOpen}
-        onLogout={onLogout}
-      />
-
       {/* Order Account Modal */}
       <Dialog open={showOrderModal} onOpenChange={setShowOrderModal}>
         <DialogContent className="sm:max-w-md">
