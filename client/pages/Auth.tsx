@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/card";
 import { login } from "@/lib/api";
 import { saveAuthCredentials } from "@/lib/auth";
-import { Loader2, AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
+import { Loading } from "@/components/Loading";
+import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_MIN_LENGTH = 8;
