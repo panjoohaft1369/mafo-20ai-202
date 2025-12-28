@@ -120,19 +120,6 @@ export function TopNav() {
                   </div>
                 </div>
               )}
-              <Link
-                to="/admin-login"
-                onClick={() => setIsOpen(false)}
-                className="block"
-              >
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full bg-transparent hover:bg-foreground/5"
-                >
-                  پنل ادمین
-                </Button>
-              </Link>
             </div>
           </div>
         )}
