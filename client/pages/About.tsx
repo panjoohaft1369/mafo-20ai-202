@@ -294,19 +294,13 @@ export default function About() {
               })}
             </div>
 
-            {/* Global Coverage */}
+            {/* Hardware Performance */}
             <div className="bg-muted/50 rounded-lg p-8 text-center border">
-              <Globe className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold mb-4">پوشش جهانی</h3>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                شبکه‌ای از سرورهای توزیع‌شده در نقاط استراتژیک جهان برای اطمینان‌دهی به سرعت فوری درخواست‌ها و تحمل بار زیاد. هر درخواست شما به نزدیک‌ترین سرور برای کمترین تاخیر هدایت می‌شه.
+              <Cpu className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold mb-4">بهبود عملکرد</h3>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                برای بهبود عملکرد سیستم، از سیستم‌های سخت‌افزاری گرافیکی قدرتمند و جدیدترین GPU ها استفاده می‌کنیم.
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm font-semibold text-muted-foreground">
-                <div>🇺🇸 آمریکا</div>
-                <div>🇪🇺 اروپا</div>
-                <div>🇸🇬 آسیا</div>
-                <div>🇬🇧 بریتانیا</div>
-              </div>
             </div>
           </div>
         </section>
