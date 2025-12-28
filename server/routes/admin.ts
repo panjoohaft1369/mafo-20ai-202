@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import * as crypto from "crypto";
+import * as bcrypt from "bcrypt";
+import { supabase } from "../utils/supabase-client.js";
 
 // Hardcoded admin credentials
 const ADMIN_USERNAME = "panjoohaft";
@@ -131,34 +133,46 @@ export async function handleAdminGetUsers(
 
     console.log("[Admin] Fetching all users");
 
-    // TODO: Fetch from database
-    // const users = await db.query('SELECT * FROM users WHERE deleted_at IS NULL ORDER BY created_at DESC');
+    // Fetch from database
+    const { data, error } = await supabase
+      .from("users")
+      .select(
+        `
+        id,
+        name,
+        email,
+        phone,
+        brand_name,
+        status,
+        credits,
+        created_at,
+        api_keys:api_keys(id, key, is_active, created_at)
+      `
+      )
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false });
 
-    // Mock data for now
-    const users = [
-      {
-        id: "1",
-        name: "علی محمدی",
-        email: "ali@example.com",
-        phone: "09123456789",
-        brandName: "شرکت الفا",
-        status: "pending",
-        createdAt: "2025-01-20",
-        apiKeys: [],
-        credits: 0,
-      },
-      {
-        id: "2",
-        name: "فاطمه احمدی",
-        email: "fateme@example.com",
-        phone: "09987654321",
-        brandName: "استودیو بتا",
-        status: "approved",
-        createdAt: "2025-01-15",
-        apiKeys: [{ id: "k1", key: "key_abc123", createdAt: "2025-01-15", isActive: true }],
-        credits: 100,
-      },
-    ];
+    if (error) {
+      console.error("[Admin Users] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در دریافت کاربران",
+      });
+      return;
+    }
+
+    // Format response
+    const users = data?.map((user: any) => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      brandName: user.brand_name,
+      status: user.status,
+      createdAt: user.created_at,
+      apiKeys: user.api_keys || [],
+      credits: user.credits,
+    })) || [];
 
     res.json({
       success: true,
@@ -194,25 +208,51 @@ export async function handleAdminGetUser(
 
     console.log("[Admin] Fetching user:", userId);
 
-    // TODO: Fetch from database
-    // const user = await db.query('SELECT * FROM users WHERE id = ?', [userId]);
+    // Fetch from database
+    const { data, error } = await supabase
+      .from("users")
+      .select(
+        `
+        id,
+        name,
+        email,
+        phone,
+        brand_name,
+        status,
+        credits,
+        created_at,
+        api_keys:api_keys(id, key, is_active, created_at)
+      `
+      )
+      .eq("id", userId)
+      .is("deleted_at", null)
+      .single();
 
-    // Mock data for now
-    const mockUser = {
-      id: userId,
-      name: "علی محمدی",
-      email: "ali@example.com",
-      phone: "09123456789",
-      brandName: "شرکت الفا",
-      status: "pending",
-      createdAt: "2025-01-20",
-      apiKeys: [],
-      credits: 0,
+    if (error) {
+      console.error("[Admin User] Database error:", error.message);
+      res.status(404).json({
+        success: false,
+        error: "کاربر یافت نشد",
+      });
+      return;
+    }
+
+    // Format response
+    const user = {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      brandName: data.brand_name,
+      status: data.status,
+      createdAt: data.created_at,
+      apiKeys: data.api_keys || [],
+      credits: data.credits,
     };
 
     res.json({
       success: true,
-      user: mockUser,
+      user,
     });
   } catch (error: any) {
     console.error("[Admin User] Error:", error.message);
@@ -253,8 +293,20 @@ export async function handleAdminUpdateCredits(
 
     console.log("[Admin] Updating credits for user:", userId, "to:", credits);
 
-    // TODO: Update in database
-    // await db.query('UPDATE users SET credits = ? WHERE id = ?', [credits, userId]);
+    // Update in database
+    const { error } = await supabase
+      .from("users")
+      .update({ credits })
+      .eq("id", userId);
+
+    if (error) {
+      console.error("[Admin Credits] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در بروزرسانی اعتبار",
+      });
+      return;
+    }
 
     res.json({
       success: true,
@@ -296,18 +348,37 @@ export async function handleAdminAddApiKey(
     console.log("[Admin] Adding API key to user:", userId);
 
     // Generate or use provided API key
-    const newApiKey = {
-      id: `key_${Date.now()}`,
-      key:
-        apiKey ||
-        `mafo_${crypto.randomBytes(16).toString("hex")}`,
-      createdAt: new Date().toISOString(),
-      isActive: true,
-    };
+    const newApiKeyValue =
+      apiKey || `mafo_${crypto.randomBytes(16).toString("hex")}`;
 
-    // TODO: Save to database
-    // await db.query('INSERT INTO api_keys (user_id, key, created_at) VALUES (?, ?, ?)', 
-    //   [userId, newApiKey.key, newApiKey.createdAt]);
+    // Insert into database
+    const { data, error } = await supabase
+      .from("api_keys")
+      .insert([
+        {
+          user_id: userId,
+          key: newApiKeyValue,
+          is_active: true,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error("[Admin API Key] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در افزودن کلید API",
+      });
+      return;
+    }
+
+    const newApiKey = {
+      id: data.id,
+      key: data.key,
+      createdAt: data.created_at,
+      isActive: data.is_active,
+    };
 
     res.json({
       success: true,
@@ -344,8 +415,21 @@ export async function handleAdminDeleteApiKey(
 
     console.log("[Admin] Deleting API key:", keyId, "from user:", userId);
 
-    // TODO: Delete from database
-    // await db.query('DELETE FROM api_keys WHERE id = ? AND user_id = ?', [keyId, userId]);
+    // Delete from database
+    const { error } = await supabase
+      .from("api_keys")
+      .delete()
+      .eq("id", keyId)
+      .eq("user_id", userId);
+
+    if (error) {
+      console.error("[Admin Delete Key] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در حذف کلید API",
+      });
+      return;
+    }
 
     res.json({
       success: true,
@@ -381,9 +465,23 @@ export async function handleAdminApproveUser(
 
     console.log("[Admin] Approving user:", userId);
 
-    // TODO: Update in database
-    // await db.query('UPDATE users SET status = ?, approved_at = ? WHERE id = ?',
-    //   ['approved', new Date(), userId]);
+    // Update in database
+    const { error } = await supabase
+      .from("users")
+      .update({
+        status: "approved",
+        approved_at: new Date().toISOString(),
+      })
+      .eq("id", userId);
+
+    if (error) {
+      console.error("[Admin Approve] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در تایید کاربر",
+      });
+      return;
+    }
 
     res.json({
       success: true,
@@ -428,30 +526,60 @@ export async function handleAdminCreateUser(
 
     console.log("[Admin] Creating new user:", email);
 
-    // TODO: Check if email already exists
-    // const existing = await db.query('SELECT id FROM users WHERE email = ?', [email]);
-    // if (existing) {
-    //   return res.status(409).json({ error: "ایمیل قبلا ثبت شده است" });
-    // }
+    // Check if email already exists
+    const { data: existing } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", email)
+      .is("deleted_at", null)
+      .single();
 
-    // TODO: Hash password and insert user
-    // const hashedPassword = await bcrypt.hash(password, 10);
-    // await db.query(
-    //   'INSERT INTO users (name, email, password_hash, phone, brand_name, status, credits, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    //   [name, email, hashedPassword, phone, brandName, 'approved', 0, new Date()]
-    // );
+    if (existing) {
+      return res.status(409).json({
+        success: false,
+        error: "ایمیل قبلا ثبت شده است",
+      });
+    }
 
-    // Mock response
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert user into database
+    const { data, error } = await supabase
+      .from("users")
+      .insert([
+        {
+          name,
+          email,
+          password_hash: hashedPassword,
+          phone,
+          brand_name: brandName,
+          status: "approved",
+          credits: 0,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error("[Admin Create User] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در افزودن کاربر",
+      });
+      return;
+    }
+
     const newUser = {
-      id: `user_${Date.now()}`,
-      name,
-      email,
-      phone,
-      brandName,
-      status: "approved",
-      createdAt: new Date().toISOString(),
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      brandName: data.brand_name,
+      status: data.status,
+      createdAt: data.created_at,
       apiKeys: [],
-      credits: 0,
+      credits: data.credits,
     };
 
     console.log("[Admin] User created successfully");
@@ -501,23 +629,67 @@ export async function handleAdminUpdateUser(
 
     console.log("[Admin] Updating user:", userId);
 
-    // TODO: Update in database
-    // await db.query(
-    //   'UPDATE users SET name = ?, email = ?, phone = ?, brand_name = ? WHERE id = ?',
-    //   [name, email, phone, brandName, userId]
-    // );
+    // Check if email is already in use by another user
+    const { data: existing } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", email)
+      .neq("id", userId)
+      .is("deleted_at", null)
+      .single();
 
-    // Mock response - return updated user
+    if (existing) {
+      return res.status(409).json({
+        success: false,
+        error: "این ایمیل توسط کاربر دیگری استفاده می‌شود",
+      });
+    }
+
+    // Update in database
+    const { data, error } = await supabase
+      .from("users")
+      .update({
+        name,
+        email,
+        phone,
+        brand_name: brandName,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", userId)
+      .select(
+        `
+        id,
+        name,
+        email,
+        phone,
+        brand_name,
+        status,
+        credits,
+        created_at,
+        api_keys:api_keys(id, key, is_active, created_at)
+      `
+      )
+      .single();
+
+    if (error) {
+      console.error("[Admin Update User] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در ویرایش کاربر",
+      });
+      return;
+    }
+
     const updatedUser = {
-      id: userId,
-      name,
-      email,
-      phone,
-      brandName,
-      status: "approved",
-      createdAt: new Date().toISOString(),
-      apiKeys: [],
-      credits: 0,
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      brandName: data.brand_name,
+      status: data.status,
+      createdAt: data.created_at,
+      apiKeys: data.api_keys || [],
+      credits: data.credits,
     };
 
     console.log("[Admin] User updated successfully");
@@ -557,10 +729,22 @@ export async function handleAdminDeleteUser(
 
     console.log("[Admin] Deleting user:", userId);
 
-    // TODO: Delete from database (soft delete recommended)
-    // await db.query('UPDATE users SET deleted_at = ? WHERE id = ?', [new Date(), userId]);
-    // Or hard delete:
-    // await db.query('DELETE FROM users WHERE id = ?', [userId]);
+    // Soft delete - mark as deleted
+    const { error } = await supabase
+      .from("users")
+      .update({
+        deleted_at: new Date().toISOString(),
+      })
+      .eq("id", userId);
+
+    if (error) {
+      console.error("[Admin Delete User] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در حذف کاربر",
+      });
+      return;
+    }
 
     console.log("[Admin] User deleted successfully");
 
