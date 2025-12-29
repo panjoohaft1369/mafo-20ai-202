@@ -468,15 +468,6 @@ export default function History() {
                         ذخیره
                       </Button>
                     )}
-                    <Button
-                      onClick={() => handleDelete(entry.id)}
-                      variant="destructive"
-                      size="sm"
-                      className="flex-1 gap-2"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                      حذف
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
