@@ -122,7 +122,7 @@ export async function handleImageUpload(
 }
 
 /**
- * Download image from external URL and serve it back
+ * Download image/video from external URL and serve it back
  * This bypasses CORS issues by downloading on the server side
  */
 export async function handleDownloadImage(
@@ -135,43 +135,55 @@ export async function handleDownloadImage(
     if (!url || typeof url !== "string") {
       res.status(400).json({
         success: false,
-        error: "Image URL is required",
+        error: "URL is required",
       });
       return;
     }
 
-    console.log("[Download] Fetching image from:", url);
+    console.log("[Download] Fetching from:", url);
 
-    // Fetch the image from the external URL
+    // Fetch the file from the external URL
     const response = await fetch(url);
 
     if (!response.ok) {
-      console.error("[Download] Failed to fetch image, status:", response.status);
+      console.error("[Download] Failed to fetch, status:", response.status);
       res.status(response.status).json({
         success: false,
-        error: `Failed to download image (HTTP ${response.status})`,
+        error: `Failed to download (HTTP ${response.status})`,
       });
       return;
     }
 
-    // Get content type
+    // Get content type from response headers
     const contentType =
-      response.headers.get("content-type") || "image/png";
+      response.headers.get("content-type") || "application/octet-stream";
 
-    // Stream the image directly to the client
+    // Determine filename and extension
+    let filename = "mafo-file";
+    if (contentType.includes("video")) {
+      filename = "mafo-video.mp4";
+    } else if (contentType.includes("image")) {
+      filename = "mafo-image.png";
+    }
+
+    // Set response headers to allow download
     res.setHeader("Content-Type", contentType);
-    res.setHeader("Content-Disposition", "attachment; filename=mafo-image.png");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${filename}"`,
+    );
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
     // Get the buffer and send it
     const buffer = await response.buffer();
     res.send(buffer);
 
-    console.log("[Download] Image downloaded successfully, size:", buffer.length);
+    console.log("[Download] File downloaded successfully, size:", buffer.length);
   } catch (error: any) {
     console.error("[Download] Error:", error.message);
     res.status(500).json({
       success: false,
-      error: "Failed to download image",
+      error: "Failed to download file",
     });
   }
 }
