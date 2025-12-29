@@ -379,7 +379,7 @@ export default function History() {
                         <p className="font-medium">{entry.resolution}</p>
                       </div>
                     )}
-                    {entry.status === "success" && (
+                    {getEffectiveStatus(entry) === "success" && (
                       <div>
                         <p className="text-xs text-muted-foreground">
                           مصرف اعتبار
@@ -392,7 +392,7 @@ export default function History() {
                   </div>
 
                   {/* Download Button */}
-                  {entry.status === "success" && entry.imageUrl && (
+                  {getEffectiveStatus(entry) === "success" && entry.imageUrl && (
                     <div className="flex justify-center">
                       <Button
                         onClick={() =>
