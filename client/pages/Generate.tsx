@@ -70,7 +70,51 @@ export default function Generate() {
   const isLocalhost =
     typeof window !== "undefined" && window.location.hostname === "localhost";
 
+  // Calculate credit cost based on resolution and task type
+  const calculateCreditCost = (): number => {
+    const costMap: { [key: string]: number } = {
+      "1K": 5,
+      "2K": 7,
+    };
+    return costMap[resolution] || 5;
+  };
+
+  // Persist state to localStorage
+  useEffect(() => {
+    if (selectedImages.length > 0 || prompt.trim() || generatedImage) {
+      const stateToSave = {
+        selectedImages,
+        prompt,
+        aspectRatio,
+        resolution,
+        generatedImage,
+        taskId,
+      };
+      localStorage.setItem("generate_form_state", JSON.stringify(stateToSave));
+    }
+  }, [selectedImages, prompt, aspectRatio, resolution, generatedImage, taskId]);
+
+  // Load state from localStorage on mount
+  useEffect(() => {
+    const savedState = localStorage.getItem("generate_form_state");
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState);
+        setSelectedImages(parsed.selectedImages || []);
+        setPrompt(parsed.prompt || "");
+        setAspectRatio(parsed.aspectRatio || "auto");
+        setResolution(parsed.resolution || "1K");
+        setGeneratedImage(parsed.generatedImage || null);
+        setTaskId(parsed.taskId || null);
+      } catch (e) {
+        console.error("Failed to load saved state:", e);
+      }
+    }
+  }, []);
+
   const handleLogout = () => {
+    // Clear saved state on logout
+    localStorage.removeItem("generate_form_state");
     clearAuth();
     navigate("/login");
   };
