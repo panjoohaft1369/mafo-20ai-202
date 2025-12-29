@@ -518,6 +518,33 @@ export default function AdminUserDetails() {
                     className="text-right"
                   />
                 </div>
+                <div>
+                  <label className="text-sm font-medium block mb-1">
+                    رمز عبور جدید (اختیاری)
+                  </label>
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      value={editData.password}
+                      onChange={(e) =>
+                        setEditData({ ...editData, password: e.target.value })
+                      }
+                      placeholder="اگر می‌خواهید تغییر دهید، وارد کنید"
+                      className="text-right pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                </div>
                 <div className="flex gap-2 pt-2">
                   <Button
                     onClick={handleEditUser}
