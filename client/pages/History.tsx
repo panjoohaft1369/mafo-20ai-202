@@ -316,10 +316,21 @@ export default function History() {
               درحال بارگذاری...
             </span>
           </div>
-        ) : history.length === 0 ? (
+        ) : filteredHistory.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <AlertCircle className="h-8 w-8 text-muted-foreground mb-2" />
-            <p className="text-muted-foreground mb-4">تاریخچه‌ای موجود نیست</p>
+            <p className="text-muted-foreground mb-4">
+              {filter === "videos"
+                ? "ویدیویی موجود نیست"
+                : filter === "images"
+                  ? "تصویری موجود نیست"
+                  : "تاریخچه‌ای موجود نیست"}
+            </p>
+            {history.length > 0 && (
+              <p className="text-sm text-muted-foreground mb-4">
+                (اما {history.length} مورد دیگر در دسته‌های دیگر وجود دارد)
+              </p>
+            )}
             <Button
               onClick={() => navigate("/generate")}
               className="hover:shadow-lg hover:scale-105 active:scale-95"
@@ -329,7 +340,7 @@ export default function History() {
           </div>
         ) : (
           <div className="space-y-6">
-            {history.map((entry) => (
+            {filteredHistory.map((entry) => (
               <Card key={entry.id} className="overflow-hidden">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-4">
