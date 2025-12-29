@@ -188,6 +188,14 @@ export default function History() {
     }
   };
 
+  const handleDelete = (entryId: string) => {
+    // Remove the entry from history
+    setHistory((prevHistory) =>
+      prevHistory.filter((entry) => entry.id !== entryId),
+    );
+    toast.success("تصویر/ویدیو حذف شد");
+  };
+
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp);
     return new Intl.DateTimeFormat("fa-IR", {
