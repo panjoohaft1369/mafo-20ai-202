@@ -63,9 +63,11 @@ export default function AdminUserDetails() {
     email: "",
     phone: "",
     brandName: "",
+    password: "",
   });
   const [savingEdit, setSavingEdit] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     // Check admin authentication
