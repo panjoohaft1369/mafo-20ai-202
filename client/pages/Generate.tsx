@@ -326,32 +326,35 @@ export default function Generate() {
                   {selectedImages.length > 0 ? (
                     <div className="space-y-4">
                       <p className="text-sm font-medium">
-                        {selectedImages.length} تصویر انتخاب شده
+                        {selectedImages.length} تصویر انتخاب شده (حداکثر 8 تصویر)
                       </p>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         {selectedImages.map((image, index) => (
-                          <div key={index} className="relative group">
+                          <div key={index} className="flex flex-col gap-2">
                             <img
                               src={image}
                               alt={`تصویر ${index + 1}`}
                               className="max-h-32 mx-auto rounded object-cover w-full"
                             />
-                            <button
+                            <Button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedImages((prev) =>
                                   prev.filter((_, i) => i !== index),
                                 );
                               }}
-                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                              variant="destructive"
+                              size="sm"
+                              className="w-full gap-1 text-white"
                             >
                               <Trash2 className="h-3 w-3" />
-                            </button>
+                              حذف
+                            </Button>
                           </div>
                         ))}
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        برای اضافه کردن تصویر بیشتر کلیک کنید
+                        برای اضافه کردن تصویر بیشتر (حداکثر 8) کلیک کنید
                       </p>
                     </div>
                   ) : (
@@ -361,7 +364,7 @@ export default function Generate() {
                         تصویر را اینجا بگذارید
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        PNG, JPG یا WebP (میتوانید چند تصویر انتخاب کنید)
+                        PNG, JPG یا WebP (1 تا 8 تصویر)
                       </p>
                     </div>
                   )}
