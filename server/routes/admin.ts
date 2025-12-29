@@ -766,3 +766,138 @@ export async function handleAdminDeleteUser(
     });
   }
 }
+
+/**
+ * Get all generated images with pagination and search
+ */
+export async function handleAdminGetGeneratedImages(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const token = req.headers.authorization?.replace("Bearer ", "");
+
+    if (!token || !verifyAdminToken(token)) {
+      res.status(401).json({
+        success: false,
+        error: "توکن نامعتبر است",
+      });
+      return;
+    }
+
+    const {
+      page = "1",
+      pageSize = "20",
+      searchUser = "",
+    } = req.query as Record<string, string>;
+
+    const pageNum = parseInt(page) || 1;
+    const size = parseInt(pageSize) || 20;
+    const offset = (pageNum - 1) * size;
+
+    console.log("[Admin Gallery] Fetching generated images", {
+      page: pageNum,
+      pageSize: size,
+      searchUser,
+    });
+
+    // Build query
+    let query = supabase
+      .from("generated_images")
+      .select(
+        `
+        id,
+        user_id,
+        task_id,
+        image_url,
+        prompt,
+        status,
+        aspect_ratio,
+        resolution,
+        credit_cost,
+        created_at,
+        users:user_id(id, name, email, phone, brand_name)
+      `,
+        { count: "exact" },
+      )
+      .order("created_at", { ascending: false });
+
+    // Apply search filter if provided
+    if (searchUser.trim()) {
+      const trimmedSearch = searchUser.toLowerCase();
+      // We'll filter by user name or email in the response
+      const { data: matchingUsers } = await supabase
+        .from("users")
+        .select("id")
+        .or(
+          `name.ilike.%${trimmedSearch}%,email.ilike.%${trimmedSearch}%`,
+        );
+
+      if (matchingUsers && matchingUsers.length > 0) {
+        const userIds = matchingUsers.map((u: any) => u.id);
+        query = query.in("user_id", userIds);
+      } else {
+        // No matching users found
+        return res.json({
+          success: true,
+          images: [],
+          total: 0,
+          page: pageNum,
+          pageSize: size,
+          totalPages: 0,
+        });
+      }
+    }
+
+    // Get total count and paginated data
+    const { data, count, error } = await query.range(offset, offset + size - 1);
+
+    if (error) {
+      console.error("[Admin Gallery] Database error:", error.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در دریافت تصاویر",
+      });
+      return;
+    }
+
+    const totalPages = Math.ceil((count || 0) / size);
+
+    // Format response
+    const images =
+      data?.map((img: any) => ({
+        id: img.id,
+        userId: img.user_id,
+        taskId: img.task_id,
+        imageUrl: img.image_url,
+        prompt: img.prompt,
+        status: img.status,
+        aspectRatio: img.aspect_ratio,
+        resolution: img.resolution,
+        creditCost: img.credit_cost,
+        createdAt: img.created_at,
+        user: {
+          id: img.users?.id,
+          name: img.users?.name,
+          email: img.users?.email,
+          phone: img.users?.phone,
+          brandName: img.users?.brand_name,
+        },
+      })) || [];
+
+    res.json({
+      success: true,
+      images,
+      total: count || 0,
+      page: pageNum,
+      pageSize: size,
+      totalPages,
+    });
+  } catch (error: any) {
+    console.error("[Admin Gallery] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در دریافت تصاویر",
+    });
+  }
+}
