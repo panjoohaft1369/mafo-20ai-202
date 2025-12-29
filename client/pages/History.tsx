@@ -88,14 +88,25 @@ export default function History() {
     try {
       // Use backend endpoint to bypass CORS issues
       const downloadUrl = `/api/download-image?url=${encodeURIComponent(imageUrl)}`;
+      console.log("[Download] Requesting from backend:", downloadUrl);
+
       const response = await fetch(downloadUrl);
 
       if (!response.ok) {
-        toast.error("خطا در دانلود تصویر");
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage =
+          errorData.error || `خطا در دانلود تصویر (HTTP ${response.status})`;
+        console.error("[Download] Server error:", errorMessage);
+        toast.error(errorMessage);
         return;
       }
 
       const blob = await response.blob();
+      if (blob.size === 0) {
+        toast.error("فایل دانلود شده خالی است");
+        return;
+      }
+
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -105,9 +116,13 @@ export default function History() {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
       toast.success("تصویر دانلود شد");
-    } catch (err) {
-      toast.error("خطا در دانلود تصویر");
-      console.error("Download error:", err);
+    } catch (err: any) {
+      console.error("[Download] Error:", err.message);
+      toast.error(
+        err.message === "Failed to fetch"
+          ? "خطا در اتصال به سرور. لطفا بعدا دوباره سعی کنید."
+          : "خطا در دانلود تصویر",
+      );
     }
   };
 
