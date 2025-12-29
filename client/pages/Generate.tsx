@@ -557,7 +557,12 @@ export default function Generate() {
                   درحال ایجاد تصویر...
                 </div>
               ) : (
-                "ایجاد تصویر"
+                <div className="flex items-center justify-center gap-2">
+                  <span>ایجاد تصویر</span>
+                  <span className="text-sm opacity-90">
+                    ({calculateCreditCost()} 💳)
+                  </span>
+                </div>
               )}
             </Button>
 
