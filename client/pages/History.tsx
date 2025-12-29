@@ -450,7 +450,7 @@ export default function History() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-2 justify-center">
+                  <div className="flex gap-2 justify-center w-full">
                     {getEffectiveStatus(entry) === "success" && entry.imageUrl && (
                       <Button
                         onClick={() =>
@@ -461,7 +461,7 @@ export default function History() {
                         }
                         variant="default"
                         size="sm"
-                        className="flex-1 gap-2"
+                        className="w-1/2 gap-2"
                       >
                         <Download className="h-4 w-4" />
                         ذخیره
