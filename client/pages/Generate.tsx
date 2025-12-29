@@ -251,7 +251,11 @@ export default function Generate() {
         return;
       }
 
+      // Mark task as in progress
       setTaskId(result.taskId);
+      setHasInProgressTask(true);
+      localStorage.setItem("generate_in_progress_task", "true");
+
       toast.dismiss();
       toast.loading("درحال پردازش تصویر... (این ممکن است چند دقیقه طول بکشد)");
 
