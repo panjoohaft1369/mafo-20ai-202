@@ -71,8 +71,8 @@ export function TopNav() {
   return (
     <>
       {/* Desktop/Tablet Navigation */}
-      <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 flex justify-center px-6 py-2">
-        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-3 py-1 shadow-lg" style={{ width: 'fit-content', maxWidth: '50vw' }}>
+      <nav className="hidden md:flex fixed top-0 left-1/2 transform -translate-x-1/2 z-50 justify-center px-6 py-4">
+        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-4 py-2 shadow-lg" style={{ width: 'fit-content', maxWidth: '90vw' }}>
           <div className="flex flex-row justify-between items-center gap-3">
             {/* Navigation Items - Left Side */}
             <ul className="flex flex-row gap-1.5 items-center">
