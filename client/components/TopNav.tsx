@@ -31,12 +31,6 @@ export function TopNav() {
     };
   }, []);
 
-  const handleLogout = () => {
-    clearAuth();
-    setAuth(getAuthState());
-    navigate("/");
-  };
-
   const navItems = [
     { label: "خانه", href: "/" },
     { label: "آموزش‌ها", href: "/tutorials" },
