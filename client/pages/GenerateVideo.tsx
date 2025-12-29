@@ -78,6 +78,14 @@ export default function GenerateVideo() {
   const handleGenerate = async () => {
     setError("");
 
+    // Check if user has credits
+    if (!auth.credits || auth.credits <= 0) {
+      toast.error(
+        "اعتبار حساب شما به اتمام رسیده، لطفا برای ادامه استفاده از ربات، با پشتیبانی تماس بگیرید",
+      );
+      return;
+    }
+
     if (!selectedImage) {
       setError("لطفا ابتدا یک تصویر انتخاب کنید");
       return;
