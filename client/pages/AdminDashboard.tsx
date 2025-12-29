@@ -473,8 +473,7 @@ export default function AdminDashboard() {
       {/* Gallery Tab Content */}
       {activeTab === "gallery" && (
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold">گالری تصاویر</h1>
+          <div className="flex items-center justify-end mb-6">
             <Button
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 text-white"
@@ -483,13 +482,7 @@ export default function AdminDashboard() {
               خروج
             </Button>
           </div>
-          <Card>
-            <CardContent className="pt-6">
-              <p className="text-center text-muted-foreground py-12">
-                این بخش به زودی فعال خواهد شد
-              </p>
-            </CardContent>
-          </Card>
+          <AdminGallery />
         </div>
       )}
 
