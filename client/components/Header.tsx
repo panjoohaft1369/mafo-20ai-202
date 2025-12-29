@@ -29,11 +29,11 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
       <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex h-20 items-center justify-between px-4 sm:px-8">
           {/* Brand */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-2">
             <img
               src="https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F9e202c908efe4404bc59d52a7a35052a?format=webp&width=800"
               alt="MAFO AI"
-              className="h-12 w-auto"
+              className="h-10 w-auto"
             />
           </Link>
 
