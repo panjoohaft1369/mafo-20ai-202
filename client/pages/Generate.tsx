@@ -153,6 +153,14 @@ export default function Generate() {
   const handleGenerate = async () => {
     setError("");
 
+    // Check if user has credits
+    if (!auth.credits || auth.credits <= 0) {
+      toast.error(
+        "اعتبار حساب شما به اتمام رسیده، لطفا برای ادامه استفاده از ربات، با پشتیبانی تماس بگیرید",
+      );
+      return;
+    }
+
     if (selectedImages.length === 0) {
       setError("لطفا ابتدا یک یا چند تصویر انتخاب کنید");
       return;
