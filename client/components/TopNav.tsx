@@ -239,6 +239,48 @@ export function TopNav() {
           </div>
         </>
       )}
+
+      {/* Zero Credit Modal */}
+      {showZeroCreditModal && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 z-50"
+            onClick={() => setShowZeroCreditModal(false)}
+          />
+          {/* Modal */}
+          <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
+            <div className="bg-background border border-red-300 rounded-lg p-6 max-w-md w-full shadow-lg">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-red-700">
+                  ❌ اعتبار به اتمام رسیده
+                </h2>
+                <button
+                  onClick={() => setShowZeroCreditModal(false)}
+                  className="text-foreground/60 hover:text-foreground"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <p className="text-sm text-foreground mb-6">
+                متاسفانه اعتبار شما برای استفاده از تصویر ساز به پایان رسید. برای
+                تمدید اعتبار با تیم پشتیبانی تماس بگیرید.
+              </p>
+              <a
+                href={`https://wa.me/${whatsappNumber.replace(/[^\d]/g, "")}?text=${encodeURIComponent(whatsappMessage)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <Button className="w-full gap-2 bg-green-600 hover:bg-green-700">
+                  <MessageCircle className="h-4 w-4" />
+                  پیام در واتساپ
+                </Button>
+              </a>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
