@@ -207,7 +207,7 @@ export default function Generate() {
     <div className="min-h-screen bg-background pb-20">
       <Header isLoggedIn={true} onLogout={handleLogout} />
 
-      <main className="container mx-auto px-4 py-8 sm:py-12 pt-20 md:pt-24 md:pt-20">
+      <main className="container mx-auto px-4 py-8 sm:py-12 pt-20 md:pt-24">
         {/* Title Section */}
         <div className="max-w-4xl mx-auto mb-8 text-center">
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
