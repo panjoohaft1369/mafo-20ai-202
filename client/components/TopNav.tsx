@@ -99,17 +99,34 @@ export function TopNav() {
             {/* Credits Box */}
             {auth.isLoggedIn && auth.credits !== null && (
               <div className="flex gap-2 items-center border-l border-foreground/10 pl-8">
-                <div className="flex items-center gap-2 bg-yellow-100/80 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded-lg px-4 py-2 min-w-max">
-                  <Zap className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                  <div className="flex flex-col items-end">
-                    <span className="text-xs text-yellow-700 dark:text-yellow-300">
-                      اعتبار باقی
-                    </span>
-                    <span className="text-lg font-bold text-yellow-700 dark:text-yellow-200">
-                      {auth.credits}
-                    </span>
+                {auth.credits <= 0 ? (
+                  <button
+                    onClick={handleZeroCreditClick}
+                    className="flex items-center gap-2 bg-red-100/80 dark:bg-red-900/30 border border-red-300 dark:border-red-600 rounded-lg px-4 py-2 min-w-max hover:bg-red-200/80 dark:hover:bg-red-900/50 transition-colors cursor-pointer"
+                  >
+                    <Zap className="h-5 w-5 text-red-600 dark:text-red-400" />
+                    <div className="flex flex-col items-end">
+                      <span className="text-xs text-red-700 dark:text-red-300">
+                        اعتبار باقی
+                      </span>
+                      <span className="text-lg font-bold text-red-700 dark:text-red-200">
+                        {auth.credits}
+                      </span>
+                    </div>
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2 bg-yellow-100/80 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded-lg px-4 py-2 min-w-max">
+                    <Zap className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                    <div className="flex flex-col items-end">
+                      <span className="text-xs text-yellow-700 dark:text-yellow-300">
+                        اعتبار باقی
+                      </span>
+                      <span className="text-lg font-bold text-yellow-700 dark:text-yellow-200">
+                        {auth.credits}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
           </div>
