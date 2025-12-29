@@ -694,6 +694,9 @@ export async function handleGenerateVideo(
     // Initialize task status as processing with request details
     const taskId = data?.data?.taskId;
     if (taskId) {
+      // Video always costs 20 credits
+      const creditCost = CREDIT_COSTS[CreditType.VIDEO];
+
       taskResults.set(taskId, {
         status: "processing",
         timestamp: Date.now(),
@@ -703,6 +706,7 @@ export async function handleGenerateVideo(
         userId,
         taskType: "video",
         creditsDeducted: false,
+        creditCost: creditCost,
       });
       // Persist to file
       saveTasksToFile();
