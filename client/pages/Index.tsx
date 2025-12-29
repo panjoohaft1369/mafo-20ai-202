@@ -45,7 +45,7 @@ export default function Index() {
       <TopNav />
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
-      <main>
+      <main className="pt-24 md:pt-20">
         {/* Image Carousel - Full Width Top */}
         <section className="relative w-full">
           <ImageCarousel />
