@@ -108,6 +108,13 @@ export default function Generate() {
   const [taskId, setTaskId] = useState<string | null>(initialState.taskId);
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
 
+  // Track if there's an in-progress task (persisted across navigation)
+  const [hasInProgressTask, setHasInProgressTask] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const saved = localStorage.getItem("generate_in_progress_task");
+    return saved === "true";
+  });
+
   // Detect if running on localhost
   const isLocalhost =
     typeof window !== "undefined" && window.location.hostname === "localhost";
