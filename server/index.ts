@@ -149,6 +149,10 @@ export function createServer() {
   app.post("/api/admin/menu", handleSaveMenu);
   app.get("/api/admin/slides", handleGetSlides);
   app.post("/api/admin/slides", handleSaveSlides);
+  app.get("/api/admin/index-slides", handleGetIndexSlides);
+  app.post("/api/admin/index-slides", handleSaveIndexSlides);
+  app.get("/api/admin/about-slides", handleGetAboutSlides);
+  app.post("/api/admin/about-slides", handleSaveAboutSlides);
 
   // KIE.AI API Proxy Routes
   app.post("/api/validate-key", handleValidateApiKey);
