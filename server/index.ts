@@ -110,8 +110,9 @@ export function createServer() {
     });
   });
 
-  // Image upload route
+  // Image upload and download routes
   app.post("/api/upload-image", handleImageUpload);
+  app.get("/api/download-image", handleDownloadImage);
 
   // Authentication routes
   app.post("/api/register", handleRegister);
