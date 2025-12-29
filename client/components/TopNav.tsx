@@ -82,7 +82,7 @@ export function TopNav() {
                   <li key={item.href}>
                     <Link
                       to={item.href}
-                      className={`text-sm font-semibold transition-colors px-2 py-1 rounded-lg block text-center whitespace-nowrap ${
+                      className={`text-sm font-bold transition-colors px-2 py-1 rounded-lg block text-center whitespace-nowrap ${
                         active
                           ? "text-primary bg-primary/10 border border-primary/30"
                           : "hover:text-primary"
