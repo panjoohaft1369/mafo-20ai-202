@@ -4,7 +4,6 @@ import { Zap, MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAuthState } from "@/lib/auth";
 import { getAdminToken } from "@/lib/admin-auth";
-import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 export function TopNav() {
