@@ -143,9 +143,9 @@ export async function handleDownloadImage(
 
     console.log("[Download] Fetching from:", url);
 
-    // Add timeout and retry logic
+    // Add timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout for larger files
 
     try {
       // Fetch the file from the external URL with timeout
@@ -153,7 +153,7 @@ export async function handleDownloadImage(
         signal: controller.signal,
         headers: {
           "User-Agent":
-            "Mozilla/5.0 (compatible; MAFO/1.0; +http://example.com/bot)",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         },
       });
 
@@ -173,16 +173,72 @@ export async function handleDownloadImage(
       }
 
       // Get content type from response headers
-      const contentType =
-        response.headers.get("content-type") || "application/octet-stream";
+      let contentType = response.headers.get("content-type") || "";
 
-      // Determine filename and extension
-      let filename = "mafo-file";
-      if (contentType.includes("video")) {
-        filename = "mafo-video.mp4";
-      } else if (contentType.includes("image")) {
-        filename = "mafo-image.png";
+      console.log("[Download] Content-Type from server:", contentType);
+
+      // If content-type is not set properly, try to detect from URL
+      if (!contentType || contentType.includes("octet-stream")) {
+        const urlLower = url.toLowerCase();
+        if (
+          urlLower.includes(".mp4") ||
+          urlLower.includes("video") ||
+          urlLower.includes("generated_video")
+        ) {
+          contentType = "video/mp4";
+          console.log("[Download] Detected video from URL");
+        } else if (
+          urlLower.includes(".png") ||
+          urlLower.includes(".jpg") ||
+          urlLower.includes(".webp")
+        ) {
+          contentType = "image/png";
+          console.log("[Download] Detected image from URL");
+        } else {
+          contentType = "application/octet-stream";
+        }
       }
+
+      // Determine filename and extension based on content type
+      let filename = "mafo-file";
+      let extension = "";
+
+      if (contentType.includes("video")) {
+        extension = ".mp4";
+        filename = `mafo-video-${Date.now()}${extension}`;
+      } else if (
+        contentType.includes("image/png") ||
+        contentType.includes("png")
+      ) {
+        extension = ".png";
+        filename = `mafo-image-${Date.now()}${extension}`;
+      } else if (
+        contentType.includes("image/jpeg") ||
+        contentType.includes("image/jpg") ||
+        contentType.includes("jpg")
+      ) {
+        extension = ".jpg";
+        filename = `mafo-image-${Date.now()}${extension}`;
+      } else if (
+        contentType.includes("image/webp") ||
+        contentType.includes("webp")
+      ) {
+        extension = ".webp";
+        filename = `mafo-image-${Date.now()}${extension}`;
+      } else if (contentType.includes("image")) {
+        extension = ".png";
+        filename = `mafo-image-${Date.now()}${extension}`;
+      } else {
+        extension = ".bin";
+        filename = `mafo-file-${Date.now()}${extension}`;
+      }
+
+      console.log(
+        "[Download] Final filename:",
+        filename,
+        "content-type:",
+        contentType,
+      );
 
       // Set response headers to allow download
       res.setHeader("Content-Type", contentType);
@@ -192,15 +248,28 @@ export async function handleDownloadImage(
       );
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
 
       // Get the buffer and send it
       const arrayBuffer = await response.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
+
+      if (buffer.length === 0) {
+        console.error("[Download] Downloaded buffer is empty!");
+        res.status(500).json({
+          success: false,
+          error: "Downloaded file is empty",
+        });
+        return;
+      }
+
       res.send(buffer);
 
       console.log(
         "[Download] File downloaded successfully, size:",
         buffer.length,
+        "bytes",
       );
     } catch (fetchError: any) {
       clearTimeout(timeoutId);
