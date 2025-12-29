@@ -46,7 +46,8 @@ export function TopNav() {
   ];
 
   // Check if user is admin (either via hardcoded admin token or role-based admin)
-  const isAdmin = (auth.isLoggedIn && auth.role === "admin") || !!getAdminToken();
+  const isAdmin =
+    (auth.isLoggedIn && auth.role === "admin") || !!getAdminToken();
 
   // Add admin panel link if user is admin
   if (isAdmin) {

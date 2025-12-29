@@ -135,7 +135,9 @@ export default function Contact() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">ساعات کاری</span>
-                    <span className="font-semibold">شنبه تا پنج‌شنبه، 10 صبح تا 21</span>
+                    <span className="font-semibold">
+                      شنبه تا پنج‌شنبه، 10 صبح تا 21
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -209,7 +211,8 @@ export default function Contact() {
                 <CardContent className="text-muted-foreground space-y-3">
                   <p>
                     حریم خصوصی شما برای ما بسیار مهم است. تمام اطلاعات و تصاویری
-                    که برای ویرایش اپلود میکنید، کاملاً محفوظ و رمزگذاری شده است.
+                    که برای ویرایش اپلود میکنید، کاملاً محفوظ و رمزگذاری شده
+                    است.
                   </p>
                   <p>
                     و کسی جز خودتون بهش دسترسی ندارین. ما دوست نداریم تصویر

@@ -190,7 +190,10 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
 /**
  * Handle user profile update
  */
-export async function handleUpdateProfile(req: Request, res: Response): Promise<void> {
+export async function handleUpdateProfile(
+  req: Request,
+  res: Response,
+): Promise<void> {
   try {
     const { userId, name, email, phone, brandName } = req.body;
 
@@ -233,7 +236,10 @@ export async function handleUpdateProfile(req: Request, res: Response): Promise<
     }
 
     // Validate brand name if provided
-    if (brandName && (typeof brandName !== "string" || brandName.trim().length < 2)) {
+    if (
+      brandName &&
+      (typeof brandName !== "string" || brandName.trim().length < 2)
+    ) {
       res.status(400).json({
         success: false,
         error: "نام برند باید حداقل 2 کاراکتر باشد",

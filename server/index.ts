@@ -12,7 +12,11 @@ import {
   handleCallback,
 } from "./routes/api-proxy.js";
 import { handleImageUpload } from "./routes/upload.js";
-import { handleRegister, handleLogin, handleUpdateProfile } from "./routes/auth.js";
+import {
+  handleRegister,
+  handleLogin,
+  handleUpdateProfile,
+} from "./routes/auth.js";
 import {
   handleAdminLogin,
   handleAdminVerify,

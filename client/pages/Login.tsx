@@ -73,7 +73,8 @@ export default function Login() {
 
       // Redirect to admin panel if user is admin, otherwise to generate page
       setTimeout(() => {
-        const redirectPath = result.data.role === "admin" ? "/admin" : "/generate";
+        const redirectPath =
+          result.data.role === "admin" ? "/admin" : "/generate";
         navigate(redirectPath);
       }, 1000);
     } catch (err) {

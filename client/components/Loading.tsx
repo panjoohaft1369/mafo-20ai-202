@@ -10,7 +10,7 @@ interface LoadingProps {
 export const Loading: React.FC<LoadingProps> = ({
   text = "درحال بارگذاری...",
   size = "md",
-  inline = false
+  inline = false,
 }) => {
   const sizeClasses = {
     sm: "w-5 h-5",
@@ -21,11 +21,7 @@ export const Loading: React.FC<LoadingProps> = ({
   if (inline) {
     return (
       <div className={sizeClasses[size]}>
-        <Lottie
-          animationData={animationData}
-          loop
-          autoplay
-        />
+        <Lottie animationData={animationData} loop autoplay />
       </div>
     );
   }
@@ -33,11 +29,7 @@ export const Loading: React.FC<LoadingProps> = ({
   return (
     <div className="flex flex-col items-center justify-center gap-3">
       <div className={sizeClasses[size]}>
-        <Lottie
-          animationData={animationData}
-          loop
-          autoplay
-        />
+        <Lottie animationData={animationData} loop autoplay />
       </div>
       {text && <p className="text-sm text-muted-foreground">{text}</p>}
     </div>

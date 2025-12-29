@@ -125,7 +125,9 @@ export default function Auth() {
     }
   };
 
-  const handleRegisterInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRegisterInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -207,7 +209,8 @@ export default function Auth() {
 
       // Redirect to admin panel if user is admin, otherwise to generate page
       setTimeout(() => {
-        const redirectPath = result.data.role === "admin" ? "/admin" : "/generate";
+        const redirectPath =
+          result.data.role === "admin" ? "/admin" : "/generate";
         navigate(redirectPath);
       }, 1000);
     } catch (err) {
@@ -288,7 +291,10 @@ export default function Auth() {
     Object.keys(errors).length === 0;
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted" dir="rtl">
+    <div
+      className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted"
+      dir="rtl"
+    >
       <Card className="w-full max-w-md text-right">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
@@ -497,7 +503,9 @@ export default function Auth() {
                   className="text-right"
                 />
                 {errors.name && (
-                  <p className="text-xs text-red-600 text-right">{errors.name}</p>
+                  <p className="text-xs text-red-600 text-right">
+                    {errors.name}
+                  </p>
                 )}
               </div>
 
@@ -588,7 +596,10 @@ export default function Auth() {
 
               {/* Confirm Password */}
               <div className="space-y-2">
-                <label htmlFor="confirm-password" className="text-sm font-medium">
+                <label
+                  htmlFor="confirm-password"
+                  className="text-sm font-medium"
+                >
                   تأیید رمز عبور <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -648,7 +659,9 @@ export default function Auth() {
               {registerError && (
                 <div className="flex gap-3 p-3 rounded-lg bg-red-50 border border-red-200">
                   <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-red-800 text-right">{registerError}</p>
+                  <p className="text-sm text-red-800 text-right">
+                    {registerError}
+                  </p>
                 </div>
               )}
 

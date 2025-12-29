@@ -60,7 +60,14 @@ export default function Profile() {
       credits: auth.credits || 0,
     });
     setIsLoading(false);
-  }, [auth.isLoggedIn, auth.apiKey, navigate, auth.name, auth.email, auth.credits]);
+  }, [
+    auth.isLoggedIn,
+    auth.apiKey,
+    navigate,
+    auth.name,
+    auth.email,
+    auth.credits,
+  ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
