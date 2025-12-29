@@ -188,7 +188,15 @@ export default function Generate() {
     if (!generatedImage) return;
 
     try {
-      const response = await fetch(generatedImage);
+      // Use backend endpoint to bypass CORS issues
+      const downloadUrl = `/api/download-image?url=${encodeURIComponent(generatedImage)}`;
+      const response = await fetch(downloadUrl);
+
+      if (!response.ok) {
+        toast.error("خطا در دانلود تصویر");
+        return;
+      }
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -198,7 +206,9 @@ export default function Generate() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+      toast.success("تصویر دانلود شد");
     } catch (err) {
+      console.error("Download error:", err);
       toast.error("خطا در دانلود تصویر");
     }
   };
