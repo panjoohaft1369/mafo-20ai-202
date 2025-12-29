@@ -587,6 +587,25 @@ export default function AdminUserDetails() {
                   <p>{user.brandName}</p>
                 </div>
                 <div>
+                  <p className="text-sm text-muted-foreground">رمز عبور</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="font-mono text-sm">
+                      {showPassword ? "••••••••" : "••••••••"}
+                    </span>
+                    <button
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="p-1 hover:bg-gray-200 rounded transition-colors"
+                      title={showPassword ? "پنهان کن" : "نمایش بده"}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <Eye className="h-4 w-4 text-muted-foreground" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+                <div>
                   <p className="text-sm text-muted-foreground">وضعیت</p>
                   <div className="mt-1">
                     {user.status === "pending" && (
