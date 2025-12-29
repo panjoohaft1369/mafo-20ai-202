@@ -613,7 +613,7 @@ export async function handleAdminUpdateUser(
   try {
     const token = req.headers.authorization?.replace("Bearer ", "");
     const { userId } = req.params;
-    const { name, email, phone, brandName } = req.body;
+    const { name, email, phone, brandName, password } = req.body;
 
     if (!token || !verifyAdminToken(token)) {
       res.status(401).json({
@@ -630,6 +630,25 @@ export async function handleAdminUpdateUser(
         error: "تمام فیلدها الزامی هستند",
       });
       return;
+    }
+
+    // Validate password if provided
+    if (password) {
+      if (password.length < 8) {
+        res.status(400).json({
+          success: false,
+          error: "رمز عبور باید حداقل 8 کاراکتر باشد",
+        });
+        return;
+      }
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        res.status(400).json({
+          success: false,
+          error: "رمز عبور باید شامل حروف بزرگ، کوچک و اعداد باشد",
+        });
+        return;
+      }
     }
 
     console.log("[Admin] Updating user:", userId);
@@ -650,16 +669,25 @@ export async function handleAdminUpdateUser(
       });
     }
 
+    // Prepare update data
+    const updateData: any = {
+      name,
+      email,
+      phone,
+      brand_name: brandName,
+      updated_at: new Date().toISOString(),
+    };
+
+    // Add hashed password if provided
+    if (password) {
+      updateData.password_hash = await bcrypt.hash(password, 10);
+      console.log("[Admin] Password will be updated for user:", userId);
+    }
+
     // Update in database
     const { data, error } = await supabase
       .from("users")
-      .update({
-        name,
-        email,
-        phone,
-        brand_name: brandName,
-        updated_at: new Date().toISOString(),
-      })
+      .update(updateData)
       .eq("id", userId)
       .select(
         `
