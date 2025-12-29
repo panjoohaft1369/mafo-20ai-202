@@ -47,9 +47,30 @@ export function AdminGallery() {
   const [error, setError] = useState("");
   const [searchUser, setSearchUser] = useState("");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+
+  // Set default page size based on screen size
+  const getDefaultPageSize = () => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth >= 768 ? 20 : 10; // md breakpoint = 768px
+    }
+    return 20;
+  };
+
+  const [pageSize, setPageSize] = useState(getDefaultPageSize());
   const [totalPages, setTotalPages] = useState(0);
   const [total, setTotal] = useState(0);
+
+  // Update page size on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const newPageSize = getDefaultPageSize();
+      setPageSize(newPageSize);
+      setPage(1);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Fetch images on mount or when search/page/pageSize changes
   useEffect(() => {
