@@ -386,13 +386,13 @@ export default function GenerateVideo() {
                     </div>
                   </div>
                 ) : (
-                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center text-center">
-                    <div className="space-y-2">
-                      <CheckCircle className="h-8 w-8 mx-auto text-muted-foreground" />
-                      <p className="text-sm text-muted-foreground">
-                        ویدیو تولید شده اینجا نشان داده می‌شود
-                      </p>
+                  <div className="aspect-video bg-muted rounded-lg flex flex-col items-center justify-center text-center">
+                    <div className="w-32 h-32">
+                      <Loading size="lg" inline text={undefined} />
                     </div>
+                    <p className="text-sm text-muted-foreground mt-4">
+                      ویدیو تولید شده اینجا نشان داده می‌شود
+                    </p>
                   </div>
                 )}
               </CardContent>
