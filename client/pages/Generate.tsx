@@ -285,6 +285,9 @@ export default function Generate() {
       toast.dismiss();
     } finally {
       setLoading(false);
+      // Clear in-progress task flag once generation attempt completes
+      setHasInProgressTask(false);
+      localStorage.removeItem("generate_in_progress_task");
     }
   };
 
