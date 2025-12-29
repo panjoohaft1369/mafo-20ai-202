@@ -56,14 +56,56 @@ export default function Generate() {
     }
   }, [auth.isLoggedIn, auth.apiKey, navigate]);
 
-  const [selectedImages, setSelectedImages] = useState<string[]>([]);
-  const [prompt, setPrompt] = useState("");
-  const [aspectRatio, setAspectRatio] = useState("auto");
-  const [resolution, setResolution] = useState("1K");
+  // Initialize state from localStorage if available
+  const getInitialState = () => {
+    if (typeof window === "undefined") {
+      return {
+        selectedImages: [],
+        prompt: "",
+        aspectRatio: "auto",
+        resolution: "1K",
+        generatedImage: null,
+        taskId: null,
+      };
+    }
+    const savedState = localStorage.getItem("generate_form_state");
+    if (savedState) {
+      try {
+        return JSON.parse(savedState);
+      } catch {
+        return {
+          selectedImages: [],
+          prompt: "",
+          aspectRatio: "auto",
+          resolution: "1K",
+          generatedImage: null,
+          taskId: null,
+        };
+      }
+    }
+    return {
+      selectedImages: [],
+      prompt: "",
+      aspectRatio: "auto",
+      resolution: "1K",
+      generatedImage: null,
+      taskId: null,
+    };
+  };
+
+  const initialState = getInitialState();
+  const [selectedImages, setSelectedImages] = useState<string[]>(
+    initialState.selectedImages,
+  );
+  const [prompt, setPrompt] = useState(initialState.prompt);
+  const [aspectRatio, setAspectRatio] = useState(initialState.aspectRatio);
+  const [resolution, setResolution] = useState(initialState.resolution);
   const [loading, setLoading] = useState(false);
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(
+    initialState.generatedImage,
+  );
   const [error, setError] = useState("");
-  const [taskId, setTaskId] = useState<string | null>(null);
+  const [taskId, setTaskId] = useState<string | null>(initialState.taskId);
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
 
   // Detect if running on localhost
