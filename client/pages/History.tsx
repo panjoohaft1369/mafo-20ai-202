@@ -287,11 +287,6 @@ export default function History() {
                       <p className="text-xs text-muted-foreground">
                         {formatDate(entry.timestamp)}
                       </p>
-                      {entry.status === "success" && (
-                        <p className="text-xs text-yellow-600 font-semibold mt-1">
-                          💳 هزینه اعتبار: {calculateCreditCost(entry)}
-                        </p>
-                      )}
                     </div>
                   </div>
                 </CardHeader>
