@@ -1266,6 +1266,45 @@ export async function handleCallback(
       } catch (creditError) {
         console.error("[Callback] Error deducting credits:", creditError);
       }
+
+      // Save generated image to database for admin gallery
+      if (isSuccess && existingResult.userId && imageUrl) {
+        try {
+          const insertData: any = {
+            user_id: existingResult.userId,
+            task_id: taskId,
+            image_url: imageUrl,
+            prompt: existingResult.prompt,
+            status: "completed",
+            aspect_ratio: existingResult.aspectRatio,
+            resolution: existingResult.resolution,
+          };
+
+          // Add credit cost if available
+          if (existingResult.taskType === "image") {
+            insertData.credit_cost = CREDIT_COSTS[getImageCreditType(existingResult.resolution || "1K")];
+          } else if (existingResult.taskType === "video") {
+            insertData.credit_cost = CREDIT_COSTS[CreditType.VIDEO];
+          }
+
+          const { error: insertError } = await supabase
+            .from("generated_images")
+            .insert([insertData]);
+
+          if (insertError) {
+            console.error(
+              "[Callback] Error saving generated image to database:",
+              insertError,
+            );
+          } else {
+            console.log(
+              "[Callback] Generated image saved to database successfully",
+            );
+          }
+        } catch (dbError) {
+          console.error("[Callback] Error inserting image to database:", dbError);
+        }
+      }
     }
 
     taskResults.set(taskId, {
