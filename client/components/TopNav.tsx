@@ -72,7 +72,7 @@ export function TopNav() {
     <>
       {/* Desktop/Tablet Navigation */}
       <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 flex justify-center px-6 py-2">
-        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-4 py-1.5 shadow-lg w-auto">
+        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-4 py-1.5 shadow-lg" style={{ width: 'fit-content', maxWidth: '50%' }}>
           <div className="flex flex-row justify-between items-center gap-3">
             {/* Navigation Items - Left Side */}
             <ul className="flex flex-row gap-1.5 items-center">
