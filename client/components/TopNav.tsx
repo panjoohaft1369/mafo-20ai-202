@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Zap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAuthState } from "@/lib/auth";
 import { getAdminToken } from "@/lib/admin-auth";
 
 export function TopNav() {
-  const navigate = useNavigate();
   const location = useLocation();
   const [auth, setAuth] = useState(getAuthState());
 
