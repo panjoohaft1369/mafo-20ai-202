@@ -279,24 +279,37 @@ export default function History() {
                 </CardHeader>
 
                 <CardContent className="space-y-4">
-                  {/* Image Preview - Larger Container */}
+                  {/* Media Preview - Image or Video */}
                   {entry.imageUrl && entry.status === "success" ? (
-                    <div
-                      onClick={() => {
-                        setViewerImage(entry.imageUrl!);
-                        setViewerOpen(true);
-                      }}
-                      className="relative rounded-lg overflow-hidden border border-border bg-muted h-[450px] flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors group"
-                    >
-                      <img
-                        src={entry.imageUrl}
-                        alt="تصویر تولید شده"
-                        className="max-w-full max-h-full object-contain"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors">
-                        <Maximize2 className="h-8 w-8 text-white/0 group-hover:text-white transition-colors" />
+                    isVideoUrl(entry.imageUrl) ? (
+                      // Video Player
+                      <div className="relative rounded-lg overflow-hidden border border-border bg-black h-[450px] flex items-center justify-center group">
+                        <video
+                          src={entry.imageUrl}
+                          controls
+                          className="w-full h-full object-contain"
+                          poster={`${entry.imageUrl}?thumbnail=true`}
+                        />
                       </div>
-                    </div>
+                    ) : (
+                      // Image Preview
+                      <div
+                        onClick={() => {
+                          setViewerImage(entry.imageUrl!);
+                          setViewerOpen(true);
+                        }}
+                        className="relative rounded-lg overflow-hidden border border-border bg-muted h-[450px] flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors group"
+                      >
+                        <img
+                          src={entry.imageUrl}
+                          alt="تصویر تولید شده"
+                          className="max-w-full max-h-full object-contain"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors">
+                          <Maximize2 className="h-8 w-8 text-white/0 group-hover:text-white transition-colors" />
+                        </div>
+                      </div>
+                    )
                   ) : entry.status === "fail" ? (
                     <div className="rounded-lg p-4 bg-red-50 border border-red-200">
                       <p className="text-sm text-red-800">
