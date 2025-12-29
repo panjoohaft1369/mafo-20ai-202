@@ -1307,6 +1307,17 @@ export async function handleCallback(
       }
     }
 
+    // Calculate credit cost for this task
+    let creditCost: number | undefined;
+    if (isSuccess && existingResult) {
+      if (existingResult.taskType === "image") {
+        const creditType = getImageCreditType(existingResult.resolution || "1K");
+        creditCost = CREDIT_COSTS[creditType];
+      } else if (existingResult.taskType === "video") {
+        creditCost = CREDIT_COSTS[CreditType.VIDEO];
+      }
+    }
+
     taskResults.set(taskId, {
       ...existingResult,
       status: state || "unknown",
@@ -1316,6 +1327,7 @@ export async function handleCallback(
           ? data?.data?.failMsg || data?.failMsg || "Unknown error"
           : undefined,
       timestamp: existingResult?.timestamp || Date.now(),
+      creditCost: creditCost,
     });
 
     // Persist to file
