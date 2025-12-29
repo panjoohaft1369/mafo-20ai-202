@@ -8,7 +8,6 @@ import { getAdminToken } from "@/lib/admin-auth";
 export function TopNav() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
   const [auth, setAuth] = useState(getAuthState());
 
   // Update auth state when component mounts or when location changes
