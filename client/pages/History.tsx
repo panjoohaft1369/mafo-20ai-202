@@ -400,9 +400,9 @@ export default function History() {
                     )}
                   </div>
 
-                  {/* Download Button */}
-                  {getEffectiveStatus(entry) === "success" && entry.imageUrl && (
-                    <div className="flex justify-center">
+                  {/* Action Buttons */}
+                  <div className="flex gap-2 justify-center">
+                    {getEffectiveStatus(entry) === "success" && entry.imageUrl && (
                       <Button
                         onClick={() =>
                           handleDownload(
@@ -412,13 +412,22 @@ export default function History() {
                         }
                         variant="default"
                         size="sm"
-                        className="w-1/2 gap-2"
+                        className="flex-1 gap-2"
                       >
                         <Download className="h-4 w-4" />
                         ذخیره
                       </Button>
-                    </div>
-                  )}
+                    )}
+                    <Button
+                      onClick={() => handleDelete(entry.id)}
+                      variant="destructive"
+                      size="sm"
+                      className="flex-1 gap-2"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      حذف
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
