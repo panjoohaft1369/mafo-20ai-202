@@ -210,8 +210,8 @@ export async function handleAdminGetUser(
 
     console.log("[Admin] Fetching user:", userId);
 
-    // Fetch from database
-    const { data, error } = await supabase
+    // Fetch user from database
+    const { data: userData, error: userError } = await supabase
       .from("users")
       .select(
         `
@@ -223,15 +223,15 @@ export async function handleAdminGetUser(
         status,
         credits,
         created_at,
-        api_keys:api_keys(id, key, is_active, created_at)
+        role
       `,
       )
       .eq("id", userId)
       .is("deleted_at", null)
       .single();
 
-    if (error) {
-      console.error("[Admin User] Database error:", error.message);
+    if (userError) {
+      console.error("[Admin User] Database error:", userError.message);
       res.status(404).json({
         success: false,
         error: "کاربر یافت نشد",
@@ -239,20 +239,37 @@ export async function handleAdminGetUser(
       return;
     }
 
+    // Fetch API keys separately
+    const { data: apiKeysData, error: apiKeysError } = await supabase
+      .from("api_keys")
+      .select("id, key, is_active, created_at")
+      .eq("user_id", userId);
+
+    if (apiKeysError) {
+      console.error("[Admin API Keys] Database error:", apiKeysError.message);
+      // Continue without API keys rather than failing completely
+    }
+
     // Format response
     const user = {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      brandName: data.brand_name,
-      status: data.status,
-      createdAt: data.created_at,
-      apiKeys: data.api_keys || [],
-      credits: data.credits,
-      role: data.role || "user",
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      phone: userData.phone,
+      brandName: userData.brand_name,
+      status: userData.status,
+      createdAt: userData.created_at,
+      apiKeys: (apiKeysData || []).map((key: any) => ({
+        id: key.id,
+        key: key.key,
+        createdAt: key.created_at,
+        isActive: key.is_active,
+      })),
+      credits: userData.credits,
+      role: userData.role || "user",
     };
 
+    console.log("[Admin] Successfully fetched user:", userId);
     res.json({
       success: true,
       user,
