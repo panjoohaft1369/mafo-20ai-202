@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Menu, X, LogOut, Zap, Shield } from "lucide-react";
+import { LogOut, Zap, Shield, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAuthState, clearAuth } from "@/lib/auth";
 import { getAdminToken } from "@/lib/admin-auth";
