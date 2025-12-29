@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Zap, MessageCircle, Menu, X, X as XIcon } from "lucide-react";
+import { Zap, MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAuthState } from "@/lib/auth";
 import { getAdminToken } from "@/lib/admin-auth";
