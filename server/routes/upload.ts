@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
-import fetch from "node-fetch";
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(process.cwd(), "public", "uploads");
