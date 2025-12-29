@@ -159,7 +159,15 @@ export default function GenerateVideo() {
     if (!generatedVideo) return;
 
     try {
-      const response = await fetch(generatedVideo);
+      // Use backend endpoint to bypass CORS issues
+      const downloadUrl = `/api/download-image?url=${encodeURIComponent(generatedVideo)}`;
+      const response = await fetch(downloadUrl);
+
+      if (!response.ok) {
+        toast.error("خطا در دانلود ویدیو");
+        return;
+      }
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -169,7 +177,9 @@ export default function GenerateVideo() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+      toast.success("ویدیو دانلود شد");
     } catch (err) {
+      console.error("Download error:", err);
       toast.error("خطا در دانلود ویدیو");
     }
   };
