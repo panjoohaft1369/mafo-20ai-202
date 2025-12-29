@@ -637,6 +637,17 @@ export default function Generate() {
 
           </div>
 
+          {/* Middle Column - Robot Image */}
+          <div className="hidden lg:flex items-center justify-center">
+            <div className="text-center">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F7b7411c026af4e239cc51b637375e6fc?format=webp&width=800"
+                alt="Robot"
+                className="w-full max-w-xs mx-auto object-contain"
+              />
+            </div>
+          </div>
+
           {/* Right Column - Output */}
           <div className="space-y-6">
             <Card>
