@@ -368,20 +368,37 @@ export default function GenerateVideo() {
             )}
 
             {/* Credit Cost Alert */}
-            <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-400 shadow-md">
-              <p className="text-sm text-yellow-900 font-bold">
-                ⚠️ توجه: اعتبار شما کسر خواهد شد
-              </p>
-              <p className="text-xs text-yellow-800 mt-2">
-                ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر
-                خواهد کرد
-              </p>
-            </div>
+            {(!auth.credits || auth.credits <= 0) ? (
+              <div className="p-4 bg-red-50 rounded-lg border-2 border-red-400 shadow-md">
+                <p className="text-sm text-red-900 font-bold">
+                  ❌ اعتبار به اتمام رسیده
+                </p>
+                <p className="text-xs text-red-800 mt-2">
+                  اعتبار حساب شما به اتمام رسیده. برای ادامه استفاده از ربات، لطفا با پشتیبانی تماس بگیرید.
+                </p>
+              </div>
+            ) : (
+              <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-400 shadow-md">
+                <p className="text-sm text-yellow-900 font-bold">
+                  ⚠️ توجه: اعتبار شما کسر خواهد شد
+                </p>
+                <p className="text-xs text-yellow-800 mt-2">
+                  ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر
+                  خواهد کرد
+                </p>
+              </div>
+            )}
 
             {/* Generate Button */}
             <Button
               onClick={handleGenerate}
-              disabled={loading || !selectedImage || !prompt.trim()}
+              disabled={
+                loading ||
+                !selectedImage ||
+                !prompt.trim() ||
+                !auth.credits ||
+                auth.credits <= 0
+              }
               className="w-full py-6 text-base font-semibold hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200"
               size="lg"
             >
