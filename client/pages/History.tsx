@@ -364,13 +364,13 @@ export default function History() {
                         <p className="font-medium">{entry.resolution}</p>
                       </div>
                     )}
-                    {entry.creditCost && (
+                    {entry.status === "success" && (
                       <div>
                         <p className="text-xs text-muted-foreground">
                           مصرف اعتبار
                         </p>
                         <p className="font-medium text-yellow-600">
-                          {entry.creditCost} اعتبار
+                          {calculateCreditCost(entry)} اعتبار
                         </p>
                       </div>
                     )}
