@@ -344,6 +344,16 @@ export default function History() {
                         <p className="font-medium">{entry.resolution}</p>
                       </div>
                     )}
+                    {entry.creditCost && (
+                      <div>
+                        <p className="text-xs text-muted-foreground">
+                          مصرف اعتبار
+                        </p>
+                        <p className="font-medium text-yellow-600">
+                          {entry.creditCost} اعتبار
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   {/* Download Button */}
