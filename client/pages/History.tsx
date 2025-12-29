@@ -55,6 +55,16 @@ export default function History() {
     );
   };
 
+  // Filter history based on selected filter
+  const filteredHistory = history.filter((entry) => {
+    if (filter === "videos") {
+      return entry.imageUrl && isVideoUrl(entry.imageUrl);
+    } else if (filter === "images") {
+      return entry.imageUrl && !isVideoUrl(entry.imageUrl);
+    }
+    return true; // "all"
+  });
+
   // Function to calculate credit cost based on resolution and media type
   const calculateCreditCost = (entry: HistoryEntry): number => {
     // If creditCost is already provided, use it
