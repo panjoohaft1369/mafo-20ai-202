@@ -341,21 +341,43 @@ export default function AdminUserDetails() {
       return;
     }
 
+    // Validate password if provided
+    if (editData.password) {
+      if (editData.password.length < 8) {
+        setError("رمز عبور باید حداقل 8 کاراکتر باشد");
+        return;
+      }
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!passwordRegex.test(editData.password)) {
+        setError(
+          "رمز عبور باید شامل حروف بزرگ، کوچک و اعداد باشد",
+        );
+        return;
+      }
+    }
+
     setSavingEdit(true);
     try {
       const token = getAdminToken();
+      const updateBody: any = {
+        name: editData.name.trim(),
+        email: editData.email.trim(),
+        phone: editData.phone.trim(),
+        brandName: editData.brandName.trim(),
+      };
+
+      // Add password to update if provided
+      if (editData.password) {
+        updateBody.password = editData.password;
+      }
+
       const response = await fetch(`/api/admin/users/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          name: editData.name.trim(),
-          email: editData.email.trim(),
-          phone: editData.phone.trim(),
-          brandName: editData.brandName.trim(),
-        }),
+        body: JSON.stringify(updateBody),
       });
 
       if (response.status === 401) {
@@ -373,6 +395,10 @@ export default function AdminUserDetails() {
 
       const data = await response.json();
       setUser(data.user);
+      setEditData({
+        ...editData,
+        password: "",
+      });
       setIsEditMode(false);
       setError("");
     } catch (err) {
