@@ -41,6 +41,19 @@ export default function History() {
   const [loading, setLoading] = useState(true);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerImage, setViewerImage] = useState<string | null>(null);
+  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
+
+  // Function to detect if URL is a video
+  const isVideoUrl = (url?: string): boolean => {
+    if (!url) return false;
+    const videoExtensions = [".mp4", ".webm", ".mov", ".avi", ".mkv"];
+    const urlLower = url.toLowerCase();
+    return (
+      videoExtensions.some((ext) => urlLower.includes(ext)) ||
+      urlLower.includes("video") ||
+      urlLower.includes("generated_video")
+    );
+  };
 
   const handleLogout = () => {
     clearAuth();
