@@ -143,24 +143,6 @@ export default function Generate() {
     }
   }, [selectedImages, prompt, aspectRatio, resolution, generatedImage, taskId]);
 
-  // Load state from localStorage on mount
-  useEffect(() => {
-    const savedState = localStorage.getItem("generate_form_state");
-    if (savedState) {
-      try {
-        const parsed = JSON.parse(savedState);
-        setSelectedImages(parsed.selectedImages || []);
-        setPrompt(parsed.prompt || "");
-        setAspectRatio(parsed.aspectRatio || "auto");
-        setResolution(parsed.resolution || "1K");
-        setGeneratedImage(parsed.generatedImage || null);
-        setTaskId(parsed.taskId || null);
-      } catch (e) {
-        console.error("Failed to load saved state:", e);
-      }
-    }
-  }, []);
-
   const handleLogout = () => {
     // Clear saved state on logout
     localStorage.removeItem("generate_form_state");
