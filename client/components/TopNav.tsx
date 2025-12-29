@@ -101,11 +101,11 @@ export function TopNav() {
                 {auth.credits <= 0 ? (
                   <button
                     onClick={handleZeroCreditClick}
-                    className="flex items-center gap-1.5 bg-red-100/80 dark:bg-red-900/30 border border-red-300 dark:border-red-600 rounded-lg px-3 py-1.5 min-w-max hover:bg-red-200/80 dark:hover:bg-red-900/50 transition-colors cursor-pointer"
+                    className="flex items-center gap-1 bg-red-100/80 dark:bg-red-900/30 border border-red-300 dark:border-red-600 rounded-lg px-2.5 py-1 min-w-max hover:bg-red-200/80 dark:hover:bg-red-900/50 transition-colors cursor-pointer"
                   >
-                    <Zap className="h-4 w-4 text-red-600 dark:text-red-400 flex-shrink-0" />
+                    <Zap className="h-3.5 w-3.5 text-red-600 dark:text-red-400 flex-shrink-0" />
                     <div className="flex flex-col items-end">
-                      <span className="text-xs text-red-700 dark:text-red-300 leading-tight">
+                      <span className="text-xs text-red-700 dark:text-red-300 leading-tight font-semibold">
                         اعتبار
                       </span>
                       <span className="text-sm font-bold text-red-700 dark:text-red-200 leading-tight">
@@ -114,10 +114,10 @@ export function TopNav() {
                     </div>
                   </button>
                 ) : (
-                  <div className="flex items-center gap-1.5 bg-yellow-100/80 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded-lg px-3 py-1.5 min-w-max">
-                    <Zap className="h-4 w-4 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
+                  <div className="flex items-center gap-1 bg-yellow-100/80 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded-lg px-2.5 py-1 min-w-max">
+                    <Zap className="h-3.5 w-3.5 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
                     <div className="flex flex-col items-end">
-                      <span className="text-xs text-yellow-700 dark:text-yellow-300 leading-tight">
+                      <span className="text-xs text-yellow-700 dark:text-yellow-300 leading-tight font-semibold">
                         اعتبار
                       </span>
                       <span className="text-sm font-bold text-yellow-700 dark:text-yellow-200 leading-tight">
