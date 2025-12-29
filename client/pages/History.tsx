@@ -280,7 +280,7 @@ export default function History() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        {entry.status === "success" ? (
+                        {getEffectiveStatus(entry) === "success" ? (
                           <>
                             <CheckCircle2 className="h-5 w-5 text-green-400" />
                             <Badge
@@ -290,7 +290,7 @@ export default function History() {
                               موفق
                             </Badge>
                           </>
-                        ) : entry.status === "fail" ? (
+                        ) : getEffectiveStatus(entry) === "fail" ? (
                           <>
                             <AlertCircle className="h-5 w-5 text-red-600" />
                             <Badge variant="destructive">ناموفق</Badge>
