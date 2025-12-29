@@ -1292,7 +1292,10 @@ export async function handleCallback(
 
           // Add credit cost if available
           if (existingResult.taskType === "image") {
-            insertData.credit_cost = CREDIT_COSTS[getImageCreditType(existingResult.resolution || "1K")];
+            insertData.credit_cost =
+              CREDIT_COSTS[
+                getImageCreditType(existingResult.resolution || "1K")
+              ];
           } else if (existingResult.taskType === "video") {
             insertData.credit_cost = CREDIT_COSTS[CreditType.VIDEO];
           }
@@ -1312,7 +1315,10 @@ export async function handleCallback(
             );
           }
         } catch (dbError) {
-          console.error("[Callback] Error inserting image to database:", dbError);
+          console.error(
+            "[Callback] Error inserting image to database:",
+            dbError,
+          );
         }
       }
     }
@@ -1321,7 +1327,9 @@ export async function handleCallback(
     let creditCost: number | undefined;
     if (isSuccess && existingResult) {
       if (existingResult.taskType === "image") {
-        const creditType = getImageCreditType(existingResult.resolution || "1K");
+        const creditType = getImageCreditType(
+          existingResult.resolution || "1K",
+        );
         creditCost = CREDIT_COSTS[creditType];
       } else if (existingResult.taskType === "video") {
         creditCost = CREDIT_COSTS[CreditType.VIDEO];

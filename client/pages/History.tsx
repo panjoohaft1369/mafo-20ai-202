@@ -198,7 +198,6 @@ export default function History() {
     }
   };
 
-
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp);
     return new Intl.DateTimeFormat("fa-IR", {
@@ -272,8 +271,7 @@ export default function History() {
               size="sm"
               className="gap-1"
             >
-              همه (
-              {history.length})
+              همه ({history.length})
             </Button>
             <Button
               onClick={() => setFilter("images")}
@@ -282,8 +280,10 @@ export default function History() {
               className="gap-1"
             >
               تصاویر (
-              {history.filter((h) => h.imageUrl && !isVideoUrl(h.imageUrl))
-                .length}
+              {
+                history.filter((h) => h.imageUrl && !isVideoUrl(h.imageUrl))
+                  .length
+              }
               )
             </Button>
             <Button
@@ -293,8 +293,10 @@ export default function History() {
               className="gap-1"
             >
               ویدیوها (
-              {history.filter((h) => h.imageUrl && isVideoUrl(h.imageUrl))
-                .length}
+              {
+                history.filter((h) => h.imageUrl && isVideoUrl(h.imageUrl))
+                  .length
+              }
               )
             </Button>
           </div>
@@ -451,22 +453,23 @@ export default function History() {
 
                   {/* Action Buttons */}
                   <div className="flex gap-2 justify-center w-full">
-                    {getEffectiveStatus(entry) === "success" && entry.imageUrl && (
-                      <Button
-                        onClick={() =>
-                          handleDownload(
-                            entry.imageUrl,
-                            entry.prompt || "تصویر",
-                          )
-                        }
-                        variant="default"
-                        size="sm"
-                        className="w-1/2 gap-2"
-                      >
-                        <Download className="h-4 w-4" />
-                        ذخیره
-                      </Button>
-                    )}
+                    {getEffectiveStatus(entry) === "success" &&
+                      entry.imageUrl && (
+                        <Button
+                          onClick={() =>
+                            handleDownload(
+                              entry.imageUrl,
+                              entry.prompt || "تصویر",
+                            )
+                          }
+                          variant="default"
+                          size="sm"
+                          className="w-1/2 gap-2"
+                        >
+                          <Download className="h-4 w-4" />
+                          ذخیره
+                        </Button>
+                      )}
                   </div>
                 </CardContent>
               </Card>

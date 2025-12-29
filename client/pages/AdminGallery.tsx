@@ -9,7 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, ChevronLeft, ChevronRight, AlertCircle, Loader2 } from "lucide-react";
+import {
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
 import { getAdminToken } from "@/lib/admin-auth";
 
 interface GeneratedImage {
@@ -138,9 +144,7 @@ export function AdminGallery() {
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <h1 className="text-3xl font-bold">گالری تصاویر</h1>
-        <p className="text-sm text-muted-foreground">
-          مجموع {total} تصویر
-        </p>
+        <p className="text-sm text-muted-foreground">مجموع {total} تصویر</p>
       </div>
 
       {/* Search and Filter Section */}
@@ -159,7 +163,10 @@ export function AdminGallery() {
             </div>
 
             {/* Page Size Selector */}
-            <Select value={pageSize.toString()} onValueChange={handlePageSizeChange}>
+            <Select
+              value={pageSize.toString()}
+              onValueChange={handlePageSizeChange}
+            >
               <SelectTrigger className="md:w-32 text-right">
                 <SelectValue />
               </SelectTrigger>
@@ -238,9 +245,7 @@ export function AdminGallery() {
 
                   {/* Stats */}
                   <div className="text-xs text-muted-foreground space-y-1">
-                    {image.resolution && (
-                      <p>کیفیت: {image.resolution}</p>
-                    )}
+                    {image.resolution && <p>کیفیت: {image.resolution}</p>}
                     {image.aspectRatio && (
                       <p>نسبت ابعاد: {image.aspectRatio}</p>
                     )}
@@ -341,7 +346,9 @@ export function AdminGallery() {
           <CardContent className="pt-6 text-center py-12">
             <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
             <p className="text-muted-foreground">
-              {searchUser ? "تصویری با این جستجو یافت نشد" : "هنوز تصویری ایجاد نشده است"}
+              {searchUser
+                ? "تصویری با این جستجو یافت نشد"
+                : "هنوز تصویری ایجاد نشده است"}
             </p>
           </CardContent>
         </Card>

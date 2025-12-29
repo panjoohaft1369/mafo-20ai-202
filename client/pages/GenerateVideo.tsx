@@ -368,13 +368,14 @@ export default function GenerateVideo() {
             )}
 
             {/* Credit Cost Alert */}
-            {(!auth.credits || auth.credits <= 0) ? (
+            {!auth.credits || auth.credits <= 0 ? (
               <div className="p-4 bg-red-50 rounded-lg border-2 border-red-400 shadow-md">
                 <p className="text-sm text-red-900 font-bold">
                   ❌ اعتبار به اتمام رسیده
                 </p>
                 <p className="text-xs text-red-800 mt-2">
-                  اعتبار حساب شما به اتمام رسیده. برای ادامه استفاده از ربات، لطفا با پشتیبانی تماس بگیرید.
+                  اعتبار حساب شما به اتمام رسیده. برای ادامه استفاده از ربات،
+                  لطفا با پشتیبانی تماس بگیرید.
                 </p>
               </div>
             ) : (
@@ -383,8 +384,8 @@ export default function GenerateVideo() {
                   ⚠️ توجه: اعتبار شما کسر خواهد شد
                 </p>
                 <p className="text-xs text-yellow-800 mt-2">
-                  ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما کسر
-                  خواهد کرد
+                  ساخت هر ویدیو 6 ثانیه‌ای با این هوش مصنوعی 20 اعتبار از شما
+                  کسر خواهد کرد
                 </p>
               </div>
             )}

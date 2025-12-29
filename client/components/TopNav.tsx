@@ -61,8 +61,7 @@ export function TopNav() {
 
   // WhatsApp contact information
   const whatsappNumber = "+989357887572";
-  const whatsappMessage =
-    "سلام، من برای اطلاعات بیشتر تماس می‌گیرم";
+  const whatsappMessage = "سلام، من برای اطلاعات بیشتر تماس می‌گیرم";
 
   const handleZeroCreditClick = () => {
     setShowZeroCreditModal(true);
@@ -72,7 +71,10 @@ export function TopNav() {
     <>
       {/* Desktop/Tablet Navigation */}
       <nav className="hidden md:flex fixed top-0 left-1/2 transform -translate-x-1/2 z-50 justify-center px-6 py-4">
-        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-4 py-2 shadow-lg" style={{ width: 'fit-content', maxWidth: '90vw' }}>
+        <div
+          className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-4 py-2 shadow-lg"
+          style={{ width: "fit-content", maxWidth: "90vw" }}
+        >
           <div className="flex flex-row justify-between items-center gap-3">
             {/* Navigation Items - Left Side */}
             <ul className="flex flex-row gap-1.5 items-center">
@@ -179,8 +181,9 @@ export function TopNav() {
               <div className="border-t border-foreground/10" />
 
               {/* Credits Box (Mobile) */}
-              {auth.isLoggedIn && auth.credits !== null && (
-                auth.credits <= 0 ? (
+              {auth.isLoggedIn &&
+                auth.credits !== null &&
+                (auth.credits <= 0 ? (
                   <button
                     onClick={handleZeroCreditClick}
                     className="flex items-center gap-2 bg-red-100/80 dark:bg-red-900/30 border border-red-300 dark:border-red-600 rounded-lg px-4 py-2 w-full hover:bg-red-200/80 dark:hover:bg-red-900/50 transition-colors cursor-pointer"
@@ -207,8 +210,7 @@ export function TopNav() {
                       </span>
                     </div>
                   </div>
-                )
-              )}
+                ))}
 
               {/* Contact Info Buttons */}
               <div className="space-y-2 pt-2">
@@ -262,8 +264,8 @@ export function TopNav() {
                 </button>
               </div>
               <p className="text-sm text-foreground mb-6">
-                متاسفانه اعتبار شما برای استفاده از تصویر ساز به پایان رسید. برای
-                تمدید اعتبار با تیم پشتیبانی تماس بگیرید.
+                متاسفانه اعتبار شما برای استفاده از تصویر ساز به پایان رسید.
+                برای تمدید اعتبار با تیم پشتیبانی تماس بگیرید.
               </p>
               <a
                 href={`https://wa.me/${whatsappNumber.replace(/[^\d]/g, "")}?text=${encodeURIComponent(whatsappMessage)}`}

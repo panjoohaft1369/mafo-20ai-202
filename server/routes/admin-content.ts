@@ -95,7 +95,10 @@ function initializeDefaults() {
         },
       ],
     };
-    fs.writeFileSync(INDEX_SLIDES_FILE, JSON.stringify(defaultIndexSlides, null, 2));
+    fs.writeFileSync(
+      INDEX_SLIDES_FILE,
+      JSON.stringify(defaultIndexSlides, null, 2),
+    );
   }
 
   // Initialize about slides if it doesn't exist
@@ -128,7 +131,10 @@ function initializeDefaults() {
         },
       ],
     };
-    fs.writeFileSync(ABOUT_SLIDES_FILE, JSON.stringify(defaultAboutSlides, null, 2));
+    fs.writeFileSync(
+      ABOUT_SLIDES_FILE,
+      JSON.stringify(defaultAboutSlides, null, 2),
+    );
   }
 }
 

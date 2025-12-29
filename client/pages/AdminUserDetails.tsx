@@ -349,9 +349,7 @@ export default function AdminUserDetails() {
       }
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
       if (!passwordRegex.test(editData.password)) {
-        setError(
-          "رمز عبور باید شامل حروف بزرگ، کوچک و اعداد باشد",
-        );
+        setError("رمز عبور باید شامل حروف بزرگ، کوچک و اعداد باشد");
         return;
       }
     }

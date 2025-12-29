@@ -586,13 +586,14 @@ export default function Generate() {
             )}
 
             {/* Credit Cost Alert */}
-            {(!auth.credits || auth.credits <= 0) ? (
+            {!auth.credits || auth.credits <= 0 ? (
               <div className="p-4 bg-red-50 rounded-lg border-2 border-red-400 shadow-md">
                 <p className="text-sm text-red-900 font-bold">
                   ❌ اعتبار به اتمام رسیده
                 </p>
                 <p className="text-xs text-red-800 mt-2">
-                  اعتبار حساب شما به اتمام رسیده. برای ادامه استفاده از ربات، لطفا با پشتیبانی تماس بگیرید.
+                  اعتبار حساب شما به اتمام رسیده. برای ادامه استفاده از ربات،
+                  لطفا با پشتیبانی تماس بگیرید.
                 </p>
               </div>
             ) : (
@@ -634,7 +635,6 @@ export default function Generate() {
                 </div>
               )}
             </Button>
-
           </div>
 
           {/* Right Column - Output */}

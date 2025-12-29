@@ -894,9 +894,7 @@ export async function handleAdminGetGeneratedImages(
       const { data: matchingUsers } = await supabase
         .from("users")
         .select("id")
-        .or(
-          `name.ilike.%${trimmedSearch}%,email.ilike.%${trimmedSearch}%`,
-        );
+        .or(`name.ilike.%${trimmedSearch}%,email.ilike.%${trimmedSearch}%`);
 
       if (matchingUsers && matchingUsers.length > 0) {
         const userIds = matchingUsers.map((u: any) => u.id);

@@ -6,7 +6,10 @@ interface AdminEditButtonProps {
   className?: string;
 }
 
-export function AdminEditButton({ onClick, className = "" }: AdminEditButtonProps) {
+export function AdminEditButton({
+  onClick,
+  className = "",
+}: AdminEditButtonProps) {
   const isAdmin = !!getAdminToken();
 
   if (!isAdmin) {

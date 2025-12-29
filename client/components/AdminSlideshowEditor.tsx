@@ -3,7 +3,13 @@ import { Plus, Trash2, Edit2, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { toast } from "sonner";
 
 interface Slide {
@@ -21,7 +27,11 @@ interface AdminSlideshowEditorProps {
   isLoading?: boolean;
 }
 
-export function AdminSlideshowEditor({ slides, onSave, isLoading = false }: AdminSlideshowEditorProps) {
+export function AdminSlideshowEditor({
+  slides,
+  onSave,
+  isLoading = false,
+}: AdminSlideshowEditorProps) {
   const [editingSlide, setEditingSlide] = useState<Slide | null>(null);
   const [localSlides, setLocalSlides] = useState<Slide[]>(slides);
   const [saving, setSaving] = useState(false);
@@ -52,7 +62,10 @@ export function AdminSlideshowEditor({ slides, onSave, isLoading = false }: Admi
     }
   };
 
-  const handleImageUpload = (slideId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (
+    slideId: string,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -80,7 +93,11 @@ export function AdminSlideshowEditor({ slides, onSave, isLoading = false }: Admi
   return (
     <div className="space-y-6">
       {/* Add Slide Button */}
-      <Button onClick={handleAddSlide} disabled={saving} className="gap-2 bg-green-600 hover:bg-green-700">
+      <Button
+        onClick={handleAddSlide}
+        disabled={saving}
+        className="gap-2 bg-green-600 hover:bg-green-700"
+      >
         <Plus className="h-4 w-4" />
         افزودن اسلاید جدید
       </Button>
@@ -92,7 +109,9 @@ export function AdminSlideshowEditor({ slides, onSave, isLoading = false }: Admi
             <CardHeader className="pb-3">
               <Input
                 value={slide.title}
-                onChange={(e) => handleUpdateSlide(slide.id, { title: e.target.value })}
+                onChange={(e) =>
+                  handleUpdateSlide(slide.id, { title: e.target.value })
+                }
                 placeholder="عنوان اسلاید"
                 className="font-semibold"
                 disabled={saving}
@@ -128,7 +147,9 @@ export function AdminSlideshowEditor({ slides, onSave, isLoading = false }: Admi
               {/* Subtitle */}
               <Textarea
                 value={slide.subtitle}
-                onChange={(e) => handleUpdateSlide(slide.id, { subtitle: e.target.value })}
+                onChange={(e) =>
+                  handleUpdateSlide(slide.id, { subtitle: e.target.value })
+                }
                 placeholder="توضیح اسلاید"
                 className="text-sm resize-none min-h-16"
                 disabled={saving}
@@ -139,13 +160,17 @@ export function AdminSlideshowEditor({ slides, onSave, isLoading = false }: Admi
                 <label className="text-xs font-medium">رنگ پس‌زمینه</label>
                 <select
                   value={slide.bgColor}
-                  onChange={(e) => handleUpdateSlide(slide.id, { bgColor: e.target.value })}
+                  onChange={(e) =>
+                    handleUpdateSlide(slide.id, { bgColor: e.target.value })
+                  }
                   className="w-full px-2 py-1 border border-border rounded text-sm bg-background disabled:opacity-50"
                   disabled={saving}
                 >
                   <option value="from-blue-600 to-blue-400">آبی</option>
                   <option value="from-purple-600 to-purple-400">بنفش</option>
-                  <option value="from-indigo-600 to-indigo-400">آبی تیره</option>
+                  <option value="from-indigo-600 to-indigo-400">
+                    آبی تیره
+                  </option>
                   <option value="from-green-600 to-green-400">سبز</option>
                   <option value="from-red-600 to-red-400">قرمز</option>
                   <option value="from-pink-600 to-pink-400">صورتی</option>
@@ -182,7 +207,12 @@ export function AdminSlideshowEditor({ slides, onSave, isLoading = false }: Admi
       </div>
 
       {/* Save Button */}
-      <Button onClick={handleSave} disabled={saving} size="lg" className="w-full bg-green-600 hover:bg-green-700">
+      <Button
+        onClick={handleSave}
+        disabled={saving}
+        size="lg"
+        className="w-full bg-green-600 hover:bg-green-700"
+      >
         {saving ? "درحال ذخیره..." : "ذخیره تمام اسلاید‌ها"}
       </Button>
     </div>

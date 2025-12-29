@@ -396,7 +396,10 @@ export async function handleChangePassword(
     );
 
     if (!isPasswordCorrect) {
-      console.log("[ChangePassword] Invalid current password for user:", userId);
+      console.log(
+        "[ChangePassword] Invalid current password for user:",
+        userId,
+      );
       res.status(401).json({
         success: false,
         error: "رمز عبور فعلی نادرست است",
@@ -423,7 +426,10 @@ export async function handleChangePassword(
       return;
     }
 
-    console.log("[ChangePassword] Successfully changed password for user:", userId);
+    console.log(
+      "[ChangePassword] Successfully changed password for user:",
+      userId,
+    );
 
     res.json({
       success: true,

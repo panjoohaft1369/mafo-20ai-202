@@ -40,10 +40,13 @@ export function AdminEditModal({
   isLoading = false,
 }: AdminEditModalProps) {
   const [formData, setFormData] = useState<Record<string, string>>(
-    fields.reduce((acc, field) => {
-      acc[field.key] = field.value;
-      return acc;
-    }, {} as Record<string, string>),
+    fields.reduce(
+      (acc, field) => {
+        acc[field.key] = field.value;
+        return acc;
+      },
+      {} as Record<string, string>,
+    ),
   );
   const [error, setError] = useState("");
 
@@ -54,7 +57,10 @@ export function AdminEditModal({
     }));
   };
 
-  const handleImageUpload = (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (
+    key: string,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -193,10 +199,18 @@ export function AdminEditModal({
         </div>
 
         <div className="flex gap-3 justify-end">
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isLoading}>
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            disabled={isLoading}
+          >
             انصراف
           </Button>
-          <Button onClick={handleSave} disabled={isLoading} className="bg-blue-600 hover:bg-blue-700">
+          <Button
+            onClick={handleSave}
+            disabled={isLoading}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
             {isLoading ? "درحال ذخیره..." : "ذخیره تغییرات"}
           </Button>
         </div>
