@@ -71,18 +71,18 @@ export function TopNav() {
   return (
     <>
       {/* Desktop/Tablet Navigation */}
-      <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 px-4 py-4">
-        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-4 md:px-10 py-3 shadow-lg">
-          <div className="flex flex-row gap-6 md:gap-12 justify-center items-center">
-            {/* Navigation Items */}
-            <ul className="flex flex-row gap-3 md:gap-12 justify-center items-center">
+      <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 px-6 py-2">
+        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-6 py-2 shadow-lg">
+          <div className="flex flex-row justify-between items-center gap-4">
+            {/* Navigation Items - Left Side */}
+            <ul className="flex flex-row gap-2 items-center">
               {navItems.map((item) => {
                 const active = isActive(item.href);
                 return (
                   <li key={item.href}>
                     <Link
                       to={item.href}
-                      className={`text-sm font-medium transition-colors px-3 py-2 rounded-lg block text-center ${
+                      className={`text-xs font-medium transition-colors px-2 py-1.5 rounded-lg block text-center whitespace-nowrap ${
                         active
                           ? "text-primary bg-primary/10 border border-primary/30"
                           : "hover:text-primary"
@@ -95,9 +95,9 @@ export function TopNav() {
               })}
             </ul>
 
-            {/* Credits Box */}
+            {/* Credits Box - Right Side */}
             {auth.isLoggedIn && auth.credits !== null && (
-              <div className="flex gap-2 items-center border-l border-foreground/10 pl-8">
+              <div className="flex gap-2 items-center ml-auto flex-shrink-0">
                 {auth.credits <= 0 ? (
                   <button
                     onClick={handleZeroCreditClick}
