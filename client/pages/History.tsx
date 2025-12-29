@@ -12,7 +12,6 @@ import {
   AlertCircle,
   CheckCircle2,
   Maximize2,
-  Play,
 } from "lucide-react";
 import { getAuthState, clearAuth } from "@/lib/auth";
 import { fetchLogs } from "@/lib/api";
