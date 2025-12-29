@@ -321,53 +321,51 @@ export default function Generate() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div
-                  onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-muted-foreground/50 rounded-lg p-8 text-center cursor-pointer hover:border-primary transition-colors"
-                >
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageSelect}
-                    className="hidden"
-                  />
-                  {selectedImages.length > 0 ? (
-                    <div className="space-y-4">
-                      <p className="text-sm font-medium">
-                        {selectedImages.length} تصویر انتخاب شده (حداکثر 8 تصویر)
-                      </p>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {selectedImages.map((image, index) => (
-                          <div key={index} className="flex flex-col gap-2">
-                            <img
-                              src={image}
-                              alt={`تصویر ${index + 1}`}
-                              className="max-h-32 mx-auto rounded object-cover w-full"
-                            />
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedImages((prev) =>
-                                  prev.filter((_, i) => i !== index),
-                                );
-                              }}
-                              variant="destructive"
-                              size="sm"
-                              className="w-full gap-1 text-white"
-                            >
-                              <Trash2 className="h-3 w-3" />
-                              حذف
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
+                {/* Selected Images Preview - Large Display */}
+                {selectedImages.length > 0 && (
+                  <div className="space-y-3">
+                    <p className="text-sm font-medium">
+                      {selectedImages.length} تصویر انتخاب شده (حداکثر 8 تصویر)
+                    </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {selectedImages.map((image, index) => (
+                        <div key={index} className="flex flex-col gap-2">
+                          <img
+                            src={image}
+                            alt={`تصویر ${index + 1}`}
+                            className="rounded object-cover w-full h-40 sm:h-48"
+                          />
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedImages((prev) =>
+                                prev.filter((_, i) => i !== index),
+                              );
+                            }}
+                            variant="destructive"
+                            size="sm"
+                            className="w-full gap-1 text-white"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                            حذف
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                    {selectedImages.length < 8 && (
                       <p className="text-xs text-muted-foreground">
                         برای اضافه کردن تصویر بیشتر (حداکثر 8) کلیک کنید
                       </p>
-                    </div>
-                  ) : (
+                    )}
+                  </div>
+                )}
+
+                {/* Upload Area - Show instructions when no images selected */}
+                {selectedImages.length === 0 && (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="border-2 border-dashed border-muted-foreground/50 rounded-lg p-8 text-center cursor-pointer hover:border-primary transition-colors"
+                  >
                     <div className="space-y-2">
                       <Upload className="h-8 w-8 mx-auto text-muted-foreground" />
                       <p className="text-sm font-medium">
@@ -377,9 +375,30 @@ export default function Generate() {
                         PNG, JPG یا WebP (1 تا 8 تصویر)
                       </p>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
 
+                {/* Add More Images Button - Shows when images selected but not full */}
+                {selectedImages.length > 0 && selectedImages.length < 8 && (
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full border-2 border-dashed border-muted-foreground/30 rounded-lg p-3 text-center cursor-pointer hover:border-primary transition-colors text-sm font-medium text-muted-foreground hover:text-primary"
+                  >
+                    + افزودن تصویر
+                  </button>
+                )}
+
+                {/* Hidden File Input */}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageSelect}
+                  className="hidden"
+                />
+
+                {/* Delete All Button */}
                 {selectedImages.length > 0 && (
                   <Button
                     variant="destructive"
