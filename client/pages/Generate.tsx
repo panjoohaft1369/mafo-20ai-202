@@ -685,10 +685,12 @@ export default function Generate() {
                       </div>
                     ) : (
                       <>
-                        <div className="w-32 h-32">
-                          <Loading size="lg" inline text={undefined} />
-                        </div>
-                        <p className="text-sm text-muted-foreground mt-4">
+                        <img
+                          src="https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F7b7411c026af4e239cc51b637375e6fc?format=webp&width=800"
+                          alt="Robot"
+                          className="w-40 h-40 object-contain mb-4"
+                        />
+                        <p className="text-sm text-muted-foreground px-4 py-2 border border-white rounded-lg bg-background">
                           تصویر تولید شده اینجا نشان داده می‌شود
                         </p>
                       </>
