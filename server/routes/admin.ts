@@ -133,8 +133,8 @@ export async function handleAdminGetUsers(
 
     console.log("[Admin] Fetching all users");
 
-    // Fetch from database
-    const { data, error } = await supabase
+    // Fetch users from database (without nested api_keys)
+    const { data: usersData, error: usersError } = await supabase
       .from("users")
       .select(
         `
@@ -146,14 +146,14 @@ export async function handleAdminGetUsers(
         status,
         credits,
         created_at,
-        api_keys:api_keys(id, key, is_active, created_at)
+        role
       `,
       )
       .is("deleted_at", null)
       .order("created_at", { ascending: false });
 
-    if (error) {
-      console.error("[Admin Users] Database error:", error.message);
+    if (usersError) {
+      console.error("[Admin Users] Database error:", usersError.message);
       res.status(500).json({
         success: false,
         error: "خطا در دریافت کاربران",
@@ -161,9 +161,30 @@ export async function handleAdminGetUsers(
       return;
     }
 
+    // Fetch all API keys at once
+    const { data: apiKeysData } = await supabase
+      .from("api_keys")
+      .select("id, user_id, key, is_active, created_at");
+
+    // Create a map of user IDs to their API keys
+    const apiKeysByUser: { [userId: string]: any[] } = {};
+    if (apiKeysData) {
+      apiKeysData.forEach((key: any) => {
+        if (!apiKeysByUser[key.user_id]) {
+          apiKeysByUser[key.user_id] = [];
+        }
+        apiKeysByUser[key.user_id].push({
+          id: key.id,
+          key: key.key,
+          createdAt: key.created_at,
+          isActive: key.is_active,
+        });
+      });
+    }
+
     // Format response
     const users =
-      data?.map((user: any) => ({
+      usersData?.map((user: any) => ({
         id: user.id,
         name: user.name,
         email: user.email,
@@ -171,11 +192,12 @@ export async function handleAdminGetUsers(
         brandName: user.brand_name,
         status: user.status,
         createdAt: user.created_at,
-        apiKeys: user.api_keys || [],
+        apiKeys: apiKeysByUser[user.id] || [],
         credits: user.credits,
         role: user.role || "user",
       })) || [];
 
+    console.log("[Admin] Successfully fetched", users.length, "users");
     res.json({
       success: true,
       users,
