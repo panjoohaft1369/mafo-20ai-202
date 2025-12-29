@@ -53,6 +53,26 @@ export default function History() {
     );
   };
 
+  // Function to calculate credit cost based on resolution and media type
+  const calculateCreditCost = (entry: HistoryEntry): number => {
+    // If creditCost is already provided, use it
+    if (entry.creditCost !== undefined) {
+      return entry.creditCost;
+    }
+
+    // Calculate based on resolution and media type
+    if (entry.imageUrl && isVideoUrl(entry.imageUrl)) {
+      return 20; // Video always costs 20 credits
+    }
+
+    // For images, check resolution
+    const resolution = entry.resolution?.toUpperCase() || "1K";
+    if (resolution === "2K") {
+      return 7;
+    }
+    return 5; // Default to 1K = 5 credits
+  };
+
   const handleLogout = () => {
     clearAuth();
     navigate("/login");
