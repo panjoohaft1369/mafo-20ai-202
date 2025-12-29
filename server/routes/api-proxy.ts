@@ -512,6 +512,10 @@ export async function handleGenerateImage(
     // Initialize task status as processing with request details
     const taskId = data?.data?.taskId;
     if (taskId) {
+      // Calculate initial credit cost
+      const creditType = getImageCreditType(resolution);
+      const creditCost = CREDIT_COSTS[creditType];
+
       taskResults.set(taskId, {
         status: "processing",
         timestamp: Date.now(),
@@ -522,6 +526,7 @@ export async function handleGenerateImage(
         userId,
         taskType: "image",
         creditsDeducted: false,
+        creditCost: creditCost,
       });
       // Persist to file
       saveTasksToFile();
