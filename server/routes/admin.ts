@@ -145,8 +145,7 @@ export async function handleAdminGetUsers(
         brand_name,
         status,
         credits,
-        created_at,
-        role
+        created_at
       `,
       )
       .is("deleted_at", null)
