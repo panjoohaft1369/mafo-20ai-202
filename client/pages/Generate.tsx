@@ -78,6 +78,15 @@ export default function Generate() {
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
+      // Check if adding these files would exceed 8 images
+      const totalImages = selectedImages.length + files.length;
+      if (totalImages > 8) {
+        toast.error(
+          `حداکثر 8 تصویر مجاز است. شما ${totalImages} تصویر انتخاب کرده‌اید.`,
+        );
+        return;
+      }
+
       const newImages: string[] = [];
       let loadedCount = 0;
 
@@ -89,6 +98,7 @@ export default function Generate() {
 
           if (loadedCount === files.length) {
             setSelectedImages((prev) => [...prev, ...newImages]);
+            toast.success(`${files.length} تصویر اضافه شد`);
           }
         };
         reader.readAsDataURL(file);
