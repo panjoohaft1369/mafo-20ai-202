@@ -5,6 +5,8 @@ import path from "path";
 const ADMIN_DATA_DIR = path.join(process.cwd(), "public", "admin-data");
 const MENU_FILE = path.join(ADMIN_DATA_DIR, "menu.json");
 const SLIDES_FILE = path.join(ADMIN_DATA_DIR, "slides.json");
+const INDEX_SLIDES_FILE = path.join(ADMIN_DATA_DIR, "index-slides.json");
+const ABOUT_SLIDES_FILE = path.join(ADMIN_DATA_DIR, "about-slides.json");
 
 // Ensure admin data directory exists
 function ensureDataDir() {
