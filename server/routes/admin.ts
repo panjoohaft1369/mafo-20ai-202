@@ -244,8 +244,7 @@ export async function handleAdminGetUser(
         brand_name,
         status,
         credits,
-        created_at,
-        role
+        created_at
       `,
       )
       .eq("id", userId)
