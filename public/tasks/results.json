@@ -96,5 +96,17 @@
     "taskType": "video",
     "creditsDeducted": true,
     "imageUrl": "https://tempfile.aiquickdraw.com/r/users/487b74fe-5f0f-42bb-a36e-8845ec847992/generated/883b07a2-1e0e-4843-b274-326048afc9f1/generated_video.mp4"
+  },
+  "53d32f69f9148ef6e1877dead81a6280": {
+    "status": "success",
+    "timestamp": 1766968701649,
+    "prompt": "این تصویر نقاشی رو واقعی کن",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "eb1e4272952ed5e1acdc29f8378bce8e",
+    "userId": "08448efc-9c3e-4fc3-9764-8b9a5ba0269b",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/53d32f69f9148ef6e1877dead81a6280_1766968727.png"
   }
 }
