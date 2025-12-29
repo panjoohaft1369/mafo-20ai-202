@@ -71,18 +71,18 @@ export function TopNav() {
   return (
     <>
       {/* Desktop/Tablet Navigation */}
-      <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 px-6 py-2">
-        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-6 py-2 shadow-lg">
-          <div className="flex flex-row justify-between items-center gap-4">
+      <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 flex justify-center px-6 py-2">
+        <div className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg px-5 py-1.5 shadow-lg max-w-lg">
+          <div className="flex flex-row justify-between items-center gap-3">
             {/* Navigation Items - Left Side */}
-            <ul className="flex flex-row gap-2 items-center">
+            <ul className="flex flex-row gap-1.5 items-center">
               {navItems.map((item) => {
                 const active = isActive(item.href);
                 return (
                   <li key={item.href}>
                     <Link
                       to={item.href}
-                      className={`text-xs font-medium transition-colors px-2 py-1.5 rounded-lg block text-center whitespace-nowrap ${
+                      className={`text-sm font-semibold transition-colors px-2 py-1 rounded-lg block text-center whitespace-nowrap ${
                         active
                           ? "text-primary bg-primary/10 border border-primary/30"
                           : "hover:text-primary"
@@ -97,7 +97,7 @@ export function TopNav() {
 
             {/* Credits Box - Right Side */}
             {auth.isLoggedIn && auth.credits !== null && (
-              <div className="flex gap-2 items-center ml-auto flex-shrink-0">
+              <div className="flex gap-1.5 items-center flex-shrink-0">
                 {auth.credits <= 0 ? (
                   <button
                     onClick={handleZeroCreditClick}
