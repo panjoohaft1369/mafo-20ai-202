@@ -1,0 +1,330 @@
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Search, ChevronLeft, ChevronRight, AlertCircle, Loader2 } from "lucide-react";
+import { getAdminToken } from "@/lib/admin-auth";
+
+interface GeneratedImage {
+  id: string;
+  userId: string;
+  taskId?: string;
+  imageUrl?: string;
+  prompt?: string;
+  status: string;
+  aspectRatio?: string;
+  resolution?: string;
+  creditCost?: number;
+  createdAt: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    phone?: string;
+    brandName?: string;
+  };
+}
+
+interface GalleryResponse {
+  success: boolean;
+  images: GeneratedImage[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
+export function AdminGallery() {
+  const [images, setImages] = useState<GeneratedImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [searchUser, setSearchUser] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [totalPages, setTotalPages] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  // Fetch images on mount or when search/page/pageSize changes
+  useEffect(() => {
+    fetchImages();
+  }, [page, pageSize, searchUser]);
+
+  const fetchImages = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const token = getAdminToken();
+      const params = new URLSearchParams({
+        page: page.toString(),
+        pageSize: pageSize.toString(),
+        searchUser,
+      });
+
+      const response = await fetch(`/api/admin/gallery?${params.toString()}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("خطا در دریافت تصاویر");
+      }
+
+      const data: GalleryResponse = await response.json();
+      setImages(data.images);
+      setTotalPages(data.totalPages);
+      setTotal(data.total);
+
+      // Reset to first page if search changes
+      if (searchUser && page > 1 && page > data.totalPages) {
+        setPage(1);
+      }
+    } catch (err: any) {
+      setError(err.message || "خطا در دریافت تصاویر");
+      setImages([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (value: string) => {
+    setSearchUser(value);
+    setPage(1); // Reset to first page
+  };
+
+  const handlePageSizeChange = (value: string) => {
+    setPageSize(parseInt(value));
+    setPage(1); // Reset to first page
+  };
+
+  const goToFirstPage = () => setPage(1);
+  const goToLastPage = () => setPage(totalPages);
+  const goToPreviousPage = () => setPage(Math.max(1, page - 1));
+  const goToNextPage = () => setPage(Math.min(totalPages, page + 1));
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <h1 className="text-3xl font-bold">گالری تصاویر</h1>
+        <p className="text-sm text-muted-foreground">
+          مجموع {total} تصویر
+        </p>
+      </div>
+
+      {/* Search and Filter Section */}
+      <Card>
+        <CardContent className="pt-6 space-y-4">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+            {/* Search by User */}
+            <div className="flex-1 relative">
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="جستجو بر اساس نام یا ایمیل کاربر..."
+                value={searchUser}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="pr-9 text-right"
+              />
+            </div>
+
+            {/* Page Size Selector */}
+            <Select value={pageSize.toString()} onValueChange={handlePageSizeChange}>
+              <SelectTrigger className="md:w-32 text-right">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10 تصویر</SelectItem>
+                <SelectItem value="20">20 تصویر</SelectItem>
+                <SelectItem value="50">50 تصویر</SelectItem>
+                <SelectItem value="100">100 تصویر</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Error Message */}
+      {error && (
+        <Card className="border-red-200 bg-red-50 dark:bg-red-950 dark:border-red-800">
+          <CardContent className="pt-6 flex gap-3">
+            <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
+            <p className="text-sm text-red-600">{error}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      )}
+
+      {/* Gallery Grid */}
+      {!loading && images.length > 0 && (
+        <>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {images.map((image) => (
+              <Card
+                key={image.id}
+                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+              >
+                {/* Image Preview */}
+                <div className="aspect-square bg-muted overflow-hidden group">
+                  {image.imageUrl ? (
+                    <img
+                      src={image.imageUrl}
+                      alt={image.prompt || "Generated image"}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-muted/50">
+                      <AlertCircle className="h-8 w-8 text-muted-foreground" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Image Details */}
+                <CardContent className="p-3 space-y-2 text-right">
+                  {/* User Info */}
+                  <div className="text-xs border-b pb-2">
+                    <p className="font-semibold text-foreground truncate">
+                      {image.user.name}
+                    </p>
+                    <p className="text-muted-foreground text-xs truncate">
+                      {image.user.email}
+                    </p>
+                  </div>
+
+                  {/* Prompt */}
+                  {image.prompt && (
+                    <div className="text-xs">
+                      <p className="text-muted-foreground line-clamp-2">
+                        {image.prompt}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Stats */}
+                  <div className="text-xs text-muted-foreground space-y-1">
+                    {image.resolution && (
+                      <p>کیفیت: {image.resolution}</p>
+                    )}
+                    {image.aspectRatio && (
+                      <p>نسبت ابعاد: {image.aspectRatio}</p>
+                    )}
+                    {image.creditCost && (
+                      <p>هزینه اعتبار: {image.creditCost}</p>
+                    )}
+                    <p className="text-xs">
+                      {new Date(image.createdAt).toLocaleDateString("fa-IR")}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <Card>
+              <CardContent className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="text-sm text-muted-foreground">
+                  صفحه {page} از {totalPages} | مجموع {total} تصویر
+                </div>
+
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={goToFirstPage}
+                    disabled={page === 1 || loading}
+                    className="hidden md:inline-flex"
+                  >
+                    اول
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={goToPreviousPage}
+                    disabled={page === 1 || loading}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    قبلی
+                  </Button>
+
+                  {/* Page Numbers */}
+                  <div className="flex gap-1">
+                    {Array.from({ length: Math.min(5, totalPages) }).map(
+                      (_, i) => {
+                        let pageNum = i + 1;
+                        if (totalPages > 5 && page > 3) {
+                          pageNum = page - 2 + i;
+                        }
+                        if (pageNum > totalPages) return null;
+
+                        return (
+                          <Button
+                            key={pageNum}
+                            variant={page === pageNum ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => setPage(pageNum)}
+                            disabled={loading}
+                            className="w-10"
+                          >
+                            {pageNum}
+                          </Button>
+                        );
+                      },
+                    )}
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={goToNextPage}
+                    disabled={page === totalPages || loading}
+                  >
+                    بعدی
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={goToLastPage}
+                    disabled={page === totalPages || loading}
+                    className="hidden md:inline-flex"
+                  >
+                    آخر
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </>
+      )}
+
+      {/* Empty State */}
+      {!loading && images.length === 0 && !error && (
+        <Card className="border-dashed">
+          <CardContent className="pt-6 text-center py-12">
+            <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+            <p className="text-muted-foreground">
+              {searchUser ? "تصویری با این جستجو یافت نشد" : "هنوز تصویری ایجاد نشده است"}
+            </p>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
