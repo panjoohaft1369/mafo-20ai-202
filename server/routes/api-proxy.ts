@@ -43,6 +43,7 @@ const taskResults: Map<
     userId?: string;
     taskType?: "image" | "video";
     creditsDeducted?: boolean;
+    creditCost?: number;
   }
 > = new Map();
 
