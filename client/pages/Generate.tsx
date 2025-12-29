@@ -153,6 +153,7 @@ export default function Generate() {
   const handleLogout = () => {
     // Clear saved state on logout
     localStorage.removeItem("generate_form_state");
+    localStorage.removeItem("generate_in_progress_task");
     clearAuth();
     navigate("/login");
   };
