@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Zap, MessageCircle } from "lucide-react";
+import { Zap, MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAuthState } from "@/lib/auth";
 import { getAdminToken } from "@/lib/admin-auth";
@@ -8,6 +8,7 @@ import { getAdminToken } from "@/lib/admin-auth";
 export function TopNav() {
   const location = useLocation();
   const [auth, setAuth] = useState(getAuthState());
+  const [isOpen, setIsOpen] = useState(false);
 
   // Update auth state when component mounts or when location changes
   useEffect(() => {
