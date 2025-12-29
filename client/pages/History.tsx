@@ -86,7 +86,15 @@ export default function History() {
     }
 
     try {
-      const response = await fetch(imageUrl);
+      // Use backend endpoint to bypass CORS issues
+      const downloadUrl = `/api/download-image?url=${encodeURIComponent(imageUrl)}`;
+      const response = await fetch(downloadUrl);
+
+      if (!response.ok) {
+        toast.error("خطا در دانلود تصویر");
+        return;
+      }
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
