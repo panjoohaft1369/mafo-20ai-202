@@ -12,11 +12,13 @@ import {
   AlertCircle,
   CheckCircle2,
   Maximize2,
+  Play,
 } from "lucide-react";
 import { getAuthState, clearAuth } from "@/lib/auth";
 import { fetchLogs } from "@/lib/api";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 interface HistoryEntry {
   id: string;
