@@ -10,6 +10,7 @@ import {
   CreditType,
   CREDIT_COSTS,
 } from "../utils/credit-manager.js";
+import { supabase } from "../utils/supabase-client.js";
 
 // Updated to kie.ai v1 API
 const KIE_AI_API_BASE = "https://api.kie.ai/api/v1";
