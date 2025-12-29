@@ -120,3 +120,58 @@ export async function handleImageUpload(
     });
   }
 }
+
+/**
+ * Download image from external URL and serve it back
+ * This bypasses CORS issues by downloading on the server side
+ */
+export async function handleDownloadImage(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const { url } = req.query;
+
+    if (!url || typeof url !== "string") {
+      res.status(400).json({
+        success: false,
+        error: "Image URL is required",
+      });
+      return;
+    }
+
+    console.log("[Download] Fetching image from:", url);
+
+    // Fetch the image from the external URL
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      console.error("[Download] Failed to fetch image, status:", response.status);
+      res.status(response.status).json({
+        success: false,
+        error: `Failed to download image (HTTP ${response.status})`,
+      });
+      return;
+    }
+
+    // Get content type
+    const contentType =
+      response.headers.get("content-type") || "image/png";
+
+    // Stream the image directly to the client
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Content-Disposition", "attachment; filename=mafo-image.png");
+
+    // Get the buffer and send it
+    const buffer = await response.buffer();
+    res.send(buffer);
+
+    console.log("[Download] Image downloaded successfully, size:", buffer.length);
+  } catch (error: any) {
+    console.error("[Download] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to download image",
+    });
+  }
+}
