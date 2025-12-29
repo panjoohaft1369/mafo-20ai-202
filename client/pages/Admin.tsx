@@ -63,11 +63,25 @@ export default function Admin() {
         setMenuItems(menuData.items || []);
       }
 
-      // Load slides
+      // Load slides (legacy)
       const slidesRes = await fetch("/api/admin/slides");
       if (slidesRes.ok) {
         const slidesData = await slidesRes.json();
         setSlides(slidesData.slides || []);
+      }
+
+      // Load index slides
+      const indexSlidesRes = await fetch("/api/admin/index-slides");
+      if (indexSlidesRes.ok) {
+        const indexSlidesData = await indexSlidesRes.json();
+        setIndexSlides(indexSlidesData.slides || []);
+      }
+
+      // Load about slides
+      const aboutSlidesRes = await fetch("/api/admin/about-slides");
+      if (aboutSlidesRes.ok) {
+        const aboutSlidesData = await aboutSlidesRes.json();
+        setAboutSlides(aboutSlidesData.slides || []);
       }
     } catch (error) {
       console.error("Error loading data:", error);
