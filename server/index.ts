@@ -37,6 +37,10 @@ import {
   handleSaveMenu,
   handleGetSlides,
   handleSaveSlides,
+  handleGetIndexSlides,
+  handleSaveIndexSlides,
+  handleGetAboutSlides,
+  handleSaveAboutSlides,
 } from "./routes/admin-content.js";
 
 export function createServer() {
