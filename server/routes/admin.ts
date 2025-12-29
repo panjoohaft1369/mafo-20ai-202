@@ -287,7 +287,7 @@ export async function handleAdminGetUser(
         isActive: key.is_active,
       })),
       credits: userData.credits,
-      role: userData.role || "user",
+      role: "user",
     };
 
     console.log("[Admin] Successfully fetched user:", userId);
