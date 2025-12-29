@@ -383,7 +383,12 @@ export default function GenerateVideo() {
                   درحال ایجاد ویدیو...
                 </div>
               ) : (
-                "ایجاد ویدیو"
+                <div className="flex items-center justify-center gap-2">
+                  <span>ایجاد ویدیو</span>
+                  <span className="text-sm opacity-90">
+                    ({VIDEO_CREDIT_COST} 💳)
+                  </span>
+                </div>
               )}
             </Button>
           </div>
