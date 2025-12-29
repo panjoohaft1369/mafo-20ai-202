@@ -73,6 +73,24 @@ export default function History() {
     return 5; // Default to 1K = 5 credits
   };
 
+  // Check if a processing task has timed out (more than 15 minutes)
+  const hasTimedOut = (entry: HistoryEntry): boolean => {
+    if (entry.status !== "processing") return false;
+    const timeoutThreshold = 15 * 60 * 1000; // 15 minutes in milliseconds
+    const elapsedTime = Date.now() - entry.timestamp;
+    return elapsedTime > timeoutThreshold;
+  };
+
+  // Get the effective status (handles timeout scenarios)
+  const getEffectiveStatus = (
+    entry: HistoryEntry,
+  ): "success" | "fail" | "processing" => {
+    if (hasTimedOut(entry)) {
+      return "fail";
+    }
+    return entry.status as any;
+  };
+
   const handleLogout = () => {
     clearAuth();
     navigate("/login");
