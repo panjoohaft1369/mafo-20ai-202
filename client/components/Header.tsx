@@ -31,16 +31,10 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
           {/* Brand */}
           <Link to="/" className="flex items-center gap-3">
             <img
-              src="/loading-gif.gif"
-              alt="MAFO"
-              className="h-12 w-12 rounded"
+              src="https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F9e202c908efe4404bc59d52a7a35052a?format=webp&width=800"
+              alt="MAFO AI"
+              className="h-12 w-auto"
             />
-            <div className="flex flex-col items-start">
-              <h1 className="text-lg sm:text-xl font-bold">MAFO</h1>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                هوش مصنوعی
-              </p>
-            </div>
           </Link>
 
           {/* Center spacer */}
