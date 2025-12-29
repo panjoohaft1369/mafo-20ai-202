@@ -65,6 +65,10 @@ export function TopNav() {
   const whatsappMessage =
     "سلام، من برای اطلاعات بیشتر تماس می‌گیرم";
 
+  const handleZeroCreditClick = () => {
+    setShowZeroCreditModal(true);
+  };
+
   return (
     <>
       {/* Desktop/Tablet Navigation */}
