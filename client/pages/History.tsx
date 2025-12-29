@@ -41,6 +41,7 @@ export default function History() {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerImage, setViewerImage] = useState<string | null>(null);
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
+  const [filter, setFilter] = useState<"all" | "images" | "videos">("all");
 
   // Function to detect if URL is a video
   const isVideoUrl = (url?: string): boolean => {
