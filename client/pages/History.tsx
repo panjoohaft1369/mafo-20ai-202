@@ -311,7 +311,7 @@ export default function History() {
 
                 <CardContent className="space-y-4">
                   {/* Media Preview - Image or Video */}
-                  {entry.imageUrl && entry.status === "success" ? (
+                  {entry.imageUrl && getEffectiveStatus(entry) === "success" ? (
                     isVideoUrl(entry.imageUrl) ? (
                       // Video Player
                       <div className="relative rounded-lg overflow-hidden border border-border bg-black h-[450px] flex items-center justify-center group">
@@ -341,10 +341,12 @@ export default function History() {
                         </div>
                       </div>
                     )
-                  ) : entry.status === "fail" ? (
+                  ) : getEffectiveStatus(entry) === "fail" ? (
                     <div className="rounded-lg p-4 bg-red-50 border border-red-200">
                       <p className="text-sm text-red-800">
-                        {getErrorMessage(entry.error)}
+                        {hasTimedOut(entry)
+                          ? "پردازش منقضی شد. درخواست برای تولید این تصویر/ویدیو لغو شد. اعتباری کسر نشده است."
+                          : getErrorMessage(entry.error)}
                       </p>
                     </div>
                   ) : null}
