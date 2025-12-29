@@ -134,6 +134,9 @@ export function createServer() {
   );
   app.post("/api/admin/users/:userId/approve", handleAdminApproveUser);
 
+  // Admin gallery routes
+  app.get("/api/admin/gallery", handleAdminGetGeneratedImages);
+
   // Admin content routes (menu & slides)
   app.get("/api/admin/menu", handleGetMenu);
   app.post("/api/admin/menu", handleSaveMenu);
