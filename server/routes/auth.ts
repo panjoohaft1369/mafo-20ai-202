@@ -324,6 +324,121 @@ export async function handleUpdateProfile(
 }
 
 /**
+ * Handle user password change
+ */
+export async function handleChangePassword(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const { userId, currentPassword, newPassword, confirmPassword } = req.body;
+
+    console.log("[ChangePassword] Password change attempt for user:", userId);
+
+    // Validate required fields
+    if (!userId || !currentPassword || !newPassword || !confirmPassword) {
+      res.status(400).json({
+        success: false,
+        error: "تمام فیلدها الزامی هستند",
+      });
+      return;
+    }
+
+    // Validate password strength
+    if (!isValidPassword(newPassword)) {
+      res.status(400).json({
+        success: false,
+        error:
+          "رمز عبور باید حداقل 8 کاراکتر و شامل حروف بزرگ، کوچک و اعداد باشد",
+      });
+      return;
+    }
+
+    // Check if passwords match
+    if (newPassword !== confirmPassword) {
+      res.status(400).json({
+        success: false,
+        error: "رمز عبور جدید و تکرار آن مطابقت ندارند",
+      });
+      return;
+    }
+
+    // Check if new password is same as current password
+    if (currentPassword === newPassword) {
+      res.status(400).json({
+        success: false,
+        error: "رمز عبور جدید نمی‌تواند همان رمز عبور فعلی باشد",
+      });
+      return;
+    }
+
+    // Fetch user from database
+    const { data: user, error: userError } = await supabase
+      .from("users")
+      .select("id, password_hash")
+      .eq("id", userId)
+      .is("deleted_at", null)
+      .single();
+
+    if (userError || !user) {
+      console.error("[ChangePassword] User not found:", userId, userError);
+      res.status(404).json({
+        success: false,
+        error: "کاربر یافت نشد",
+      });
+      return;
+    }
+
+    // Verify current password
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password_hash,
+    );
+
+    if (!isPasswordCorrect) {
+      console.log("[ChangePassword] Invalid current password for user:", userId);
+      res.status(401).json({
+        success: false,
+        error: "رمز عبور فعلی نادرست است",
+      });
+      return;
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password in database
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({ password_hash: hashedPassword })
+      .eq("id", userId)
+      .is("deleted_at", null);
+
+    if (updateError) {
+      console.error("[ChangePassword] Database error:", updateError.message);
+      res.status(500).json({
+        success: false,
+        error: "خطا در تغییر رمز عبور. لطفا دوباره سعی کنید.",
+      });
+      return;
+    }
+
+    console.log("[ChangePassword] Successfully changed password for user:", userId);
+
+    res.json({
+      success: true,
+      message: "رمز عبور با موفقیت تغییر کرد. لطفا دوباره وارد شوید.",
+    });
+  } catch (error: any) {
+    console.error("[ChangePassword] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در تغییر رمز عبور. لطفا دوباره سعی کنید.",
+    });
+  }
+}
+
+/**
  * Handle user registration
  */
 export async function handleRegister(
