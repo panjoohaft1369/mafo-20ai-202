@@ -271,6 +271,41 @@ export default function History() {
               </div>
             </div>
           </div>
+
+          {/* Filter Tabs */}
+          <div className="flex gap-2 justify-center mt-6 flex-wrap">
+            <Button
+              onClick={() => setFilter("all")}
+              variant={filter === "all" ? "default" : "outline"}
+              size="sm"
+              className="gap-1"
+            >
+              همه (
+              {history.length})
+            </Button>
+            <Button
+              onClick={() => setFilter("images")}
+              variant={filter === "images" ? "default" : "outline"}
+              size="sm"
+              className="gap-1"
+            >
+              تصاویر (
+              {history.filter((h) => h.imageUrl && !isVideoUrl(h.imageUrl))
+                .length}
+              )
+            </Button>
+            <Button
+              onClick={() => setFilter("videos")}
+              variant={filter === "videos" ? "default" : "outline"}
+              size="sm"
+              className="gap-1"
+            >
+              ویدیوها (
+              {history.filter((h) => h.imageUrl && isVideoUrl(h.imageUrl))
+                .length}
+              )
+            </Button>
+          </div>
         </div>
 
         {/* History Content */}
