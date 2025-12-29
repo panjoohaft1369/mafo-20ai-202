@@ -29,6 +29,7 @@ import {
   handleAdminCreateUser,
   handleAdminUpdateUser,
   handleAdminDeleteUser,
+  handleAdminGetGeneratedImages,
 } from "./routes/admin.js";
 import {
   handleGetMenu,
