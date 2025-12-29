@@ -189,3 +189,63 @@ export function handleSaveSlides(req: Request, res: Response) {
     res.status(500).json({ error: "Error saving slides" });
   }
 }
+
+// Index Slides Handlers
+export function handleGetIndexSlides(_req: Request, res: Response) {
+  try {
+    initializeDefaults();
+    const data = fs.readFileSync(INDEX_SLIDES_FILE, "utf-8");
+    res.json(JSON.parse(data));
+  } catch (error) {
+    console.error("Error reading index slides:", error);
+    res.status(500).json({ error: "Error reading index slides" });
+  }
+}
+
+export function handleSaveIndexSlides(req: Request, res: Response) {
+  try {
+    initializeDefaults();
+    const { slides } = req.body;
+
+    if (!slides || !Array.isArray(slides)) {
+      return res.status(400).json({ error: "Invalid slides data" });
+    }
+
+    const data = { slides };
+    fs.writeFileSync(INDEX_SLIDES_FILE, JSON.stringify(data, null, 2));
+    res.json({ success: true, message: "Index slides saved successfully" });
+  } catch (error) {
+    console.error("Error saving index slides:", error);
+    res.status(500).json({ error: "Error saving index slides" });
+  }
+}
+
+// About Slides Handlers
+export function handleGetAboutSlides(_req: Request, res: Response) {
+  try {
+    initializeDefaults();
+    const data = fs.readFileSync(ABOUT_SLIDES_FILE, "utf-8");
+    res.json(JSON.parse(data));
+  } catch (error) {
+    console.error("Error reading about slides:", error);
+    res.status(500).json({ error: "Error reading about slides" });
+  }
+}
+
+export function handleSaveAboutSlides(req: Request, res: Response) {
+  try {
+    initializeDefaults();
+    const { slides } = req.body;
+
+    if (!slides || !Array.isArray(slides)) {
+      return res.status(400).json({ error: "Invalid slides data" });
+    }
+
+    const data = { slides };
+    fs.writeFileSync(ABOUT_SLIDES_FILE, JSON.stringify(data, null, 2));
+    res.json({ success: true, message: "About slides saved successfully" });
+  } catch (error) {
+    console.error("Error saving about slides:", error);
+    res.status(500).json({ error: "Error saving about slides" });
+  }
+}
