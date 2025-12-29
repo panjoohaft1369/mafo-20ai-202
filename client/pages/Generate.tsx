@@ -81,7 +81,11 @@ export default function Generate() {
 
   // Persist state to localStorage
   useEffect(() => {
-    if (selectedImages.length > 0 || prompt.trim() || generatedImage) {
+    const hasContent =
+      selectedImages.length > 0 || prompt.trim() || generatedImage;
+
+    if (hasContent) {
+      // Save the current state
       const stateToSave = {
         selectedImages,
         prompt,
@@ -91,6 +95,9 @@ export default function Generate() {
         taskId,
       };
       localStorage.setItem("generate_form_state", JSON.stringify(stateToSave));
+    } else {
+      // Clear localStorage completely if all content is empty
+      localStorage.removeItem("generate_form_state");
     }
   }, [selectedImages, prompt, aspectRatio, resolution, generatedImage, taskId]);
 
