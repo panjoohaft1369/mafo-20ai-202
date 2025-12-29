@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { LogOut, Zap, Shield, MessageCircle } from "lucide-react";
+import { Zap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getAuthState, clearAuth } from "@/lib/auth";
+import { getAuthState } from "@/lib/auth";
 import { getAdminToken } from "@/lib/admin-auth";
 
 export function TopNav() {
