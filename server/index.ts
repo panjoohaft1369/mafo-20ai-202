@@ -11,7 +11,7 @@ import {
   handleQueryTask,
   handleCallback,
 } from "./routes/api-proxy.js";
-import { handleImageUpload } from "./routes/upload.js";
+import { handleImageUpload, handleDownloadImage } from "./routes/upload.js";
 import {
   handleRegister,
   handleLogin,
