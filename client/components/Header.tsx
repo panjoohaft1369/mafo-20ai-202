@@ -31,9 +31,11 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
         <div className="flex h-20 items-center justify-between px-4 sm:px-8">
           {/* Brand */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="h-12 w-12">
-              <Loading size="md" inline text={undefined} />
-            </div>
+            <img
+              src="/loading-gif.gif"
+              alt="MAFO"
+              className="h-12 w-12 rounded"
+            />
             <div className="flex flex-col items-start">
               <h1 className="text-lg sm:text-xl font-bold">MAFO</h1>
               <p className="text-xs sm:text-sm text-muted-foreground">
