@@ -372,15 +372,15 @@ export default function Generate() {
 
                 {selectedImages.length > 0 && (
                   <Button
-                    variant="outline"
+                    variant="destructive"
                     size="sm"
                     onClick={() => {
                       setSelectedImages([]);
                       setGeneratedImage(null);
                     }}
-                    className="w-full"
+                    className="w-full text-white gap-2"
                   >
-                    <Trash2 className="h-4 w-4 mr-2" />
+                    <Trash2 className="h-4 w-4" />
                     حذف تمام تصاویر
                   </Button>
                 )}
