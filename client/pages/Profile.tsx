@@ -12,8 +12,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { User, Mail, Phone, Store } from "lucide-react";
+import { User, Mail, Phone, Store, Lock } from "lucide-react";
 import { getAuthState, clearAuth, saveAuthCredentials } from "@/lib/auth";
+import { toast } from "sonner";
 
 export default function Profile() {
   const navigate = useNavigate();
