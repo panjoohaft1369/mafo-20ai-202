@@ -133,6 +133,7 @@ export async function handleDownloadImage(
     const { url } = req.query;
 
     if (!url || typeof url !== "string") {
+      console.error("[Download] Missing URL parameter");
       res.status(400).json({
         success: false,
         error: "URL is required",
@@ -142,45 +143,83 @@ export async function handleDownloadImage(
 
     console.log("[Download] Fetching from:", url);
 
-    // Fetch the file from the external URL
-    const response = await fetch(url);
+    // Add timeout and retry logic
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-    if (!response.ok) {
-      console.error("[Download] Failed to fetch, status:", response.status);
-      res.status(response.status).json({
-        success: false,
-        error: `Failed to download (HTTP ${response.status})`,
+    try {
+      // Fetch the file from the external URL with timeout
+      const response = await fetch(url, {
+        signal: controller.signal,
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (compatible; MAFO/1.0; +http://example.com/bot)",
+        },
       });
-      return;
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.error(
+          "[Download] Failed to fetch, status:",
+          response.status,
+          response.statusText,
+        );
+        res.status(response.status).json({
+          success: false,
+          error: `Failed to download (HTTP ${response.status})`,
+        });
+        return;
+      }
+
+      // Get content type from response headers
+      const contentType =
+        response.headers.get("content-type") || "application/octet-stream";
+
+      // Determine filename and extension
+      let filename = "mafo-file";
+      if (contentType.includes("video")) {
+        filename = "mafo-video.mp4";
+      } else if (contentType.includes("image")) {
+        filename = "mafo-image.png";
+      }
+
+      // Set response headers to allow download
+      res.setHeader("Content-Type", contentType);
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${filename}"`,
+      );
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
+      // Get the buffer and send it
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      res.send(buffer);
+
+      console.log(
+        "[Download] File downloaded successfully, size:",
+        buffer.length,
+      );
+    } catch (fetchError: any) {
+      clearTimeout(timeoutId);
+      console.error("[Download] Fetch error:", fetchError.message);
+
+      if (fetchError.name === "AbortError") {
+        res.status(504).json({
+          success: false,
+          error: "Download timeout - file took too long to fetch",
+        });
+      } else {
+        res.status(502).json({
+          success: false,
+          error: `Failed to fetch file: ${fetchError.message}`,
+        });
+      }
     }
-
-    // Get content type from response headers
-    const contentType =
-      response.headers.get("content-type") || "application/octet-stream";
-
-    // Determine filename and extension
-    let filename = "mafo-file";
-    if (contentType.includes("video")) {
-      filename = "mafo-video.mp4";
-    } else if (contentType.includes("image")) {
-      filename = "mafo-image.png";
-    }
-
-    // Set response headers to allow download
-    res.setHeader("Content-Type", contentType);
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="${filename}"`,
-    );
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
-    // Get the buffer and send it
-    const buffer = await response.buffer();
-    res.send(buffer);
-
-    console.log("[Download] File downloaded successfully, size:", buffer.length);
   } catch (error: any) {
-    console.error("[Download] Error:", error.message);
+    console.error("[Download] Unexpected error:", error.message);
     res.status(500).json({
       success: false,
       error: "Failed to download file",
