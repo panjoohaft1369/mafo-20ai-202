@@ -37,7 +37,9 @@ export default function Admin() {
   const auth = getAuthState();
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [slides, setSlides] = useState<Slide[]>([]);
-  const [activeTab, setActiveTab] = useState<"menu" | "slides">("menu");
+  const [indexSlides, setIndexSlides] = useState<Slide[]>([]);
+  const [aboutSlides, setAboutSlides] = useState<Slide[]>([]);
+  const [activeTab, setActiveTab] = useState<"menu" | "index-slides" | "about-slides">("menu");
   const [loading, setLoading] = useState(false);
   const [editingMenu, setEditingMenu] = useState<MenuItem | null>(null);
   const [editingSlide, setEditingSlide] = useState<Slide | null>(null);
