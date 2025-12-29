@@ -596,16 +596,6 @@ export default function Generate() {
               )}
             </Button>
 
-            {/* History Button */}
-            <Button
-              onClick={() => setHistoryModalOpen(true)}
-              variant="outline"
-              className="w-full gap-2 py-6 text-base font-semibold"
-              size="lg"
-            >
-              <History className="h-5 w-5" />
-              تاریخچه تصاویر
-            </Button>
           </div>
 
           {/* Right Column - Output */}
