@@ -287,9 +287,9 @@ export default function History() {
                       <p className="text-xs text-muted-foreground">
                         {formatDate(entry.timestamp)}
                       </p>
-                      {entry.creditCost && (
+                      {entry.status === "success" && (
                         <p className="text-xs text-yellow-600 font-semibold mt-1">
-                          💳 هزینه اعتبار: {entry.creditCost}
+                          💳 هزینه اعتبار: {calculateCreditCost(entry)}
                         </p>
                       )}
                     </div>
