@@ -163,6 +163,93 @@ export default function Profile() {
     }
   };
 
+  const handlePasswordChange = async () => {
+    setMessage(null);
+
+    // Validate fields
+    if (
+      !passwordData.currentPassword ||
+      !passwordData.newPassword ||
+      !passwordData.confirmPassword
+    ) {
+      setMessage({
+        type: "error",
+        text: "تمام فیلدها الزامی هستند",
+      });
+      return;
+    }
+
+    // Validate password strength
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(passwordData.newPassword)) {
+      setMessage({
+        type: "error",
+        text: "رمز عبور باید حداقل 8 کاراکتر و شامل حروف بزرگ، کوچک و اعداد باشد",
+      });
+      return;
+    }
+
+    // Check if passwords match
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setMessage({
+        type: "error",
+        text: "رمز عبور جدید و تکرار آن مطابقت ندارند",
+      });
+      return;
+    }
+
+    setIsChangingPassword(true);
+
+    try {
+      const response = await fetch("/api/user/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: auth.userId,
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword,
+          confirmPassword: passwordData.confirmPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMessage({
+          type: "error",
+          text: data.error || "خطا در تغییر رمز عبور",
+        });
+        setIsChangingPassword(false);
+        return;
+      }
+
+      // Show success message
+      toast.success("رمز عبور با موفقیت تغییر کرد. درحال ورود دوباره...");
+
+      // Clear password fields
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+
+      // Logout and redirect to login
+      setTimeout(() => {
+        clearAuth();
+        navigate("/login");
+      }, 1500);
+    } catch (error) {
+      console.error("Error changing password:", error);
+      setMessage({
+        type: "error",
+        text: "خطا در ارتباط با سرور",
+      });
+      setIsChangingPassword(false);
+    }
+  };
+
   const handleLogout = () => {
     clearAuth();
     navigate("/login");
