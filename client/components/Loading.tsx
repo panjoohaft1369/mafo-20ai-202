@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import animationData from "/public/animation.json";
+import animationData from "@/animation.json";
 
 interface LoadingProps {
   text?: string;
