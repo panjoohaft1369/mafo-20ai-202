@@ -452,12 +452,24 @@ export default function GenerateVideo() {
                   </div>
                 ) : (
                   <div className="aspect-video bg-muted rounded-lg flex flex-col items-center justify-center text-center">
-                    <div className="w-32 h-32">
-                      <Loading size="lg" inline text={undefined} />
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-4">
-                      ویدیو تولید شده اینجا نشان داده می‌شود
-                    </p>
+                    {loading ? (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <img
+                          src="/loading-gif.gif"
+                          alt="درحال بارگذاری"
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <div className="w-32 h-32">
+                          <Loading size="lg" inline text={undefined} />
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-4">
+                          ویدیو تولید شده اینجا نشان داده می‌شود
+                        </p>
+                      </>
+                    )}
                   </div>
                 )}
               </CardContent>
