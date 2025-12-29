@@ -26,6 +26,7 @@ import {
 } from "@/lib/admin-auth";
 import { getAuthState, clearAuth } from "@/lib/auth";
 import { AdminBottomNav } from "@/components/AdminBottomNav";
+import { AdminGallery } from "@/pages/AdminGallery";
 
 interface User {
   id: string;
