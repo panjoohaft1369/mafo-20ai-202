@@ -519,7 +519,10 @@ export function AdminGallery() {
       {selectedImage && (
         <div
           className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 pb-[80px]"
-          onClick={() => setSelectedImage(null)}
+          onClick={() => {
+            setSelectedImage(null);
+            setPlayingVideoId(null);
+          }}
         >
           <Card
             className="w-full max-w-2xl max-h-[90vh] overflow-auto"
@@ -530,7 +533,10 @@ export function AdminGallery() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setSelectedImage(null)}
+                onClick={() => {
+                  setSelectedImage(null);
+                  setPlayingVideoId(null);
+                }}
                 className="hover:bg-muted"
               >
                 <X className="h-4 w-4" />
