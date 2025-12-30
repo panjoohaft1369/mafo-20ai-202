@@ -8,7 +8,6 @@ export function Footer() {
       title: "منابع",
       links: [
         { label: "آموزش‌ها", href: "/tutorials" },
-        { label: "تاریخچه", href: "/history" },
       ],
     },
     {
