@@ -422,7 +422,10 @@ export default function AdminDashboard() {
           {/* Users List */}
           <Card>
             <CardHeader>
-              <CardTitle>کاربران ({filteredUsers.length})</CardTitle>
+              <CardTitle>
+                کاربران ({filteredUsers.length})
+                {filterZeroCredit && " - فقط اعتبار صفر"}
+              </CardTitle>
               <CardDescription>
                 کلیک بر روی یک کاربر برای مدیریت کلیدهای API و اعتبارات
               </CardDescription>
@@ -435,7 +438,7 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {filteredUsers.map((user) => (
+                  {paginatedUsers.map((user) => (
                     <div
                       key={user.id}
                       onClick={() => navigate(`/admin/users/${user.id}`)}
