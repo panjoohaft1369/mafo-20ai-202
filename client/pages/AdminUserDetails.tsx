@@ -259,6 +259,55 @@ export default function AdminUserDetails() {
     setTimeout(() => setCopiedKeyId(null), 2000);
   };
 
+  const handleTogglePasswordVisibility = async () => {
+    // If we're showing the password, just hide it
+    if (showPassword) {
+      setShowPassword(false);
+      return;
+    }
+
+    // If password is already loaded, just show it
+    if (editData.password) {
+      setShowPassword(true);
+      return;
+    }
+
+    // Fetch password from database
+    setFetchingPassword(true);
+    try {
+      const token = getAdminToken();
+      const response = await fetch(`/api/admin/users/${userId}/password`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 401) {
+        clearAdminToken();
+        navigate("/admin-login");
+        return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "خطا در بارگذاری رمز عبور");
+        setFetchingPassword(false);
+        return;
+      }
+
+      const data = await response.json();
+      setEditData({ ...editData, password: data.password });
+      setShowPassword(true);
+    } catch (err) {
+      setError("خطا در بارگذاری رمز عبور");
+      console.error(err);
+    } finally {
+      setFetchingPassword(false);
+    }
+  };
+
   const handleApproveUser = async () => {
     try {
       const token = getAdminToken();
