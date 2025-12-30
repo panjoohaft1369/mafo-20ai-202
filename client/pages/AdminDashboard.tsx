@@ -461,13 +461,7 @@ export default function AdminDashboard() {
               خروج
             </Button>
           </div>
-          <Card>
-            <CardContent className="pt-6">
-              <p className="text-center text-muted-foreground py-12">
-                این بخش به زودی فعال خواهد شد
-              </p>
-            </CardContent>
-          </Card>
+          <AdminSlidesImageEditor />
         </div>
       )}
 
