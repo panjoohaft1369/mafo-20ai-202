@@ -304,6 +304,58 @@ export async function handleAdminGetUser(
 }
 
 /**
+ * Get user password for editing
+ */
+export async function handleAdminGetUserPassword(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const token = req.headers.authorization?.replace("Bearer ", "");
+    const { userId } = req.params;
+
+    if (!token || !verifyAdminToken(token)) {
+      res.status(401).json({
+        success: false,
+        error: "توکن نامعتبر است",
+      });
+      return;
+    }
+
+    console.log("[Admin] Fetching password for user:", userId);
+
+    // Fetch user password from database
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("password")
+      .eq("id", userId)
+      .is("deleted_at", null)
+      .single();
+
+    if (userError) {
+      console.error("[Admin Password] Database error:", userError.message);
+      res.status(404).json({
+        success: false,
+        error: "کاربر یافت نشد",
+      });
+      return;
+    }
+
+    // Return the password (it's stored as bcrypt hash, but we return it for display)
+    res.json({
+      success: true,
+      password: userData.password || "",
+    });
+  } catch (error: any) {
+    console.error("[Admin Password] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "خطا در دریافت رمز عبور",
+    });
+  }
+}
+
+/**
  * Update user credits
  */
 export async function handleAdminUpdateCredits(
