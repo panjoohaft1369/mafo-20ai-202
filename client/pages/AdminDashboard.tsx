@@ -274,7 +274,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             <Card>
               <CardContent className="pt-6">
                 <div className="text-center">
@@ -302,6 +302,16 @@ export default function AdminDashboard() {
                     {users.filter((u) => u.status === "approved").length}
                   </div>
                   <p className="text-sm text-muted-foreground">تایید شده</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600">
+                    {users.filter((u) => u.credits === 0).length}
+                  </div>
+                  <p className="text-sm text-muted-foreground">اعتبار صفر</p>
                 </div>
               </CardContent>
             </Card>
