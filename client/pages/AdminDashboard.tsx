@@ -138,18 +138,33 @@ export default function AdminDashboard() {
     loadUsers();
   }, [navigate]);
 
-  const filteredUsers = users.filter((user) => {
-    const matchesSearch =
-      user.name.includes(searchTerm) ||
-      user.email.includes(searchTerm) ||
-      user.phone.includes(searchTerm) ||
-      user.brandName.includes(searchTerm);
+  const filteredUsers = users
+    .filter((user) => {
+      const matchesSearch =
+        user.name.includes(searchTerm) ||
+        user.email.includes(searchTerm) ||
+        user.phone.includes(searchTerm) ||
+        user.brandName.includes(searchTerm);
 
-    const matchesFilter =
-      filterStatus === "all" || user.status === filterStatus;
+      const matchesFilter =
+        filterStatus === "all" || user.status === filterStatus;
 
-    return matchesSearch && matchesFilter;
-  });
+      const matchesCreditFilter = filterZeroCredit
+        ? user.credits === 0
+        : true;
+
+      return matchesSearch && matchesFilter && matchesCreditFilter;
+    })
+    .sort((a, b) => {
+      // Sort by creation date (newest first)
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const startIndex = (currentPage - 1) * usersPerPage;
+  const endIndex = startIndex + usersPerPage;
+  const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
