@@ -420,7 +420,7 @@ export function AdminGallery() {
             </div>
 
             {/* Modal Content */}
-            <CardContent className="pt-6 space-y-6">
+            <CardContent className="pt-6 space-y-6 pb-6">
               {/* Image Display */}
               {selectedImage.imageUrl ? (
                 <div className="flex flex-col gap-4">
