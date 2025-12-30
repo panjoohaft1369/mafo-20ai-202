@@ -517,14 +517,27 @@ export function AdminGallery() {
 
             {/* Modal Content */}
             <CardContent className="pt-6 space-y-6 pb-6">
-              {/* Image Display */}
+              {/* Media Display */}
               {selectedImage.imageUrl ? (
                 <div className="flex flex-col gap-4">
-                  <img
-                    src={selectedImage.imageUrl}
-                    alt={selectedImage.prompt || "Generated image"}
-                    className="w-full max-h-96 object-contain rounded-lg bg-muted"
-                  />
+                  {isVideoUrl(selectedImage.imageUrl) ? (
+                    // Video Player
+                    <div className="relative rounded-lg overflow-hidden border border-border bg-black h-[400px] flex items-center justify-center">
+                      <video
+                        src={selectedImage.imageUrl}
+                        controls
+                        className="w-full h-full object-contain"
+                        poster={`${selectedImage.imageUrl}?thumbnail=true`}
+                      />
+                    </div>
+                  ) : (
+                    // Image Display
+                    <img
+                      src={selectedImage.imageUrl}
+                      alt={selectedImage.prompt || "Generated image"}
+                      className="w-full max-h-96 object-contain rounded-lg bg-muted"
+                    />
+                  )}
                   <Button
                     onClick={() => handleDownloadImage(selectedImage)}
                     disabled={downloadingId === selectedImage.id}
@@ -533,7 +546,9 @@ export function AdminGallery() {
                     <Download className="h-4 w-4" />
                     {downloadingId === selectedImage.id
                       ? "در حال دانلود..."
-                      : "دانلود تصویر"}
+                      : isVideoUrl(selectedImage.imageUrl)
+                        ? "دانلود ویدیو"
+                        : "دانلود تصویر"}
                   </Button>
                 </div>
               ) : (
