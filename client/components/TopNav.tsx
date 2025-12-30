@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Zap, MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getAuthState } from "@/lib/auth";
+import { getAuthState, updateStoredCredits } from "@/lib/auth";
 import { getAdminToken } from "@/lib/admin-auth";
 import { toast } from "sonner";
 
