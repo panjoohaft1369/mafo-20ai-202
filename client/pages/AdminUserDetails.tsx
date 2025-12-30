@@ -266,46 +266,20 @@ export default function AdminUserDetails() {
       return;
     }
 
-    // If password is already loaded, just show it
-    if (editData.password) {
+    // If password field is empty (new password), just toggle the visibility
+    if (!editData.password) {
       setShowPassword(true);
       return;
     }
 
-    // Fetch password from database
-    setFetchingPassword(true);
-    try {
-      const token = getAdminToken();
-      const response = await fetch(`/api/admin/users/${userId}/password`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 401) {
-        clearAdminToken();
-        navigate("/admin-login");
-        return;
-      }
-
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.error || "خطا در بارگذاری رمز عبور");
-        setFetchingPassword(false);
-        return;
-      }
-
-      const data = await response.json();
-      setEditData({ ...editData, password: data.password });
-      setShowPassword(true);
-    } catch (err) {
-      setError("خطا در بارگذاری رمز عبور");
-      console.error(err);
-    } finally {
-      setFetchingPassword(false);
+    // If password looks like a bcrypt hash (starts with $2a, $2b, or $2y), show a message
+    if (editData.password.startsWith("$2")) {
+      setError("رمز عبور موجود رمزگذاری شده است و نمی‌تواند نمایش داده شود. لطفا یک رمز عبور جدید وارد کنید.");
+      return;
     }
+
+    // Otherwise show the password
+    setShowPassword(true);
   };
 
   const handleApproveUser = async () => {
