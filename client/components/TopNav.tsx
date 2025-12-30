@@ -21,15 +21,51 @@ export function TopNav() {
     // Check on component mount
     checkAuth();
 
+    // Sync credits from server periodically (every 10 seconds)
+    const syncCredits = async () => {
+      const currentAuth = getAuthState();
+      if (!currentAuth.isLoggedIn || !currentAuth.apiKey) return;
+
+      try {
+        const response = await fetch("/api/user/profile", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${currentAuth.apiKey}`,
+          },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.data) {
+            const { credits: newCredits } = result.data;
+            // Update localStorage and state if credits differ
+            if (newCredits !== currentAuth.credits) {
+              import("@/lib/auth").then((module) => {
+                module.updateStoredCredits(newCredits);
+                setAuth(module.getAuthState());
+              });
+            }
+          }
+        }
+      } catch (err) {
+        console.error("[TopNav] Error syncing credits:", err);
+      }
+    };
+
     // Listen for storage changes (for multi-tab sync)
     window.addEventListener("storage", checkAuth);
 
-    // Also check periodically
+    // Check periodically
     const interval = setInterval(checkAuth, 1000);
+
+    // Sync credits from server every 10 seconds
+    const syncInterval = setInterval(syncCredits, 10000);
 
     return () => {
       window.removeEventListener("storage", checkAuth);
       clearInterval(interval);
+      clearInterval(syncInterval);
     };
   }, []);
 
