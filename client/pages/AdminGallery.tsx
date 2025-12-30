@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { getAdminToken } from "@/lib/admin-auth";
+import { toast } from "sonner";
 
 interface GeneratedImage {
   id: string;
@@ -180,12 +181,14 @@ export function AdminGallery() {
         const errorMessage =
           errorData.error || `خطا در دانلود فایل (HTTP ${response.status})`;
         console.error("[Download] Server error:", errorMessage);
+        toast.error(errorMessage);
         return;
       }
 
       const blob = await response.blob();
       if (blob.size === 0) {
         console.error("Downloaded file is empty");
+        toast.error("فایل دانلود شده خالی است");
         return;
       }
 
@@ -207,8 +210,14 @@ export function AdminGallery() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+      toast.success("فایل دانلود شد");
     } catch (err: any) {
       console.error("[Download] Error:", err.message);
+      toast.error(
+        err.message === "Failed to fetch"
+          ? "خطا در اتصال به سرور. لطفا بعدا دوباره سعی کنید."
+          : "خطا در دانلود فایل",
+      );
     } finally {
       setDownloadingId(null);
     }
