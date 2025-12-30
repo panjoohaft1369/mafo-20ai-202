@@ -188,7 +188,7 @@ export default function About() {
         </section>
 
         {/* Our Philosophy - Difference from Others */}
-        <section className="px-4 py-16 sm:py-20 bg-gradient-to-r from-green-50 to-green-50/50 border-b">
+        <section className="px-4 py-16 sm:py-20 bg-gradient-to-r from-green-100 to-green-50 border-b">
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-6 text-foreground">
