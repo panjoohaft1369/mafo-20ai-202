@@ -324,10 +324,10 @@ export async function handleAdminGetUserPassword(
 
     console.log("[Admin] Fetching password for user:", userId);
 
-    // Fetch user password from database
+    // Fetch user password from database - try password_hash first (most likely)
     const { data: userData, error: userError } = await supabase
       .from("users")
-      .select("password")
+      .select("password_hash, password")
       .eq("id", userId)
       .is("deleted_at", null)
       .single();
@@ -341,10 +341,13 @@ export async function handleAdminGetUserPassword(
       return;
     }
 
-    // Return the password (it's stored as bcrypt hash, but we return it for display)
+    // Note: password_hash is bcrypt hashed, so we return it as-is (cannot decrypt)
+    // The frontend will display this hash or a masked version
+    const password = userData.password || userData.password_hash || "";
+
     res.json({
       success: true,
-      password: userData.password || "",
+      password,
     });
   } catch (error: any) {
     console.error("[Admin Password] Error:", error.message);
