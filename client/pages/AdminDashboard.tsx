@@ -506,6 +506,61 @@ export default function AdminDashboard() {
                   ))}
                 </div>
               )}
+
+              {/* Pagination Controls */}
+              {filteredUsers.length > 0 && (
+                <div className="mt-6 flex items-center justify-between pt-6 border-t">
+                  <div className="text-sm text-muted-foreground">
+                    نمایش {startIndex + 1} تا {Math.min(endIndex, filteredUsers.length)} از{" "}
+                    {filteredUsers.length} کاربر
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {/* Previous Button */}
+                    <Button
+                      onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      variant="outline"
+                      size="sm"
+                      className="gap-1"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                      قبلی
+                    </Button>
+
+                    {/* Page Numbers */}
+                    <div className="flex gap-1">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page)}
+                          className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+                            currentPage === page
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Next Button */}
+                    <Button
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                      }
+                      disabled={currentPage === totalPages}
+                      variant="outline"
+                      size="sm"
+                      className="gap-1"
+                    >
+                      بعدی
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
