@@ -796,10 +796,10 @@ export default function AdminUserDetails() {
               <div className="p-1 rounded bg-purple-100">
                 <Key className="h-5 w-5 text-purple-600" />
               </div>
-              کلیدهای API
+              کلید API
             </CardTitle>
             <CardDescription>
-              کلیدهای API ای که به این کاربر اختصاص داده شده‌اند
+              کلید API ای که به این کاربر اختصاص داده شده است
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
