@@ -601,7 +601,7 @@ export default function AdminUserDetails() {
                   <Button
                     onClick={handleEditUser}
                     disabled={savingEdit}
-                    className="bg-green-600 hover:bg-green-700 flex-1"
+                    className="bg-green-600 hover:bg-green-700 flex-1 text-white"
                   >
                     {savingEdit ? (
                       <>
@@ -614,9 +614,9 @@ export default function AdminUserDetails() {
                   <Button
                     onClick={() => setIsEditMode(false)}
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 text-white hover:text-white border-white hover:bg-gray-700"
                   >
-                    انصراف
+                    لغو
                   </Button>
                 </div>
               </div>
