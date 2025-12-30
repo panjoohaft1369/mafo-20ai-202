@@ -454,6 +454,9 @@ export default function Profile() {
       </main>
 
       <Footer />
+
+      <section className="h-[150px] bg-background w-full"></section>
+
       <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );
