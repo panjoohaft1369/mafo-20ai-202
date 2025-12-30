@@ -396,7 +396,7 @@ export function AdminGallery() {
       {/* Image Preview Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 pb-[80px]"
           onClick={() => setSelectedImage(null)}
         >
           <Card
