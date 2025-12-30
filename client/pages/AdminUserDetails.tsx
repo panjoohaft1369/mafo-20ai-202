@@ -68,6 +68,7 @@ export default function AdminUserDetails() {
   const [savingEdit, setSavingEdit] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [fetchingPassword, setFetchingPassword] = useState(false);
 
   useEffect(() => {
     // Check admin authentication
