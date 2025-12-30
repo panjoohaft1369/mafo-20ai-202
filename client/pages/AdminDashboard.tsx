@@ -333,9 +333,22 @@ export default function AdminDashboard() {
                     className="pl-3 pr-9 text-right"
                   />
                 </div>
+                {/* Items Per Page Dropdown */}
+                <select
+                  value={usersPerPage}
+                  onChange={(e) => {
+                    setUsersPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="px-4 py-2 rounded-lg border border-border bg-background text-right text-sm font-medium"
+                >
+                  <option value={5}>5 کاربر</option>
+                  <option value={10}>10 کاربر</option>
+                  <option value={20}>20 کاربر</option>
+                </select>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setFilterStatus("all")}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -375,6 +388,21 @@ export default function AdminDashboard() {
                   }`}
                 >
                   رد شده
+                </button>
+
+                {/* Zero Credit Filter */}
+                <button
+                  onClick={() => {
+                    setFilterZeroCredit(!filterZeroCredit);
+                    setCurrentPage(1);
+                  }}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ml-2 ${
+                    filterZeroCredit
+                      ? "bg-red-600 text-white"
+                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                  }`}
+                >
+                  {filterZeroCredit ? "❌ فقط اعتبار صفر" : "⭕ اعتبار صفر"}
                 </button>
               </div>
             </CardContent>
