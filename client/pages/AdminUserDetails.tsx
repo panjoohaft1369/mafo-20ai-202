@@ -608,10 +608,13 @@ export default function AdminUserDetails() {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      onClick={handleTogglePasswordVisibility}
+                      disabled={fetchingPassword}
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {showPassword ? (
+                      {fetchingPassword ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : showPassword ? (
                         <EyeOff className="h-4 w-4" />
                       ) : (
                         <Eye className="h-4 w-4" />
