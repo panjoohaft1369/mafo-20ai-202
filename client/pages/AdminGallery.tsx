@@ -420,17 +420,17 @@ export function AdminGallery() {
           {/* Pagination */}
           {totalPages > 1 && (
             <Card>
-              <CardContent className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="text-sm text-muted-foreground">
-                  صفحه {page} از {totalPages} | مجموع {total}{" "}
+              <CardContent className="pt-6 space-y-4">
+                <div className="text-sm text-muted-foreground text-center">
+                  Page {page} of {totalPages} | Total {total}{" "}
                   {filter === "images"
-                    ? "تصویر"
+                    ? "Images"
                     : filter === "videos"
-                      ? "ویدیو"
-                      : "آیتم"}
+                      ? "Videos"
+                      : "Items"}
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-2">
                   <Button
                     variant="outline"
                     size="sm"
@@ -438,7 +438,7 @@ export function AdminGallery() {
                     disabled={page === 1 || loading}
                     className="hidden md:inline-flex"
                   >
-                    اول
+                    First
                   </Button>
                   <Button
                     variant="outline"
@@ -447,11 +447,11 @@ export function AdminGallery() {
                     disabled={page === 1 || loading}
                   >
                     <ChevronLeft className="h-4 w-4" />
-                    قبلی
+                    Prev
                   </Button>
 
                   {/* Page Numbers */}
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 flex-wrap justify-center">
                     {Array.from({ length: Math.min(5, totalPages) }).map(
                       (_, i) => {
                         let pageNum = i + 1;
@@ -467,7 +467,7 @@ export function AdminGallery() {
                             size="sm"
                             onClick={() => setPage(pageNum)}
                             disabled={loading}
-                            className="w-10"
+                            className="sm:w-10 px-3 text-sm sm:text-base font-semibold"
                           >
                             {pageNum}
                           </Button>
@@ -482,7 +482,7 @@ export function AdminGallery() {
                     onClick={goToNextPage}
                     disabled={page === totalPages || loading}
                   >
-                    بعدی
+                    Next
                     <ChevronRight className="h-4 w-4" />
                   </Button>
                   <Button
@@ -492,7 +492,7 @@ export function AdminGallery() {
                     disabled={page === totalPages || loading}
                     className="hidden md:inline-flex"
                   >
-                    آخر
+                    Last
                   </Button>
                 </div>
               </CardContent>
@@ -527,7 +527,7 @@ export function AdminGallery() {
       {/* Image Preview Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 pb-[80px]"
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 pb-[110px]"
           onClick={() => {
             setSelectedImage(null);
             setPlayingVideoId(null);
