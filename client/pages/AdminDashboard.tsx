@@ -407,13 +407,30 @@ export default function AdminDashboard() {
           {/* Users List */}
           <Card>
             <CardHeader>
-              <CardTitle>
-                کاربران ({filteredUsers.length})
-                {filterZeroCredit && " - فقط اعتبار صفر"}
-              </CardTitle>
-              <CardDescription>
-                کلیک بر روی یک کاربر برای مدیریت کلیدهای API و اعتبارات
-              </CardDescription>
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <CardTitle>
+                    کاربران ({filteredUsers.length})
+                    {filterZeroCredit && " - فقط اعتبار صفر"}
+                  </CardTitle>
+                  <CardDescription>
+                    کلیک بر روی یک کاربر برای مدیریت کلیدهای API و اعتبارات
+                  </CardDescription>
+                </div>
+                {/* Items Per Page Dropdown */}
+                <select
+                  value={usersPerPage}
+                  onChange={(e) => {
+                    setUsersPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="px-4 py-2 rounded-lg border border-border bg-background text-right text-sm font-medium whitespace-nowrap"
+                >
+                  <option value={5}>5 کاربر</option>
+                  <option value={10}>10 کاربر</option>
+                  <option value={20}>20 کاربر</option>
+                </select>
+              </div>
             </CardHeader>
             <CardContent>
               {filteredUsers.length === 0 ? (
