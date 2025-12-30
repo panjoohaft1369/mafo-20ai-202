@@ -41,7 +41,7 @@ export default function Admin() {
   const [indexSlides, setIndexSlides] = useState<Slide[]>([]);
   const [aboutSlides, setAboutSlides] = useState<Slide[]>([]);
   const [activeTab, setActiveTab] = useState<
-    "menu" | "index-slides" | "about-slides"
+    "menu" | "slides" | "image-editor" | "index-slides" | "about-slides"
   >("menu");
   const [loading, setLoading] = useState(false);
   const [editingMenu, setEditingMenu] = useState<MenuItem | null>(null);
