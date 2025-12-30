@@ -24,7 +24,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col pb-10" dir="rtl">
+    <div className="min-h-screen bg-background flex flex-col pb-20" dir="rtl">
       <TopNav />
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 

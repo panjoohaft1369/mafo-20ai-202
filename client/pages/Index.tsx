@@ -41,7 +41,7 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-10">
+    <div className="min-h-screen bg-background pb-20">
       <TopNav />
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
