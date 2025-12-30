@@ -61,22 +61,20 @@ export function Footer() {
             <p>© {currentYear} MAFO AI. تمام حقوق محفوظ است.</p>
             <div className="flex gap-4">
               <a
-                href="https://twitter.com"
+                href="https://whatsapp.com/channel/0029VbBjqEND38COV9iuFy33"
                 className="hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                توییتر
+                کانال واتساپ
               </a>
               <a
-                href="https://instagram.com"
+                href="https://t.me/mafoai"
                 className="hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                اینستاگرام
-              </a>
-              <a
-                href="https://telegram.com"
-                className="hover:text-foreground transition-colors"
-              >
-                تلگرام
+                کانال تلگرام
               </a>
             </div>
           </div>
