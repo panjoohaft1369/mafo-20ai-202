@@ -492,7 +492,7 @@ export default function AdminDashboard() {
           {/* Slideshow Sub-tab */}
           {editSubTab === "slideshow" && (
             <div className="pb-[150px]">
-              <AdminSlidesImageEditor />
+              <AdminSlideshowManager />
             </div>
           )}
 
