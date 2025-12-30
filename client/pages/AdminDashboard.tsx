@@ -456,7 +456,7 @@ export default function AdminDashboard() {
                             {getRoleBadge(user.role)}
                           </div>
 
-                          <div className="grid grid-cols-4 gap-4 text-sm text-right">
+                          <div className="grid grid-cols-3 gap-4 text-sm text-right">
                             <div className="min-w-0">
                               <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                                 ایمیل
@@ -479,14 +479,6 @@ export default function AdminDashboard() {
                               </p>
                               <p className="text-muted-foreground hover:text-white transition-colors truncate">
                                 {user.brandName}
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-muted-foreground hover:text-white transition-colors">
-                                کلیدهای API
-                              </p>
-                              <p className="font-semibold text-foreground hover:text-white transition-colors">
-                                {user.apiKeys.length}
                               </p>
                             </div>
                           </div>
