@@ -472,7 +472,7 @@ export default function AdminUserDetails() {
           <div className="flex gap-2">
             <Button
               onClick={() => setIsEditMode(!isEditMode)}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               <Edit2 className="h-4 w-4" />
               {isEditMode ? "لغو" : "ویرایش"}
