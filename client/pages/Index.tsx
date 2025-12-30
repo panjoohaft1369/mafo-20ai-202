@@ -250,6 +250,10 @@ export default function Index() {
       </main>
 
       <Footer />
+
+      {/* Bottom Spacing Section */}
+      <div className="h-[120px] bg-gradient-to-b from-primary/10 to-primary/5 w-full" />
+
       <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );

@@ -432,6 +432,10 @@ export default function Tutorials() {
       </main>
 
       <Footer />
+
+      {/* Bottom Spacing Section */}
+      <div className="h-[120px] bg-gradient-to-b from-blue-50 to-blue-50/50 dark:from-blue-950/20 dark:to-blue-950/10 w-full" />
+
       <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );

@@ -245,6 +245,10 @@ export default function Contact() {
       </main>
 
       <Footer />
+
+      {/* Bottom Spacing Section */}
+      <div className="h-[120px] bg-gradient-to-b from-green-50 to-green-50/50 dark:from-green-950/20 dark:to-green-950/10 w-full" />
+
       <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );

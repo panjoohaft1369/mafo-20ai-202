@@ -484,6 +484,10 @@ export default function About() {
       </main>
 
       <Footer />
+
+      {/* Bottom Spacing Section */}
+      <div className="h-[120px] bg-gradient-to-b from-purple-50 to-purple-50/50 dark:from-purple-950/20 dark:to-purple-950/10 w-full" />
+
       <BottomNav isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
     </div>
   );
