@@ -787,8 +787,7 @@ export async function handleAdminUpdateUser(
         brand_name,
         status,
         credits,
-        created_at,
-        api_keys:api_keys(id, key, is_active, created_at)
+        created_at
       `,
       )
       .single();
@@ -802,6 +801,17 @@ export async function handleAdminUpdateUser(
       return;
     }
 
+    // Fetch API keys separately to avoid join issues
+    const { data: apiKeysData, error: apiKeysError } = await supabase
+      .from("api_keys")
+      .select("id, key, is_active, created_at")
+      .eq("user_id", userId);
+
+    if (apiKeysError) {
+      console.error("[Admin Update User] API Keys error:", apiKeysError.message);
+      // Continue without API keys rather than failing completely
+    }
+
     const updatedUser = {
       id: data.id,
       name: data.name,
@@ -810,12 +820,17 @@ export async function handleAdminUpdateUser(
       brandName: data.brand_name,
       status: data.status,
       createdAt: data.created_at,
-      apiKeys: data.api_keys || [],
+      apiKeys: (apiKeysData || []).map((key: any) => ({
+        id: key.id,
+        key: key.key,
+        createdAt: key.created_at,
+        isActive: key.is_active,
+      })),
       credits: data.credits,
-      role: data.role || "user",
+      role: "user",
     };
 
-    console.log("[Admin] User updated successfully");
+    console.log("[Admin] User updated successfully:", userId);
 
     res.json({
       success: true,
