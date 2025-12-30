@@ -3,27 +3,33 @@ import { Link } from "react-router-dom";
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const footerLinks = {
-    درباره: [
-      { label: "درباره ما", href: "/about" },
-      { label: "تماس با ما", href: "/contact" },
-    ],
-    منابع: [
-      { label: "آموزش‌ها", href: "/tutorials" },
-      { label: "تاریخچه", href: "/history" },
-      { label: "پشتیبانی", href: "/support" },
-    ],
-  };
+  const footerSections = [
+    {
+      title: "منابع",
+      links: [
+        { label: "آموزش‌ها", href: "/tutorials" },
+        { label: "تاریخچه", href: "/history" },
+        { label: "پشتیبانی", href: "/support" },
+      ],
+    },
+    {
+      title: "درباره",
+      links: [
+        { label: "درباره ما", href: "/about" },
+        { label: "تماس با ما", href: "/contact" },
+      ],
+    },
+  ];
 
   return (
     <footer className="bg-card border-t border-border mt-20">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h3 className="font-semibold mb-4">{category}</h3>
+          {footerSections.map((section) => (
+            <div key={section.title}>
+              <h3 className="font-semibold mb-4">{section.title}</h3>
               <ul className="space-y-2">
-                {links.map((link) => (
+                {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
