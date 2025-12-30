@@ -15,6 +15,8 @@ import {
   ChevronRight,
   AlertCircle,
   Loader2,
+  Download,
+  X,
 } from "lucide-react";
 import { getAdminToken } from "@/lib/admin-auth";
 
@@ -53,6 +55,10 @@ export function AdminGallery() {
   const [error, setError] = useState("");
   const [searchUser, setSearchUser] = useState("");
   const [page, setPage] = useState(1);
+  const [selectedImage, setSelectedImage] = useState<GeneratedImage | null>(
+    null,
+  );
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
   // Set default page size based on screen size
   const getDefaultPageSize = () => {
@@ -134,6 +140,38 @@ export function AdminGallery() {
     setPage(1); // Reset to first page
   };
 
+  const handleDownloadImage = async (image: GeneratedImage) => {
+    if (!image.imageUrl) return;
+
+    try {
+      setDownloadingId(image.id);
+
+      // Fetch the image
+      const response = await fetch(image.imageUrl);
+      if (!response.ok) throw new Error("Failed to download image");
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+
+      // Generate filename from prompt or use default
+      const filename = image.prompt
+        ? image.prompt.substring(0, 50).replace(/[^a-zA-Z0-9_\u0600-\u06FF]/g, "_")
+        : `image_${image.id}`;
+
+      link.download = `${filename}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed:", err);
+    } finally {
+      setDownloadingId(null);
+    }
+  };
+
   const goToFirstPage = () => setPage(1);
   const goToLastPage = () => setPage(totalPages);
   const goToPreviousPage = () => setPage(Math.max(1, page - 1));
@@ -206,6 +244,7 @@ export function AdminGallery() {
               <Card
                 key={image.id}
                 className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => setSelectedImage(image)}
               >
                 {/* Image Preview */}
                 <div className="aspect-square bg-muted overflow-hidden group">
@@ -352,6 +391,111 @@ export function AdminGallery() {
             </p>
           </CardContent>
         </Card>
+      )}
+
+      {/* Image Preview Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <Card
+            className="w-full max-w-2xl max-h-[90vh] overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 border-b bg-card sticky top-0">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSelectedImage(null)}
+                className="hover:bg-muted"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+              <h2 className="text-lg font-semibold flex-1 text-center">
+                جزئیات تصویر
+              </h2>
+              <div className="w-10" /> {/* Placeholder for balance */}
+            </div>
+
+            {/* Modal Content */}
+            <CardContent className="pt-6 space-y-6">
+              {/* Image Display */}
+              {selectedImage.imageUrl ? (
+                <div className="flex flex-col gap-4">
+                  <img
+                    src={selectedImage.imageUrl}
+                    alt={selectedImage.prompt || "Generated image"}
+                    className="w-full max-h-96 object-contain rounded-lg bg-muted"
+                  />
+                  <Button
+                    onClick={() => handleDownloadImage(selectedImage)}
+                    disabled={downloadingId === selectedImage.id}
+                    className="w-full gap-2"
+                  >
+                    <Download className="h-4 w-4" />
+                    {downloadingId === selectedImage.id
+                      ? "در حال دانلود..."
+                      : "دانلود تصویر"}
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center py-12 bg-muted rounded-lg">
+                  <AlertCircle className="h-8 w-8 text-muted-foreground" />
+                </div>
+              )}
+
+              {/* Image Details */}
+              <div className="space-y-4 text-right">
+                {/* User Info */}
+                <div className="border-t pt-4">
+                  <h3 className="font-semibold mb-2">اطلاعات کاربر</h3>
+                  <p className="text-sm">نام: {selectedImage.user.name}</p>
+                  <p className="text-sm">ایمیل: {selectedImage.user.email}</p>
+                  {selectedImage.user.phone && (
+                    <p className="text-sm">موبایل: {selectedImage.user.phone}</p>
+                  )}
+                </div>
+
+                {/* Prompt */}
+                {selectedImage.prompt && (
+                  <div className="border-t pt-4">
+                    <h3 className="font-semibold mb-2">متن درخواست</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {selectedImage.prompt}
+                    </p>
+                  </div>
+                )}
+
+                {/* Technical Details */}
+                <div className="border-t pt-4">
+                  <h3 className="font-semibold mb-2">مشخصات فنی</h3>
+                  <div className="text-sm space-y-1 text-muted-foreground">
+                    {selectedImage.resolution && (
+                      <p>کیفیت: {selectedImage.resolution}</p>
+                    )}
+                    {selectedImage.aspectRatio && (
+                      <p>نسبت ابعاد: {selectedImage.aspectRatio}</p>
+                    )}
+                    {selectedImage.creditCost && (
+                      <p>هزینه اعتبار: {selectedImage.creditCost}</p>
+                    )}
+                    <p>
+                      تاریخ ایجاد:{" "}
+                      {new Date(selectedImage.createdAt).toLocaleDateString(
+                        "fa-IR",
+                      )}{" "}
+                      {new Date(selectedImage.createdAt).toLocaleTimeString(
+                        "fa-IR",
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );
