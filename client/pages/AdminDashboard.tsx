@@ -323,29 +323,14 @@ export default function AdminDashboard() {
               <CardTitle className="text-lg">جستجو و فیلتر</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex gap-3">
-                <div className="flex-1 relative">
-                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="جستجو بر اساس نام، ایمیل، شماره تماس یا نام برند..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-3 pr-9 text-right"
-                  />
-                </div>
-                {/* Items Per Page Dropdown */}
-                <select
-                  value={usersPerPage}
-                  onChange={(e) => {
-                    setUsersPerPage(Number(e.target.value));
-                    setCurrentPage(1);
-                  }}
-                  className="px-4 py-2 rounded-lg border border-border bg-background text-right text-sm font-medium"
-                >
-                  <option value={5}>5 کاربر</option>
-                  <option value={10}>10 کاربر</option>
-                  <option value={20}>20 کاربر</option>
-                </select>
+              <div className="flex-1 relative">
+                <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="جستجو بر اساس نام، ایمیل، شماره تماس یا نام برند..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-3 pr-9 text-right"
+                />
               </div>
 
               <div className="flex flex-wrap gap-2">
