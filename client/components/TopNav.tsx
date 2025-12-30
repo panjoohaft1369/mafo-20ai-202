@@ -39,17 +39,15 @@ export function TopNav() {
           const result = await response.json();
           if (result.success && result.data) {
             const { credits: newCredits } = result.data;
-            // Update localStorage and state if credits differ
+            // Update localStorage and state if credits differ from server
             if (newCredits !== currentAuth.credits) {
-              import("@/lib/auth").then((module) => {
-                module.updateStoredCredits(newCredits);
-                setAuth(module.getAuthState());
-              });
+              updateStoredCredits(newCredits);
+              setAuth(getAuthState());
             }
           }
         }
       } catch (err) {
-        console.error("[TopNav] Error syncing credits:", err);
+        // Silently ignore sync errors to avoid console spam
       }
     };
 
