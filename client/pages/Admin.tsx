@@ -522,6 +522,15 @@ export default function Admin() {
             </div>
           )}
 
+          {/* Image Editor */}
+          {activeTab === "image-editor" && (
+            <AdminSlidesImageEditor
+              onSave={() => {
+                loadData();
+              }}
+            />
+          )}
+
           {/* Admin Warning */}
           <div className="mt-12 p-4 rounded-lg bg-amber-50 border border-amber-200 flex gap-3">
             <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
