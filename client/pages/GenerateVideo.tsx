@@ -483,6 +483,8 @@ export default function GenerateVideo() {
         </div>
       </main>
 
+      <section className="h-[150px] bg-background w-full"></section>
+
       {/* Bottom Navigation */}
       <BottomNav isLoggedIn={true} onLogout={handleLogout} />
     </div>

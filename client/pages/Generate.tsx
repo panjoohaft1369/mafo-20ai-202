@@ -712,6 +712,8 @@ export default function Generate() {
         apiKey={auth.apiKey!}
       />
 
+      <section className="h-[150px] bg-background w-full"></section>
+
       {/* Bottom Navigation */}
       <BottomNav isLoggedIn={true} onLogout={handleLogout} />
     </div>

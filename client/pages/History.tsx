@@ -490,6 +490,8 @@ export default function History() {
         />
       )}
 
+      <section className="h-[150px] bg-background w-full"></section>
+
       <BottomNav isLoggedIn={true} onLogout={handleLogout} />
     </div>
   );
