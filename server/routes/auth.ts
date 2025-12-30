@@ -673,7 +673,7 @@ export async function handleGetUserProfile(
         brandName: user.brand_name,
         credits: user.credits,
         status: user.status,
-        role: user.role || "user",
+        role: "user",
       },
     });
   } catch (error: any) {
