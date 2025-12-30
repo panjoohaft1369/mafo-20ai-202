@@ -237,6 +237,8 @@ export default function History() {
     <div className="min-h-screen bg-background pb-0">
       <Header isLoggedIn={true} onLogout={handleLogout} />
 
+      <section className="h-[150px] bg-background w-full"></section>
+
       <main className="container mx-auto px-4 py-8 sm:py-12 max-w-6xl -mt-[120px]">
         {/* Title Section */}
         <div className="mb-8 text-center">

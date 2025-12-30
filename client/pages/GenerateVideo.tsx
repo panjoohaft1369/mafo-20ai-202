@@ -221,6 +221,8 @@ export default function GenerateVideo() {
     <div className="min-h-screen bg-background pb-0">
       <Header isLoggedIn={true} onLogout={handleLogout} />
 
+      <section className="h-[150px] bg-background w-full"></section>
+
       <main className="container mx-auto px-4 py-8 sm:py-12 pt-20 md:pt-24 -mt-[120px]">
         {/* Title Section */}
         <div className="max-w-4xl mx-auto mb-8 text-center">
