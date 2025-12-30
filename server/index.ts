@@ -124,6 +124,7 @@ export function createServer() {
   // Authentication routes
   app.post("/api/register", handleRegister);
   app.post("/api/login", handleLogin);
+  app.get("/api/user/profile", handleGetUserProfile);
   app.put("/api/user/profile", handleUpdateProfile);
   app.post("/api/user/change-password", handleChangePassword);
 
