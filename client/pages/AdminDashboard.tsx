@@ -27,6 +27,7 @@ import {
 import { getAuthState, clearAuth } from "@/lib/auth";
 import { AdminBottomNav } from "@/components/AdminBottomNav";
 import { AdminGallery } from "@/pages/AdminGallery";
+import { AdminSlidesImageEditor } from "@/components/AdminSlidesImageEditor";
 
 interface User {
   id: string;
