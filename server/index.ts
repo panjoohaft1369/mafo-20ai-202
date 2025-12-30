@@ -23,6 +23,7 @@ import {
   handleAdminVerify,
   handleAdminGetUsers,
   handleAdminGetUser,
+  handleAdminGetUserPassword,
   handleAdminUpdateCredits,
   handleAdminAddApiKey,
   handleAdminDeleteApiKey,
