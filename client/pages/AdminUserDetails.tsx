@@ -458,16 +458,17 @@ export default function AdminUserDetails() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-background to-muted pt-20">
+    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-background to-muted pt-20 pb-[100px]">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Top Navigation */}
         <div className="flex items-center justify-between">
-          <button
+          <Button
             onClick={() => navigate("/admin")}
-            className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+            className="bg-gray-600 hover:bg-gray-700 text-white gap-2"
           >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
+            <ChevronLeft className="h-4 w-4" />
+            بازگشت
+          </Button>
           <div className="flex gap-2">
             <Button
               onClick={() => setIsEditMode(!isEditMode)}
