@@ -464,7 +464,50 @@ export default function AdminDashboard() {
               خروج
             </Button>
           </div>
-          <AdminSlidesImageEditor />
+
+          {/* Sub-tabs */}
+          <div className="flex gap-2 mb-6 border-b border-muted">
+            <button
+              onClick={() => setEditSubTab("slideshow")}
+              className={`px-4 py-2 text-sm font-medium transition-colors ${
+                editSubTab === "slideshow"
+                  ? "border-b-2 border-primary text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              اسلاید شو
+            </button>
+            <button
+              onClick={() => setEditSubTab("links")}
+              className={`px-4 py-2 text-sm font-medium transition-colors ${
+                editSubTab === "links"
+                  ? "border-b-2 border-primary text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              لینک ها
+            </button>
+          </div>
+
+          {/* Slideshow Sub-tab */}
+          {editSubTab === "slideshow" && (
+            <div className="pb-[150px]">
+              <AdminSlidesImageEditor />
+            </div>
+          )}
+
+          {/* Links Sub-tab */}
+          {editSubTab === "links" && (
+            <div className="pb-[150px]">
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-muted-foreground text-center">
+                    این قسمت در آینده فعال خواهد شد
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       )}
 
