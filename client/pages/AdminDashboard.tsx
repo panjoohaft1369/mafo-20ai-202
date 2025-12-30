@@ -238,19 +238,19 @@ export default function AdminDashboard() {
       {activeTab === "users" && (
         <div className="max-w-7xl mx-auto space-y-6 pb-[150px]">
           {/* Header */}
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-2">
+              <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
                 <div className="p-2 rounded-lg bg-primary/10">
-                  <Users className="h-7 w-7 text-primary" />
+                  <Users className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
                 </div>
                 پنل مدیریت کاربران
               </h1>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-muted-foreground mt-1 text-sm sm:text-base">
                 مدیریت حسابهای کاربری و اختصاص کلیدهای API
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <Button
                 onClick={() => navigate("/admin/users/add")}
                 className="bg-green-600 hover:bg-green-700 text-white"
