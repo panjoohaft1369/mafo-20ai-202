@@ -486,20 +486,14 @@ export default function AdminUserDetails() {
   return (
     <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-background to-muted pt-20">
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Header */}
+        {/* Top Navigation */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate("/admin")}
-              className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
-            <div>
-              <h1 className="text-3xl font-bold">{user.name}</h1>
-              <p className="text-muted-foreground">{user.brandName}</p>
-            </div>
-          </div>
+          <button
+            onClick={() => navigate("/admin")}
+            className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
           <div className="flex gap-2">
             <Button
               onClick={() => setIsEditMode(!isEditMode)}
@@ -525,6 +519,12 @@ export default function AdminUserDetails() {
               )}
             </Button>
           </div>
+        </div>
+
+        {/* User Name Section */}
+        <div>
+          <h1 className="text-3xl font-bold">{user.name}</h1>
+          <p className="text-muted-foreground mt-1">{user.brandName}</p>
         </div>
 
         {/* Error Message */}
