@@ -11,7 +11,7 @@ export function AdminBottomNav({
   onTabChange,
 }: AdminBottomNavProps) {
   return (
-    <div className="fixed bottom-[55px] left-0 right-0 z-40 w-full border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 rounded-t-2xl shadow-2xl pb-[55px]">
+    <div className="fixed left-0 right-0 z-40 w-full border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 rounded-t-2xl shadow-2xl bottom-[55px] lg:bottom-0 pb-[55px] lg:pb-8">
       <div className="flex h-16 items-center justify-around px-4 sm:px-8">
         {/* Users Tab */}
         <div
