@@ -9,7 +9,6 @@ export function Footer() {
       links: [
         { label: "آموزش‌ها", href: "/tutorials" },
         { label: "تاریخچه", href: "/history" },
-        { label: "پشتیبانی", href: "/support" },
       ],
     },
     {
