@@ -15,6 +15,7 @@ import {
 import { Plus, Trash2, Edit2, Save, X, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { AdminSlideshowEditor } from "@/components/AdminSlideshowEditor";
+import { AdminSlidesImageEditor } from "@/components/AdminSlidesImageEditor";
 
 interface MenuItem {
   id: string;
