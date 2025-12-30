@@ -513,7 +513,7 @@ export default function AdminDashboard() {
 
       {/* Gallery Tab Content */}
       {activeTab === "gallery" && (
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto pb-[150px]">
           <div className="flex items-center justify-end mb-6">
             <Button
               onClick={handleLogout}
