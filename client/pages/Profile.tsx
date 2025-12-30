@@ -271,7 +271,7 @@ export default function Profile() {
       <TopNav />
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
-      <main className="flex-1 pt-20 md:pt-28 pb-24">
+      <main className="flex-1 pt-20 md:pt-28 pb-10">
         <section className="px-4 py-12 sm:py-16">
           <div className="container mx-auto max-w-2xl">
             {/* Header */}
