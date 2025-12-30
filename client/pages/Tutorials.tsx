@@ -120,7 +120,10 @@ export default function Tutorials() {
               </Card>
 
               {/* Tips for Images */}
-              <div className="p-6 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800" dir="rtl">
+              <div
+                className="p-6 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800"
+                dir="rtl"
+              >
                 <h3 className="font-bold text-lg mb-4 text-right text-green-900 dark:text-green-100">
                   💡 نکات مهم برای بهترین نتایج
                 </h3>
@@ -185,7 +188,8 @@ export default function Tutorials() {
                         ✅ درست
                       </p>
                       <p className="italic font-semibold text-sm text-green-700 dark:text-green-400">
-                        "دوربین بصورت آهسته حول محور عمود به سوژه به آهستگی به سمت چپ حرکت کند."
+                        "دوربین بصورت آهسته حول محور عمود به سوژه به آهستگی به
+                        سمت چپ حرکت کند."
                       </p>
                     </div>
                   </div>
@@ -227,7 +231,8 @@ export default function Tutorials() {
                   </p>
                   <div className="p-4 bg-muted rounded-lg border border-border">
                     <p className="italic font-semibold text-sm">
-                      "دوربین به آهستگی دور سوژه حرکت میکنه و یه مرد جوان به تصویر اضافه میشه و روی مبل میشینه."
+                      "دوربین به آهستگی دور سوژه حرکت میکنه و یه مرد جوان به
+                      تصویر اضافه میشه و روی مبل میشینه."
                     </p>
                   </div>
                 </CardContent>
@@ -252,9 +257,11 @@ export default function Tutorials() {
                 </CardContent>
               </Card>
 
-
               {/* Tips for Videos */}
-              <div className="p-6 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800" dir="rtl">
+              <div
+                className="p-6 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800"
+                dir="rtl"
+              >
                 <h3 className="font-bold text-lg mb-4 text-right text-green-900 dark:text-green-100">
                   💡 نکاتی که نتیجه رو بهتر می‌کنه
                 </h3>
@@ -295,8 +302,6 @@ export default function Tutorials() {
                   </li>
                 </ul>
               </div>
-
-
             </div>
           </div>
         </section>

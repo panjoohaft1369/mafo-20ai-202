@@ -275,8 +275,8 @@ export default function About() {
             <div className="mt-12 text-center p-8 rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
               <p className="text-lg text-foreground font-medium">
                 ما می‌خواهیم شما با{" "}
-                <span className="text-foreground font-bold">آرامش و راحتی</span> در
-                زمان‌های لازم، از هوش مصنوعی ما استفاده کنید.
+                <span className="text-foreground font-bold">آرامش و راحتی</span>{" "}
+                در زمان‌های لازم، از هوش مصنوعی ما استفاده کنید.
               </p>
               <p className="text-foreground mt-3">
                 بدون فشار، بدون محدودیت، فقط وقتی که واقعا نیازتون باشه.
@@ -332,7 +332,6 @@ export default function About() {
                 );
               })}
             </div>
-
           </div>
         </section>
 
