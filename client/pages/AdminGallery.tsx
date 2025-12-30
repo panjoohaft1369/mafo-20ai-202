@@ -59,6 +59,29 @@ export function AdminGallery() {
     null,
   );
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [filter, setFilter] = useState<"all" | "images" | "videos">("all");
+
+  // Function to detect if URL is a video
+  const isVideoUrl = (url?: string): boolean => {
+    if (!url) return false;
+    const videoExtensions = [".mp4", ".webm", ".mov", ".avi", ".mkv"];
+    const urlLower = url.toLowerCase();
+    return (
+      videoExtensions.some((ext) => urlLower.includes(ext)) ||
+      urlLower.includes("video") ||
+      urlLower.includes("generated_video")
+    );
+  };
+
+  // Filter images based on selected filter
+  const filteredImages = images.filter((entry) => {
+    if (filter === "videos") {
+      return entry.imageUrl && isVideoUrl(entry.imageUrl);
+    } else if (filter === "images") {
+      return entry.imageUrl && !isVideoUrl(entry.imageUrl);
+    }
+    return true; // "all"
+  });
 
   // Set default page size based on screen size
   const getDefaultPageSize = () => {
@@ -146,27 +169,45 @@ export function AdminGallery() {
     try {
       setDownloadingId(image.id);
 
-      // Fetch the image
-      const response = await fetch(image.imageUrl);
-      if (!response.ok) throw new Error("Failed to download image");
+      // Use backend endpoint to bypass CORS issues
+      const downloadUrl = `/api/download-image?url=${encodeURIComponent(image.imageUrl)}`;
+
+      const response = await fetch(downloadUrl);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage =
+          errorData.error || `خطا در دانلود فایل (HTTP ${response.status})`;
+        console.error("[Download] Server error:", errorMessage);
+        return;
+      }
 
       const blob = await response.blob();
+      if (blob.size === 0) {
+        console.error("Downloaded file is empty");
+        return;
+      }
+
+      // Try to get filename from Content-Disposition header
+      const contentDisposition = response.headers.get("Content-Disposition");
+      let filename = "mafo-file";
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
+        if (filenameMatch && filenameMatch[1]) {
+          filename = filenameMatch[1];
+        }
+      }
+
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-
-      // Generate filename from prompt or use default
-      const filename = image.prompt
-        ? image.prompt.substring(0, 50).replace(/[^a-zA-Z0-9_\u0600-\u06FF]/g, "_")
-        : `image_${image.id}`;
-
-      link.download = `${filename}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
       window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download failed:", err);
+      document.body.removeChild(a);
+    } catch (err: any) {
+      console.error("[Download] Error:", err.message);
     } finally {
       setDownloadingId(null);
     }
