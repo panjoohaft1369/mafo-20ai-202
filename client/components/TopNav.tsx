@@ -134,8 +134,14 @@ export function TopNav() {
         </div>
       </nav>
 
-      {/* Mobile Hamburger Menu */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 p-4">
+      {/* Mobile Header with Logo and Menu */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 p-4 flex items-center justify-between">
+        {/* Logo on Left */}
+        <Link to="/" className="flex items-center gap-2 text-lg font-bold hover:text-primary transition-colors">
+          🎨 MAFO
+        </Link>
+
+        {/* Hamburger Menu on Right */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="backdrop-blur-md bg-background/40 border border-foreground/10 rounded-lg p-3 flex items-center justify-center w-12 h-12 hover:bg-foreground/10 transition-colors"
