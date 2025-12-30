@@ -227,6 +227,16 @@ export default function Admin() {
             >
               مدیریت اسلاید‌ها
             </button>
+            <button
+              onClick={() => setActiveTab("image-editor")}
+              className={`pb-3 px-4 font-medium transition-colors ${
+                activeTab === "image-editor"
+                  ? "border-b-2 border-primary text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              ویرایش تصاویر
+            </button>
           </div>
 
           {/* Menu Manager */}
