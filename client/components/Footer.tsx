@@ -18,24 +18,46 @@ export function Footer() {
         { label: "تماس با ما", href: "/contact" },
       ],
     },
+    {
+      title: "شبکه های اجتماعی",
+      links: [
+        {
+          label: "کانال واتساپ",
+          href: "https://whatsapp.com/channel/0029VbBjqEND38COV9iuFy33",
+          external: true,
+        },
+        { label: "کانال تلگرام", href: "https://t.me/mafoai", external: true },
+      ],
+    },
   ];
 
   return (
     <footer className="bg-card border-t border-border mt-20">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-3 gap-8 mb-8">
           {footerSections.map((section) => (
             <div key={section.title}>
               <h3 className="font-semibold mb-4">{section.title}</h3>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      to={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                    >
-                      {link.label}
-                    </Link>
+                    {link.external ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -57,26 +79,8 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+          <div className="text-center text-sm text-muted-foreground">
             <p>© {currentYear} MAFO AI. تمام حقوق محفوظ است.</p>
-            <div className="flex gap-4">
-              <a
-                href="https://whatsapp.com/channel/0029VbBjqEND38COV9iuFy33"
-                className="hover:text-foreground transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                کانال واتساپ
-              </a>
-              <a
-                href="https://t.me/mafoai"
-                className="hover:text-foreground transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                کانال تلگرام
-              </a>
-            </div>
           </div>
         </div>
       </div>
