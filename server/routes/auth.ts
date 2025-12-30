@@ -647,8 +647,7 @@ export async function handleGetUserProfile(
         phone,
         brand_name,
         credits,
-        status,
-        role
+        status
       `,
       )
       .eq("id", apiKeyData.user_id)
