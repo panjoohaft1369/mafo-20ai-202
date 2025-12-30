@@ -328,14 +328,39 @@ export function AdminGallery() {
                 className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                 onClick={() => setSelectedImage(image)}
               >
-                {/* Image Preview */}
-                <div className="aspect-square bg-muted overflow-hidden group">
+                {/* Media Preview */}
+                <div className="aspect-square bg-muted overflow-hidden group relative">
                   {image.imageUrl ? (
-                    <img
-                      src={image.imageUrl}
-                      alt={image.prompt || "Generated image"}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
+                    <>
+                      {isVideoUrl(image.imageUrl) ? (
+                        <div className="w-full h-full bg-black flex items-center justify-center relative">
+                          <video
+                            src={image.imageUrl}
+                            className="w-full h-full object-cover"
+                            onLoadedMetadata={(e) => {
+                              // Thumbnail from video will show when loaded
+                            }}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-all">
+                            <div className="bg-white/90 rounded-full p-3 group-hover:scale-110 transition-transform">
+                              <svg
+                                className="w-6 h-6 text-black"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <img
+                          src={image.imageUrl}
+                          alt={image.prompt || "Generated image"}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                      )}
+                    </>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-muted/50">
                       <AlertCircle className="h-8 w-8 text-muted-foreground" />
