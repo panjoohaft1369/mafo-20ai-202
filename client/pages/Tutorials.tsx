@@ -23,7 +23,7 @@ export default function Tutorials() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col pb-24">
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
       <main className="flex-1 pt-20 md:pt-28">
