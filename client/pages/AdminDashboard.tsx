@@ -444,12 +444,12 @@ export default function AdminDashboard() {
                     <div
                       key={user.id}
                       onClick={() => navigate(`/admin/users/${user.id}`)}
-                      className="p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:bg-slate-800"
+                      className="p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:bg-slate-800"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <h3 className="font-semibold text-right hover:text-white transition-colors">
+                            <h3 className="font-semibold text-right hover:text-white transition-colors truncate">
                               {user.name}
                             </h3>
                             {getStatusBadge(user.status)}
@@ -457,27 +457,27 @@ export default function AdminDashboard() {
                           </div>
 
                           <div className="grid grid-cols-4 gap-4 text-sm text-right">
-                            <div>
+                            <div className="min-w-0">
                               <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                                 ایمیل
                               </p>
-                              <p className="font-mono text-muted-foreground hover:text-white transition-colors">
+                              <p className="font-mono text-muted-foreground hover:text-white transition-colors truncate">
                                 {user.email}
                               </p>
                             </div>
-                            <div>
+                            <div className="min-w-0">
                               <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                                 شماره تماس
                               </p>
-                              <p className="text-muted-foreground hover:text-white transition-colors">
+                              <p className="text-muted-foreground hover:text-white transition-colors truncate">
                                 {user.phone}
                               </p>
                             </div>
-                            <div>
+                            <div className="min-w-0">
                               <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                                 نام برند
                               </p>
-                              <p className="text-muted-foreground hover:text-white transition-colors">
+                              <p className="text-muted-foreground hover:text-white transition-colors truncate">
                                 {user.brandName}
                               </p>
                             </div>
@@ -492,7 +492,7 @@ export default function AdminDashboard() {
                           </div>
                         </div>
 
-                        <div className="flex flex-col items-end gap-2 ml-4">
+                        <div className="flex flex-col items-end gap-2 ml-4 flex-shrink-0">
                           <div className="text-right">
                             <p className="text-xs text-muted-foreground hover:text-white transition-colors">
                               اعتبار
