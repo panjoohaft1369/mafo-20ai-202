@@ -56,7 +56,7 @@ export function ImageCarousel({
   };
 
   return (
-    <div className="relative w-full h-screen group">
+    <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-screen group">
       {/* Main Carousel Container - Full Width */}
       <div className="relative w-full h-full overflow-hidden">
         <div ref={emblaRef} className="h-full w-full">
