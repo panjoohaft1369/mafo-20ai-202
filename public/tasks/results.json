@@ -108,5 +108,18 @@
     "taskType": "image",
     "creditsDeducted": true,
     "imageUrl": "https://tempfile.aiquickdraw.com/h/53d32f69f9148ef6e1877dead81a6280_1766968727.png"
+  },
+  "031f92021089b2a0d1a4461e4f9c1a67": {
+    "status": "success",
+    "timestamp": 1767077350384,
+    "prompt": "این تصویر رو کارتونی و رنگی کن",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "3f1a92a9955aa2feac4057642fdc6899",
+    "userId": "08448efc-9c3e-4fc3-9764-8b9a5ba0269b",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/031f92021089b2a0d1a4461e4f9c1a67_1767077375.png"
   }
 }
