@@ -60,6 +60,7 @@ export function AdminGallery() {
   );
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "images" | "videos">("all");
+  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
 
   // Function to detect if URL is a video
   const isVideoUrl = (url?: string): boolean => {
@@ -546,15 +547,39 @@ export function AdminGallery() {
               {selectedImage.imageUrl ? (
                 <div className="flex flex-col gap-4">
                   {isVideoUrl(selectedImage.imageUrl) ? (
-                    // Video Player
-                    <div className="relative rounded-lg overflow-hidden border border-border bg-black h-[400px] flex items-center justify-center">
-                      <video
-                        src={selectedImage.imageUrl}
-                        controls
-                        className="w-full h-full object-contain"
-                        poster={`${selectedImage.imageUrl}?thumbnail=true`}
-                      />
-                    </div>
+                    // Video Preview or Player
+                    playingVideoId === selectedImage.id ? (
+                      <div className="relative rounded-lg overflow-hidden border border-border bg-black h-[400px] flex items-center justify-center">
+                        <video
+                          src={selectedImage.imageUrl}
+                          controls
+                          autoPlay
+                          className="w-full h-full object-contain"
+                          poster={`${selectedImage.imageUrl}?thumbnail=true`}
+                        />
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setPlayingVideoId(selectedImage.id)}
+                        className="relative rounded-lg overflow-hidden border border-border bg-black h-[400px] flex items-center justify-center hover:opacity-80 transition-opacity group cursor-pointer"
+                      >
+                        <video
+                          src={selectedImage.imageUrl}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-all">
+                          <div className="bg-white/90 rounded-full p-4 group-hover:scale-110 transition-transform">
+                            <svg
+                              className="w-8 h-8 text-black"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </button>
+                    )
                   ) : (
                     // Image Display
                     <img
