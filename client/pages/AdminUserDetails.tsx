@@ -804,30 +804,39 @@ export default function AdminUserDetails() {
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Add New Key */}
-            <div className="flex gap-2">
-              <Input
-                placeholder="یا کلید API را اینجا بچسبانید"
-                value={newApiKey}
-                onChange={(e) => setNewApiKey(e.target.value)}
-                className="text-right"
-              />
-              <Button
-                onClick={handleAddApiKey}
-                disabled={addingKey}
-                className="whitespace-nowrap bg-green-600 hover:bg-green-700"
-              >
-                {addingKey ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  </>
-                ) : (
-                  <>
-                    <Plus className="h-4 w-4" />
-                    افزودن کلید
-                  </>
-                )}
-              </Button>
-            </div>
+            {user.apiKeys.length === 0 && (
+              <div className="flex gap-2">
+                <Input
+                  placeholder="یا کلید API را اینجا بچسبانید"
+                  value={newApiKey}
+                  onChange={(e) => setNewApiKey(e.target.value)}
+                  className="text-right"
+                />
+                <Button
+                  onClick={handleAddApiKey}
+                  disabled={addingKey}
+                  className="whitespace-nowrap bg-green-600 hover:bg-green-700"
+                >
+                  {addingKey ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="h-4 w-4" />
+                      افزودن کلید
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+            {user.apiKeys.length > 0 && (
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-sm text-blue-800">
+                  ℹ️ هر کاربر فقط می‌تواند یک کلید API داشته باشد.
+                </p>
+              </div>
+            )}
 
             {/* API Keys List */}
             {user.apiKeys.length === 0 ? (
