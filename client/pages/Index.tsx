@@ -5,7 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TopNav } from "@/components/TopNav";
 import { BottomNav } from "@/components/BottomNav";
-import { ImageCarousel } from "@/components/ImageCarousel";
+import { DisplaySlideshow } from "@/components/DisplaySlideshow";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -46,9 +46,9 @@ export default function Index() {
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
       <main className="pt-20 md:pt-24">
-        {/* Image Carousel - Full Width Top */}
+        {/* Slideshow - Full Width Top */}
         <section className="relative w-full">
-          <ImageCarousel />
+          <DisplaySlideshow slidesEndpoint="/api/admin/index-slides" />
         </section>
 
         {/* Carousel Description */}
