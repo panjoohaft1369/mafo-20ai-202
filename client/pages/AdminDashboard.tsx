@@ -54,6 +54,9 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<"users" | "edit" | "gallery">(
     "users",
   );
+  const [editSubTab, setEditSubTab] = useState<"slideshow" | "links">(
+    "slideshow",
+  );
 
   useEffect(() => {
     // Check admin authentication and role
