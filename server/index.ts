@@ -17,6 +17,7 @@ import {
   handleLogin,
   handleUpdateProfile,
   handleChangePassword,
+  handleGetUserProfile,
 } from "./routes/auth.js";
 import {
   handleAdminLogin,
