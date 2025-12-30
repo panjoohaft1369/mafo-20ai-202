@@ -599,3 +599,89 @@ export async function handleRegister(
     });
   }
 }
+
+/**
+ * Handle fetching current user profile (for syncing credits and user info)
+ * Uses API key authentication
+ */
+export async function handleGetUserProfile(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  try {
+    const apiKey = req.headers.authorization?.replace("Bearer ", "");
+
+    if (!apiKey) {
+      res.status(401).json({
+        success: false,
+        error: "API key is required",
+      });
+      return;
+    }
+
+    // Find user by API key
+    const { data: apiKeyData, error: keyError } = await supabase
+      .from("api_keys")
+      .select("user_id")
+      .eq("key", apiKey)
+      .eq("is_active", true)
+      .single();
+
+    if (keyError || !apiKeyData) {
+      console.error("[GetUserProfile] Invalid API key:", keyError);
+      res.status(401).json({
+        success: false,
+        error: "Invalid API key",
+      });
+      return;
+    }
+
+    // Fetch user data
+    const { data: user, error: userError } = await supabase
+      .from("users")
+      .select(
+        `
+        id,
+        name,
+        email,
+        phone,
+        brand_name,
+        credits,
+        status,
+        role
+      `,
+      )
+      .eq("id", apiKeyData.user_id)
+      .is("deleted_at", null)
+      .single();
+
+    if (userError || !user) {
+      console.error("[GetUserProfile] User not found:", userError);
+      res.status(404).json({
+        success: false,
+        error: "User not found",
+      });
+      return;
+    }
+
+    res.json({
+      success: true,
+      data: {
+        userId: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        brandName: user.brand_name,
+        credits: user.credits,
+        status: user.status,
+        role: user.role || "user",
+      },
+    });
+  } catch (error: any) {
+    console.error("[GetUserProfile] Error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Error fetching user profile",
+    });
+  }
+}
