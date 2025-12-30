@@ -250,12 +250,53 @@ export function AdminGallery() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="10">10 تصویر</SelectItem>
-                <SelectItem value="20">20 تصویر</SelectItem>
-                <SelectItem value="50">50 تصویر</SelectItem>
-                <SelectItem value="100">100 تصویر</SelectItem>
+                <SelectItem value="10">10 آیتم</SelectItem>
+                <SelectItem value="20">20 آیتم</SelectItem>
+                <SelectItem value="50">50 آیتم</SelectItem>
+                <SelectItem value="100">100 آیتم</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Filter Tabs */}
+          <div className="flex gap-2 justify-center flex-wrap pt-2 border-t">
+            <Button
+              onClick={() => {
+                setFilter("all");
+                setPage(1);
+              }}
+              variant={filter === "all" ? "default" : "outline"}
+              size="sm"
+              className="gap-1"
+            >
+              همه ({images.length})
+            </Button>
+            <Button
+              onClick={() => {
+                setFilter("images");
+                setPage(1);
+              }}
+              variant={filter === "images" ? "default" : "outline"}
+              size="sm"
+              className="gap-1"
+            >
+              تصاویر (
+              {images.filter((h) => h.imageUrl && !isVideoUrl(h.imageUrl)).length}
+              )
+            </Button>
+            <Button
+              onClick={() => {
+                setFilter("videos");
+                setPage(1);
+              }}
+              variant={filter === "videos" ? "default" : "outline"}
+              size="sm"
+              className="gap-1"
+            >
+              ویدیوها (
+              {images.filter((h) => h.imageUrl && isVideoUrl(h.imageUrl)).length}
+              )
+            </Button>
           </div>
         </CardContent>
       </Card>
@@ -278,10 +319,10 @@ export function AdminGallery() {
       )}
 
       {/* Gallery Grid */}
-      {!loading && images.length > 0 && (
+      {!loading && filteredImages.length > 0 && (
         <>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {images.map((image) => (
+            {filteredImages.map((image) => (
               <Card
                 key={image.id}
                 className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
@@ -346,7 +387,12 @@ export function AdminGallery() {
             <Card>
               <CardContent className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="text-sm text-muted-foreground">
-                  صفحه {page} از {totalPages} | مجموع {total} تصویر
+                  صفحه {page} از {totalPages} | مجموع {total}{" "}
+                  {filter === "images"
+                    ? "تصویر"
+                    : filter === "videos"
+                      ? "ویدیو"
+                      : "آیتم"}
                 </div>
 
                 <div className="flex gap-2">
@@ -421,15 +467,24 @@ export function AdminGallery() {
       )}
 
       {/* Empty State */}
-      {!loading && images.length === 0 && !error && (
+      {!loading && filteredImages.length === 0 && !error && (
         <Card className="border-dashed">
           <CardContent className="pt-6 text-center py-12">
             <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
             <p className="text-muted-foreground">
-              {searchUser
-                ? "تصویری با این جستجو یافت نشد"
-                : "هنوز تصویری ایجاد نشده است"}
+              {filter === "videos"
+                ? "ویدیویی موجود نیست"
+                : filter === "images"
+                  ? "تصویری موجود نیست"
+                  : searchUser
+                    ? "تصویری با این جستجو یافت نشد"
+                    : "هنوز تصویری ایجاد نشده است"}
             </p>
+            {images.length > 0 && filteredImages.length === 0 && (
+              <p className="text-sm text-muted-foreground mt-2">
+                (اما {images.length} مورد دیگر در دسته‌های دیگر وجود دارد)
+              </p>
+            )}
           </CardContent>
         </Card>
       )}
