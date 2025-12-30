@@ -24,36 +24,11 @@ import {
   Gauge,
   Globe,
 } from "lucide-react";
-
-const slides = [
-  {
-    title: "تولید تصاویر حرفه‌ای",
-    subtitle: "با کیفیت بالا و سرعت فوری",
-    bg: "from-blue-600 to-blue-400",
-  },
-  {
-    title: "برای کسب‌وکار شما",
-    subtitle: "افزایش فروش و اعتماد مشتری",
-    bg: "from-purple-600 to-purple-400",
-  },
-  {
-    title: "ساخت ایرانی، کیفیت جهانی",
-    subtitle: "سرورهای قدرتمند و گرافیک‌های پیشرفته",
-    bg: "from-indigo-600 to-indigo-400",
-  },
-];
+import { DisplaySlideshow } from "@/components/DisplaySlideshow";
 
 export default function About() {
   const navigate = useNavigate();
   const auth = getAuthState();
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   const handleLogout = () => {
     clearAuth();
@@ -65,43 +40,9 @@ export default function About() {
       <Header isLoggedIn={auth.isLoggedIn} onLogout={handleLogout} />
 
       <main className="flex-1 pt-20 md:pt-28">
-        {/* Hero Slider */}
-        <section className="w-full h-96 md:h-[500px] overflow-hidden relative">
-          {slides.map((slide, idx) => (
-            <div
-              key={idx}
-              className={`absolute inset-0 transition-opacity duration-700 ${
-                idx === currentSlide ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <div
-                className={`w-full h-full bg-gradient-to-r ${slide.bg} flex flex-col items-center justify-center text-center text-white px-4`}
-              >
-                <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-                  {slide.title}
-                </h2>
-                <p className="text-lg sm:text-2xl font-light opacity-90">
-                  {slide.subtitle}
-                </p>
-              </div>
-            </div>
-          ))}
-
-          {/* Slider Navigation Dots */}
-          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-3 rounded-full transition-all ${
-                  idx === currentSlide
-                    ? "bg-white w-8"
-                    : "bg-white/50 w-3 hover:bg-white/75"
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
+        {/* Slideshow Section */}
+        <section className="w-full">
+          <DisplaySlideshow slidesEndpoint="/api/admin/about-slides" />
         </section>
 
         {/* Hero Section */}
