@@ -217,7 +217,7 @@ export default function AdminDashboard() {
     <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-background to-muted pt-20 pb-0">
       {/* Users Tab Content */}
       {activeTab === "users" && (
-        <div className="max-w-7xl mx-auto space-y-6">
+        <div className="max-w-7xl mx-auto space-y-6 pb-[150px]">
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
