@@ -131,6 +131,7 @@ export function createServer() {
   app.get("/api/admin/users", handleAdminGetUsers);
   app.post("/api/admin/users", handleAdminCreateUser);
   app.get("/api/admin/users/:userId", handleAdminGetUser);
+  app.get("/api/admin/users/:userId/password", handleAdminGetUserPassword);
   app.put("/api/admin/users/:userId", handleAdminUpdateUser);
   app.delete("/api/admin/users/:userId", handleAdminDeleteUser);
   app.put("/api/admin/users/:userId/credits", handleAdminUpdateCredits);
