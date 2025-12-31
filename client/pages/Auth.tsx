@@ -133,7 +133,11 @@ export default function Auth() {
 
     // Clear error for this field when user starts typing
     if (errors[name as keyof ValidationErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
+      setErrors((prev) => {
+        const updated = { ...prev };
+        delete updated[name as keyof ValidationErrors];
+        return updated;
+      });
     }
   };
 
