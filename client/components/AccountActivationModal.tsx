@@ -81,16 +81,19 @@ export default function AccountActivationModal({
             </Button>
           </a>
 
-          <a href="https://wa.me/+989357887572" target="_blank" rel="noopener noreferrer" className="block w-full">
-            <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold">
-              💬 ارسال پیام واتساپ
-            </Button>
-          </a>
+          <Button
+            onClick={() => {
+              const url = getWhatsAppUrl();
+              window.open(url, "_blank");
+            }}
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold"
+          >
+            💬 ارسال پیام واتساپ
+          </Button>
 
           <Button
             onClick={onClose}
-            variant="outline"
-            className="w-full text-gray-700"
+            className="w-full bg-amber-400 hover:bg-amber-500 text-white font-bold"
           >
             بازگشت به خانه
           </Button>
