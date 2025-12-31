@@ -131,31 +131,36 @@ export default function RegisterPending() {
             </div>
           </div>
 
-          {/* Contact Section */}
-          <div className="p-4 rounded-lg bg-blue-50 border border-blue-200 space-y-3">
-            <div className="flex gap-2 items-start">
-              <Smartphone className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+          {/* Contact Section - URGENT */}
+          <div className="p-5 rounded-lg bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-300 space-y-4">
+            <div className="flex gap-3 items-start">
+              <span className="text-2xl animate-bounce">📞</span>
               <div className="text-right flex-1">
-                <h4 className="font-medium text-sm text-blue-900 mb-2">
-                  در صورت سؤال
+                <h4 className="font-bold text-base text-red-900 mb-2">
+                  🚀 اقدام فوری مورد نیاز است
                 </h4>
-                <p className="text-xs text-blue-800 mb-2">
-                  با تیم پشتیبانی ما تماس بگیرید:
+                <p className="text-sm text-red-800 mb-3 font-medium">
+                  برای فعال‌سازی حساب کاربری خود، لطفاً <strong>بلافاصله</strong> با تیم پشتیبانی ما تماس بگیرید:
                 </p>
-                <div className="space-y-1">
+                <div className="space-y-2 bg-white rounded p-3 border border-red-200">
                   <a
                     href="tel:+989357887572"
-                    className="flex items-center gap-2 text-xs text-blue-700 hover:text-blue-900 font-medium"
+                    className="flex items-center gap-3 text-sm text-red-700 hover:text-red-900 font-bold"
                   >
-                    ☎ 09357887572
+                    <span className="text-lg">☎</span>
+                    <span>09357887572</span>
                   </a>
                   <a
                     href="http://wa.me/+989357887572"
-                    className="flex items-center gap-2 text-xs text-blue-700 hover:text-blue-900 font-medium"
+                    className="flex items-center gap-3 text-sm text-green-700 hover:text-green-900 font-bold"
                   >
-                    💬 واتساپ
+                    <span className="text-lg">💬</span>
+                    <span>واتساپ</span>
                   </a>
                 </div>
+                <p className="text-xs text-red-800 mt-3 italic">
+                  بدون تماس با پشتیبانی و انتخاب پلان، نمی‌توانید از خدمات MAFO استفاده کنید.
+                </p>
               </div>
             </div>
           </div>
