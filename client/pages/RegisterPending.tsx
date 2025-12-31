@@ -89,29 +89,43 @@ export default function RegisterPending() {
           </div>
 
           {/* Info Cards */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="p-3 rounded-lg bg-amber-50 border border-amber-200">
-              <div className="flex gap-2 items-start">
-                <Clock className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                <div className="text-right">
-                  <p className="text-xs font-medium text-amber-900">
-                    زمان تایید
+          <div className="grid grid-cols-1 gap-3">
+            <div className="p-4 rounded-lg bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200">
+              <div className="flex gap-3 items-start">
+                <span className="text-2xl">📋</span>
+                <div className="text-right flex-1">
+                  <p className="text-sm font-semibold text-orange-900 mb-1">
+                    پلان‌های مختلف
                   </p>
-                  <p className="text-xs text-amber-800">24 تا 48 ساعت</p>
+                  <p className="text-xs text-orange-800">
+                    MAFO پلان‌های متنوعی برای تمام نیازها ارائه می‌دهد. تیم پشتیبانی ما به شما کمک خواهد کرد تا بهترین پلان برای فعالیت خود انتخاب کنید.
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-purple-50 border border-purple-200">
-              <div className="flex gap-2 items-start">
-                <FileCheck className="h-4 w-4 text-purple-600 flex-shrink-0 mt-0.5" />
-                <div className="text-right">
-                  <p className="text-xs font-medium text-purple-900">
-                    اطلاعات ثبت شده
-                  </p>
-                  <p className="text-xs text-purple-800">
-                    ایمیل و رمز عبور شما
-                  </p>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3 rounded-lg bg-blue-50 border border-blue-200">
+                <div className="flex gap-2 items-start">
+                  <Smartphone className="h-4 w-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-right">
+                    <p className="text-xs font-medium text-blue-900">
+                      تماس فوری
+                    </p>
+                    <p className="text-xs text-blue-800">09357887572</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-lg bg-green-50 border border-green-200">
+                <div className="flex gap-2 items-start">
+                  <Clock className="h-4 w-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-right">
+                    <p className="text-xs font-medium text-green-900">
+                      زمان پاسخ
+                    </p>
+                    <p className="text-xs text-green-800">معمولاً فوری</p>
+                  </div>
                 </div>
               </div>
             </div>
