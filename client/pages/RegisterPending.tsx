@@ -125,7 +125,9 @@ export default function RegisterPending() {
             </a>
 
             <a
-              href="http://wa.me/+989357887572"
+              href="https://wa.me/+989357887572"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block w-full"
             >
               <Button
