@@ -138,7 +138,7 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
 
     // If user has no API key, create one
     if (!userApiKey) {
-      const newKey = `mafo_${require("crypto").randomBytes(16).toString("hex")}`;
+      const newKey = `mafo_${crypto.randomBytes(16).toString("hex")}`;
       const { data: newApiKey, error: keyError } = await supabase
         .from("api_keys")
         .insert([
