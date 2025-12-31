@@ -611,10 +611,40 @@ export default function Auth() {
                     {errors.password}
                   </p>
                 )}
-                {!errors.password && formData.password && (
-                  <p className="text-xs text-green-600 text-right">
-                    ✓ رمز عبور قوی است
-                  </p>
+
+                {formData.password && !errors.password && (
+                  <div className="space-y-2 mt-3 p-3 bg-gray-50 rounded-lg">
+                    {(() => {
+                      const criteria = getPasswordCriteria(formData.password);
+                      return (
+                        <div className="space-y-2">
+                          {/* Special Characters */}
+                          <p className={`text-xs text-right ${
+                            criteria.hasSpecialChars ? "text-green-600 font-medium" : "text-red-600"
+                          }`}>
+                            {criteria.hasSpecialChars ? "✓ " : "• "}
+                            از علائم در رمز عبور خود استفاده کنید (مثل @، #، $)
+                          </p>
+
+                          {/* Uppercase and Lowercase */}
+                          <p className={`text-xs text-right ${
+                            criteria.hasUpperCase && criteria.hasLowerCase ? "text-green-600 font-medium" : "text-red-600"
+                          }`}>
+                            {criteria.hasUpperCase && criteria.hasLowerCase ? "✓ " : "• "}
+                            از حروف کوچک و بزرگ استفاده کنید
+                          </p>
+
+                          {/* Numbers */}
+                          <p className={`text-xs text-right ${
+                            criteria.hasNumbers ? "text-green-600 font-medium" : "text-red-600"
+                          }`}>
+                            {criteria.hasNumbers ? "✓ " : "• "}
+                            از اعداد استفاده کنید
+                          </p>
+                        </div>
+                      );
+                    })()}
+                  </div>
                 )}
               </div>
 
