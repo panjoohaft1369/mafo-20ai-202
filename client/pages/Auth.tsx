@@ -305,7 +305,7 @@ export default function Auth() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted"
+      className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted pb-[120px] md:pb-0"
       dir="rtl"
     >
       <Card className="w-full max-w-md text-right">
