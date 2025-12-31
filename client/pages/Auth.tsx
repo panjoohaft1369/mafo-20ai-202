@@ -440,7 +440,9 @@ export default function Auth() {
                           ☎ 09357887572
                         </a>
                         <a
-                          href="http://wa.me/+989357887572"
+                          href="https://wa.me/+989357887572"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="block hover:underline"
                         >
                           💬 واتساپ
