@@ -70,7 +70,7 @@ export default function AccountActivationModal({
             </Button>
           </a>
 
-          <a href="http://wa.me/+989357887572" className="block w-full">
+          <a href="https://wa.me/+989357887572" target="_blank" rel="noopener noreferrer" className="block w-full">
             <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold">
               💬 ارسال پیام واتساپ
             </Button>
