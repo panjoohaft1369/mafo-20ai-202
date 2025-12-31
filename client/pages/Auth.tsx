@@ -18,6 +18,15 @@ import AccountActivationModal from "@/components/AccountActivationModal";
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_MIN_LENGTH = 8;
 const PHONE_REGEX = /^(\+98|0)?9\d{9}$/;
+const SPECIAL_CHARS_REGEX = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
+// Password validation criteria
+const getPasswordCriteria = (password: string) => ({
+  hasSpecialChars: SPECIAL_CHARS_REGEX.test(password),
+  hasUpperCase: /[A-Z]/.test(password),
+  hasLowerCase: /[a-z]/.test(password),
+  hasNumbers: /[0-9]/.test(password),
+});
 
 interface RegistrationData {
   name: string;
