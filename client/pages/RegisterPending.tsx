@@ -182,31 +182,37 @@ export default function RegisterPending() {
 
           {/* Buttons */}
           <div className="space-y-3 pt-4 border-t">
-            <Button
-              onClick={() => navigate("/")}
-              className="w-full"
-              size="lg"
-              style={{
-                backgroundColor: "#ffffff",
-                color: "#000000",
-                border: "1px solid #d1d5db",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#f3f4f6";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#ffffff";
-              }}
+            <a
+              href="tel:+989357887572"
+              className="block w-full"
             >
-              بازگشت به صفحه اصلی
-            </Button>
+              <Button
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-6 text-base"
+                size="lg"
+              >
+                📞 تماس با پشتیبانی (09357887572)
+              </Button>
+            </a>
+
+            <a
+              href="http://wa.me/+989357887572"
+              className="block w-full"
+            >
+              <Button
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold"
+                size="lg"
+              >
+                💬 ارسال پیام از طریق واتساپ
+              </Button>
+            </a>
 
             <Button
-              onClick={() => navigate("/contact")}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              onClick={() => navigate("/")}
+              variant="outline"
+              className="w-full text-gray-700"
               size="lg"
             >
-              تماس با پشتیبانی
+              بازگشت به صفحه اصلی
             </Button>
           </div>
         </CardContent>
