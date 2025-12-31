@@ -13,6 +13,7 @@ import { login } from "@/lib/api";
 import { saveAuthCredentials } from "@/lib/auth";
 import { Loading } from "@/components/Loading";
 import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
+import AccountActivationModal from "@/components/AccountActivationModal";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_MIN_LENGTH = 8;
