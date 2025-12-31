@@ -121,5 +121,31 @@
     "creditsDeducted": true,
     "creditCost": 5,
     "imageUrl": "https://tempfile.aiquickdraw.com/h/031f92021089b2a0d1a4461e4f9c1a67_1767077375.png"
+  },
+  "61d08210777b1889689fd04094db5eb4": {
+    "status": "success",
+    "timestamp": 1767196000616,
+    "prompt": "زاویه دورین این تصویر رو تغییر بده.",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "e4c200b52d54b88eb4fb8492f9bb6a7d",
+    "userId": "08448efc-9c3e-4fc3-9764-8b9a5ba0269b",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/61d08210777b1889689fd04094db5eb4_1767196026.png"
+  },
+  "187e7ba8cfc8a4a1c150260cb1736c82": {
+    "status": "success",
+    "timestamp": 1767196001332,
+    "prompt": "زاویه دورین این تصویر رو تغییر بده.",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "9b1bf58793a88a5b02bafbfc5ba00e7c",
+    "userId": "a7f2c808-fa28-4178-a717-7984b8890a04",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/187e7ba8cfc8a4a1c150260cb1736c82_1767196026.png"
   }
 }
