@@ -168,15 +168,14 @@ export default function RegisterPending() {
           </div>
 
           {/* Terms Agreement Message */}
-          <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 text-right">
-            <p className="text-xs text-amber-900 leading-relaxed">
-              <span className="font-medium">توجه:</span> با ثبت نام در MAFO، شما
-              قوانین و شرایط استفاده از سرویس را پذیرفته‌اید. لطفاً قبل از شروع
-              کار حتماً{" "}
-              <a href="/terms" className="underline hover:no-underline">
-                قوانین و شرایط
-              </a>{" "}
-              را مطالعه کنید.
+          <div className="p-4 rounded-lg bg-yellow-50 border border-yellow-300 text-right">
+            <p className="text-xs text-yellow-900 leading-relaxed mb-2">
+              <span className="font-bold text-base">⚠️ توجه مهم:</span>
+            </p>
+            <p className="text-xs text-yellow-900 leading-relaxed">
+              با ثبت نام در MAFO، شما قوانین و شرایط استفاده از سرویس را پذیرفته‌اید.
+              <br />
+              برای شروع کار، <strong>حتماً</strong> با تیم پشتیبانی تماس بگیرید، پلان مورد نیاز را انتخاب کنید، و منتظر فعال‌سازی حساب بمانید.
             </p>
           </div>
 
