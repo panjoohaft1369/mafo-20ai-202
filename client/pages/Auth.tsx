@@ -189,7 +189,14 @@ export default function Auth() {
       const result = await login({ email, password });
 
       if (!result.success || !result.data) {
-        setLoginError(result.error || "خطا در ورود");
+        const errorMessage = result.error || "خطا در ورود";
+        setLoginError(errorMessage);
+
+        // Show activation modal if user is not approved
+        if (errorMessage.includes("فعال نشده")) {
+          setShowActivationModal(true);
+        }
+
         setLoginLoading(false);
         return;
       }
