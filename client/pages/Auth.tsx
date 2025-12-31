@@ -708,6 +708,12 @@ export default function Auth() {
           )}
         </CardContent>
       </Card>
+
+      {/* Account Activation Modal */}
+      <AccountActivationModal
+        isOpen={showActivationModal}
+        onClose={() => setShowActivationModal(false)}
+      />
     </div>
   );
 }
