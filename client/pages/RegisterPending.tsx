@@ -35,10 +35,12 @@ export default function RegisterPending() {
 
         <CardContent className="space-y-6">
           {/* Main Message */}
-          <div className="p-5 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
-            <p className="text-sm text-green-900 font-medium leading-relaxed">
-              تشکر از ثبت نام در MAFO. درخواست عضویت شما دریافت شد و در حال
-              بررسی تیم پشتیبانی ما می‌باشد.
+          <div className="p-5 rounded-lg bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200">
+            <p className="text-sm text-blue-900 font-medium leading-relaxed">
+              ✨ تشکر از ثبت نام در MAFO!
+            </p>
+            <p className="text-sm text-blue-800 mt-2 leading-relaxed">
+              حساب کاربری شما ایجاد شده است، اما برای فعال‌سازی و شروع کار، باید با تیم پشتیبانی ما صحبت کنید و پلانی را برای نیازهای خود انتخاب کنید.
             </p>
           </div>
 
