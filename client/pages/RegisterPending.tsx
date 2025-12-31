@@ -124,19 +124,19 @@ export default function RegisterPending() {
               </Button>
             </a>
 
-            <a
-              href="https://wa.me/+989357887572"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full"
+            <Button
+              onClick={() => {
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                const url = isMobile
+                  ? "whatsapp://send?phone=989357887572"
+                  : "https://wa.me/+989357887572";
+                window.open(url, "_blank");
+              }}
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold"
+              size="lg"
             >
-              <Button
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold"
-                size="lg"
-              >
-                💬 ارسال پیام از طریق واتساپ
-              </Button>
-            </a>
+              💬 ارسال پیام از طریق واتساپ
+            </Button>
 
             <Button
               onClick={() => navigate("/")}
