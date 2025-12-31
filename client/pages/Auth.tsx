@@ -448,14 +448,18 @@ export default function Auth() {
                         >
                           ☎ 09357887572
                         </a>
-                        <a
-                          href="https://wa.me/+989357887572"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block hover:underline"
+                        <button
+                          onClick={() => {
+                            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                            const url = isMobile
+                              ? "whatsapp://send?phone=989357887572"
+                              : "https://wa.me/+989357887572";
+                            window.open(url, "_blank");
+                          }}
+                          className="block hover:underline text-left cursor-pointer"
                         >
                           💬 واتساپ
-                        </a>
+                        </button>
                       </div>
                     )}
                   </div>
