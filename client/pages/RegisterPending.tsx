@@ -54,7 +54,7 @@ export default function RegisterPending() {
                 1
               </div>
               <div className="text-right flex-1">
-                <h4 className="font-medium text-sm mb-1">
+                <h4 className="font-bold text-sm mb-1 text-gray-800">
                   📞 تماس با تیم پشتیبانی
                 </h4>
                 <p className="text-xs text-blue-700 font-medium">
@@ -69,7 +69,7 @@ export default function RegisterPending() {
                 2
               </div>
               <div className="text-right flex-1">
-                <h4 className="font-medium text-sm mb-1">💰 بررسی پلان‌های مختلف</h4>
+                <h4 className="font-bold text-sm mb-1 text-gray-800">💰 بررسی پلان‌های مختلف</h4>
                 <p className="text-xs text-purple-700">
                   تیم پشتیبانی درمورد پلان‌های اعتبار و خدمات مختلف MAFO با شما صحبت خواهد کرد
                 </p>
@@ -82,7 +82,7 @@ export default function RegisterPending() {
                 3
               </div>
               <div className="text-right flex-1">
-                <h4 className="font-medium text-sm mb-1">✅ انتخاب پلان و فعال‌سازی</h4>
+                <h4 className="font-bold text-sm mb-1 text-gray-800">✅ انتخاب پلان و فعال‌سازی</h4>
                 <p className="text-xs text-green-700">
                   پس از انتخاب پلان مورد نیاز، تیم پشتیبانی حساب کاربری شما را فعال خواهد کرد
                 </p>
