@@ -6,6 +6,17 @@ interface AccountActivationModalProps {
   onClose: () => void;
 }
 
+// Helper function to get WhatsApp URL based on device type
+const getWhatsAppUrl = (): string => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const phoneNumber = "989357887572"; // بدون + علامت برای موبایل
+
+  if (isMobile) {
+    return `whatsapp://send?phone=${phoneNumber}`;
+  }
+  return "https://wa.me/+989357887572";
+};
+
 export default function AccountActivationModal({
   isOpen,
   onClose,
