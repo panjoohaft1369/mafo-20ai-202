@@ -47,43 +47,42 @@ export default function RegisterPending() {
             <h3 className="font-semibold text-right">مراحل بعدی:</h3>
 
             {/* Step 1 */}
-            <div className="flex gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
+            <div className="flex gap-4 p-4 rounded-lg border border-blue-200 bg-blue-50">
               <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-semibold">
                 1
               </div>
               <div className="text-right flex-1">
                 <h4 className="font-medium text-sm mb-1">
-                  تایید قوانین و شرایط
+                  📞 تماس با تیم پشتیبانی
                 </h4>
-                <p className="text-xs text-gray-600">
-                  قوانین و مقررات استفاده از سرویس MAFO را بخوانید و بپذیرید
+                <p className="text-xs text-blue-700 font-medium">
+                  اولین و مهم‌ترین گام: لطفاً درحال حاضر با تیم پشتیبانی ما تماس بگیرید
                 </p>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="flex gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
-              <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-semibold">
+            <div className="flex gap-4 p-4 rounded-lg border border-purple-200 bg-purple-50">
+              <div className="h-8 w-8 rounded-full bg-purple-600 text-white flex items-center justify-center flex-shrink-0 font-semibold">
                 2
               </div>
               <div className="text-right flex-1">
-                <h4 className="font-medium text-sm mb-1">انتظار برای تایید</h4>
-                <p className="text-xs text-gray-600">
-                  تیم پشتیبانی ما درخواست شما را بررسی خواهد کرد (معمولا 24 تا
-                  48 ساعت)
+                <h4 className="font-medium text-sm mb-1">💰 بررسی پلان‌های مختلف</h4>
+                <p className="text-xs text-purple-700">
+                  تیم پشتیبانی درمورد پلان‌های اعتبار و خدمات مختلف MAFO با شما صحبت خواهد کرد
                 </p>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="flex gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
-              <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-semibold">
+            <div className="flex gap-4 p-4 rounded-lg border border-green-200 bg-green-50">
+              <div className="h-8 w-8 rounded-full bg-green-600 text-white flex items-center justify-center flex-shrink-0 font-semibold">
                 3
               </div>
               <div className="text-right flex-1">
-                <h4 className="font-medium text-sm mb-1">دریافت تأیید</h4>
-                <p className="text-xs text-gray-600">
-                  بعد از تایید، یک ایمیل تأیید به آدرس ثبت شده ارسال خواهد شد
+                <h4 className="font-medium text-sm mb-1">✅ انتخاب پلان و فعال‌سازی</h4>
+                <p className="text-xs text-green-700">
+                  پس از انتخاب پلان مورد نیاز، تیم پشتیبانی حساب کاربری شما را فعال خواهد کرد
                 </p>
               </div>
             </div>
