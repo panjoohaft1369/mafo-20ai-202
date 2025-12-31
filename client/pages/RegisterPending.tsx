@@ -103,6 +103,13 @@ export default function RegisterPending() {
             </p>
           </div>
 
+          {/* Important Message */}
+          <div className="p-4 rounded-lg bg-red-50 border-2 border-red-300 text-center">
+            <p className="text-sm font-bold text-gray-800">
+              ⚠️ بدون تماس با پشتیبانی و انتخاب پلان، نمی‌توانید از خدمات MAFO استفاده کنید.
+            </p>
+          </div>
+
           {/* Buttons */}
           <div className="space-y-3 pt-4 border-t">
             <a
