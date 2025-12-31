@@ -117,6 +117,7 @@ export default function AdminUserDetails() {
           email: data.user.email,
           phone: data.user.phone,
           brandName: data.user.brandName,
+          password: "",
         });
       } catch (err) {
         setError("خطا در بارگذاری اطلاعات کاربر");
