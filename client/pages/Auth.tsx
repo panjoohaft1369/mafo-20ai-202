@@ -401,16 +401,30 @@ export default function Auth() {
                 <label htmlFor="login-password" className="text-sm font-medium">
                   رمز عبور
                 </label>
-                <Input
-                  id="login-password"
-                  type="password"
-                  placeholder="رمز عبور خود را وارد کنید"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  disabled={loginLoading}
-                  className="text-right"
-                  dir="rtl"
-                />
+                <div className="relative">
+                  <Input
+                    id="login-password"
+                    type={showLoginPassword ? "text" : "password"}
+                    placeholder="رمز عبور خود را وارد کنید"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    disabled={loginLoading}
+                    className="text-right pe-10"
+                    dir="rtl"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowLoginPassword(!showLoginPassword)}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    disabled={loginLoading}
+                  >
+                    {showLoginPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               {/* Remember Me */}
