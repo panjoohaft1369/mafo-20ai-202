@@ -1,0 +1,5 @@
+-- Disable RLS on all tables to test if this is the issue
+ALTER TABLE users DISABLE ROW LEVEL SECURITY;
+ALTER TABLE api_keys DISABLE ROW LEVEL SECURITY;
+ALTER TABLE usage_history DISABLE ROW LEVEL SECURITY;
+ALTER TABLE generated_images DISABLE ROW LEVEL SECURITY;
