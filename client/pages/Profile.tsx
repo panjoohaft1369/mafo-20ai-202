@@ -45,37 +45,97 @@ export default function Profile() {
 
   const [originalData, setOriginalData] = useState({ ...formData });
 
-  // Redirect if not logged in
+  // Redirect if not logged in and load user profile from backend
   useEffect(() => {
     if (!auth.isLoggedIn || !auth.apiKey) {
       navigate("/login");
       return;
     }
 
-    // Load user data from auth state
-    setFormData({
-      name: auth.name || "",
-      email: auth.email || "",
-      phone: "",
-      brandName: "",
-      credits: auth.credits || 0,
-    });
-    setOriginalData({
-      name: auth.name || "",
-      email: auth.email || "",
-      phone: "",
-      brandName: "",
-      credits: auth.credits || 0,
-    });
-    setIsLoading(false);
-  }, [
-    auth.isLoggedIn,
-    auth.apiKey,
-    navigate,
-    auth.name,
-    auth.email,
-    auth.credits,
-  ]);
+    const loadProfileData = async () => {
+      try {
+        const response = await fetch("/api/user/profile", {
+          method: "GET",
+          headers: {
+            "X-API-Key": auth.apiKey!,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.data) {
+            setFormData({
+              name: data.data.name || auth.name || "",
+              email: data.data.email || auth.email || "",
+              phone: data.data.phone || "",
+              brandName: data.data.brandName || "",
+              credits: data.data.credits || auth.credits || 0,
+            });
+            setOriginalData({
+              name: data.data.name || auth.name || "",
+              email: data.data.email || auth.email || "",
+              phone: data.data.phone || "",
+              brandName: data.data.brandName || "",
+              credits: data.data.credits || auth.credits || 0,
+            });
+          } else {
+            // Fallback to auth state
+            setFormData({
+              name: auth.name || "",
+              email: auth.email || "",
+              phone: "",
+              brandName: "",
+              credits: auth.credits || 0,
+            });
+            setOriginalData({
+              name: auth.name || "",
+              email: auth.email || "",
+              phone: "",
+              brandName: "",
+              credits: auth.credits || 0,
+            });
+          }
+        } else {
+          // Fallback to auth state
+          setFormData({
+            name: auth.name || "",
+            email: auth.email || "",
+            phone: "",
+            brandName: "",
+            credits: auth.credits || 0,
+          });
+          setOriginalData({
+            name: auth.name || "",
+            email: auth.email || "",
+            phone: "",
+            brandName: "",
+            credits: auth.credits || 0,
+          });
+        }
+      } catch (error) {
+        console.error("Error loading profile:", error);
+        // Fallback to auth state
+        setFormData({
+          name: auth.name || "",
+          email: auth.email || "",
+          phone: "",
+          brandName: "",
+          credits: auth.credits || 0,
+        });
+        setOriginalData({
+          name: auth.name || "",
+          email: auth.email || "",
+          phone: "",
+          brandName: "",
+          credits: auth.credits || 0,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProfileData();
+  }, [auth.isLoggedIn, auth.apiKey, navigate, auth.name, auth.email, auth.credits]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
