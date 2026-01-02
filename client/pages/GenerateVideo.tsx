@@ -343,13 +343,23 @@ export default function GenerateVideo() {
                   دقیقاً توصیف کنید چگونه تصویر باید حرکت کند
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-3">
                 <Textarea
                   placeholder="مثلا: دوربین دست‌دار به دخترک نزدیک می‌شود و او سر تکان می‌دهد..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-32 resize-none"
                 />
+                {prompt && (
+                  <Button
+                    onClick={() => setPrompt("")}
+                    variant="ghost"
+                    size="sm"
+                    className="w-full text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    خالی کردن متن
+                  </Button>
+                )}
               </CardContent>
             </Card>
 
