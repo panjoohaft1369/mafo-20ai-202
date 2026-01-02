@@ -23,6 +23,8 @@ import {
   Cpu,
   Gauge,
   Globe,
+  Download,
+  Smartphone,
 } from "lucide-react";
 import { DisplaySlideshow } from "@/components/DisplaySlideshow";
 
