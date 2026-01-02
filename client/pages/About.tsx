@@ -488,15 +488,15 @@ export default function About() {
         {/* PWA Install Section */}
         <section className="px-4 py-16 sm:py-20 bg-gradient-to-b from-blue-50 to-background border-b">
           <div className="container mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold mb-6">📲 نصب اپلیکیشن MAFO</h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <h2 className="text-3xl font-bold mb-6 text-black">📲 نصب اپلیکیشن MAFO</h2>
+            <p className="text-lg text-black mb-8">
               MAFO را به‌عنوان یک اپلیکیشن موبایلی نصب کنید و دسترسی سریع‌تری داشته باشید
             </p>
 
             {showIOSInstructions ? (
               <div className="bg-white border border-blue-200 rounded-lg p-8 mb-8 text-right space-y-4">
-                <h3 className="text-xl font-bold text-blue-900 mb-4">🍎 دستورالعمل نصب برای iOS</h3>
-                <ol className="space-y-3 text-sm text-muted-foreground">
+                <h3 className="text-xl font-bold text-black mb-4">🍎 دستورالعمل نصب برای iOS</h3>
+                <ol className="space-y-3 text-sm text-black">
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 font-bold text-primary">۱.</span>
                     <span>این صفحه را در Safari باز کنید</span>
@@ -551,9 +551,6 @@ export default function About() {
               </div>
             )}
 
-            <p className="text-xs text-muted-foreground mt-8">
-              اپلیکیشن دقیقاً مثل وب‌سایت کار می‌کند اما با دسترسی سریع‌تر و امکان کار آفلاین
-            </p>
           </div>
         </section>
 
