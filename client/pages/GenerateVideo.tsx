@@ -421,7 +421,8 @@ export default function GenerateVideo() {
                 !selectedImage ||
                 !prompt.trim() ||
                 !auth.credits ||
-                auth.credits <= 0
+                auth.credits <= 0 ||
+                auth.credits < VIDEO_CREDIT_COST
               }
               className="w-full py-6 text-base font-semibold hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200"
               size="lg"
