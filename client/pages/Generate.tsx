@@ -50,6 +50,7 @@ export default function Generate() {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const auth = getAuthState();
+  const taskNotification = useTaskNotification("generate-image");
 
   // Redirect if not logged in
   useEffect(() => {
