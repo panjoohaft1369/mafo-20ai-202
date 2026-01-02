@@ -150,7 +150,7 @@ export async function deductUserCredits(
  */
 export async function getUserCredits(userId: string): Promise<number> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("users")
       .select("credits")
       .eq("id", userId)
