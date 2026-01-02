@@ -215,11 +215,7 @@ export default function Register() {
         <CardHeader className="text-center space-y-2">
           <div className="flex justify-center mb-4">
             <div className="flex flex-col items-center">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2Fa2dcdb2b6e894df7989c87db38a879a2?format=webp&width=800"
-                alt="MAFO"
-                className="h-16 w-16 mb-2 drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]"
-              />
+              <Logo size="lg" className="mb-2" />
               <h1 className="text-3xl font-bold">MAFO</h1>
               <p className="text-sm text-muted-foreground">
                 هوش مصنوعی تصویرساز
