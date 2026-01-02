@@ -255,9 +255,9 @@ export async function handleUpdateProfile(
     if (phone) updateData.phone = normalizePhone(phone);
     if (brandName) updateData.brand_name = brandName.trim();
 
-    // Check if email is already taken by another user
+    // Check if email is already taken by another user (use admin client to bypass RLS)
     if (email) {
-      const { data: existingUser, error: checkError } = await supabase
+      const { data: existingUser, error: checkError } = await supabaseAdmin
         .from("users")
         .select("id")
         .eq("email", email.toLowerCase())
