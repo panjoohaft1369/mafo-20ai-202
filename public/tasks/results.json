@@ -212,5 +212,17 @@
     "creditsDeducted": true,
     "creditCost": 5,
     "imageUrl": "https://tempfile.aiquickdraw.com/h/f07d1c53898a3e18435358d580f61ce1_1767326307.png"
+  },
+  "d237b326cc69c91e842d3c631287dd96": {
+    "status": "success",
+    "timestamp": 1767327160592,
+    "prompt": "دوربین به اهستگی به سمت چپ مبل حرکت کنه. و یه نفر اهسته بیاد و روش یه پارچه بزرگ پهن کنه که مبل دیگه دیده نشه.",
+    "resolution": "normal",
+    "apiKey": "6b16254b7d421ae7832b43d173566458",
+    "userId": "de55aa05-32c4-4b4a-b138-ccfe1bc54a81",
+    "taskType": "video",
+    "creditsDeducted": true,
+    "creditCost": 20,
+    "imageUrl": "https://tempfile.aiquickdraw.com/r/users/f9af660e-9696-47c5-bc6d-2f9f5137c768/generated/69912f65-dc1a-427d-b9f0-83e55bba6bd0/generated_video.mp4"
   }
 }
