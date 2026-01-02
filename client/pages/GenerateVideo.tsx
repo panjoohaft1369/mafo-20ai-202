@@ -347,7 +347,7 @@ export default function GenerateVideo() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <Textarea
-                  placeholder="مثلا: دوربین دست‌دار به دخترک نزدیک می‌شود و او سر تکان می‌دهد..."
+                  placeholder="مثلا: دوربین به آهستگی دور مبل حرکت کند و آن را از تمام جوانب نشان دهد..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-32 resize-none"
