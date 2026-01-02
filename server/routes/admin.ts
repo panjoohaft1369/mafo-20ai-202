@@ -622,7 +622,7 @@ export async function handleAdminCreateUser(
     console.log("[Admin] Creating new user:", email, "role:", role);
 
     // Check if email already exists
-    const { data: existing } = await supabase
+    const { data: existing } = await supabaseAdmin
       .from("users")
       .select("id")
       .eq("email", email)
@@ -640,7 +640,7 @@ export async function handleAdminCreateUser(
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert user into database
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("users")
       .insert([
         {
