@@ -136,10 +136,10 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
       userApiKey = activeKey ? activeKey.key : user.api_keys[0].key;
     }
 
-    // If user has no API key, create one
+    // If user has no API key, create one (using admin client)
     if (!userApiKey) {
       const newKey = `mafo_${crypto.randomBytes(16).toString("hex")}`;
-      const { data: newApiKey, error: keyError } = await supabase
+      const { data: newApiKey, error: keyError } = await supabaseAdmin
         .from("api_keys")
         .insert([
           {
