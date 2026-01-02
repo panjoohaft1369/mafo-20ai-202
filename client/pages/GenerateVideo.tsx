@@ -26,6 +26,8 @@ import {
   translateErrorMessage,
 } from "@/lib/api";
 import { getAuthState, clearAuth, updateStoredCredits } from "@/lib/auth";
+import { useTaskNotification } from "@/lib/useTaskNotification";
+import { TaskNotificationModal } from "@/components/TaskNotificationModal";
 import { Loading } from "@/components/Loading";
 import {
   Upload,
