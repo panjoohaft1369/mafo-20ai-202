@@ -254,7 +254,7 @@ export default function GenerateVideo() {
             تصویری انتخاب کنید و حرکت دلخواه را توصیف کنید تا ویدیویی خیره‌کننده
             ایجاد شود
           </p>
-          <p className="text-sm text-yellow-900 font-medium mb-4">
+          <p className="text-sm text-red-600 font-medium mb-4">
             استفاده از این هوش مصنوعی رایگان نمی‌باشد
           </p>
 
