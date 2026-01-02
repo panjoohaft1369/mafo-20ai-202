@@ -364,7 +364,7 @@ export default function GenerateVideo() {
                     size="sm"
                     className="w-full text-white"
                   >
-                    خالی کردن متن
+                    حذف کردن متن
                   </Button>
                 )}
               </CardContent>
