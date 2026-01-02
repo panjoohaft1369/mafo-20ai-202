@@ -936,8 +936,8 @@ export async function handleAdminGetGeneratedImages(
       searchUser,
     });
 
-    // Build query
-    let query = supabase
+    // Build query using supabaseAdmin to bypass RLS for admin access
+    let query = supabaseAdmin
       .from("generated_images")
       .select(
         `
