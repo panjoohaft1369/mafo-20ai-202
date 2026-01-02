@@ -549,13 +549,23 @@ export default function Generate() {
                   تغییراتی که می‌خواهید را توصیف کنید
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-3">
                 <Textarea
                   placeholder="مثلا: این تصویر اتاق من است، یک مبل قرمز رنگ بزرگ در کنار پنجره بگذار..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-32 resize-none"
                 />
+                {prompt && (
+                  <Button
+                    onClick={() => setPrompt("")}
+                    variant="ghost"
+                    size="sm"
+                    className="w-full text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    خالی کردن متن
+                  </Button>
+                )}
               </CardContent>
             </Card>
 
