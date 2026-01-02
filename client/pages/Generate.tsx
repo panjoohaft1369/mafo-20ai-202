@@ -641,7 +641,9 @@ export default function Generate() {
                 selectedImages.length === 0 ||
                 !prompt.trim() ||
                 !auth.credits ||
-                auth.credits <= 0
+                auth.credits <= 0 ||
+                auth.credits <
+                  (CREDIT_COSTS[resolution as keyof typeof CREDIT_COSTS] || 5)
               }
               className="w-full py-6 text-base font-semibold hover:shadow-lg hover:opacity-90 active:opacity-75 transition-all duration-200"
               size="lg"
