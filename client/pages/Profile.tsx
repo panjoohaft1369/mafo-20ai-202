@@ -195,15 +195,15 @@ export default function Profile() {
       setFormData({
         name: data.data.name,
         email: data.data.email,
-        phone: formData.phone,
-        brandName: data.data.brandName,
+        phone: data.data.phone || formData.phone,
+        brandName: data.data.brandName || formData.brandName,
         credits: data.data.credits,
       });
       setOriginalData({
         name: data.data.name,
         email: data.data.email,
-        phone: formData.phone,
-        brandName: data.data.brandName,
+        phone: data.data.phone || formData.phone,
+        brandName: data.data.brandName || formData.brandName,
         credits: data.data.credits,
       });
 
