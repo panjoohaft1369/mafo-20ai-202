@@ -92,11 +92,7 @@ export default function Login() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-2">
           <div className="flex justify-center mb-4">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F8a7c6c3baee946769a39cda73202983b?format=webp&width=800"
-              alt="MAFO AI"
-              className="h-20 w-auto mb-2"
-            />
+            <Logo size="lg" className="mb-2" />
           </div>
           <CardTitle className="text-2xl">خوش آمدید</CardTitle>
           <CardDescription>
