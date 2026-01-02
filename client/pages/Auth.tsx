@@ -631,38 +631,83 @@ export default function Auth() {
                   </p>
                 )}
 
-                {formData.password && !errors.password && (
-                  <div className="space-y-2 mt-3 p-3 bg-gray-50 rounded-lg">
-                    {(() => {
-                      const criteria = getPasswordCriteria(formData.password);
-                      return (
-                        <div className="space-y-2">
-                          {/* Special Characters */}
-                          <p className={`text-xs text-right ${
-                            criteria.hasSpecialChars ? "text-green-600 font-medium" : "text-red-600"
-                          }`}>
-                            {criteria.hasSpecialChars ? "✓ " : "• "}
-                            از علائم در رمز عبور خود استفاده کنید (مثل @، #، $)
-                          </p>
+                {formData.password && (
+                  <div className="mt-3 p-3 rounded-lg bg-red-50 border border-red-200 space-y-2">
+                    {/* Special Characters */}
+                    <div className={`text-xs flex items-center gap-2 text-right ${
+                      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(formData.password)
+                        ? "text-green-700"
+                        : "text-red-700"
+                    }`}>
+                      {/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(formData.password) ? (
+                        <>
+                          <span className="text-green-600">✓</span>
+                          <span>استفاده از علائم خاص (مثل @ # $ و ...)</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-red-600">•</span>
+                          <span>استفاده از علائم خاص (مثل @ # $ و ...)</span>
+                        </>
+                      )}
+                    </div>
 
-                          {/* Uppercase and Lowercase */}
-                          <p className={`text-xs text-right ${
-                            criteria.hasUpperCase && criteria.hasLowerCase ? "text-green-600 font-medium" : "text-red-600"
-                          }`}>
-                            {criteria.hasUpperCase && criteria.hasLowerCase ? "✓ " : "• "}
-                            از حروف کوچک و بزرگ استفاده کنید
-                          </p>
+                    {/* Uppercase and Lowercase */}
+                    <div className={`text-xs flex items-center gap-2 text-right ${
+                      /[A-Z]/.test(formData.password) && /[a-z]/.test(formData.password)
+                        ? "text-green-700"
+                        : "text-red-700"
+                    }`}>
+                      {/[A-Z]/.test(formData.password) && /[a-z]/.test(formData.password) ? (
+                        <>
+                          <span className="text-green-600">✓</span>
+                          <span>استفاده از حروف کوچک و بزرگ</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-red-600">•</span>
+                          <span>استفاده از حروف کوچک و بزرگ</span>
+                        </>
+                      )}
+                    </div>
 
-                          {/* Numbers */}
-                          <p className={`text-xs text-right ${
-                            criteria.hasNumbers ? "text-green-600 font-medium" : "text-red-600"
-                          }`}>
-                            {criteria.hasNumbers ? "✓ " : "• "}
-                            از اعداد استفاده کنید
-                          </p>
-                        </div>
-                      );
-                    })()}
+                    {/* Numbers */}
+                    <div className={`text-xs flex items-center gap-2 text-right ${
+                      /[0-9]/.test(formData.password)
+                        ? "text-green-700"
+                        : "text-red-700"
+                    }`}>
+                      {/[0-9]/.test(formData.password) ? (
+                        <>
+                          <span className="text-green-600">✓</span>
+                          <span>استفاده از اعداد</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-red-600">•</span>
+                          <span>استفاده از اعداد</span>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Minimum Length */}
+                    <div className={`text-xs flex items-center gap-2 text-right ${
+                      formData.password.length >= 8
+                        ? "text-green-700"
+                        : "text-red-700"
+                    }`}>
+                      {formData.password.length >= 8 ? (
+                        <>
+                          <span className="text-green-600">✓</span>
+                          <span>حداقل 8 کاراکتر</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-red-600">•</span>
+                          <span>حداقل 8 کاراکتر</span>
+                        </>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
