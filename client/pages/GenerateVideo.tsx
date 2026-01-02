@@ -254,9 +254,11 @@ export default function GenerateVideo() {
             تصویری انتخاب کنید و حرکت دلخواه را توصیف کنید تا ویدیویی خیره‌کننده
             ایجاد شود
           </p>
-          <p className="text-sm text-red-600 font-medium mb-4">
-            استفاده از این هوش مصنوعی رایگان نمی‌باشد
-          </p>
+          <div className="inline-block px-4 py-2 rounded-lg bg-white border border-red-200 mb-4">
+            <p className="text-sm text-red-600 font-medium">
+              استفاده از این هوش مصنوعی رایگان نمی‌باشد
+            </p>
+          </div>
 
           {/* Credit Cost Info Box */}
           <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-300 inline-block">
