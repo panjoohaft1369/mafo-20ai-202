@@ -92,6 +92,14 @@ export default function GenerateVideo() {
       return;
     }
 
+    // Check if user has sufficient credits for the video operation
+    if (auth.credits < VIDEO_CREDIT_COST) {
+      const errorMsg = `اعتبار شما ناکافی است. برای این عملیات ${VIDEO_CREDIT_COST} اعتبار نیاز است، اما شما فقط ${auth.credits} اعتبار دارید.`;
+      setError(errorMsg);
+      toast.error(errorMsg);
+      return;
+    }
+
     if (!selectedImage) {
       setError("لطفا ابتدا یک تصویر انتخاب کنید");
       return;
