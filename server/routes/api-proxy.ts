@@ -1300,7 +1300,7 @@ export async function handleCallback(
             insertData.credit_cost = CREDIT_COSTS[CreditType.VIDEO];
           }
 
-          const { error: insertError } = await supabase
+          const { error: insertError } = await supabaseAdmin
             .from("generated_images")
             .insert([insertData]);
 
