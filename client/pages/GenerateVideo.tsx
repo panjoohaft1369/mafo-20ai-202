@@ -484,11 +484,17 @@ export default function GenerateVideo() {
                       </div>
                     ) : (
                       <>
-                        <img
-                          src="https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F7b7411c026af4e239cc51b637375e6fc?format=webp&width=800"
-                          alt="Robot"
+                        <video
+                          autoPlay
+                          muted
+                          loop
                           className="w-40 h-40 object-contain mb-4"
-                        />
+                        >
+                          <source
+                            src="https://cdn.builder.io/o/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2Ff73021d63a064400a5096c6ae9fb4d82?alt=media&token=a683588b-6423-4d46-b498-93baec235975&apiKey=4c88dfcd13ad44aba9d3f4537f9785d5"
+                            type="video/webm"
+                          />
+                        </video>
                         <p className="text-sm text-muted-foreground px-4 py-2 border border-white rounded-lg bg-background">
                           ویدیو تولید شده اینجا نشان داده می‌شود
                         </p>
