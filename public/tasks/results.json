@@ -224,5 +224,30 @@
     "creditsDeducted": true,
     "creditCost": 20,
     "imageUrl": "https://tempfile.aiquickdraw.com/r/users/f9af660e-9696-47c5-bc6d-2f9f5137c768/generated/69912f65-dc1a-427d-b9f0-83e55bba6bd0/generated_video.mp4"
+  },
+  "79eebd13339f83f1b3a2ea40df1bc64a": {
+    "status": "success",
+    "timestamp": 1767327528712,
+    "prompt": "یه بچه بیاد روی تخت و بالا پایین بپره",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "6b16254b7d421ae7832b43d173566458",
+    "userId": "de55aa05-32c4-4b4a-b138-ccfe1bc54a81",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/79eebd13339f83f1b3a2ea40df1bc64a_1767327554.png"
+  },
+  "97193c041321e45a227929a76679009e": {
+    "status": "success",
+    "timestamp": 1767327624314,
+    "prompt": "یه بچه بیاد روی تخت و بالا پایین بپره",
+    "resolution": "normal",
+    "apiKey": "6b16254b7d421ae7832b43d173566458",
+    "userId": "de55aa05-32c4-4b4a-b138-ccfe1bc54a81",
+    "taskType": "video",
+    "creditsDeducted": true,
+    "creditCost": 20,
+    "imageUrl": "https://tempfile.aiquickdraw.com/r/users/5b3803b3-c064-42bc-9ccd-e0e01e946ec3/generated/26dd3d29-5b07-44a1-a156-a54152eedefc/generated_video.mp4"
   }
 }
