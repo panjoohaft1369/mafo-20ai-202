@@ -76,8 +76,8 @@ export async function handleLogin(req: Request, res: Response): Promise<void> {
 
     const lowerEmail = email.toLowerCase();
 
-    // Find user by email
-    const { data: user, error: userError } = await supabase
+    // Find user by email (using admin client to read password_hash)
+    const { data: user, error: userError } = await supabaseAdmin
       .from("users")
       .select(
         `
