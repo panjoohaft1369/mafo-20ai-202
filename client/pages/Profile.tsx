@@ -57,7 +57,8 @@ export default function Profile() {
         const response = await fetch("/api/user/profile", {
           method: "GET",
           headers: {
-            "X-API-Key": auth.apiKey!,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.apiKey!}`,
           },
         });
 
