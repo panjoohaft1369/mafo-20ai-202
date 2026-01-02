@@ -411,8 +411,8 @@ export async function handleChangePassword(
     // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Update password in database
-    const { error: updateError } = await supabase
+    // Update password in database (using admin client)
+    const { error: updateError } = await supabaseAdmin
       .from("users")
       .update({ password_hash: hashedPassword })
       .eq("id", userId)
