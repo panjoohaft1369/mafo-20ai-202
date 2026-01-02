@@ -45,6 +45,7 @@ export default function GenerateVideo() {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const auth = getAuthState();
+  const taskNotification = useTaskNotification("generate-video");
 
   // Redirect if not logged in
   useEffect(() => {
