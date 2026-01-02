@@ -33,6 +33,7 @@ export default function About() {
   const auth = getAuthState();
   const [installPrompt, setInstallPrompt] = useState<any>(null);
   const [showIOSInstructions, setShowIOSInstructions] = useState(false);
+  const [showAndroidInstructions, setShowAndroidInstructions] = useState(false);
 
   // Listen for the PWA install prompt
   useEffect(() => {
@@ -47,17 +48,25 @@ export default function About() {
     };
   }, []);
 
-  const handleInstall = async () => {
-    if (!installPrompt) return;
-
-    installPrompt.prompt();
-    const { outcome } = await installPrompt.userChoice;
-    console.log(`User response to install prompt: ${outcome}`);
-    setInstallPrompt(null);
+  const handleAndroidInstall = async () => {
+    if (installPrompt) {
+      // If the install prompt is available, use it
+      installPrompt.prompt();
+      const { outcome } = await installPrompt.userChoice;
+      console.log(`User response to install prompt: ${outcome}`);
+      setInstallPrompt(null);
+    } else {
+      // Otherwise, show manual instructions
+      setShowAndroidInstructions(true);
+    }
   };
 
   const handleIOSInstall = () => {
     setShowIOSInstructions(true);
+  };
+
+  const isAndroid = () => {
+    return /android/i.test(navigator.userAgent);
   };
 
   const handleLogout = () => {
@@ -493,7 +502,40 @@ export default function About() {
               MAFO را به‌عنوان یک اپلیکیشن موبایلی نصب کنید و دسترسی سریع‌تری داشته باشید
             </p>
 
-            {showIOSInstructions ? (
+            {showAndroidInstructions ? (
+              <div className="bg-white border border-green-200 rounded-lg p-8 mb-8 text-right space-y-4">
+                <h3 className="text-xl font-bold text-black mb-4">🤖 دستورالعمل نصب برای Android</h3>
+                <ol className="space-y-3 text-sm text-black">
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 font-bold text-primary">۱.</span>
+                    <span>دکمه سه نقطه (⋮) در بالای مرورگر را کلیک کنید</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 font-bold text-primary">۲.</span>
+                    <span>گزینه "Add to Home Screen" را انتخاب کنید</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 font-bold text-primary">۳.</span>
+                    <span>نام اپلیکیشن را تأیید کنید</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 font-bold text-primary">۴.</span>
+                    <span>روی "Install" یا "Add" کلیک کنید</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 font-bold text-primary">۵.</span>
+                    <span>تمام شد! اپلیکیشن روی صفحه‌نمایش شما اضافه شد</span>
+                  </li>
+                </ol>
+                <Button
+                  onClick={() => setShowAndroidInstructions(false)}
+                  variant="outline"
+                  className="w-full mt-6"
+                >
+                  بستن
+                </Button>
+              </div>
+            ) : showIOSInstructions ? (
               <div className="bg-white border border-blue-200 rounded-lg p-8 mb-8 text-right space-y-4">
                 <h3 className="text-xl font-bold text-black mb-4">🍎 دستورالعمل نصب برای iOS</h3>
                 <ol className="space-y-3 text-sm text-black">
@@ -528,16 +570,14 @@ export default function About() {
               </div>
             ) : (
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                {installPrompt && (
-                  <Button
-                    onClick={handleInstall}
-                    size="lg"
-                    className="gap-2 text-lg py-6 hover:shadow-lg"
-                  >
-                    <Download className="h-5 w-5" />
-                    دانلود برای Android
-                  </Button>
-                )}
+                <Button
+                  onClick={handleAndroidInstall}
+                  size="lg"
+                  className="gap-2 text-lg py-6 hover:shadow-lg"
+                >
+                  <Download className="h-5 w-5" />
+                  دانلود برای Android
+                </Button>
 
                 <Button
                   onClick={handleIOSInstall}
