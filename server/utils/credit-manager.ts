@@ -117,7 +117,7 @@ export async function deductUserCredits(
     }
 
     // Record transaction in usage_history
-    const { error: txnError } = await supabase.from("usage_history").insert([
+    const { error: txnError } = await supabaseAdmin.from("usage_history").insert([
       {
         user_id: userId,
         type,
@@ -181,7 +181,7 @@ export async function recordUsageTransaction(
       transaction.creditAmount,
     );
 
-    const { error } = await supabase.from("usage_history").insert([
+    const { error } = await supabaseAdmin.from("usage_history").insert([
       {
         user_id: transaction.userId,
         type: transaction.type,
