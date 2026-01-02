@@ -2,7 +2,7 @@
  * Credit management utilities for tracking and deducting user credits
  */
 
-import { supabase } from "./supabase-client.js";
+import { supabaseAdmin } from "./supabase-client.js";
 
 export enum CreditType {
   IMAGE_1K = "image_1k",
