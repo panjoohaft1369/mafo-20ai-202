@@ -201,7 +201,7 @@
     "imageUrl": "https://tempfile.aiquickdraw.com/h/6b73607b6937102c0aa0e2fe418b18e7_1767324810.png"
   },
   "f07d1c53898a3e18435358d580f61ce1": {
-    "status": "processing",
+    "status": "success",
     "timestamp": 1767326277666,
     "prompt": "بک گراند این تصویر رو تیره کن.",
     "aspectRatio": "auto",
@@ -209,7 +209,8 @@
     "apiKey": "5977c1852b5f3a0621558fdea93c200e",
     "userId": "87828415-0119-4fc5-a9e9-cfeb65ad8990",
     "taskType": "image",
-    "creditsDeducted": false,
-    "creditCost": 5
+    "creditsDeducted": true,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/f07d1c53898a3e18435358d580f61ce1_1767326307.png"
   }
 }
