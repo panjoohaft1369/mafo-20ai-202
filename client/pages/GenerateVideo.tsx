@@ -353,9 +353,9 @@ export default function GenerateVideo() {
                 {prompt && (
                   <Button
                     onClick={() => setPrompt("")}
-                    variant="ghost"
+                    variant="destructive"
                     size="sm"
-                    className="w-full text-muted-foreground hover:text-foreground hover:bg-muted"
+                    className="w-full text-white"
                   >
                     خالی کردن متن
                   </Button>
