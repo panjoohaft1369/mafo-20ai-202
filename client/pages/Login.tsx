@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/card";
 import { login } from "@/lib/api";
 import { saveAuthCredentials } from "@/lib/auth";
-import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
+import { Loader2, AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
