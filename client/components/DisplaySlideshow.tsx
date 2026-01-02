@@ -114,31 +114,35 @@ export function DisplaySlideshow({ slidesEndpoint }: DisplaySlideshowProps) {
             {slides.map((slide, index) => (
               <div
                 key={slide.id}
-                className="relative flex-[0_0_100%] h-full w-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50"
+                className="relative flex-[0_0_100%] h-full w-full"
               >
                 {/* Background Image or Color */}
                 {slide.imageData || slide.imageUrl ? (
-                  <img
-                    src={slide.imageData || slide.imageUrl}
-                    alt={slide.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/placeholder.svg";
-                    }}
-                  />
+                  <div className="relative w-full h-full">
+                    <img
+                      src={slide.imageData || slide.imageUrl}
+                      alt={slide.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/placeholder.svg";
+                      }}
+                    />
+                    {/* Dark overlay for text readability */}
+                    <div className="absolute inset-0 bg-black/40" />
+                  </div>
                 ) : (
                   <div
-                    className={`w-full h-full bg-gradient-to-r ${slide.bgColor} flex items-center justify-center`}
+                    className={`w-full h-full bg-gradient-to-r ${slide.bgColor}`}
                   />
                 )}
 
                 {/* Text Overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center px-4 mb-2">
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center px-4 mb-2 drop-shadow-lg">
                     {slide.title}
                   </h2>
                   {slide.subtitle && (
-                    <p className="text-sm sm:text-base md:text-lg text-white text-center px-4">
+                    <p className="text-sm sm:text-base md:text-lg text-white text-center px-4 drop-shadow-lg">
                       {slide.subtitle}
                     </p>
                   )}
