@@ -19,7 +19,7 @@ export default function RegisterPending() {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-background to-muted sm:mt-0 -mt-[110px]">
       <Card className="w-full max-w-2xl">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center mb-4">
