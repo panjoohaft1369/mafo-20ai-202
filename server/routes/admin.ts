@@ -161,7 +161,7 @@ export async function handleAdminGetUsers(
     }
 
     // Fetch all API keys at once
-    const { data: apiKeysData } = await supabase
+    const { data: apiKeysData } = await supabaseAdmin
       .from("api_keys")
       .select("id, user_id, key, is_active, created_at");
 
@@ -232,7 +232,7 @@ export async function handleAdminGetUser(
     console.log("[Admin] Fetching user:", userId);
 
     // Fetch user from database
-    const { data: userData, error: userError } = await supabase
+    const { data: userData, error: userError } = await supabaseAdmin
       .from("users")
       .select(
         `
@@ -260,7 +260,7 @@ export async function handleAdminGetUser(
     }
 
     // Fetch API keys separately
-    const { data: apiKeysData, error: apiKeysError } = await supabase
+    const { data: apiKeysData, error: apiKeysError } = await supabaseAdmin
       .from("api_keys")
       .select("id, key, is_active, created_at")
       .eq("user_id", userId);
@@ -325,7 +325,7 @@ export async function handleAdminGetUserPassword(
     console.log("[Admin] Fetching password for user:", userId);
 
     // Fetch user password from database - try password_hash first (most likely)
-    const { data: userData, error: userError } = await supabase
+    const { data: userData, error: userError } = await supabaseAdmin
       .from("users")
       .select("password_hash, password")
       .eq("id", userId)
@@ -389,7 +389,7 @@ export async function handleAdminUpdateCredits(
     console.log("[Admin] Updating credits for user:", userId, "to:", credits);
 
     // Update in database
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("users")
       .update({ credits })
       .eq("id", userId);
@@ -447,7 +447,7 @@ export async function handleAdminAddApiKey(
       apiKey || `mafo_${crypto.randomBytes(16).toString("hex")}`;
 
     // Insert into database
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("api_keys")
       .insert([
         {
@@ -511,7 +511,7 @@ export async function handleAdminDeleteApiKey(
     console.log("[Admin] Deleting API key:", keyId, "from user:", userId);
 
     // Delete from database
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("api_keys")
       .delete()
       .eq("id", keyId)
@@ -561,7 +561,7 @@ export async function handleAdminApproveUser(
     console.log("[Admin] Approving user:", userId);
 
     // Update in database
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("users")
       .update({
         status: "approved",
@@ -746,7 +746,7 @@ export async function handleAdminUpdateUser(
     console.log("[Admin] Updating user:", userId);
 
     // Check if email is already in use by another user
-    const { data: existing } = await supabase
+    const { data: existing } = await supabaseAdmin
       .from("users")
       .select("id")
       .eq("email", email)
@@ -777,7 +777,7 @@ export async function handleAdminUpdateUser(
     }
 
     // Update in database
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("users")
       .update(updateData)
       .eq("id", userId)
@@ -805,7 +805,7 @@ export async function handleAdminUpdateUser(
     }
 
     // Fetch API keys separately to avoid join issues
-    const { data: apiKeysData, error: apiKeysError } = await supabase
+    const { data: apiKeysData, error: apiKeysError } = await supabaseAdmin
       .from("api_keys")
       .select("id, key, is_active, created_at")
       .eq("user_id", userId);
@@ -871,7 +871,7 @@ export async function handleAdminDeleteUser(
     console.log("[Admin] Deleting user:", userId);
 
     // Soft delete - mark as deleted
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("users")
       .update({
         deleted_at: new Date().toISOString(),
@@ -961,7 +961,7 @@ export async function handleAdminGetGeneratedImages(
     if (searchUser.trim()) {
       const trimmedSearch = searchUser.toLowerCase();
       // We'll filter by user name or email in the response
-      const { data: matchingUsers } = await supabase
+      const { data: matchingUsers } = await supabaseAdmin
         .from("users")
         .select("id")
         .or(`name.ilike.%${trimmedSearch}%,email.ilike.%${trimmedSearch}%`);
