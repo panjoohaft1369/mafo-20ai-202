@@ -134,7 +134,7 @@ export async function handleAdminGetUsers(
     console.log("[Admin] Fetching all users");
 
     // Fetch users from database (without nested api_keys)
-    const { data: usersData, error: usersError } = await supabase
+    const { data: usersData, error: usersError } = await supabaseAdmin
       .from("users")
       .select(
         `
