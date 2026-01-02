@@ -642,20 +642,30 @@ export default function AdminUserDetails() {
                 <div>
                   <p className="text-sm text-muted-foreground">رمز عبور</p>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="font-mono text-sm">
-                      {showPassword ? "••••••••" : "••••••••"}
-                    </span>
-                    <button
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="p-1 hover:bg-gray-200 rounded transition-colors"
-                      title={showPassword ? "پنهان کن" : "نمایش بده"}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4 text-muted-foreground" />
-                      ) : (
-                        <Eye className="h-4 w-4 text-muted-foreground" />
-                      )}
-                    </button>
+                    {user.password && user.password.startsWith("$2") ? (
+                      <span className="font-mono text-sm text-amber-600">
+                        [رمزگذاری شده - نمی‌توان نمایش داد]
+                      </span>
+                    ) : (
+                      <span className="font-mono text-sm">
+                        {showPassword && user.password
+                          ? user.password
+                          : "••••••••"}
+                      </span>
+                    )}
+                    {!(user.password && user.password.startsWith("$2")) && (
+                      <button
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="p-1 hover:bg-gray-200 rounded transition-colors"
+                        title={showPassword ? "پنهان کن" : "نمایش بده"}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
                 <div>
