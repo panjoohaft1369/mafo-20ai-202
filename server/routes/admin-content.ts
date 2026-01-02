@@ -15,6 +15,9 @@ function ensureDataDir() {
   }
 }
 
+// Image URL constant
+const MAFO_IMAGE_URL = "https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2Fcb7ff6366612402c8b974195a58baf15?format=webp&width=800";
+
 // Initialize default data
 function initializeDefaults() {
   ensureDataDir();
