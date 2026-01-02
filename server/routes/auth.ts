@@ -520,8 +520,8 @@ export async function handleRegister(
     const normalizedPhone = normalizePhone(phone);
     const lowerEmail = email.toLowerCase();
 
-    // Check if email already exists in database
-    const { data: existingUser, error: checkError } = await supabase
+    // Check if email already exists in database (using admin client)
+    const { data: existingUser, error: checkError } = await supabaseAdmin
       .from("users")
       .select("id")
       .eq("email", lowerEmail)
