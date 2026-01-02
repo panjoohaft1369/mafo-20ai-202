@@ -620,8 +620,8 @@ export async function handleGetUserProfile(
       return;
     }
 
-    // Find user by API key
-    const { data: apiKeyData, error: keyError } = await supabase
+    // Find user by API key (using admin client)
+    const { data: apiKeyData, error: keyError } = await supabaseAdmin
       .from("api_keys")
       .select("user_id")
       .eq("key", apiKey)
@@ -637,8 +637,8 @@ export async function handleGetUserProfile(
       return;
     }
 
-    // Fetch user data
-    const { data: user, error: userError } = await supabase
+    // Fetch user data (using admin client)
+    const { data: user, error: userError } = await supabaseAdmin
       .from("users")
       .select(
         `
