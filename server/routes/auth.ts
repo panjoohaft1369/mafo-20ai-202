@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as bcrypt from "bcrypt";
 import * as crypto from "crypto";
-import { supabase } from "../utils/supabase-client.js";
+import { supabase, supabaseAdmin } from "../utils/supabase-client.js";
 
 /**
  * Basic email validation
