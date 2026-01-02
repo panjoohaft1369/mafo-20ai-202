@@ -30,8 +30,7 @@ export function TopNav() {
         const response = await fetch("/api/user/profile", {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${currentAuth.apiKey}`,
+            "X-API-Key": currentAuth.apiKey,
           },
         });
 
@@ -48,6 +47,7 @@ export function TopNav() {
         }
       } catch (err) {
         // Silently ignore sync errors to avoid console spam
+        console.debug("[TopNav] Credit sync failed:", err);
       }
     };
 
