@@ -373,8 +373,8 @@ export async function handleChangePassword(
       return;
     }
 
-    // Fetch user from database
-    const { data: user, error: userError } = await supabase
+    // Fetch user from database (using admin client to read password_hash)
+    const { data: user, error: userError } = await supabaseAdmin
       .from("users")
       .select("id, password_hash")
       .eq("id", userId)
