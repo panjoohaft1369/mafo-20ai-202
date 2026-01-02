@@ -355,6 +355,14 @@ export default function Generate() {
     <div className="min-h-screen bg-background pb-0">
       <Header isLoggedIn={true} onLogout={handleLogout} />
 
+      {/* Task Notification Modal */}
+      <TaskNotificationModal
+        isOpen={taskNotification.isOpen}
+        message={taskNotification.message}
+        status={taskNotification.status}
+        onClose={taskNotification.close}
+      />
+
       <section className="h-[150px] bg-background w-full"></section>
 
       <main className="container mx-auto px-4 py-8 sm:py-12 pt-20 md:pt-24 -mt-[120px]">
