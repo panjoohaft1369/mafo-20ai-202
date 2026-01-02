@@ -186,5 +186,18 @@
     "creditsDeducted": false,
     "creditCost": 5,
     "imageUrl": "https://tempfile.aiquickdraw.com/h/4efa7230f34c82d91fd366b38a4f3f9d_1767324366.png"
+  },
+  "6b73607b6937102c0aa0e2fe418b18e7": {
+    "status": "success",
+    "timestamp": 1767324784408,
+    "prompt": "از نظر بصری، این لوگو رو جذابتر و گرافیکی تر طراحی کن.",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "6b16254b7d421ae7832b43d173566458",
+    "userId": "de55aa05-32c4-4b4a-b138-ccfe1bc54a81",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/6b73607b6937102c0aa0e2fe418b18e7_1767324810.png"
   }
 }
