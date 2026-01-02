@@ -502,6 +502,23 @@ export default function Profile() {
               </CardContent>
             </Card>
 
+            {/* Password Change Notice */}
+            <Card className="mb-6 border-blue-200 bg-blue-50">
+              <CardContent className="pt-6">
+                <div className="flex gap-3 items-start">
+                  <span className="text-2xl">💡</span>
+                  <div>
+                    <p className="font-semibold text-blue-900 mb-2">
+                      توجه: برای درخواست تغییر رمز عبور
+                    </p>
+                    <p className="text-sm text-blue-800">
+                      اگر می‌خواهید رمز عبور خود را تغییر دهید، لطفا با پشتیبانی تماس بگیرید.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Logout Button */}
             <Button
               onClick={handleLogout}
