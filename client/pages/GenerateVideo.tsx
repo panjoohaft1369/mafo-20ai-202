@@ -60,6 +60,9 @@ export default function GenerateVideo() {
   const [taskId, setTaskId] = useState<string | null>(null);
 
   const handleLogout = () => {
+    // Clear saved state on logout
+    localStorage.removeItem("generate_video_form_state");
+    localStorage.removeItem("generate_video_in_progress_task");
     clearAuth();
     navigate("/login");
   };
