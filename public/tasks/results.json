@@ -147,5 +147,44 @@
     "creditsDeducted": true,
     "creditCost": 5,
     "imageUrl": "https://tempfile.aiquickdraw.com/h/187e7ba8cfc8a4a1c150260cb1736c82_1767196026.png"
+  },
+  "61c5db38fcf61a1fde5fc5ab0e8a77bf": {
+    "status": "success",
+    "timestamp": 1767324122093,
+    "prompt": "زاویه دورین این تصویر رو تغییر بده.",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "0ae666a7051995dca89490cbd1059a5c",
+    "userId": "2e175ecf-fa73-4470-a055-bffd5c33722b",
+    "taskType": "image",
+    "creditsDeducted": false,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/61c5db38fcf61a1fde5fc5ab0e8a77bf_1767324148.png"
+  },
+  "c29bb2144a25647f40b9fc605fdf366f": {
+    "status": "success",
+    "timestamp": 1767324239560,
+    "prompt": "رنگ لباس رو تغییر بده به رنگ مشکی.",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "0ae666a7051995dca89490cbd1059a5c",
+    "userId": "2e175ecf-fa73-4470-a055-bffd5c33722b",
+    "taskType": "image",
+    "creditsDeducted": false,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/c29bb2144a25647f40b9fc605fdf366f_1767324279.png"
+  },
+  "4efa7230f34c82d91fd366b38a4f3f9d": {
+    "status": "success",
+    "timestamp": 1767324338063,
+    "prompt": "رنگ لباس رو تغییر بده به رنگ مشکی.",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "5977c1852b5f3a0621558fdea93c200e",
+    "userId": "87828415-0119-4fc5-a9e9-cfeb65ad8990",
+    "taskType": "image",
+    "creditsDeducted": false,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/4efa7230f34c82d91fd366b38a4f3f9d_1767324366.png"
   }
 }
