@@ -462,7 +462,9 @@ export default function Auth() {
                         </a>
                         <button
                           onClick={() => {
-                            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                            const isMobile = /iPhone|iPad|iPod|Android/i.test(
+                              navigator.userAgent,
+                            );
                             const url = isMobile
                               ? "whatsapp://send?phone=989357887572"
                               : "https://wa.me/+989357887572";
@@ -631,12 +633,18 @@ export default function Auth() {
                 {formData.password && (
                   <div className="mt-3 p-3 rounded-lg bg-red-50 border border-red-200 space-y-2">
                     {/* Special Characters */}
-                    <div className={`text-xs flex items-center gap-2 text-right ${
-                      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(formData.password)
-                        ? "text-green-700"
-                        : "text-red-700"
-                    }`}>
-                      {/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(formData.password) ? (
+                    <div
+                      className={`text-xs flex items-center gap-2 text-right ${
+                        /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
+                          formData.password,
+                        )
+                          ? "text-green-700"
+                          : "text-red-700"
+                      }`}
+                    >
+                      {/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
+                        formData.password,
+                      ) ? (
                         <>
                           <span className="text-green-600">✓</span>
                           <span>استفاده از علائم خاص (مثل @ # $ و ...)</span>
@@ -650,12 +658,16 @@ export default function Auth() {
                     </div>
 
                     {/* Uppercase and Lowercase */}
-                    <div className={`text-xs flex items-center gap-2 text-right ${
-                      /[A-Z]/.test(formData.password) && /[a-z]/.test(formData.password)
-                        ? "text-green-700"
-                        : "text-red-700"
-                    }`}>
-                      {/[A-Z]/.test(formData.password) && /[a-z]/.test(formData.password) ? (
+                    <div
+                      className={`text-xs flex items-center gap-2 text-right ${
+                        /[A-Z]/.test(formData.password) &&
+                        /[a-z]/.test(formData.password)
+                          ? "text-green-700"
+                          : "text-red-700"
+                      }`}
+                    >
+                      {/[A-Z]/.test(formData.password) &&
+                      /[a-z]/.test(formData.password) ? (
                         <>
                           <span className="text-green-600">✓</span>
                           <span>استفاده از حروف کوچک و بزرگ</span>
@@ -669,11 +681,13 @@ export default function Auth() {
                     </div>
 
                     {/* Numbers */}
-                    <div className={`text-xs flex items-center gap-2 text-right ${
-                      /[0-9]/.test(formData.password)
-                        ? "text-green-700"
-                        : "text-red-700"
-                    }`}>
+                    <div
+                      className={`text-xs flex items-center gap-2 text-right ${
+                        /[0-9]/.test(formData.password)
+                          ? "text-green-700"
+                          : "text-red-700"
+                      }`}
+                    >
                       {/[0-9]/.test(formData.password) ? (
                         <>
                           <span className="text-green-600">✓</span>
@@ -688,11 +702,13 @@ export default function Auth() {
                     </div>
 
                     {/* Minimum Length */}
-                    <div className={`text-xs flex items-center gap-2 text-right ${
-                      formData.password.length >= 8
-                        ? "text-green-700"
-                        : "text-red-700"
-                    }`}>
+                    <div
+                      className={`text-xs flex items-center gap-2 text-right ${
+                        formData.password.length >= 8
+                          ? "text-green-700"
+                          : "text-red-700"
+                      }`}
+                    >
                       {formData.password.length >= 8 ? (
                         <>
                           <span className="text-green-600">✓</span>

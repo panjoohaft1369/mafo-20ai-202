@@ -40,7 +40,9 @@ export default function RegisterPending() {
               ✨ تشکر از ثبت نام در MAFO!
             </p>
             <p className="text-sm text-blue-800 mt-2 leading-relaxed">
-              حساب کاربری شما ایجاد شده است، اما برای فعال‌سازی و شروع کار، باید با تیم پشتیبانی ما صحبت کنید و پلانی را برای نیازهای خود انتخاب کنید.
+              حساب کاربری شما ایجاد شده است، اما برای فعال‌سازی و شروع کار، باید
+              با تیم پشتیبانی ما صحبت کنید و پلانی را برای نیازهای خود انتخاب
+              کنید.
             </p>
           </div>
 
@@ -58,7 +60,8 @@ export default function RegisterPending() {
                   📞 تماس با تیم پشتیبانی
                 </h4>
                 <p className="text-xs text-blue-700 font-medium">
-                  اولین و مهم‌ترین گام: لطفاً درحال حاضر با تیم پشتیبانی ما تماس بگیرید
+                  اولین و مهم‌ترین گام: لطفاً درحال حاضر با تیم پشتیبانی ما تماس
+                  بگیرید
                 </p>
               </div>
             </div>
@@ -69,9 +72,12 @@ export default function RegisterPending() {
                 2
               </div>
               <div className="text-right flex-1">
-                <h4 className="font-bold text-sm mb-1 text-gray-800">💰 بررسی پلان‌های مختلف</h4>
+                <h4 className="font-bold text-sm mb-1 text-gray-800">
+                  💰 بررسی پلان‌های مختلف
+                </h4>
                 <p className="text-xs text-purple-700">
-                  تیم پشتیبانی درمورد پلان‌های اعتبار و خدمات مختلف MAFO با شما صحبت خواهد کرد
+                  تیم پشتیبانی درمورد پلان‌های اعتبار و خدمات مختلف MAFO با شما
+                  صحبت خواهد کرد
                 </p>
               </div>
             </div>
@@ -82,14 +88,16 @@ export default function RegisterPending() {
                 3
               </div>
               <div className="text-right flex-1">
-                <h4 className="font-bold text-sm mb-1 text-gray-800">✅ انتخاب پلان و فعال‌سازی</h4>
+                <h4 className="font-bold text-sm mb-1 text-gray-800">
+                  ✅ انتخاب پلان و فعال‌سازی
+                </h4>
                 <p className="text-xs text-green-700">
-                  پس از انتخاب پلان مورد نیاز، تیم پشتیبانی حساب کاربری شما را فعال خواهد کرد
+                  پس از انتخاب پلان مورد نیاز، تیم پشتیبانی حساب کاربری شما را
+                  فعال خواهد کرد
                 </p>
               </div>
             </div>
           </div>
-
 
           {/* Terms Agreement Message */}
           <div className="p-4 rounded-lg bg-yellow-50 border border-yellow-300 text-right">
@@ -97,25 +105,25 @@ export default function RegisterPending() {
               <span className="font-bold text-base">⚠️ توجه مهم:</span>
             </p>
             <p className="text-xs text-yellow-900 leading-relaxed">
-              با ثبت نام در MAFO، شما قوانین و شرایط استفاده از سرویس را پذیرفته‌اید.
+              با ثبت نام در MAFO، شما قوانین و شرایط استفاده از سرویس را
+              پذیرفته‌اید.
               <br />
-              برای شروع کار، <strong>حتماً</strong> با تیم پشتیبانی تماس بگیرید، پلان مورد نیاز را انتخاب کنید، و منتظر فعال‌سازی حساب بمانید.
+              برای شروع کار، <strong>حتماً</strong> با تیم پشتیبانی تماس بگیرید،
+              پلان مورد نیاز را انتخاب کنید، و منتظر فعال‌سازی حساب بمانید.
             </p>
           </div>
 
           {/* Important Message */}
           <div className="p-4 rounded-lg bg-red-50 border-2 border-red-300 text-center">
             <p className="text-sm font-bold text-gray-800">
-              ⚠️ بدون تماس با پشتیبانی و انتخاب پلان، نمی‌توانید از خدمات MAFO استفاده کنید.
+              ⚠️ بدون تماس با پشتیبانی و انتخاب پلان، نمی‌توانید از خدمات MAFO
+              استفاده کنید.
             </p>
           </div>
 
           {/* Buttons */}
           <div className="space-y-3 pt-4 border-t">
-            <a
-              href="tel:+989357887572"
-              className="block w-full"
-            >
+            <a href="tel:+989357887572" className="block w-full">
               <Button
                 className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-6 text-base"
                 size="lg"
@@ -126,7 +134,9 @@ export default function RegisterPending() {
 
             <Button
               onClick={() => {
-                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(
+                  navigator.userAgent,
+                );
                 const url = isMobile
                   ? "whatsapp://send?phone=989357887572"
                   : "https://wa.me/+989357887572";

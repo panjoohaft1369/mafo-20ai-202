@@ -811,7 +811,10 @@ export async function handleAdminUpdateUser(
       .eq("user_id", userId);
 
     if (apiKeysError) {
-      console.error("[Admin Update User] API Keys error:", apiKeysError.message);
+      console.error(
+        "[Admin Update User] API Keys error:",
+        apiKeysError.message,
+      );
       // Continue without API keys rather than failing completely
     }
 

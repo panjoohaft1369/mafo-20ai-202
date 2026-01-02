@@ -20,7 +20,10 @@ if (!SUPABASE_SERVICE_ROLE_KEY) {
 export const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!);
 
 // Create Supabase client for server-side trusted operations (bypasses RLS)
-export const supabaseAdmin = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+export const supabaseAdmin = createClient(
+  SUPABASE_URL!,
+  SUPABASE_SERVICE_ROLE_KEY!,
+);
 
 // Re-export types
 export type { User } from "@supabase/supabase-js";

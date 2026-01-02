@@ -37,7 +37,7 @@ export function DisplaySlideshow({ slidesEndpoint }: DisplaySlideshowProps) {
         if (response.ok) {
           const data = await response.json();
           const sortedSlides = (data.slides || []).sort(
-            (a: Slide, b: Slide) => a.order - b.order
+            (a: Slide, b: Slide) => a.order - b.order,
           );
           setSlides(sortedSlides);
         } else {

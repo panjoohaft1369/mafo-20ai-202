@@ -119,7 +119,8 @@ export default function GenerateVideo() {
       const uploadResult = await uploadImage(selectedImage);
 
       if (!uploadResult.success || !uploadResult.imageUrl) {
-        const errorMsg = translateErrorMessage(uploadResult.error) || "خطا در آپلود تصویر";
+        const errorMsg =
+          translateErrorMessage(uploadResult.error) || "خطا در آپلود تصویر";
         setError(errorMsg);
         setLoading(false);
         taskNotification.showError(errorMsg);
@@ -138,7 +139,8 @@ export default function GenerateVideo() {
       });
 
       if (!result.success || !result.taskId) {
-        const errorMsg = translateErrorMessage(result.error) || "خطا در ایجاد ویدیو";
+        const errorMsg =
+          translateErrorMessage(result.error) || "خطا در ایجاد ویدیو";
         setError(errorMsg);
         setLoading(false);
         taskNotification.showError(errorMsg);
@@ -146,7 +148,9 @@ export default function GenerateVideo() {
       }
 
       setTaskId(result.taskId);
-      taskNotification.showLoading("درحال پردازش ویدیو... (این ممکن است چند دقیقه طول بکشد)");
+      taskNotification.showLoading(
+        "درحال پردازش ویدیو... (این ممکن است چند دقیقه طول بکشد)",
+      );
 
       // Step 3: Poll for completion
       const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
@@ -162,7 +166,8 @@ export default function GenerateVideo() {
           `ویدیو با موفقیت ایجاد شد! (${VIDEO_CREDIT_COST} اعتبار کاهش یافت)`,
         );
       } else {
-        const errorMsg = translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو";
+        const errorMsg =
+          translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو";
         setError(errorMsg);
         taskNotification.showError(errorMsg);
       }
@@ -267,8 +272,8 @@ export default function GenerateVideo() {
             {/* Credit Cost Info Box */}
             <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-300">
               <p className="text-sm text-yellow-900 font-medium">
-                💰 <strong>هزینه اعتبار:</strong> ساخت هر ویدیو 6 ثانیه‌ای با این
-                هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
+                💰 <strong>هزینه اعتبار:</strong> ساخت هر ویدیو 6 ثانیه‌ای با
+                این هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
               </p>
             </div>
           </div>

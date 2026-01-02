@@ -833,7 +833,9 @@ export async function handleFetchLogs(
       (a: any, b: any) => b.timestamp - a.timestamp,
     );
 
-    console.log(`[Logs] Returning ${sortedLogs.length} recent tasks in local storage`);
+    console.log(
+      `[Logs] Returning ${sortedLogs.length} recent tasks in local storage`,
+    );
 
     res.json({
       success: true,

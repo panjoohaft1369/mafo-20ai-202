@@ -291,7 +291,10 @@ export function AdminGallery() {
               className="gap-1"
             >
               تصاویر (
-              {images.filter((h) => h.imageUrl && !isVideoUrl(h.imageUrl)).length}
+              {
+                images.filter((h) => h.imageUrl && !isVideoUrl(h.imageUrl))
+                  .length
+              }
               )
             </Button>
             <Button
@@ -304,7 +307,10 @@ export function AdminGallery() {
               className="gap-1"
             >
               ویدیوها (
-              {images.filter((h) => h.imageUrl && isVideoUrl(h.imageUrl)).length}
+              {
+                images.filter((h) => h.imageUrl && isVideoUrl(h.imageUrl))
+                  .length
+              }
               )
             </Button>
           </div>
@@ -650,7 +656,9 @@ export function AdminGallery() {
                   <p className="text-sm">نام: {selectedImage.user.name}</p>
                   <p className="text-sm">ایمیل: {selectedImage.user.email}</p>
                   {selectedImage.user.phone && (
-                    <p className="text-sm">موبایل: {selectedImage.user.phone}</p>
+                    <p className="text-sm">
+                      موبایل: {selectedImage.user.phone}
+                    </p>
                   )}
                 </div>
 

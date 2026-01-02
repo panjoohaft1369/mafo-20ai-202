@@ -85,7 +85,9 @@ export function TaskNotificationModal({
       {/* Backdrop - clickable to close when not loading */}
       <div
         className={`fixed inset-0 transition-opacity duration-300 ${
-          status === "loading" ? "bg-black/20 pointer-events-none" : "bg-black/0 pointer-events-auto"
+          status === "loading"
+            ? "bg-black/20 pointer-events-none"
+            : "bg-black/0 pointer-events-auto"
         }`}
         onClick={() => status !== "loading" && onClose()}
       />
@@ -111,7 +113,9 @@ export function TaskNotificationModal({
             <div className="flex-shrink-0">{getIcon()}</div>
 
             {/* Message */}
-            <div className={`flex-1 text-sm font-medium ${getTextColor()} text-right`}>
+            <div
+              className={`flex-1 text-sm font-medium ${getTextColor()} text-right`}
+            >
               {message}
             </div>
           </div>

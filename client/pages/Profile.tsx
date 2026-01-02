@@ -136,7 +136,14 @@ export default function Profile() {
     };
 
     loadProfileData();
-  }, [auth.isLoggedIn, auth.apiKey, navigate, auth.name, auth.email, auth.credits]);
+  }, [
+    auth.isLoggedIn,
+    auth.apiKey,
+    navigate,
+    auth.name,
+    auth.email,
+    auth.credits,
+  ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -513,7 +520,8 @@ export default function Profile() {
                       توجه: برای درخواست تغییر رمز عبور
                     </p>
                     <p className="text-sm text-blue-800">
-                      اگر می‌خواهید رمز عبور خود را تغییر دهید، لطفا با پشتیبانی تماس بگیرید.
+                      اگر می‌خواهید رمز عبور خود را تغییر دهید، لطفا با پشتیبانی
+                      تماس بگیرید.
                     </p>
                   </div>
                 </div>

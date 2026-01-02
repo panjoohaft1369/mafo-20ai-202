@@ -117,16 +117,18 @@ export async function deductUserCredits(
     }
 
     // Record transaction in usage_history
-    const { error: txnError } = await supabaseAdmin.from("usage_history").insert([
-      {
-        user_id: userId,
-        type,
-        credit_amount: credits,
-        task_id: taskId,
-        status: "completed",
-        metadata: {},
-      },
-    ]);
+    const { error: txnError } = await supabaseAdmin
+      .from("usage_history")
+      .insert([
+        {
+          user_id: userId,
+          type,
+          credit_amount: credits,
+          task_id: taskId,
+          status: "completed",
+          metadata: {},
+        },
+      ]);
 
     if (txnError) {
       console.error(`[Credits] Error recording transaction:`, txnError.message);

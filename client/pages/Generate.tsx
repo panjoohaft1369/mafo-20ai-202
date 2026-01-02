@@ -260,7 +260,8 @@ export default function Generate() {
       });
 
       if (!result.success || !result.taskId) {
-        const errorMsg = translateErrorMessage(result.error) || "خطا در ایجاد تصویر";
+        const errorMsg =
+          translateErrorMessage(result.error) || "خطا در ایجاد تصویر";
         setError(errorMsg);
         setLoading(false);
         taskNotification.showError(errorMsg);
@@ -272,7 +273,9 @@ export default function Generate() {
       setHasInProgressTask(true);
       localStorage.setItem("generate_in_progress_task", "true");
 
-      taskNotification.showLoading("درحال پردازش تصویر... (این ممکن است چند دقیقه طول بکشد)");
+      taskNotification.showLoading(
+        "درحال پردازش تصویر... (این ممکن است چند دقیقه طول بکشد)",
+      );
 
       // Step 3: Poll for completion
       const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
@@ -638,8 +641,8 @@ export default function Generate() {
                   ❌ اعتبار ناکافی
                 </p>
                 <p className="text-xs text-red-800 mt-2">
-                  برای ایجاد تصویر با این تنظیمات به {calculateCreditCost()} اعتبار
-                  نیاز است، اما شما فقط {auth.credits} اعتبار دارید.
+                  برای ایجاد تصویر با این تنظیمات به {calculateCreditCost()}{" "}
+                  اعتبار نیاز است، اما شما فقط {auth.credits} اعتبار دارید.
                 </p>
               </div>
             ) : (

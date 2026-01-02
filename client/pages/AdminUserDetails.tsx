@@ -275,7 +275,9 @@ export default function AdminUserDetails() {
 
     // If password looks like a bcrypt hash (starts with $2a, $2b, or $2y), show a message
     if (editData.password.startsWith("$2")) {
-      setError("رمز عبور موجود رمزگذاری شده است و نمی‌تواند نمایش داده شود. لطفا یک رمز عبور جدید وارد کنید.");
+      setError(
+        "رمز عبور موجود رمزگذاری شده است و نمی‌تواند نمایش داده شود. لطفا یک رمز عبور جدید وارد کنید.",
+      );
       return;
     }
 

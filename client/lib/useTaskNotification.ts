@@ -13,27 +13,29 @@ interface TaskNotificationState {
 const STORAGE_KEY = "task_notification";
 
 export function useTaskNotification(currentPageId: string) {
-  const [notification, setNotification] = useState<TaskNotificationState>(() => {
-    // Check if there's a saved notification in sessionStorage
-    if (typeof window === "undefined") {
-      return { isOpen: false, message: "", status: "loading" };
-    }
-
-    try {
-      const saved = sessionStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Only restore if it belongs to the current page and user is on that page
-        if (parsed.pageId === currentPageId) {
-          return parsed;
-        }
+  const [notification, setNotification] = useState<TaskNotificationState>(
+    () => {
+      // Check if there's a saved notification in sessionStorage
+      if (typeof window === "undefined") {
+        return { isOpen: false, message: "", status: "loading" };
       }
-    } catch (e) {
-      console.error("Error reading notification from sessionStorage:", e);
-    }
 
-    return { isOpen: false, message: "", status: "loading" };
-  });
+      try {
+        const saved = sessionStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          // Only restore if it belongs to the current page and user is on that page
+          if (parsed.pageId === currentPageId) {
+            return parsed;
+          }
+        }
+      } catch (e) {
+        console.error("Error reading notification from sessionStorage:", e);
+      }
+
+      return { isOpen: false, message: "", status: "loading" };
+    },
+  );
 
   // Save notification to sessionStorage whenever it changes
   useEffect(() => {
@@ -54,32 +56,41 @@ export function useTaskNotification(currentPageId: string) {
     }
   }, [notification, currentPageId]);
 
-  const showLoading = useCallback((message: string) => {
-    setNotification({
-      isOpen: true,
-      message,
-      status: "loading",
-      pageId: currentPageId,
-    });
-  }, [currentPageId]);
+  const showLoading = useCallback(
+    (message: string) => {
+      setNotification({
+        isOpen: true,
+        message,
+        status: "loading",
+        pageId: currentPageId,
+      });
+    },
+    [currentPageId],
+  );
 
-  const showSuccess = useCallback((message: string) => {
-    setNotification({
-      isOpen: true,
-      message,
-      status: "success",
-      pageId: currentPageId,
-    });
-  }, [currentPageId]);
+  const showSuccess = useCallback(
+    (message: string) => {
+      setNotification({
+        isOpen: true,
+        message,
+        status: "success",
+        pageId: currentPageId,
+      });
+    },
+    [currentPageId],
+  );
 
-  const showError = useCallback((message: string) => {
-    setNotification({
-      isOpen: true,
-      message,
-      status: "error",
-      pageId: currentPageId,
-    });
-  }, [currentPageId]);
+  const showError = useCallback(
+    (message: string) => {
+      setNotification({
+        isOpen: true,
+        message,
+        status: "error",
+        pageId: currentPageId,
+      });
+    },
+    [currentPageId],
+  );
 
   const close = useCallback(() => {
     setNotification((prev) => ({
