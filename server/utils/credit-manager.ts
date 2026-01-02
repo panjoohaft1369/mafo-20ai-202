@@ -78,8 +78,8 @@ export async function deductUserCredits(
       `[Credits] Deducting ${credits} credits from user ${userId} for ${type}`,
     );
 
-    // Get current user credits
-    const { data: userData, error: userError } = await supabase
+    // Get current user credits using supabaseAdmin (bypasses RLS)
+    const { data: userData, error: userError } = await supabaseAdmin
       .from("users")
       .select("credits")
       .eq("id", userId)
@@ -99,8 +99,8 @@ export async function deductUserCredits(
       return false;
     }
 
-    // Deduct credits from user
-    const { error: updateError } = await supabase
+    // Deduct credits from user using supabaseAdmin (bypasses RLS)
+    const { error: updateError } = await supabaseAdmin
       .from("users")
       .update({
         credits: currentCredits - credits,
