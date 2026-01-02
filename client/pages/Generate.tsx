@@ -621,6 +621,17 @@ export default function Generate() {
                   لطفا با پشتیبانی تماس بگیرید.
                 </p>
               </div>
+            ) : auth.credits <
+              (CREDIT_COSTS[resolution as keyof typeof CREDIT_COSTS] || 5) ? (
+              <div className="p-4 bg-red-50 rounded-lg border-2 border-red-400 shadow-md">
+                <p className="text-sm text-red-900 font-bold">
+                  ❌ اعتبار ناکافی
+                </p>
+                <p className="text-xs text-red-800 mt-2">
+                  برای ایجاد تصویر با این تنظیمات به {calculateCreditCost()} اعتبار
+                  نیاز است، اما شما فقط {auth.credits} اعتبار دارید.
+                </p>
+              </div>
             ) : (
               <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-400 shadow-md">
                 <p className="text-sm text-yellow-900 font-bold">
