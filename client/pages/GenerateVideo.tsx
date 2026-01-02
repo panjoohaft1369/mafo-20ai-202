@@ -250,22 +250,27 @@ export default function GenerateVideo() {
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">
             تولید ویدیو هوش مصنوعی (حالت آزمایشی)
           </h1>
-          <p className="text-muted-foreground mb-2">
+          <p className="text-muted-foreground mb-6">
             تصویری انتخاب کنید و حرکت دلخواه را توصیف کنید تا ویدیویی خیره‌کننده
             ایجاد شود
           </p>
-          <div className="inline-block px-4 py-2 rounded-lg bg-white border border-red-200 mb-4">
-            <p className="text-sm text-red-600 font-medium">
-              استفاده از این هوش مصنوعی رایگان نمی‌باشد
-            </p>
-          </div>
 
-          {/* Credit Cost Info Box */}
-          <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-300 inline-block">
-            <p className="text-sm text-yellow-900 font-medium">
-              💰 <strong>هزینه اعتبار:</strong> ساخت هر ویدیو 6 ثانیه‌ای با این
-              هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
-            </p>
+          {/* Info Boxes Stack */}
+          <div className="space-y-3 max-w-2xl mx-auto">
+            {/* "Not Free" Box */}
+            <div className="px-4 py-2 rounded-lg bg-white border border-red-200">
+              <p className="text-sm text-red-600 font-medium">
+                استفاده از این هوش مصنوعی رایگان نمی‌باشد
+              </p>
+            </div>
+
+            {/* Credit Cost Info Box */}
+            <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-300">
+              <p className="text-sm text-yellow-900 font-medium">
+                💰 <strong>هزینه اعتبار:</strong> ساخت هر ویدیو 6 ثانیه‌ای با این
+                هوش مصنوعی 20 اعتبار از شما کسر خواهد کرد
+              </p>
+            </div>
           </div>
         </div>
 
