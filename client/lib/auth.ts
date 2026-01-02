@@ -59,15 +59,26 @@ export function saveAuthCredentials(
 }
 
 /**
- * Clear auth data (logout)
+ * Clear auth data (logout) - also clears all form state and session data
  */
 export function clearAuth(): void {
+  // Clear auth credentials
   localStorage.removeItem(USER_ID_STORAGE_KEY);
   localStorage.removeItem(API_KEY_STORAGE_KEY);
   localStorage.removeItem(USER_NAME_STORAGE_KEY);
   localStorage.removeItem(USER_EMAIL_STORAGE_KEY);
   localStorage.removeItem(USER_CREDITS_STORAGE_KEY);
   localStorage.removeItem(USER_ROLE_STORAGE_KEY);
+
+  // Clear form state and session data
+  localStorage.removeItem("generate_form_state");
+  localStorage.removeItem("generate_in_progress_task");
+  localStorage.removeItem("generate_video_form_state");
+  localStorage.removeItem("generate_video_in_progress_task");
+
+  // Clear any other session-specific data
+  localStorage.removeItem("last_generated_image");
+  localStorage.removeItem("last_prompt");
 }
 
 /**
