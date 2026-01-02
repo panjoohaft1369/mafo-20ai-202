@@ -107,19 +107,18 @@ export default function GenerateVideo() {
 
     try {
       // Step 1: Upload image to get a public URL
-      toast.loading("آپلود تصویر...");
+      taskNotification.showLoading("آپلود تصویر...");
       const uploadResult = await uploadImage(selectedImage);
 
       if (!uploadResult.success || !uploadResult.imageUrl) {
-        setError(
-          translateErrorMessage(uploadResult.error) || "خطا در آپلود تصویر",
-        );
+        const errorMsg = translateErrorMessage(uploadResult.error) || "خطا در آپلود تصویر";
+        setError(errorMsg);
         setLoading(false);
+        taskNotification.showError(errorMsg);
         return;
       }
 
-      toast.dismiss();
-      toast.loading("درخواست ایجاد ویدیو...");
+      taskNotification.showLoading("درخواست ایجاد ویدیو...");
 
       // Step 2: Send generation request with uploaded image URL
       const result = await generateVideo({
@@ -131,14 +130,15 @@ export default function GenerateVideo() {
       });
 
       if (!result.success || !result.taskId) {
-        setError(translateErrorMessage(result.error) || "خطا در ایجاد ویدیو");
+        const errorMsg = translateErrorMessage(result.error) || "خطا در ایجاد ویدیو";
+        setError(errorMsg);
         setLoading(false);
+        taskNotification.showError(errorMsg);
         return;
       }
 
       setTaskId(result.taskId);
-      toast.dismiss();
-      toast.loading("درحال پردازش ویدیو... (این ممکن است چند دقیقه طول بکشد)");
+      taskNotification.showLoading("درحال پردازش ویدیو... (این ممکن است چند دقیقه طول بکشد)");
 
       // Step 3: Poll for completion
       const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
@@ -150,20 +150,19 @@ export default function GenerateVideo() {
         const newCredits = Math.max(0, (auth.credits || 0) - VIDEO_CREDIT_COST);
         updateStoredCredits(newCredits);
 
-        toast.dismiss();
-        toast.success(
+        taskNotification.showSuccess(
           `ویدیو با موفقیت ایجاد شد! (${VIDEO_CREDIT_COST} اعتبار کاهش یافت)`,
         );
       } else {
-        setError(
-          translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو",
-        );
-        toast.dismiss();
+        const errorMsg = translateErrorMessage(pollResult.error) || "خطا در ایجاد ویدیو";
+        setError(errorMsg);
+        taskNotification.showError(errorMsg);
       }
     } catch (err) {
       console.error("Generate video error:", err);
-      setError("خطا در اتصال. لطفا بعدا دوباره سعی کنید.");
-      toast.dismiss();
+      const errorMsg = "خطا در اتصال. لطفا بعدا دوباره سعی کنید.";
+      setError(errorMsg);
+      taskNotification.showError(errorMsg);
     } finally {
       setLoading(false);
     }
