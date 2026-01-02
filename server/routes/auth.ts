@@ -283,8 +283,8 @@ export async function handleUpdateProfile(
       }
     }
 
-    // Update user in database
-    const { data: updatedUser, error } = await supabase
+    // Update user in database (use admin client to bypass RLS)
+    const { data: updatedUser, error } = await supabaseAdmin
       .from("users")
       .update(updateData)
       .eq("id", userId)
