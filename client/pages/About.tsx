@@ -231,10 +231,10 @@ export default function About() {
         <section className="px-4 py-16 sm:py-20 bg-gradient-to-r from-slate-200 to-slate-100 border-b">
           <div className="container mx-auto max-w-4xl">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-6 text-foreground">
+              <h2 className="text-3xl font-bold mb-6 text-black">
                 تفاوت اساسی ما
               </h2>
-              <p className="text-lg text-foreground max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg text-black max-w-3xl mx-auto leading-relaxed">
                 هوش مصنوعی های دنیا به روش سنتی کار می‌کنند: اشتراک‌های ماهیانه
                 گران‌قیمت و تعداد محدود خدمات. ما فلسفه متفاوتی داریم.
               </p>
@@ -313,12 +313,12 @@ export default function About() {
             </div>
 
             <div className="mt-12 text-center p-8 rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
-              <p className="text-lg text-foreground font-medium">
+              <p className="text-lg text-black font-medium">
                 ما می‌خواهیم شما با{" "}
-                <span className="text-foreground font-bold">آرامش و راحتی</span>{" "}
+                <span className="text-black font-bold">آرامش و راحتی</span>{" "}
                 در زمان‌های لازم، از هوش مصنوعی ما استفاده کنید.
               </p>
-              <p className="text-foreground mt-3">
+              <p className="text-black mt-3">
                 بدون فشار، بدون محدودیت، فقط وقتی که واقعا نیازتون باشه.
               </p>
             </div>
