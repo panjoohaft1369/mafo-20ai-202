@@ -1,0 +1,43 @@
+{
+  "name": "MAFO - هوش مصنوعی تصویرساز ایرانی",
+  "short_name": "MAFO",
+  "description": "اولین هوش مصنوعی تصویرساز ایرانی برای تولید تصاویر حرفه‌ای",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "dir": "rtl",
+  "lang": "fa-IR",
+  "screenshots": [
+    {
+      "src": "https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F9e202c908efe4404bc59d52a7a35052a?format=webp&width=192",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F9e202c908efe4404bc59d52a7a35052a?format=webp&width=512",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "form_factor": "wide"
+    }
+  ],
+  "icons": [
+    {
+      "src": "https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F9e202c908efe4404bc59d52a7a35052a?format=webp&width=192",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F9e202c908efe4404bc59d52a7a35052a?format=webp&width=512",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "screenshots_text": "صفحات اپلیکیشن MAFO"
+}
