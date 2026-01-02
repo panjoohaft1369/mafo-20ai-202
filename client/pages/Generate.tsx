@@ -203,6 +203,16 @@ export default function Generate() {
       return;
     }
 
+    // Check if user has sufficient credits for the operation
+    const creditCost =
+      CREDIT_COSTS[resolution as keyof typeof CREDIT_COSTS] || 5;
+    if (auth.credits < creditCost) {
+      const errorMsg = `اعتبار شما ناکافی است. برای این عملیات ${creditCost} اعتبار نیاز است، اما شما فقط ${auth.credits} اعتبار دارید.`;
+      setError(errorMsg);
+      toast.error(errorMsg);
+      return;
+    }
+
     if (selectedImages.length === 0) {
       setError("لطفا ابتدا یک یا چند تصویر انتخاب کنید");
       return;
