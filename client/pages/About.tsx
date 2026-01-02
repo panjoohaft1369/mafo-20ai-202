@@ -31,6 +31,34 @@ import { DisplaySlideshow } from "@/components/DisplaySlideshow";
 export default function About() {
   const navigate = useNavigate();
   const auth = getAuthState();
+  const [installPrompt, setInstallPrompt] = useState<any>(null);
+  const [showIOSInstructions, setShowIOSInstructions] = useState(false);
+
+  // Listen for the PWA install prompt
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstall = async () => {
+    if (!installPrompt) return;
+
+    installPrompt.prompt();
+    const { outcome } = await installPrompt.userChoice;
+    console.log(`User response to install prompt: ${outcome}`);
+    setInstallPrompt(null);
+  };
+
+  const handleIOSInstall = () => {
+    setShowIOSInstructions(true);
+  };
 
   const handleLogout = () => {
     clearAuth();
