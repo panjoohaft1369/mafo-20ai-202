@@ -74,7 +74,7 @@ function initializeDefaults() {
           title: "تولید تصاویر حرفه‌ای",
           subtitle: "با کیفیت بالا و سرعت فوری",
           bgColor: "from-blue-600 to-blue-400",
-          imageUrl: "",
+          imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2Fcb7ff6366612402c8b974195a58baf15?format=webp&width=800",
           order: 1,
         },
         {
@@ -82,7 +82,7 @@ function initializeDefaults() {
           title: "برای کسب‌وکار شما",
           subtitle: "افزایش فروش و اعتماد مشتری",
           bgColor: "from-purple-600 to-purple-400",
-          imageUrl: "",
+          imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2Fcb7ff6366612402c8b974195a58baf15?format=webp&width=800",
           order: 2,
         },
         {
@@ -90,7 +90,7 @@ function initializeDefaults() {
           title: "ساخت ایرانی، کیفیت جهانی",
           subtitle: "سرورهای قدرتمند و گرافیک‌های پیشرفته",
           bgColor: "from-indigo-600 to-indigo-400",
-          imageUrl: "",
+          imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2Fcb7ff6366612402c8b974195a58baf15?format=webp&width=800",
           order: 3,
         },
       ],
