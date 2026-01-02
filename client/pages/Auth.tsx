@@ -65,6 +65,7 @@ export default function Auth() {
   const [loginError, setLoginError] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [showActivationModal, setShowActivationModal] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   // Register state
   const [formData, setFormData] = useState<RegistrationData>({
