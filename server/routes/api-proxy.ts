@@ -739,6 +739,7 @@ export async function handleGenerateVideo(
 /**
  * دریافت گزارشات (Logs)
  * Fetches complete history from kie.ai/logs page, with fallback to local storage
+ * Only returns logs belonging to the authenticated user
  */
 export async function handleFetchLogs(
   req: Request,
@@ -755,6 +756,26 @@ export async function handleFetchLogs(
       return;
     }
 
+    // Get userId from API key
+    console.log("[Logs] Validating API key and getting userId...");
+    const { data: apiKeyData, error: keyError } = await supabaseAdmin
+      .from("api_keys")
+      .select("user_id")
+      .eq("key", apiKey)
+      .eq("is_active", true)
+      .single();
+
+    if (keyError || !apiKeyData) {
+      console.error("[Logs] Invalid API key:", keyError);
+      res.status(401).json({
+        success: false,
+        error: "Invalid API key",
+      });
+      return;
+    }
+
+    const userId = apiKeyData.user_id;
+    console.log("[Logs] Getting logs for userId:", userId);
     console.log("[Logs] دریافت تاریخ کامل تصاویر از kie.ai/logs");
 
     // First, try to fetch from kie.ai/logs
@@ -764,8 +785,13 @@ export async function handleFetchLogs(
       console.log(
         `[Logs] Fetched ${remoteLogs.length} entries from kie.ai/logs`,
       );
+      // Filter to only show logs for this user
+      const userLogs = remoteLogs.filter((log: any) => log.userId === userId);
+      console.log(
+        `[Logs] Filtered to ${userLogs.length} logs for userId: ${userId}`,
+      );
       // Sort by timestamp in descending order (newest first)
-      const sortedLogs = remoteLogs.sort((a, b) => b.timestamp - a.timestamp);
+      const sortedLogs = userLogs.sort((a, b) => b.timestamp - a.timestamp);
       res.json({
         success: true,
         logs: sortedLogs,
@@ -791,8 +817,14 @@ export async function handleFetchLogs(
       }),
     );
 
-    // Filter logs to last 2 months
-    const filteredLogs = allLogs.filter((log: any) => {
+    // Filter logs to only include tasks for the current user
+    const userOnlyLogs = allLogs.filter((log: any) => log.userId === userId);
+    console.log(
+      `[Logs] Found ${userOnlyLogs.length} tasks for userId ${userId}`,
+    );
+
+    // Further filter logs to last 2 months
+    const filteredLogs = userOnlyLogs.filter((log: any) => {
       return log.timestamp > twoMonthsAgo.getTime();
     });
 
@@ -801,7 +833,7 @@ export async function handleFetchLogs(
       (a: any, b: any) => b.timestamp - a.timestamp,
     );
 
-    console.log(`[Logs] Found ${sortedLogs.length} tasks in local storage`);
+    console.log(`[Logs] Returning ${sortedLogs.length} recent tasks in local storage`);
 
     res.json({
       success: true,
