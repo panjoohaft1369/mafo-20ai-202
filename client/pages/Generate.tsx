@@ -218,26 +218,26 @@ export default function Generate() {
 
     try {
       // Step 1: Upload all images to get public URLs
-      toast.loading(`آپلود ${selectedImages.length} تصویر...`);
+      taskNotification.showLoading(`آپلود ${selectedImages.length} تصویر...`);
       const uploadedUrls: string[] = [];
 
       for (let i = 0; i < selectedImages.length; i++) {
         const uploadResult = await uploadImage(selectedImages[i]);
 
         if (!uploadResult.success || !uploadResult.imageUrl) {
-          setError(
+          const errorMsg =
             translateErrorMessage(uploadResult.error) ||
-              `خطا در آپلود تصویر ${i + 1} از ${selectedImages.length}`,
-          );
+            `خطا در آپلود تصویر ${i + 1} از ${selectedImages.length}`;
+          setError(errorMsg);
           setLoading(false);
+          taskNotification.showError(errorMsg);
           return;
         }
 
         uploadedUrls.push(uploadResult.imageUrl);
       }
 
-      toast.dismiss();
-      toast.loading("درخواست ایجاد تصویر...");
+      taskNotification.showLoading("درخواست ایجاد تصویر...");
 
       // Step 2: Send generation request with uploaded image URLs
       const result = await generateImage({
@@ -250,8 +250,10 @@ export default function Generate() {
       });
 
       if (!result.success || !result.taskId) {
-        setError(translateErrorMessage(result.error) || "خطا در ایجاد تصویر");
+        const errorMsg = translateErrorMessage(result.error) || "خطا در ایجاد تصویر";
+        setError(errorMsg);
         setLoading(false);
+        taskNotification.showError(errorMsg);
         return;
       }
 
@@ -260,8 +262,7 @@ export default function Generate() {
       setHasInProgressTask(true);
       localStorage.setItem("generate_in_progress_task", "true");
 
-      toast.dismiss();
-      toast.loading("درحال پردازش تصویر... (این ممکن است چند دقیقه طول بکشد)");
+      taskNotification.showLoading("درحال پردازش تصویر... (این ممکن است چند دقیقه طول بکشد)");
 
       // Step 3: Poll for completion
       const pollResult = await pollTaskCompletion(auth.apiKey!, result.taskId);
@@ -275,18 +276,19 @@ export default function Generate() {
         const newCredits = Math.max(0, (auth.credits || 0) - creditCost);
         updateStoredCredits(newCredits);
 
-        toast.dismiss();
-        toast.success(
+        taskNotification.showSuccess(
           `تصویر با موفقیت ایجاد شد! (${creditCost} اعتبار کاهش یافت)`,
         );
       } else {
-        setError(pollResult.error || "خطا در ایجاد تصویر");
-        toast.dismiss();
+        const errorMsg = pollResult.error || "خطا در ایجاد تصویر";
+        setError(errorMsg);
+        taskNotification.showError(errorMsg);
       }
     } catch (err) {
       console.error("Generate error:", err);
-      setError("خطا در اتصال. لطفا بعدا دوباره سعی کنید.");
-      toast.dismiss();
+      const errorMsg = "خطا در اتصال. لطفا بعدا دوباره سعی کنید.";
+      setError(errorMsg);
+      taskNotification.showError(errorMsg);
     } finally {
       setLoading(false);
       // Clear in-progress task flag once generation attempt completes
