@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as crypto from "crypto";
 import * as bcrypt from "bcrypt";
-import { supabase } from "../utils/supabase-client.js";
+import { supabase, supabaseAdmin } from "../utils/supabase-client.js";
 
 // Hardcoded admin credentials
 const ADMIN_USERNAME = "panjoohaft";
