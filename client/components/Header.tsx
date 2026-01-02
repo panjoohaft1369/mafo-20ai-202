@@ -31,11 +31,7 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
         <div className="flex h-20 items-center justify-between px-4 sm:px-8">
           {/* Brand */}
           <Link to="/" className="flex items-center gap-2">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F4c88dfcd13ad44aba9d3f4537f9785d5%2F9e202c908efe4404bc59d52a7a35052a?format=webp&width=800"
-              alt="MAFO AI"
-              className="h-10 w-auto"
-            />
+            <Logo size="md" />
           </Link>
 
           {/* Center spacer */}
