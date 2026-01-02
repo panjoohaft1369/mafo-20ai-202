@@ -549,8 +549,8 @@ export async function handleRegister(
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert user into database with "pending" status
-    const { data, error } = await supabase
+    // Insert user into database with "pending" status (using admin client)
+    const { data, error } = await supabaseAdmin
       .from("users")
       .insert([
         {
