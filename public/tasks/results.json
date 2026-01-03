@@ -262,5 +262,31 @@
     "creditsDeducted": true,
     "creditCost": 5,
     "imageUrl": "https://tempfile.aiquickdraw.com/h/1cbc3a7cbbd64e53e012b6f7f8475eaf_1767327887.png"
+  },
+  "7ad212f4f921c6eae6147593e625ac88": {
+    "status": "success",
+    "timestamp": 1767360292945,
+    "prompt": "این نمای یه ساختمونه. میخوام ازش رندر شب واقعی بسازی.",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "6b16254b7d421ae7832b43d173566458",
+    "userId": "de55aa05-32c4-4b4a-b138-ccfe1bc54a81",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/7ad212f4f921c6eae6147593e625ac88_1767360318.png"
+  },
+  "55cd48ce3787f37ba0e73c80d1038cff": {
+    "status": "success",
+    "timestamp": 1767360449947,
+    "prompt": "این نمای یه ساختمونه. میخوام ازش رندر روز واقعی بسازی. فقط توی یه محیط شهری جایگذاریش کن. اطرافش ساختمونای دیگه باشن، که از این تفکیک شده باشه نور و رنگشون. و پیاده رو و خیابان و آدم ها و درخت ها باشه توش.",
+    "aspectRatio": "auto",
+    "resolution": "1K",
+    "apiKey": "6b16254b7d421ae7832b43d173566458",
+    "userId": "de55aa05-32c4-4b4a-b138-ccfe1bc54a81",
+    "taskType": "image",
+    "creditsDeducted": true,
+    "creditCost": 5,
+    "imageUrl": "https://tempfile.aiquickdraw.com/h/55cd48ce3787f37ba0e73c80d1038cff_1767360476.png"
   }
 }
