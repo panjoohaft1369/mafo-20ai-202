@@ -7,6 +7,12 @@
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+
+[context.production.environment]
+  SUPABASE_URL = "https://kvmetkghgotsnpbqalwba.supabase.co"
+  SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2bWV0a2hnb3RzbnBicWFsd2JhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY5NDIzNTcsImV4cCI6MjA4MjUxODM1N30.iyg8K9o2henoGA_D120OInOvIP6_COXhHV1uczYsg3A"
+  SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2a3FveHFjdWNoYWh5Z29hZ3RuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Njk0MzY0MiwiZXhwIjoyMDgyNTE5NjQyfQ.KK4O6KbyjOyA7iJJFTGAB_UuuxV9oIBGFHrLTw6AXQ0"
+  PUBLIC_URL = "https://mafoai.netlify.app"
   
 [[redirects]]
   force = true
