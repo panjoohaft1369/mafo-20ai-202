@@ -132,6 +132,10 @@ export function createServer() {
   app.put("/api/user/profile", handleUpdateProfile);
   app.post("/api/user/change-password", handleChangePassword);
 
+  // Setup routes
+  app.get("/api/setup/config", handleGetConfig);
+  app.post("/api/setup/configure", handleSetupConfigure);
+
   // Admin routes
   app.post("/api/admin/login", handleAdminLogin);
   app.post("/api/admin/verify", handleAdminVerify);
