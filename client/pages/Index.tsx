@@ -29,6 +29,17 @@ export default function Index() {
     }
   }, [auth, navigate]);
 
+  // Check if Supabase is configured
+  useEffect(() => {
+    const checkConfig = async () => {
+      const configured = await isSupabaseConfigured();
+      if (!configured) {
+        navigate("/setup");
+      }
+    };
+    checkConfig();
+  }, [navigate]);
+
   const handleStartClick = () => {
     if (auth.isLoggedIn) {
       navigate("/generate");
