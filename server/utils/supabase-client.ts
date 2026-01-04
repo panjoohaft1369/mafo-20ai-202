@@ -4,9 +4,18 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-console.log("[Supabase Init] SUPABASE_URL:", SUPABASE_URL ? "✅ Set" : "❌ NOT SET");
-console.log("[Supabase Init] SUPABASE_ANON_KEY:", SUPABASE_ANON_KEY ? "✅ Set" : "❌ NOT SET");
-console.log("[Supabase Init] SUPABASE_SERVICE_ROLE_KEY:", SUPABASE_SERVICE_ROLE_KEY ? "✅ Set" : "❌ NOT SET");
+console.log(
+  "[Supabase Init] SUPABASE_URL:",
+  SUPABASE_URL ? "✅ Set" : "❌ NOT SET",
+);
+console.log(
+  "[Supabase Init] SUPABASE_ANON_KEY:",
+  SUPABASE_ANON_KEY ? "✅ Set" : "❌ NOT SET",
+);
+console.log(
+  "[Supabase Init] SUPABASE_SERVICE_ROLE_KEY:",
+  SUPABASE_SERVICE_ROLE_KEY ? "✅ Set" : "❌ NOT SET",
+);
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error(
