@@ -4,15 +4,19 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+console.log("[Supabase Init] SUPABASE_URL:", SUPABASE_URL ? "✅ Set" : "❌ NOT SET");
+console.log("[Supabase Init] SUPABASE_ANON_KEY:", SUPABASE_ANON_KEY ? "✅ Set" : "❌ NOT SET");
+console.log("[Supabase Init] SUPABASE_SERVICE_ROLE_KEY:", SUPABASE_SERVICE_ROLE_KEY ? "✅ Set" : "❌ NOT SET");
+
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error(
-    "Missing Supabase environment variables: SUPABASE_URL or SUPABASE_ANON_KEY",
+    "❌ CRITICAL: Missing Supabase environment variables: SUPABASE_URL or SUPABASE_ANON_KEY",
   );
 }
 
 if (!SUPABASE_SERVICE_ROLE_KEY) {
   console.warn(
-    "Warning: SUPABASE_SERVICE_ROLE_KEY not set. Some server operations may fail.",
+    "⚠️  Warning: SUPABASE_SERVICE_ROLE_KEY not set. Admin operations may fail.",
   );
 }
 
@@ -24,6 +28,8 @@ export const supabaseAdmin = createClient(
   SUPABASE_URL!,
   SUPABASE_SERVICE_ROLE_KEY!,
 );
+
+console.log("[Supabase Init] ✅ Supabase clients initialized");
 
 // Re-export types
 export type { User } from "@supabase/supabase-js";
