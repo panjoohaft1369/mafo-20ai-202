@@ -37,6 +37,7 @@ export default function App() {
           <TopNav />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/setup" element={<Setup />} />
             <Route path="/login" element={<Auth />} />
             <Route path="/register" element={<Auth />} />
             <Route path="/register-pending" element={<RegisterPending />} />
