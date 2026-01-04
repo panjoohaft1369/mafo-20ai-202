@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { getAuthState, clearAuth } from "@/lib/auth";
+import { isSupabaseConfigured } from "@/lib/config";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TopNav } from "@/components/TopNav";
