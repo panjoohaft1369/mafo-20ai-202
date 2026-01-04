@@ -1,8 +1,28 @@
 import { createClient } from "@supabase/supabase-js";
+import * as fs from "fs";
+import * as path from "path";
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+let SUPABASE_URL = process.env.SUPABASE_URL;
+let SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+let SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+// Try to read from config file if env vars not set
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  const configFile = path.join(process.cwd(), "public", "config.json");
+  if (fs.existsSync(configFile)) {
+    try {
+      const config = JSON.parse(fs.readFileSync(configFile, "utf-8"));
+      if (config.supabaseUrl && config.anonKey) {
+        SUPABASE_URL = config.supabaseUrl;
+        SUPABASE_ANON_KEY = config.anonKey;
+        SUPABASE_SERVICE_ROLE_KEY = config.serviceRoleKey;
+        console.log("[Supabase Init] Configuration loaded from config.json");
+      }
+    } catch (e) {
+      console.warn("[Supabase Init] Failed to read config.json:", e);
+    }
+  }
+}
 
 console.log(
   "[Supabase Init] SUPABASE_URL:",
