@@ -44,10 +44,7 @@ import {
   handleGetAboutSlides,
   handleSaveAboutSlides,
 } from "./routes/admin-content.js";
-import {
-  handleGetConfig,
-  handleSetupConfigure,
-} from "./routes/setup.js";
+import { handleGetConfig, handleSetupConfigure } from "./routes/setup.js";
 
 export function createServer() {
   const app = express();
